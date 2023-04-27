@@ -1,15 +1,38 @@
 //API 호출에 사용할 함수들을 정리해놓은 파일입니다
-import axios from 'axios';
+import { baseAPI, authAPI } from './axios';
 
-const BASE_URL = process.env.REACT_APP_API_URL;
+const api = {
+  //토큰 재발급
+  async reissueToken(userId: number, refreshToken: string) {
+    return await authAPI(`/auth/reissue`, {
+      method: 'POST',
+      body: {
+        userId: userId,
+        refreshToken: refreshToken,
+      },
+    });
+  },
 
-//작성예시
-export const POST_GET_NFT = async (id: number): Promise<any> => {
-  const response = await axios({
-    method: 'POST',
-    url: BASE_URL + '/nft',
-    params: id,
-  });
+  //로그아웃
+  async logoutUser(userId: number) {
+    return await authAPI(`/user/logout/${userId}`, {
+      method: 'GET',
+    });
+  },
 
-  return response;
+  //회원탈퇴
+  async deleteUser(userId: number) {
+    return await authAPI(`/user/${userId}`, {
+      method: 'DELETE',
+    });
+  },
+
+  //닉네임 중복검사
+  async checkNickname(userNickname: string) {
+    return await baseAPI(`/user/${userNickname}`, {
+      method: 'GET',
+    });
+  },
 };
+
+export default api;

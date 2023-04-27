@@ -5,9 +5,9 @@ const BASE_URL = process.env.REACT_APP_API_URL;
 const cookieStore = cookies();
 
 //베이스가 될 axios 인스턴스(인증이 필요하지 않은 요청)
-const baseAPI = (url: string, options: any) => {
+export const baseAPI = (url: string, options: any) => {
   const instance = axios.create({
-    baseURL: url,
+    baseURL: BASE_URL + url,
     ...options,
   });
 
@@ -15,9 +15,9 @@ const baseAPI = (url: string, options: any) => {
 };
 
 //인증이 필요한 요청에 대한 인스턴스
-const authAPI = (url: string, options: any) => {
+export const authAPI = (url: string, options: any) => {
   const instance = axios.create({
-    baseURL: url,
+    baseURL: BASE_URL + url,
     ...options,
   });
 
