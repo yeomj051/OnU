@@ -17,7 +17,6 @@ import javax.persistence.*;
 public class NutrientData {
     @Id
     private int prdlstReportNo;
-
     // 인허가번호  LCNS_NO
     private String lcnsNo;
     //업소명   BSSH_NM
