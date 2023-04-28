@@ -1,3 +1,6 @@
+import Link from 'next/link';
+import Logo from 'public/logo.svg';
+
 const Header = () => {
   return (
     <div className="navbar bg-base-100">
@@ -33,9 +36,12 @@ const Header = () => {
         </div>
       </div>
       <div className="navbar-center">
-        <a className="text-xl text-blue-900 normal-case btn btn-ghost">
-          OnU:
-        </a>
+        <Link
+          href="/"
+          className="text-xl text-blue-900 normal-case btn btn-ghost"
+        >
+          <Logo />
+        </Link>
       </div>
       <div className="navbar-end">
         <button className="btn btn-ghost btn-circle">
