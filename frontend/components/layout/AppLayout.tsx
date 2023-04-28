@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 const FixedWidth = styled.div`
   width: 512px;
+  background-color: #ffffff;
   @media (max-width: 512px) {
     width: 100%;
   }
