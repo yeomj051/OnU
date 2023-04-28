@@ -39,10 +39,9 @@ export default function App({
           name="viewport"
           content="width=device-width, initial-scale=1"
         />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className=" bg-slate-300 h-[100vh]">
-        {getLayout(<Component {...pageProps} />)}
-      </div>
+      {getLayout(<Component {...pageProps} />)}
     </QueryClientProvider>
   );
 }
