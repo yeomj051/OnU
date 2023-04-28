@@ -4,7 +4,7 @@ import { cookies } from 'next/headers';
 const BASE_URL = process.env.REACT_APP_API_URL;
 const cookieStore = cookies();
 
-//베이스가 될 axios 인스턴스(인증이 필요하지 않은 요청)
+//인증이 필요하지 않은 요청에 대한 인스턴스
 export const baseAPI = (url: string, options: any) => {
   const instance = axios.create({
     baseURL: BASE_URL + url,
@@ -21,6 +21,7 @@ export const authAPI = (url: string, options: any) => {
     ...options,
   });
 
+  //request interceptor
   instance.interceptors.request.use(
     (config) => {
       const token = localStorage.getItem('accessToken');
@@ -32,6 +33,7 @@ export const authAPI = (url: string, options: any) => {
     },
   );
 
+  //response interceptor
   instance.interceptors.response.use(
     (response) => {
       return response;
