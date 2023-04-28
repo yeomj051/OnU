@@ -1,12 +1,10 @@
 /** @type {import('next').NextConfig} */
-const dotenv = require('dotenv-webpack');
 
 const nextConfig = {
-  reactStrictMode: true,
-  webpack: (config) => {
-    config.plugins.push(new dotenv({ silent: true }));
-    return config;
+  env: {
+    REACT_APP_API_URL: 'https://localhost:3000/api',
   },
+  reactStrictMode: true,
 };
 
 module.exports = nextConfig;
