@@ -2,35 +2,11 @@ import React from 'react';
 import { useState } from 'react';
 import PillImg from '../../public/jong_pill.svg';
 import { Heart, HeartFill } from '@emotion-icons/bootstrap';
-import PillDetailInfo from './PillDetailInfo';
-import PillDetailReview from './PillDetailReview';
-import tw from 'twin.macro';
 
 type Props = {};
 
-// const ButtonToChange = tw.button`
-//   w-full
-//   font-semibold
-
-//   button-change-info-review{
-//     font-color: ${({infoSwitch})=>(infoSwitch? 'red' : 'green')};
-//   }
-
-// `;
-
-function PillDetailMain({}: Props): React.ReactElement {
-  const [infoSwitch, setInfoSwitch] = useState<boolean>(true);
+function PillCompareMain({}: Props) {
   const [like, setLike] = useState<boolean>(true);
-
-  //제품상세정보<->리뷰
-  const switchInfo = () => {
-    setInfoSwitch(true);
-  };
-
-  const switchReview = () => {
-    setInfoSwitch(false);
-  };
-
   //좋아요 on/off
   const likeOrNot = () => {
     setLike(!like);
@@ -78,34 +54,14 @@ function PillDetailMain({}: Props): React.ReactElement {
       <div className="bg-[#F2F9FF] mt-8 h-full pt-6">
         <hr className="mx-4" />
         <div className="tabs grid grid-cols-2 justify-items-center py-4 bg-white mx-4">
-          <div className="col-span-1">
-            <button
-              className={`w-full font-semibold ${
-                infoSwitch ? 'text-blue-500' : 'text-black'
-              }`}
-              onClick={switchInfo}
-            >
-              제품상세정보
-            </button>
-          </div>
-          <div className="col-span-1">
-            <button
-              className={`w-full font-semibold ${
-                infoSwitch ? 'text-black' : 'text-blue-500'
-              }`}
-              onClick={switchReview}
-            >
-              리뷰
-            </button>
-          </div>
+          <div className="col-span-1"></div>
+          <div className="col-span-1"></div>
         </div>
         <hr className="mx-4" />
-        <div className="mx-4">
-          {infoSwitch ? <PillDetailInfo /> : <PillDetailReview />}
-        </div>
+        <div className="mx-4"></div>
       </div>
     </div>
   );
 }
 
-export default PillDetailMain;
+export default PillCompareMain;
