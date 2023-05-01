@@ -77,4 +77,25 @@ public class UserController {
         return new ResponseEntity<>(resultMap, status);
     }
 
+    @ApiOperation(value = "회원 탈퇴", notes = "회원을 탈퇴시킨다.", response = Map.class)
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<Map<String,Object>> userDelete(@ApiParam(value = "탈퇴시킬 회원 아이디", required = true, example = "1") @PathVariable int userId
+            , Principal principal, HttpServletRequest request){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+
+        if(!userService.userDelete(userId)){
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+        } else {
+            return logout(userId, principal, request);
+        }
+        return new ResponseEntity<>(resultMap, status);
+    }
+
 }
