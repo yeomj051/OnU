@@ -98,4 +98,30 @@ public class UserController {
         return new ResponseEntity<>(resultMap, status);
     }
 
+    @ApiOperation(value = "로그아웃", notes = "로그아웃 시킨다.", response = Map.class)
+    @GetMapping("/logout/{userId}")
+    public ResponseEntity<Map<String,Object>> logout(@ApiParam(value = "로그아웃 시킬 회원 아이디", required = true, example = "1") @PathVariable int userId, Principal principal, HttpServletRequest request) {
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+
+        if (redisTemplate.opsForValue().get("RT:" + principal.getName()) != null) {
+            redisTemplate.delete("RT:" + principal.getName());
+        }
+
+        String accessToken = TokenUtils.getJwtFromRequest(request);
+
+        Long expiration = tokenProviderService.getExpiration(accessToken);
+        redisTemplate.opsForValue()
+                .set(accessToken, "logout", expiration, TimeUnit.MILLISECONDS);
+
+        resultMap.put(MESSAGE, SUCCESS);
+        status = HttpStatus.OK;
+
+        return new ResponseEntity<>(resultMap, status);
+    }
 }
