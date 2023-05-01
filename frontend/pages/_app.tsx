@@ -9,7 +9,7 @@ import type { AppProps } from 'next/app';
 import AppLayout from '@/components/layout/AppLayout';
 import { NextPage } from 'next';
 
-export type NextPageWithLayout = NextPage & {
+export type NextPageWithLayout<Props = {}> = NextPage<Props> & {
   getLayout?: (page: React.ReactElement) => React.ReactNode;
 };
 
