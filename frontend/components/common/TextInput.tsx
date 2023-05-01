@@ -4,11 +4,12 @@ const TextInput = (props: {
   labelTopR?: string;
   labelBotL?: string;
   labelBotR?: string;
+  value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }): React.ReactElement => {
   const labelText =
     props.labelBotR &&
-    props.labelBotR === '사용 가능한 닉네임입니다.' ? (
+    props.labelBotR === '사용 가능한 닉네임입니다' ? (
       <span className="text-green-400 label-text-alt">
         {props.labelBotR}
       </span>
@@ -31,6 +32,7 @@ const TextInput = (props: {
         placeholder={props.placeholder}
         className="w-full h-10 max-w-xs input input-bordered"
         onChange={props.onChange}
+        value={props.value}
       />
       <label className="label">
         <span className="label-text-alt">{props.labelBotL}</span>
