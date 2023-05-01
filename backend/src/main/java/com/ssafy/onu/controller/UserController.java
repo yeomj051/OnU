@@ -52,4 +52,29 @@ public class UserController {
         return new ResponseEntity<>(resultMap, status);
     }
 
+    @ApiOperation(value = "회원의 정보를 등록", notes = "회원의 정보를 등록한다(닉네임, 성별, 나이)", response = Map.class)
+    @PostMapping("/{userId}")
+    public ResponseEntity<Map<String,Object>> createUserInfo(@ApiParam(value = "등록할 회원정보(아이디)", required = true, example = "1") @PathVariable int userId,
+                                                             @ApiParam(value = "등록할 회원정보(닉네임, 성별, 나이)", required = true, example  = "홍동길") @Valid @RequestBody ReqUserInfoDto reqUserInfoDto, Principal principal){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+
+        ResponseUserInfoDto userInfo = userService.createUserInfo(userId, reqUserInfoDto);
+
+        if(userInfo == null){
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+        } else {
+            resultMap.put(MESSAGE, SUCCESS);
+            resultMap.put("userInfo", userInfo);
+            status = HttpStatus.OK;
+        }
+        return new ResponseEntity<>(resultMap, status);
+    }
+
 }

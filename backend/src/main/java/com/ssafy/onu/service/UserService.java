@@ -20,5 +20,14 @@ public class UserService {
         else return true;
     }
 
+    public ResponseUserInfoDto createUserInfo(int userId, ReqUserInfoDto reqUserInfoDto) {
+        Optional<User> user = userRepository.findByUserId(userId);
+        if(!user.isPresent()){
+            return null;
+        } else {
+            user.get().createUserInfo(reqUserInfoDto);
+            return new ResponseUserInfoDto(userRepository.save(user.get()));
+        }
+    }
 
 }
