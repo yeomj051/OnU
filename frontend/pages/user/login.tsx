@@ -9,12 +9,19 @@ import TextInput from '@/components/common/TextInput';
 import Main from '/public/main.svg';
 import api from '@/apis/config';
 
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import { TextField } from '@mui/material';
+
 const LoginMain: NextPageWithLayout = () => {
   const [nicknameLabel, setNicknameLabel] = React.useState('');
   const [nickname, setNickname] = React.useState('');
   const [randomNumber, setRandomNumber] = React.useState(
     Math.floor(Math.random() * 100),
   );
+  const [birth, setBirth] = React.useState<Date | null>();
+  const [gender, setGender] = React.useState('');
 
   useEffect((): void => {
     //추후 서버에서 닉네임 중복확인 api를 받아와서 사용
@@ -35,11 +42,26 @@ const LoginMain: NextPageWithLayout = () => {
     // setNicknameLabel('사용 불가능한 닉네임입니다');
   }, [nickname]);
 
+  //타이핑시 닉네임 중복확인
   const checkNickname = (
     e: React.ChangeEvent<HTMLInputElement>,
   ): void => {
     e.preventDefault();
     setNickname(e.target.value);
+  };
+
+  //회원가입 완료처리
+  const registerUser = () => {
+    const data = {
+      nickname,
+      birth,
+      gender,
+    };
+
+    // 회원정보 보내고
+    // api.updateUserInfo(data).then((res) => {});
+
+    // 다음페이지로 이동
   };
 
   return (
@@ -81,7 +103,21 @@ const LoginMain: NextPageWithLayout = () => {
               </button>
             </div>
           ) : null}
-          <TextInput labelTopL="생년월일" />
+          <div className="flex flex-col mb-4 space-y-2">
+            <label className="pl-1 text-base font-bold label-text">
+              생년월일
+            </label>
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+              <DesktopDatePicker
+                value={birth}
+                format="YYYY-MM-DD"
+                onChange={(newValue) => {
+                  setBirth(newValue);
+                }}
+              />
+            </LocalizationProvider>
+          </div>
+
           <div className="flex justify-between mb-4">
             <span className="pl-1 font-bold">성별</span>
             <div className="flex space-x-2">
@@ -104,7 +140,10 @@ const LoginMain: NextPageWithLayout = () => {
               </div>
             </div>
           </div>
-          <button className="bg-[#90B5EA] text-lg border-none btn btn-wide ">
+          <button
+            className="bg-[#90B5EA] text-lg border-none btn btn-wide"
+            onClick={registerUser}
+          >
             회원가입 완료
           </button>
         </div>
