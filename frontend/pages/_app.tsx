@@ -6,6 +6,16 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query';
 import type { AppProps } from 'next/app';
+import AppLayout from '@/components/layout/AppLayout';
+import { NextPage } from 'next';
+
+export type NextPageWithLayout = NextPage & {
+  getLayout?: (page: React.ReactElement) => React.ReactNode;
+};
+
+type AppPropsWithLayout = AppProps & {
+  Component: NextPageWithLayout;
+};
 
 const client = new QueryClient({
   defaultOptions: {
@@ -15,7 +25,12 @@ const client = new QueryClient({
   },
 });
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({
+  Component,
+  pageProps,
+}: AppPropsWithLayout) {
+  const getLayout = Component.getLayout ?? ((page) => page);
+
   return (
     <QueryClientProvider client={client}>
       <Head>
@@ -24,8 +39,9 @@ export default function App({ Component, pageProps }: AppProps) {
           name="viewport"
           content="width=device-width, initial-scale=1"
         />
+        <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Component {...pageProps} />
+      {getLayout(<Component {...pageProps} />)}
     </QueryClientProvider>
   );
 }
