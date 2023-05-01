@@ -1,4 +1,5 @@
 import React from 'react';
+
 import PillDetailMain from '@/containers/PillDetailPage/PillDetailMain';
 import { NextPageWithLayout } from '../_app';
 import HeaderLayout from '@/components/layout/HeaderLayout';
@@ -25,5 +26,4 @@ PillDetail.getLayout = function getLayout(page: React.ReactElement) {
     </AppLayout>
   );
 };
-
 export default PillDetail;
