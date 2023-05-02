@@ -27,8 +27,14 @@ public class KakaoUserInfoDto implements OAuth2UserInfoDto {
         return attributes.get("id").toString();
     }
 
+    @Override
+    public String getNickname() {
+        return "";
+    }
+
     public User toEntity(){
         return User.builder()
+                .userNickname(getNickname())
                 .userProvider(AuthProvider.valueOf(getProvider()))
                 .userProviderId(getProviderId())
                 .build();

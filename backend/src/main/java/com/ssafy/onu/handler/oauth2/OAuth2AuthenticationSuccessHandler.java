@@ -77,9 +77,11 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         try {
             String userNickname = URLEncoder.encode(userPrincipalDto.getUser().getUserNickname(), "UTF-8");
             return UriComponentsBuilder.fromUriString(targetUrl)
+                    .queryParam("accessToken", token)
                     .queryParam("userId", userPrincipalDto.getUser().getUserId())
                     .queryParam("userNickname", userNickname)
-                    .queryParam("accessToken", token)
+                    .queryParam("userAge", userPrincipalDto.getUser().getUserAge())
+                    .queryParam("userGender", userPrincipalDto.getUser().getUserGender())
                     .build().toUriString();
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);

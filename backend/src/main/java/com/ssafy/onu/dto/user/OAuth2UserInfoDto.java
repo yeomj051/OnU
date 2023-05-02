@@ -6,5 +6,6 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 public interface OAuth2UserInfoDto {
     String getProvider();
     String getProviderId();
+    String getNickname();
     User toEntity();
 }

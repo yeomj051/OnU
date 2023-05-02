@@ -38,8 +38,8 @@ public class User extends BaseEntity{
 
 
     @Builder
-    public User(AuthProvider userProvider, String userProviderId){
-        this.userNickname = new StringBuilder().append(userProvider).append("_").append(System.nanoTime()).toString();
+    public User(String userNickname, AuthProvider userProvider, String userProviderId){
+        this.userNickname = userNickname;
         this.userAuthId = Auth.builder()
                 .userProvider(userProvider)
                 .userProviderId(userProviderId)
@@ -52,7 +52,6 @@ public class User extends BaseEntity{
 
     public void createUserInfo(ReqUserInfoDto reqUserInfoDto){
         this.userNickname = reqUserInfoDto.getUserNickname();
-        System.out.println(reqUserInfoDto.getUserAge().getYear());
         this.userAge = LocalDateTime.now().getYear() - reqUserInfoDto.getUserAge().getYear() + 1;
         this.userGender = Gender.valueOf(reqUserInfoDto.getUserGender());
     }
