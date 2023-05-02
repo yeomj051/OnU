@@ -37,9 +37,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
     private final AppProperties appProperties;
     private final HttpCookieOAuth2AuthorizationRequestRepository httpCookieOAuth2AuthorizationRequestRepository;
     private final RedisTemplate redisTemplate;
-    private final ObjectMapper objectMapper;
-
-
+    private final static String REFRESH_TOKEN = "refreshToken";
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
@@ -71,8 +69,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         redisTemplate.opsForValue()
                 .set("RT:" + userPrincipalDto.getUser().getUserId(), newRefreshToken, appProperties.getAuth().getRefreshTokenExpiry(), TimeUnit.MILLISECONDS);
-
-        CookieUtils.addCookie(response, "refreshToken", newRefreshToken,180);
+        CookieUtils.deleteCookie(request, response, REFRESH_TOKEN);
+        CookieUtils.addCookie(response, REFRESH_TOKEN, newRefreshToken,(int) appProperties.getAuth().getRefreshTokenExpiry() / 1000);
 
         try {
             String userNickname = URLEncoder.encode(userPrincipalDto.getUser().getUserNickname(), "UTF-8");
