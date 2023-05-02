@@ -37,7 +37,7 @@ function PillDetailMain({}: Props): React.ReactElement {
   };
 
   return (
-    <div className="h-[100vh]">
+    <div className="h-[100vh] mt-20">
       <div className="mx-4">
         <PillImg className="mx-auto my-6 w-1/2" />
 
