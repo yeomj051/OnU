@@ -12,16 +12,33 @@ const PhoneAuth: NextPageWithLayout = () => {
   const [userId, setUserId] = React.useState<number>(0);
   const [isMessageSent, setIsMessageSent] =
     React.useState<boolean>(false); //인증 메시지 전송 여부
+  const [time, setTime] = React.useState<number>(180);
+  const [isAuth, setIsAuth] = React.useState<number>(0);
 
   const router = useRouter();
 
-  //타이머 활성화 여부
-  const [timerActice, setTimerActive] = React.useState<boolean>(true);
+  React.useEffect(() => {
+    const authNum: string | null = localStorage.getItem(
+      'isPhoneAuthenticated',
+    );
+
+    if (authNum) {
+      setIsAuth(Number.parseInt(authNum));
+      if (Number.parseInt(authNum) <= 2) setIsMessageSent(true);
+      else if (Number.parseInt(authNum) > 2) {
+        alert('인증횟수를 초과했습니다. 다시 시도해주세요');
+        localStorage.removeItem('isPhoneAuthenticated');
+        router.reload();
+      }
+    }
+  }, []);
 
   //인증시간 만료 로직처리
   const handleTimeOut = () => {
-    if (confirm('인증시간이 초과되었습니다. 다시 시도해주세요'))
+    if (confirm('인증시간이 초과되었습니다. 다시 시도해주세요')) {
+      localStorage.removeItem('isAuth');
       router.reload();
+    }
   };
 
   // userId 가져오기
@@ -69,11 +86,17 @@ const PhoneAuth: NextPageWithLayout = () => {
     //     alert('알 수 없는 오류가 발생했습니다. 다시 시도해주세요.');
     //   });
     alert('인증이 완료되었습니다.');
+    localStorage.removeItem('isPhoneAuthenticated');
     setPhoneNumber('');
     setAuthCode('');
     setIsMessageSent(false);
 
     //다음 페이지로 이동
+  };
+
+  const reVerify = (): void => {
+    localStorage.setItem('isPhoneAuthenticated', String(isAuth + 1));
+    router.reload();
   };
 
   return (
@@ -102,7 +125,13 @@ const PhoneAuth: NextPageWithLayout = () => {
                     e: React.ChangeEvent<HTMLInputElement>,
                   ): void => setAuthCode(e.target.value)}
                 />
-                <Timer seconds={180} onTimeOut={handleTimeOut} />
+                <Timer seconds={time} onTimeOut={handleTimeOut} />
+                <button
+                  className="btn btn-xs bg-[#90B5EA] border-none"
+                  onClick={reVerify}
+                >
+                  재전송
+                </button>
               </div>
               <hr />
             </div>
