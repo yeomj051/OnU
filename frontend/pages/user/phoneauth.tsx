@@ -2,33 +2,150 @@ import React from 'react';
 import { NextPageWithLayout } from '../_app';
 import AppLayout from '@/components/layout/AppLayout';
 import HeaderLayout from '@/components/layout/HeaderLayout';
+import api from '@/apis/config';
+import Timer from '@/components/common/Timer';
+import { useRouter } from 'next/router';
 
 const PhoneAuth: NextPageWithLayout = () => {
+  const [phoneNumber, setPhoneNumber] = React.useState<string>(''); //전화번호
+  const [authCode, setAuthCode] = React.useState<string>(''); //인증번호
+  const [userId, setUserId] = React.useState<number>(0);
+  const [isMessageSent, setIsMessageSent] =
+    React.useState<boolean>(false); //인증 메시지 전송 여부
+
+  const router = useRouter();
+
+  //타이머 활성화 여부
+  const [timerActice, setTimerActive] = React.useState<boolean>(true);
+
+  //인증시간 만료 로직처리
+  const handleTimeOut = () => {
+    if (confirm('인증시간이 초과되었습니다. 다시 시도해주세요'))
+      router.reload();
+  };
+
+  // userId 가져오기
+  //숫자만 입력받도록 정규식 제한
+  const handleInput = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    e.target.value = e.target.value
+      .replace(/[^0-9.]/g, '')
+      .replace(/(\..*)\./g, '$1');
+  };
+
+  const verifyPhoneNumber = (): void => {
+    // api
+    //   .verifyPhoneNumber(userId, phoneNumber)
+    //   .then((res: any): void => {
+    //     if (res.data.message === 'true') {
+    //       alert('인증번호가 전송되었습니다.');
+    //       setIsMessageSent(true);
+    //     } else {
+    //       throw new Error();
+    //     }
+    //   })
+    //   .catch((err: Error): void => {
+    //     alert('알 수 없는 오류가 발생했습니다. 다시 시도해주세요.');
+    //   });
+    alert('인증번호가 전송되었습니다.');
+    setPhoneNumber('');
+    setAuthCode('');
+    setIsMessageSent(true);
+  };
+
+  const verifyAuthNumber = (): void => {
+    // api
+    //   .verifyPhoneNumber()
+    //   .then((res: any): void => {
+    //     if (res.data.message === 'true') {
+    //       alert('인증이 완료되었습니다.');
+    //       setIsMessageSent(false);
+    //     } else {
+    //       throw new Error();
+    //     }
+    //   })
+    //   .catch((err: Error): void => {
+    //     alert('알 수 없는 오류가 발생했습니다. 다시 시도해주세요.');
+    //   });
+    alert('인증이 완료되었습니다.');
+    setPhoneNumber('');
+    setAuthCode('');
+    setIsMessageSent(false);
+
+    //다음 페이지로 이동
+  };
+
   return (
     <div className="grid grid-rows h-[100vh] bg-white pt-20">
       <div className="grid grid-cols-4">
-        <div className="col-start-2 col-end-4 space-y-2">
-          <span className="text-xl font-extrabold">
-            전화번호 인증
-          </span>
-          <br />
-          <span className="text-sm text-gray-400 whitespace-nowrap">
-            본인확인을 위해 전화번호를 입력해주세요
-          </span>
-          <div className="pt-4">
-            <label className="text-base font-bold label-text">
-              휴대전화 번호
-            </label>
-            <input
-              type="text"
-              className="w-full h-8 max-w-xs py-1 transition duration-300 ease-in bg-transparent border-b-2 border-b-gray-300 underline-input focus:outline-none"
-            ></input>
+        {isMessageSent ? (
+          <div className="col-start-2 col-end-4 space-y-2">
+            <span className="text-xl font-extrabold">
+              전화번호 인증
+            </span>
+            <br />
+            <span className="text-sm text-gray-400 whitespace-nowrap">
+              전송된 인증번호를 입력해주세요
+            </span>
+            <div className="pt-4">
+              <label className="text-base font-bold label-text">
+                인증번호
+              </label>
+              <div className="flex items-center space-x-2">
+                <input
+                  type="text"
+                  className="w-full h-8 max-w-xs py-1 transition duration-300 ease-in bg-transparent border-none underline-input focus:outline-none"
+                  onInput={handleInput}
+                  value={authCode}
+                  onChange={(
+                    e: React.ChangeEvent<HTMLInputElement>,
+                  ): void => setAuthCode(e.target.value)}
+                />
+                <Timer seconds={180} onTimeOut={handleTimeOut} />
+              </div>
+              <hr />
+            </div>
+            <button
+              className="bg-[#90B5EA] text-base border-none btn btn-sm btn-wide"
+              onClick={verifyAuthNumber}
+            >
+              인증 완료
+            </button>
           </div>
+        ) : (
+          <div className="col-start-2 col-end-4 space-y-2">
+            <span className="text-xl font-extrabold">
+              전화번호 인증
+            </span>
+            <br />
+            <span className="text-sm text-gray-400 whitespace-nowrap">
+              본인확인을 위해 전화번호를 입력해주세요
+            </span>
+            <div className="pt-4">
+              <label className="text-base font-bold label-text">
+                휴대전화 번호
+              </label>
+              <input
+                type="text"
+                className="w-full h-8 max-w-xs py-1 transition duration-300 ease-in bg-transparent border-none underline-input focus:outline-none"
+                value={phoneNumber}
+                onInput={handleInput}
+                onChange={(
+                  e: React.ChangeEvent<HTMLInputElement>,
+                ): void => setPhoneNumber(e.target.value)}
+              ></input>
+              <hr />
+            </div>
 
-          <button className="bg-[#90B5EA] text-base border-none btn btn-sm btn-wide">
-            인증번호 받기
-          </button>
-        </div>
+            <button
+              className="bg-[#90B5EA] text-base border-none btn btn-sm btn-wide"
+              onClick={verifyPhoneNumber}
+            >
+              인증번호 받기
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
