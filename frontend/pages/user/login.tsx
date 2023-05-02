@@ -73,7 +73,7 @@ const LoginMain: NextPageWithLayout = () => {
         <Main />
       </div> */}
       {/* 폼화면 */}
-      <div className="grid grid-cols-4 my-auto">
+      <div className="grid grid-cols-4">
         <div className="col-start-2 col-end-4">
           <span className="ml-1 text-xl font-extrabold">
             추가정보 입력
