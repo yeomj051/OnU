@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@emotion-icons/bootstrap": "^3.27.0",
+    "@emotion-icons/entypo": "^3.14.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@headlessui/react": "^1.7.14",
