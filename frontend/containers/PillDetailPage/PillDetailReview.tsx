@@ -1,10 +1,45 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { PersonCircle } from '@emotion-icons/bootstrap/PersonCircle';
-import { Star, StarFill } from '@emotion-icons/bootstrap';
+import { StarFill } from '@emotion-icons/bootstrap';
 import PillReviewForm from './PillReviewForm';
+import tw from 'twin.macro';
+import styled from 'styled-components';
 
 type Props = {};
+
+const StarRating = styled.div`
+  color: #aaa9a9;
+  position: relative;
+  unicode-bidi: bidi-override;
+  width: max-content;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 1.3px;
+  -webkit-text-stroke-color: #2b2a29;
+`;
+
+const RatingBase = styled.div`
+  ${tw`pt-5 space-x-1 text-red-100 w-7`}
+
+  star-ratings-base {
+    z-index: 0;
+    padding: 0;
+  }
+`;
+
+const RatingFill = styled.div`
+  ${tw`pt-5 space-x-1 text-red-400 w-7`}
+
+  star-ratings-fill {
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    -webkit-text-fill-color: gold;
+  }
+`;
 
 function PillDetailReview({}: Props) {
   const [wantReview, setWantReview] = useState<boolean>(false);
@@ -12,6 +47,32 @@ function PillDetailReview({}: Props) {
   const openReviewForm = () => {
     setWantReview(true);
   };
+
+  //별점 구현
+  //별점
+  // const [rate, setRate] = useState<number>(80);
+  // const starInde = ['first', 'second', 'third', 'fourth', 'fifth'];
+  // const [ratesStatus, setRateStatus] = useState<number[]>([
+  //   0, 0, 0, 0, 0,
+  // ]);
+
+  // const calcStarRate = () => {
+  //   let tempStarRates = [0, 0, 0, 0, 0];
+  //   let starVerScore = (rate * 140) / 100;
+  //   let idx = 0;
+
+  //   while (starVerScore > 28) {
+  //     tempStarRates[idx] = 28;
+  //     idx += 1;
+  //     starVerScore -= 28;
+  //   }
+  //   tempStarRates[idx] = starVerScore;
+  //   return tempStarRates;
+  // };
+
+  // useEffect(() => {
+  //   setRateStatus(calcStarRate);
+  // }, []);
 
   return (
     <div>
@@ -29,17 +90,38 @@ function PillDetailReview({}: Props) {
 
         <div className="bg-white h-[160px] mt-5 grid grid-cols-2 rounded-lg">
           <div className="col-span-1  grid justify-center">
-            <div className="star-rating">
-              별별별별
-              <div className="star-ratings-fill space-x-2 text-lg"></div>
-            </div>
-            <div className="text-center h-4">4.5 / 5</div>
-            {/* <button
-              className="bg-[#90B5EA] w-40 h-10 rounded-xl text-white"
-              onClick={openReviewForm}
-            >
-              리뷰 작성하기
-            </button> */}
+            {/* <StarRating>
+              <RatingBase className="star-ratings-base">
+                <StarFill
+                  className="inline-flex w-7 h-7 text-red-300"
+                  id="firstStar"
+                >
+                  <clipPath id="firstStarClip">
+                    <rect width="14px" height="28px" />
+                  </clipPath>
+                  <use
+                    clipPath="url(#firstStarClip)"
+                    href="#firstStar"
+                    background-color="#FFE70D"
+                  ></use>
+                </StarFill>
+
+                <StarFill />
+                <StarFill />
+                <StarFill />
+                <StarFill />
+                <StarFill />
+              </RatingBase>
+              <RatingFill className="star-ratings-fill">
+                <StarFill />
+                <StarFill />
+                <StarFill />
+                <StarFill />
+                <StarFill />
+              </RatingFill>
+            </StarRating> */}
+
+            <div className="text-center h-5">4.5 / 5</div>
             <label
               htmlFor="my-modal-6"
               className="btn btn-primary w-40 h-10 rounded-xl text-white"
@@ -54,7 +136,9 @@ function PillDetailReview({}: Props) {
               리뷰 작성하기
             </label>
           </div>
-          <div className="col-span-1 bg-green-200">그래프</div>
+          <div className="col-span-1 bg-green-200">
+            <div></div>
+          </div>
         </div>
       </div>
       {wantReview && <PillReviewForm />}

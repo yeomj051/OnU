@@ -4,6 +4,7 @@ import PillImg from '../../public/jong_pill.svg';
 import { Heart, HeartFill } from '@emotion-icons/bootstrap';
 import PillCompareBadge from './PillCompareBadge';
 import PillCompareImg from './PillCompareImg';
+import PillCompareContent from './PillCompareContent';
 
 type Props = {};
 
@@ -26,7 +27,7 @@ function PillCompareMain({}: Props) {
   };
 
   return (
-    <div className="h-[100vh]">
+    <div className="h-[100%] mt-20">
       <div className="mx-4 grid grid-cols-2">
         <div className="col-span-1 pr-2">
           <PillImg className="mx-auto my-6 w-1/2" />
@@ -112,13 +113,23 @@ function PillCompareMain({}: Props) {
           <div className="">영양 성분</div>
         </div>
         <hr className="mx-4" />
-        <div className="mx-4">
+        <div className="mx-4 mb-6">
           <div className="grid grid-cols-7 py-2 bg-white">
-            <div className="col-span-3">뭐야?</div>
+            <div className="col-span-3 grid justify-end">뭐야?</div>
             <div className="col-span-1">비타민A</div>
-            <div className="col-span-3">뭐야?</div>
+            <div className="col-span-3 grid justify-start">뭐야?</div>
           </div>
         </div>
+        <PillCompareContent
+          subject="섭취 시 주의사항"
+          first="하루 3번 식사 후 드세요"
+          second="카페인과 함께 복용하지 마세요"
+        />
+        <PillCompareBadge
+          subject="원료"
+          first={firstList}
+          second={secondList}
+        />
       </div>
     </div>
   );
