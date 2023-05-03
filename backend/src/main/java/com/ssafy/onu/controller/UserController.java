@@ -1,7 +1,9 @@
 package com.ssafy.onu.controller;
 
+import com.ssafy.onu.dto.PhoneAuthDto;
 import com.ssafy.onu.dto.request.ReqUserInfoDto;
 import com.ssafy.onu.dto.response.ResponseUserInfoDto;
+import com.ssafy.onu.service.SmsService;
 import com.ssafy.onu.service.TokenProviderService;
 import com.ssafy.onu.service.UserService;
 import com.ssafy.onu.util.TokenUtils;
@@ -21,7 +23,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -33,6 +35,8 @@ public class UserController {
     private final RedisTemplate redisTemplate;
     private final UserService userService;
     private final TokenProviderService tokenProviderService;
+
+    private final SmsService smsService;
 
     @ApiOperation(value = "닉네임 중복 검사", notes = "회원의 닉네임의 중복 여부를 검사합나다.", response = Map.class)
     @GetMapping("/{userNickname}")
@@ -123,5 +127,32 @@ public class UserController {
         status = HttpStatus.OK;
 
         return new ResponseEntity<>(resultMap, status);
+    }
+
+
+    @PostMapping("/sms")
+    public ResponseEntity<Map<String, Object>> sendSms(@RequestBody PhoneAuthDto phoneAuthDto) {
+        Map<String, Object> resultMap = new HashMap<>();
+
+        if(smsService.sendMessage(phoneAuthDto) != null) {
+            resultMap.put(MESSAGE, SUCCESS);
+            return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+        } else {
+            resultMap.put(MESSAGE, FAIL);
+            return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @PostMapping("/phone")
+    public ResponseEntity<Map<String, Object>> checkPhoneAuthCode(@RequestBody PhoneAuthDto phoneAuthDto) {
+        Map<String, Object> resultMap = new HashMap<>();
+
+        if(smsService.checkPhoneAuthCode(phoneAuthDto)) {
+            resultMap.put(MESSAGE, SUCCESS);
+            return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+        } else {
+            resultMap.put(MESSAGE, FAIL);
+            return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.BAD_REQUEST);
+        }
     }
 }
