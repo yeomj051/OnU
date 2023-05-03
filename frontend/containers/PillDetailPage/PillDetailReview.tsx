@@ -90,21 +90,21 @@ function PillDetailReview({}: Props) {
 
         <div className="bg-white h-[160px] mt-5 grid grid-cols-2 rounded-lg">
           <div className="col-span-1  grid justify-center">
-            <StarRating>
+            {/* <StarRating>
               <RatingBase className="star-ratings-base">
-                {/* <StarFill
-                className="inline-flex w-7 h-7 text-red-300"
-                id="firstStar"
-              >
-                <clipPath id="firstStarClip">
-                  <rect width="14px" height="28px" />
-                </clipPath>
-                <use
-                  clipPath="url(#firstStarClip)"
-                  href="#firstStar"
-                  background-color="#FFE70D"
-                ></use>
-              </StarFill> */}
+                <StarFill
+                  className="inline-flex w-7 h-7 text-red-300"
+                  id="firstStar"
+                >
+                  <clipPath id="firstStarClip">
+                    <rect width="14px" height="28px" />
+                  </clipPath>
+                  <use
+                    clipPath="url(#firstStarClip)"
+                    href="#firstStar"
+                    background-color="#FFE70D"
+                  ></use>
+                </StarFill>
 
                 <StarFill />
                 <StarFill />
@@ -119,7 +119,7 @@ function PillDetailReview({}: Props) {
                 <StarFill />
                 <StarFill />
               </RatingFill>
-            </StarRating>
+            </StarRating> */}
 
             <div className="text-center h-5">4.5 / 5</div>
             <label
@@ -136,7 +136,9 @@ function PillDetailReview({}: Props) {
               리뷰 작성하기
             </label>
           </div>
-          <div className="col-span-1 bg-green-200">그래프</div>
+          <div className="col-span-1 bg-green-200">
+            <div></div>
+          </div>
         </div>
       </div>
       {wantReview && <PillReviewForm />}

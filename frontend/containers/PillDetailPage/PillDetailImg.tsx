@@ -2,6 +2,7 @@ import React from 'react';
 
 type Props = {
   subject: string;
+  badge: string;
 };
 
 function PillDetailImg(props: Props) {

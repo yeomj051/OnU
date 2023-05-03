@@ -115,12 +115,16 @@ function PillCompareMain({}: Props) {
         <hr className="mx-4" />
         <div className="mx-4 mb-6">
           <div className="grid grid-cols-7 py-2 bg-white">
-            <div className="col-span-3">뭐야?</div>
+            <div className="col-span-3 grid justify-end">뭐야?</div>
             <div className="col-span-1">비타민A</div>
-            <div className="col-span-3">뭐야?</div>
+            <div className="col-span-3 grid justify-start">뭐야?</div>
           </div>
         </div>
-        <PillCompareContent subject="섭취 시 주의사항" />
+        <PillCompareContent
+          subject="섭취 시 주의사항"
+          first="하루 3번 식사 후 드세요"
+          second="카페인과 함께 복용하지 마세요"
+        />
         <PillCompareBadge
           subject="원료"
           first={firstList}

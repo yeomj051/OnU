@@ -2,6 +2,7 @@ import React from 'react';
 
 type Props = {
   subject: string;
+  content: string;
 };
 
 function PillDetailContents(props: Props) {
@@ -11,8 +12,8 @@ function PillDetailContents(props: Props) {
         <div className="col-span-1 grid content-center">
           {props.subject}
         </div>
-        <div className="col-span-5 bg-red-50 grid content-center">
-          카페인과 함께 섭취하지 않는다
+        <div className="col-span-5 grid content-center">
+          {props.content}
         </div>
       </div>
     </div>
