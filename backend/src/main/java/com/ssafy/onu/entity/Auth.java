@@ -41,4 +41,8 @@ public class Auth {
     public void changeProviderId(String userProviderId) {
         this.userProviderId = userProviderId;
     }
+
+    public void changeUserPhoneNumber(String userPhoneNumber) {  //번호인증완료 시 전화번호 저장하기 위한 메소드
+        this.userPhoneNumber = userPhoneNumber;
+    }
 }
