@@ -91,7 +91,7 @@ public class SmsService {
                 int authId = user.get().getUserAuthId().getAuthId();
                 Optional<Auth> auth = authRepository.findById(authId);
                 if(auth.isPresent()) {
-                    //인가테이블 번호저장처리
+                    //인가테이블 번호저장(변경)처리
                     Auth authEntity = auth.get();
                     authEntity.changeUserPhoneNumber(phoneAuthDto.getPhone());
                     authRepository.save(authEntity);
