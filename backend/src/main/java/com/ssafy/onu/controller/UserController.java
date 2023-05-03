@@ -1,12 +1,10 @@
 package com.ssafy.onu.controller;
 
+import com.ssafy.onu.dto.PhoneAuthDto;
 import com.ssafy.onu.service.SmsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,11 +22,11 @@ public class UserController {
         this.smsService = smsService;
     }
 
-    @GetMapping("/phone")
-    public ResponseEntity<Map<String, Object>> sendSms(@RequestParam String phone) {
+    @PostMapping("/sms")
+    public ResponseEntity<Map<String, Object>> sendSms(@RequestBody PhoneAuthDto phoneAuthDto) {
         Map<String, Object> resultMap = new HashMap<>();
 
-        if(smsService.sendMessage(phone) != null) {
+        if(smsService.sendMessage(phoneAuthDto) != null) {
             resultMap.put(MESSAGE, SUCCESS);
             return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
         } else {
