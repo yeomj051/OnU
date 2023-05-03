@@ -10,7 +10,7 @@ public class NutrientDataDto {
     // 인허가번호  LCNS_NO
     private String lcnsNo;
     //품복제조번호    PRDLST_REPORT_NO
-    private int prdlstReportNo;
+    private Long prdlstReportNo;
 
     //업소명   BSSH_NM
     private String bsshNM;
@@ -51,7 +51,7 @@ public class NutrientDataDto {
     public NutrientDataDto(JSONObject object) {
         this.lcnsNo = (String) object.get("LCNS_NO");
         String prdlstReportNoString = (String) object.get("PRDLST_REPORT_NO");
-        this.prdlstReportNo = Integer.parseInt(prdlstReportNoString.substring(2));
+        this.prdlstReportNo = Long.parseLong(prdlstReportNoString.substring(2));
         this.bsshNM = (String) object.get("BSSH_NM");
         this.prolstNm = (String) object.get("PRDLST_NM");
         this.pogDayCnt = (String) object.get("POG_DAYCNT");

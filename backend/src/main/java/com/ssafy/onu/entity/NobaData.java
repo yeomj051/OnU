@@ -15,8 +15,9 @@ import javax.persistence.Table;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "nutrientData")
-public class NutrientData {
+@Table(name = "nobaData")
+public class NobaData {
+
     @Id
     private Long prdlstReportNo;
     // 인허가번호  LCNS_NO
@@ -65,7 +66,7 @@ public class NutrientData {
     private String prdtShapCdNm;
 
     @Builder
-    public NutrientData(NutrientDataDto nutrientDataDto) {
+    public NobaData(NutrientDataDto nutrientDataDto) {
         this.prdlstReportNo = nutrientDataDto.getPrdlstReportNo();
         this.lcnsNo=nutrientDataDto.getLcnsNo();
         this.bsshNM =  nutrientDataDto.getBsshNM();
@@ -81,5 +82,4 @@ public class NutrientData {
         this.rawmtrlNm = nutrientDataDto.getRawmtrlNm();
         this.prdtShapCdNm = nutrientDataDto.getPrdtShapCdNm();
     }
-
 }
