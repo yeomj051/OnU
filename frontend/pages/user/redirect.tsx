@@ -33,8 +33,11 @@ const RedirectPage = () => {
     localStorage.setItem('userData', JSON.stringify(userData));
   }, [id, nickname, age, gender, accessToken, refreshToken]);
 
+  //유저 정보가 없으면 회원가입 페이지로 이동
   useEffect(() => {
-    router.push('/');
+    if (nickname === '' || age === 0 || gender === '') {
+      router.push('/user/signup');
+    } else router.push('/');
   }, []);
 
   return null;

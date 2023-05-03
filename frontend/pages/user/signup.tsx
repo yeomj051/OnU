@@ -14,7 +14,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import { TextField } from '@mui/material';
 
-const AddUserInfo: NextPageWithLayout = () => {
+const SignUp: NextPageWithLayout = () => {
   const [nicknameLabel, setNicknameLabel] = React.useState('');
   const [nickname, setNickname] = React.useState('');
   const [randomNumber, setRandomNumber] = React.useState(
@@ -155,7 +155,7 @@ const AddUserInfo: NextPageWithLayout = () => {
 //레이아웃 적용이 필요하면 getLayout을 호출해주고,
 //AppLayout안에 원하는 레이아웃을 중첩시킬 수도 있습니다
 //추가로 중첩 안시키면 기본 AppLayout이 적용됨
-AddUserInfo.getLayout = function getLayout(page: React.ReactElement) {
+SignUp.getLayout = function getLayout(page: React.ReactElement) {
   return (
     <AppLayout>
       <HeaderLayout>{page}</HeaderLayout>
@@ -163,4 +163,4 @@ AddUserInfo.getLayout = function getLayout(page: React.ReactElement) {
   );
 };
 
-export default AddUserInfo;
+export default SignUp;
