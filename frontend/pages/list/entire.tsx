@@ -1,20 +1,50 @@
 //전체 영양제 리스트
 //'use client'
 
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NextPageWithLayout } from '../_app';
 import AppLayout from '@/components/layout/AppLayout';
 import HeaderLayout from '@/components/layout/HeaderLayout';
 
 import { SearchBar } from '@/components/common/SearchBar';
+import IngredientList from '@/containers/PillListPage/IngredientCategoryList';
+import WorryList from '@/containers/PillListPage/WorryCategoryList';
 
 const EntireList: NextPageWithLayout = () => {
+  //false : 성분별 클릭, true : 고민별 클릭
+  const [tabState, setTabState] = useState<boolean>(false);
+
   return (
-    <div className="grid grid-rows h-[100vh] bg-white pt-20">
+    <div className="grid grid-rows h-[100vh] bg-white pt-20 mx-4">
       <SearchBar />
       <div id="list">
-        <div id="list-header" />
-        {/* 성분별, 고민별 탭, 그에 따른 카테고리들 들어갈곳 */}
+        <div
+          id="list-header"
+          className="flex justify-center w-full tabs"
+        >
+          <a
+            className={
+              tabState
+                ? 'w-1/2 tab tab-bordered'
+                : 'w-1/2 tab tab-bordered tab-active'
+            }
+            onClick={(): void => setTabState(false)}
+          >
+            성분별
+          </a>
+          <a
+            className={
+              tabState
+                ? 'w-1/2 tab tab-bordered tab-active'
+                : 'w-1/2 tab tab-bordered'
+            }
+            onClick={(): void => setTabState(true)}
+          >
+            고민별
+          </a>
+        </div>
+        {tabState ? <WorryList /> : <IngredientList />}
+
         <div id="list-body">
           <div id="ingredient-list"></div>
           <div id="worry-list"></div>
