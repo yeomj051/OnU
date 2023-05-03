@@ -1,48 +1,62 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { PersonCircle } from '@emotion-icons/bootstrap/PersonCircle';
+
 import { StarFill } from '@emotion-icons/bootstrap';
 import PillReviewForm from './PillReviewForm';
 import tw from 'twin.macro';
 import styled from 'styled-components';
+import PillDetailReviewBox from './PillDetailReviewBox';
 
 type Props = {};
 
-const StarRating = styled.div`
-  color: #aaa9a9;
-  position: relative;
-  unicode-bidi: bidi-override;
-  width: max-content;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke-width: 1.3px;
-  -webkit-text-stroke-color: #2b2a29;
-`;
+type PersonalReview = {
+  nickname: string;
+  age: number;
+  gender: string;
+  date: string;
+  rate: number;
+  review: string;
+};
 
-const RatingBase = styled.div`
-  ${tw`pt-5 space-x-1 text-red-100 w-7`}
+// const StarRating = styled.div`
+//   color: #aaa9a9;
+//   position: relative;
+//   unicode-bidi: bidi-override;
+//   width: max-content;
+//   -webkit-text-fill-color: transparent;
+//   -webkit-text-stroke-width: 1.3px;
+//   -webkit-text-stroke-color: #2b2a29;
+// `;
 
-  star-ratings-base {
-    z-index: 0;
-    padding: 0;
-  }
-`;
+// const RatingBase = styled.div`
+//   ${tw`pt-5 space-x-1 text-red-100 w-7`}
 
-const RatingFill = styled.div`
-  ${tw`pt-5 space-x-1 text-red-400 w-7`}
+//   star-ratings-base {
+//     z-index: 0;
+//     padding: 0;
+//   }
+// `;
 
-  star-ratings-fill {
-    position: absolute;
-    z-index: 1;
-    display: flex;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-    -webkit-text-fill-color: gold;
-  }
-`;
+// const RatingFill = styled.div`
+//   ${tw`pt-5 space-x-1 text-red-400 w-7`}
+
+//   star-ratings-fill {
+//     position: absolute;
+//     z-index: 1;
+//     display: flex;
+//     top: 0;
+//     left: 0;
+//     overflow: hidden;
+//     -webkit-text-fill-color: gold;
+//   }
+// `;
 
 function PillDetailReview({}: Props) {
   const [wantReview, setWantReview] = useState<boolean>(false);
+  const [starRate, setStarRate] = useState<number>(80);
+  const [reviewList, setReviewList] = useState<Array<PersonalReview>>(
+    [],
+  );
 
   const openReviewForm = () => {
     setWantReview(true);
@@ -74,6 +88,33 @@ function PillDetailReview({}: Props) {
   //   setRateStatus(calcStarRate);
   // }, []);
 
+  const Items = {
+    data: [
+      {
+        nickname: '약먹자',
+        age: 25,
+        gender: 'm',
+        date: '23.05.01.(월)',
+        rate: 4,
+        review:
+          '체력이 너무 떨어져서 사먹었는데 몸이 좋아졌어요 강추^^가족들이랑 같이 먹어요 색도 노란색이라 귀여움 봄에 먹기 딱입니다.. 봄이지만 외부활동 별로 안하시고 기운없고 피곤한 사람이라면 그냥 사서 먹으세요 얼ㄹㄹㄹ른....',
+      },
+      {
+        nickname: '약싫어싫어',
+        age: 42,
+        gender: 'f',
+        date: '23.05.01.(월)',
+        rate: 3,
+        review:
+          '체력이 너무 떨어져서 사먹었는데 몸이 안 좋아졌어요 비추^^ 너무 비싸고 색도 노란색이라 귀엽기만 함.  봄에 먹기 딱이긴 합니다.. 봄이니까 그냥 운동이나 해서 체력을 키워보세요 구매 ㄴㄴ',
+      },
+    ],
+  };
+
+  useEffect(() => {
+    setReviewList(Items.data);
+  }, []);
+
   return (
     <div>
       <div className="bg-[#FFFCED] h-[250px] px-5 py-30 rounded-lg mt-3">
@@ -90,36 +131,37 @@ function PillDetailReview({}: Props) {
 
         <div className="bg-white h-[160px] mt-5 grid grid-cols-2 rounded-lg">
           <div className="col-span-1  grid justify-center">
-            {/* <StarRating>
-              <RatingBase className="star-ratings-base">
-                <StarFill
-                  className="inline-flex w-7 h-7 text-red-300"
-                  id="firstStar"
-                >
-                  <clipPath id="firstStarClip">
-                    <rect width="14px" height="28px" />
-                  </clipPath>
-                  <use
-                    clipPath="url(#firstStarClip)"
-                    href="#firstStar"
-                    background-color="#FFE70D"
-                  ></use>
-                </StarFill>
+            <div className=" z-40 my-6 border border-blue-950 overflow-hidden">
+              {/* starbox */}
+              <div
+                className="text-[#FFE70D] flex z-10 relative h-8 w-[100px]"
+                // className={` text-[#FFE70D] flex z-10 w-[${starRate}%] absolute`}
+                style={{ width: starRate }}
+              >
+                {/* pointOfStar */}
 
                 <StarFill />
                 <StarFill />
                 <StarFill />
                 <StarFill />
                 <StarFill />
-              </RatingBase>
-              <RatingFill className="star-ratings-fill">
+              </div>
+
+              {/* backgroundStar */}
+              <div className="text-gray-200 flex absolute h-8 w-[100px]">
+                {/* <StarFill className="w-[35px]" />
+                <StarFill className="w-[35px]" />
+                <StarFill className="w-[35px]" />
+                <StarFill className="w-[35px]" />
+                
+                <StarFill className="w-[35px]" /> */}
                 <StarFill />
                 <StarFill />
                 <StarFill />
                 <StarFill />
                 <StarFill />
-              </RatingFill>
-            </StarRating> */}
+              </div>
+            </div>
 
             <div className="text-center h-5">4.5 / 5</div>
             <label
@@ -142,28 +184,9 @@ function PillDetailReview({}: Props) {
         </div>
       </div>
       {wantReview && <PillReviewForm />}
-      <div className="bg-white min-h-[60px] px-5 py-30 rounded-lg mt-4">
-        <div className="grid grid-cols-8 pt-6">
-          <div className="w-10 col-span-1 pt-0.5">
-            <PersonCircle />
-          </div>
-          <div className="col-span-4 pb-1">
-            <div className="text-xl">닉네임</div>
-            <div className="text-sm">20대 남성</div>
-          </div>
-          <div className="col-span-3 grid justify-items-end">
-            <div className="text-sm">23.05.01 (월)</div>
-            <div>별별별별별</div>
-          </div>
-        </div>
-        <hr />
-        <div className="my-3 pb-5 ">
-          체력이 너무 떨어져서 사먹었는데 몸이 좋아졌어요
-          강추^^가족들이랑 같이 먹어요 색도 노란색이라 귀여움 봄에
-          먹기 딱입니다.. 봄이지만 외부활동 별로 안하시고 기운없고
-          피곤한 사람이라면 그냥 사서 먹으세요 얼ㄹㄹㄹ른....
-        </div>
-      </div>
+      {reviewList.map((review, idx) => (
+        <PillDetailReviewBox key={idx} review={review} />
+      ))}
     </div>
   );
 }
