@@ -60,4 +60,9 @@ public class User extends BaseEntity{
         changeNickname("(알 수 없음)");
         this.userAuthId.changeProviderId("del");
     }
+
+    public void updateUserInfo(ReqUserInfoDto reqUserInfoDto){
+        this.userNickname = reqUserInfoDto.getUserNickname();
+        this.userGender = Gender.valueOf(reqUserInfoDto.getUserGender());
+    }
 }
