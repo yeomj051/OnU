@@ -28,6 +28,18 @@ export const SearchBar = () => {
     // });
   };
 
+  const handleKeypress = (e: any) => {
+    e.preventDefault();
+
+    const key: string = e.code;
+    switch (key) {
+      case 'Enter':
+        if (!searchKeyword.trim()) return;
+        router.push(`/search?query=${searchKeyword}`);
+        break;
+    }
+  };
+
   return (
     <div id="searchbar" className="flex items-center justify-center">
       <input
@@ -35,6 +47,7 @@ export const SearchBar = () => {
         placeholder="검색어를 입력하세요"
         className="w-full max-w-xs input input-bordered input-sm"
         onChange={handleInput}
+        onKeyDown={handleKeypress}
       />
 
       <button
