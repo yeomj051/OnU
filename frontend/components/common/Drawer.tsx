@@ -9,7 +9,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { abort } from 'process';
-import { ClickAwayListener } from '@mui/material';
+import { ClickAwayListener, Drawer } from '@mui/material';
 
 const drawerBleeding = 56;
 
@@ -23,7 +23,10 @@ const Root = styled('div')(({ theme }) => ({
 
 const StyledBox = styled(Box)(({ theme }) => ({
   backgroundColor:
-    theme.palette.mode === 'light' ? '#fff' : grey[800],
+    theme.palette.mode === 'light' ? '#FFFFFF' : grey[800],
+  border: 1,
+  borderStyle: 'solid',
+  borderBottom: 'none',
 }));
 
 const Puller = styled(Box)(({ theme }) => ({
@@ -33,41 +36,39 @@ const Puller = styled(Box)(({ theme }) => ({
     theme.palette.mode === 'light' ? grey[300] : grey[900],
   borderRadius: 3,
   position: 'absolute',
-  top: 8,
+  top: 12,
   left: 'calc(50% - 15px)',
 }));
 
 function SwipeableEdgeDrawer(props: any) {
   const [open, setOpen] = React.useState(false);
 
-  const toggleDrawer = (newOpen: any) => () => {
+  const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
   };
 
   return (
-    <ClickAwayListener
-      onClickAway={toggleDrawer(!open)}
-      mouseEvent="onClick"
-    >
-      <Root onClick={toggleDrawer(!open)}>
-        <CssBaseline />
-        <Global
-          styles={{
-            '.MuiDrawer-root > .MuiPaper-root': {
-              height: `calc(50% - ${drawerBleeding}px)`,
-              overflow: 'visible',
-              maxWidth: '512px',
-              left: `calc(50% - 256px)`,
-            },
-          }}
-        />
-        <SwipeableDrawer
+    <Root>
+      {/* <CssBaseline /> */}
+      <Global
+        styles={{
+          '.MuiDrawer-root > .MuiPaper-root': {
+            height: `calc(50% - ${drawerBleeding}px)`,
+            overflow: 'visible',
+            maxWidth: '512px',
+            left: `calc(50% - 256px)`,
+          },
+        }}
+      />
+      <ClickAwayListener
+        onClickAway={toggleDrawer(false)}
+        mouseEvent="onClick"
+      >
+        <Drawer
           anchor="bottom"
           open={open}
           onClose={toggleDrawer(false)}
-          onOpen={toggleDrawer(true)}
-          swipeAreaWidth={drawerBleeding}
-          disableSwipeToOpen={true}
+          onClick={toggleDrawer(!open)}
           ModalProps={{
             keepMounted: true,
           }}
@@ -75,7 +76,7 @@ function SwipeableEdgeDrawer(props: any) {
           <StyledBox
             sx={{
               position: 'absolute',
-              top: -drawerBleeding,
+              top: -drawerBleeding + 20,
               borderTopLeftRadius: 8,
               borderTopRightRadius: 8,
               visibility: 'visible',
@@ -83,25 +84,22 @@ function SwipeableEdgeDrawer(props: any) {
               right: 0,
             }}
           >
-            <Puller />
-
-            <Typography sx={{ p: 2, color: 'text.secondary' }}>
-              51 results
-            </Typography>
+            <div className="p-2 mt-6">
+              <Puller />
+            </div>
           </StyledBox>
           <StyledBox
             sx={{
               px: 2,
-              pb: 2,
               height: '100%',
               overflow: 'auto',
             }}
           >
             <Skeleton variant="rectangular" height="100%" />
           </StyledBox>
-        </SwipeableDrawer>
-      </Root>
-    </ClickAwayListener>
+        </Drawer>
+      </ClickAwayListener>
+    </Root>
   );
 }
 
