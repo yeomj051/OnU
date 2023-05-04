@@ -1,14 +1,8 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 import { grey } from '@mui/material/colors';
 import Box from '@mui/material/Box';
-import Skeleton from '@mui/material/Skeleton';
-import Typography from '@mui/material/Typography';
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import { abort } from 'process';
 import { ClickAwayListener, Drawer } from '@mui/material';
 
 const drawerBleeding = 56;
@@ -23,10 +17,11 @@ const Root = styled('div')(({ theme }) => ({
 
 const StyledBox = styled(Box)(({ theme }) => ({
   backgroundColor:
-    theme.palette.mode === 'light' ? '#FFFFFF' : grey[800],
-  border: 1,
-  borderStyle: 'solid',
-  borderBottom: 'none',
+    theme.palette.mode === 'light' ? '#F5F5F5' : grey[800],
+  // border: 1,
+  // borderStyle: 'solid',
+  // borderBottom: 'none',
+  // borderColor: 'black',
 }));
 
 const Puller = styled(Box)(({ theme }) => ({
@@ -49,7 +44,6 @@ function SwipeableEdgeDrawer(props: any) {
 
   return (
     <Root>
-      {/* <CssBaseline /> */}
       <Global
         styles={{
           '.MuiDrawer-root > .MuiPaper-root': {
@@ -91,11 +85,13 @@ function SwipeableEdgeDrawer(props: any) {
           <StyledBox
             sx={{
               px: 2,
+              pt: 2,
+
               height: '100%',
               overflow: 'auto',
             }}
           >
-            <Skeleton variant="rectangular" height="100%" />
+            {/* <Skeleton sx={{}} variant="rectangular" height="100%" /> */}
           </StyledBox>
         </Drawer>
       </ClickAwayListener>
