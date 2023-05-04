@@ -23,7 +23,7 @@ function PillDetailInfo({}: Props) {
   const [functionality, setFunctionality] = useState<Array<string>>(
     [],
   );
-  const [pillType, setPillType] = useState<string>('');
+  const [pillType, setPillType] = useState<number>(0);
   const [caution, setCaution] = useState<string>('');
   const [how, setHow] = useState<string>('');
   const [material, setMaterial] = useState<Array<string>>([]);
@@ -32,7 +32,7 @@ function PillDetailInfo({}: Props) {
       {
         certification: ['haccp', 'GMP'],
         functionality: ['눈건강', '관절건강'],
-        pillType: '캡슐',
+        pillType: 4,
         nutrients: [
           { name: '비타민A', amount: 40 },
           { name: '비타민B', amount: 20 },
@@ -61,7 +61,7 @@ function PillDetailInfo({}: Props) {
     <div>
       <PillDetailBadge subject="인증정보" badges={certification} />
       <PillDetailBadge subject="기능성" badges={functionality} />
-      <PillDetailImg subject="제형" badge={pillType} />
+      <PillDetailImg subject="제형" pillType={pillType} />
 
       <div className="bg-white min-h-[60px] px-5 py-30 grid grid-cols-6 rounded-lg mt-3">
         <div className="col-span-1 grid content-center">영양성분</div>

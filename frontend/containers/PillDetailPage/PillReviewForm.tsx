@@ -39,49 +39,51 @@ function PillReviewForm({}: Props) {
           >
             ✕
           </label>
-          <div className="px-10 bg-gray-100">
-            <div>
-              <p className="py-2 mt-5">별점을 등록해주세요</p>
-              <div className="rating">
+          <div className="px-10 mt-10 bg-gray-100">
+            <div className="grid grid-cols-2">
+              <div className="py-2 mt-5 pt-5 cols-span-1">
+                별점을 등록해주세요
+              </div>
+              <div className="rating cols-span-1 mt-5 pt-5">
                 <input
                   type="radio"
                   name="rating-2"
-                  className="mask mask-star-2 bg-orange-400"
+                  className="mask mask-star-2 bg-orange-400 w-10"
                   value={1}
                   onClick={handleStarClick}
                 />
                 <input
                   type="radio"
                   name="rating-2"
-                  className="mask mask-star-2 bg-orange-400"
+                  className="mask mask-star-2 bg-orange-400 w-10"
                   value={2}
                   onClick={handleStarClick}
                 />
                 <input
                   type="radio"
                   name="rating-2"
-                  className="mask mask-star-2 bg-orange-400"
+                  className="mask mask-star-2 bg-orange-400 w-10"
                   value={3}
                   onClick={handleStarClick}
                 />
                 <input
                   type="radio"
                   name="rating-2"
-                  className="mask mask-star-2 bg-orange-400"
+                  className="mask mask-star-2 bg-orange-400 w-10"
                   value={4}
                   onClick={handleStarClick}
                 />
                 <input
                   type="radio"
                   name="rating-2"
-                  className="mask mask-star-2 bg-orange-400"
+                  className="mask mask-star-2 bg-orange-400 w-10"
                   value={5}
                   onClick={handleStarClick}
                 />
               </div>
             </div>
-            <div>
-              <p className="mt-10">리뷰 작성</p>
+            <div className="pb-5">
+              <p className="mt-10 pb-2">리뷰 작성</p>
               <textarea
                 className="textarea textarea-primary w-full"
                 placeholder="리뷰를 작성해주세요"

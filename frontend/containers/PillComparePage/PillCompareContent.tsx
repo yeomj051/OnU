@@ -16,10 +16,10 @@ function PillCompareContent(props: Props) {
       <hr className="mx-4" />
       <div className="mx-4">
         <div className="grid grid-cols-2 py-2">
-          <div className="bg-white col-span-1 border rounded-lg h-20 mr-2 p-4">
+          <div className="bg-white col-span-1 border rounded-lg mr-2 p-4 py-6">
             <div>{props.first}</div>
           </div>
-          <div className="bg-white col-span-1 border  rounded-lg h-20 ml-2 p-4">
+          <div className="bg-white col-span-1 border  rounded-lg ml-2 p-4">
             <div>{props.second}</div>
           </div>
         </div>
