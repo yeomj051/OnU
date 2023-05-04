@@ -27,11 +27,12 @@ public class MypageService {
     public ResponseUserInfoDto updateUserInfo(int userId, ReqUserInfoDto reqUserInfoDto) {
         Optional<User> userData = userRepository.findByUserId(userId);
 
-        if (userData.isEmpty()) return null;
-
-        userData.get().updateUserInfo(reqUserInfoDto);
-        userRepository.save(userData.get());
-
-        return getUser(userId);
+        if (userData.isPresent()) {
+            userData.get().updateUserInfo(reqUserInfoDto);
+            userRepository.save(userData.get());
+            return getUser(userId);
+        } else {
+            return null;
+        }
     }
 }
