@@ -19,7 +19,7 @@ const worryDataList: string[] = [
   '스트레스 해소',
 ];
 
-const WorryList = () => {
+const WorryCategoryList = () => {
   return (
     <div id="list" className="flex flex-wrap mt-4 ml-4">
       {worryDataList.map((item, index) => (
@@ -34,4 +34,4 @@ const WorryList = () => {
   );
 };
 
-export default WorryList;
+export default WorryCategoryList;

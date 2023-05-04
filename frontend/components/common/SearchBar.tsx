@@ -1,16 +1,59 @@
-import React from 'react';
-import searchIcon from '@emotion-icons/bootstrap/Search';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 export const SearchBar = () => {
+  const router = useRouter();
+  const [searchKeyword, setSearchKeyword] = useState<string>('');
+
+  //입력결과 state로 저장
+  const handleInput = (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ): void => {
+    e.preventDefault();
+
+    setSearchKeyword(e.target.value);
+  };
+
+  const handleSearch = (): void => {
+    //검색결과 페이지로 이동
+
+    //검색어가 없거나 공백일 경우 검색하지 않음
+    if (!searchKeyword.trim()) return;
+    router.push(`/search?query=${searchKeyword}`);
+
+    //next/router(Next.js 13이전 버전)에서 사용하던 방식
+    // router.push({
+    //   pathname: '/search',
+    //   query: { keyword: searchKeyword },
+    // });
+  };
+
+  const handleKeypress = (e: any) => {
+    e.preventDefault();
+
+    const key: string = e.code;
+    switch (key) {
+      case 'Enter':
+        if (!searchKeyword.trim()) return;
+        router.push(`/search?query=${searchKeyword}`);
+        break;
+    }
+  };
+
   return (
     <div id="searchbar" className="flex items-center justify-center">
       <input
         type="text"
         placeholder="검색어를 입력하세요"
         className="w-full max-w-xs input input-bordered input-sm"
+        onChange={handleInput}
+        onKeyDown={handleKeypress}
       />
 
-      <button className="px-2 btn btn-ghost btn-sm">
+      <button
+        className="px-2 btn btn-ghost btn-sm"
+        onClick={handleSearch}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="w-5 h-5"

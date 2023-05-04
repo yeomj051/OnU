@@ -22,7 +22,17 @@ const itemDataList = [
   },
 ];
 
-const ItemList = () => {
+type ItemProps = {
+  data?: {
+    manufacturer?: string;
+    name?: string;
+    imgUrl?: string;
+  };
+};
+
+const ItemList = (props: ItemProps) => {
+  // const itemDataList = props.data;
+
   return (
     <div id="item-list">
       {itemDataList.map((item, index) => {
@@ -30,6 +40,7 @@ const ItemList = () => {
           <div
             id="item"
             className="flex justify-start w-full my-4 min-h-28"
+            key={index}
           >
             <div
               id="item-img"

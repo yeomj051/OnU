@@ -15,7 +15,7 @@ const ingredientDataList: string[] = [
   '밀크씨슬',
 ];
 
-const IngredientList = () => {
+const IngredientCategoryList = () => {
   return (
     <div id="list" className="flex flex-wrap justify-start mt-4 ml-4">
       {ingredientDataList.map((item, index) => (
@@ -27,4 +27,4 @@ const IngredientList = () => {
   );
 };
 
-export default IngredientList;
+export default IngredientCategoryList;
