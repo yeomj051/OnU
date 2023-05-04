@@ -3,9 +3,9 @@
 
 import React, { useState } from 'react';
 import { SearchBar } from '@/components/common/SearchBar';
-import IngredientList from '@/containers/PillListPage/IngredientCategoryList';
-import WorryList from '@/containers/PillListPage/WorryCategoryList';
 import ItemList from '@/containers/PillListPage/ItemList';
+import WorryCategoryList from '@/containers/PillListPage/WorryCategoryList';
+import IngredientCategoryList from '@/containers/PillListPage/IngredientCategoryList';
 
 const EntireList = () => {
   //false : 성분별 클릭, true : 고민별 클릭
@@ -41,12 +41,22 @@ const EntireList = () => {
             고민별
           </a>
         </div>
-        {tabState ? <WorryList /> : <IngredientList />}
+        {tabState ? (
+          <WorryCategoryList />
+        ) : (
+          <IngredientCategoryList />
+        )}
 
         <div id="list-body">
-          <ItemList />
-          <div id="ingredient-list"></div>
-          <div id="worry-list"></div>
+          {tabState ? (
+            <div id="ingredient-list">
+              <ItemList />
+            </div>
+          ) : (
+            <div id="worry-list">
+              <ItemList />
+            </div>
+          )}
         </div>
       </div>
       <div id="drawer">
