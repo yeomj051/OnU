@@ -6,6 +6,7 @@ import { SearchBar } from '@/components/common/SearchBar';
 import ItemList from '@/containers/PillListPage/ItemList';
 import WorryCategoryList from '@/containers/PillListPage/WorryCategoryList';
 import IngredientCategoryList from '@/containers/PillListPage/IngredientCategoryList';
+import SwipeableEdgeDrawer from '@/components/common/Drawer';
 
 const EntireList = () => {
   //false : 성분별 클릭, true : 고민별 클릭
@@ -59,6 +60,7 @@ const EntireList = () => {
           )}
         </div>
       </div>
+      <SwipeableEdgeDrawer />
       <div id="drawer">
         <div id="compare-box"></div>
       </div>
