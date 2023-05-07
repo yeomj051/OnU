@@ -4,6 +4,8 @@ import { styled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import Box from '@mui/material/Box';
 import { ClickAwayListener, Drawer } from '@mui/material';
+import { itemStore } from '@/store/itemStore';
+import Image from 'next/image';
 
 const drawerBleeding = 56;
 
@@ -35,11 +37,33 @@ const Puller = styled(Box)(({ theme }) => ({
   left: 'calc(50% - 15px)',
 }));
 
-function SwipeableEdgeDrawer(props: any) {
+type Item = {
+  id: number; //itemId
+  name: string; //제목
+  manufacturer?: string; //제조사
+  imgUrl: string; //썸네일 이미지
+  itemUrl: string; //상세정보 링크
+};
+
+function CompareDrawer() {
   const [open, setOpen] = React.useState(false);
+  const [itemList, setItemList] = React.useState<Item[]>([]);
+  itemStore.subscribe((state) => state);
+  const { items, removeItem } = itemStore();
+
+  React.useEffect(() => {
+    setItemList(items);
+    console.log(itemList);
+  }, [itemList, items]);
 
   const toggleDrawer = (newOpen: boolean) => () => {
-    setOpen(newOpen);
+    if (itemList.length !== 2 && !newOpen) setOpen(false);
+    else setOpen(true);
+  };
+
+  const deleteItem = (id: number) => {
+    removeItem(id);
+    setItemList(items.filter((item) => item.id === id));
   };
 
   return (
@@ -91,7 +115,67 @@ function SwipeableEdgeDrawer(props: any) {
               overflow: 'auto',
             }}
           >
-            {/* <Skeleton sx={{}} variant="rectangular" height="100%" /> */}
+            {/* 비교함 내부 */}
+
+            <div className="flex flex-col items-center space-y-4">
+              <div className="flex flex-row w-full">
+                <div className="indicator">
+                  {itemList[0] ? (
+                    <div className="indicator-item badge badge-primary right-3">
+                      <button
+                        onClick={() => deleteItem(itemList[0].id)}
+                      >
+                        삭제
+                      </button>
+                    </div>
+                  ) : null}
+                  <div className="grid flex-grow w-56 h-56 card bg-base-300 rounded-box place-items-center">
+                    {itemList[0] ? (
+                      <div className="flex flex-col items-center">
+                        <Image
+                          src={itemList[0]?.imgUrl}
+                          alt="item-img"
+                          width={140}
+                          height={100}
+                          style={{ objectFit: 'cover' }}
+                        />
+                        <span>{itemList[0]?.name}</span>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+
+                <div className="divider divider-horizontal" />
+                <div className="indicator">
+                  {itemList[1] ? (
+                    <div className="indicator-item badge badge-primary right-3">
+                      <button
+                        onClick={() => deleteItem(itemList[1].id)}
+                      >
+                        삭제
+                      </button>
+                    </div>
+                  ) : null}
+                  <div className="grid flex-grow w-56 h-56 card bg-base-300 rounded-box place-items-center">
+                    {itemList[1] ? (
+                      <div className="flex flex-col items-center">
+                        <Image
+                          src={itemList[1]?.imgUrl}
+                          alt="item-img"
+                          width={140}
+                          height={100}
+                          style={{ objectFit: 'cover' }}
+                        />
+                        <span>{itemList[1]?.name}</span>
+                      </div>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+              <button className="btn btn-wide btn-sm">
+                비교하기
+              </button>
+            </div>
           </StyledBox>
         </Drawer>
       </ClickAwayListener>
@@ -99,4 +183,4 @@ function SwipeableEdgeDrawer(props: any) {
   );
 }
 
-export default SwipeableEdgeDrawer;
+export default CompareDrawer;
