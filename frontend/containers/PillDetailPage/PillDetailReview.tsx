@@ -57,6 +57,13 @@ function PillDetailReview({}: Props) {
   const [reviewList, setReviewList] = useState<Array<PersonalReview>>(
     [],
   );
+  const [statistic, setStatistic] = useState<Array<number>>([
+    0, 0, 0, 0, 0,
+  ]);
+  const [average, setAverage] = useState<number>(0);
+  const [graphValue, setGraphValue] = useState<Array<number>>([
+    0, 0, 0, 0, 0,
+  ]);
 
   const openReviewForm = () => {
     setWantReview(true);
@@ -108,6 +115,15 @@ function PillDetailReview({}: Props) {
         review:
           '체력이 너무 떨어져서 사먹었는데 몸이 안 좋아졌어요 비추^^ 너무 비싸고 색도 노란색이라 귀엽기만 함.  봄에 먹기 딱이긴 합니다.. 봄이니까 그냥 운동이나 해서 체력을 키워보세요 구매 ㄴㄴ',
       },
+      {
+        nickname: '약최고',
+        age: 13,
+        gender: 'f',
+        date: '23.05.01.(월)',
+        rate: 3,
+        review:
+          '체력이 너무 떨어져서 사먹었는데 몸이 안 좋아졌어요 비추^^ 너무 비싸고 색도 노란색이라 귀엽기만 함.  봄에 먹기 딱이긴 합니다.. 봄이니까 그냥 운동이나 해서 체력을 키워보세요 구매 ㄴㄴ',
+      },
     ],
   };
 
@@ -115,9 +131,50 @@ function PillDetailReview({}: Props) {
     setReviewList(Items.data);
   }, []);
 
+  useEffect(() => {
+    makeStatistics();
+  }, [reviewList]);
+
+  useEffect(() => {
+    averageScore();
+  }, [statistic]);
+
+  //별점마다 개수 세는 함수
+  const makeStatistics = () => {
+    let scoreArray = [0, 0, 0, 0, 0];
+    let scoreArrayForGraph = [0, 0, 0, 0, 0];
+    reviewList.map((review, idx) => {
+      scoreArray[review.rate - 1]++;
+    });
+    setStatistic(scoreArray);
+
+    for (let i = 0; i < 5; i++) {
+      let tmp = (scoreArray[i] / reviewList.length) * 100;
+      if (0 < tmp && tmp < 10) {
+        scoreArrayForGraph[i] = 5;
+      } else if (tmp == 0) {
+        scoreArrayForGraph[i] = 0;
+      } else if (tmp == 100) {
+        scoreArrayForGraph[i] = 100;
+      } else {
+        scoreArrayForGraph[i] = Math.round(tmp / 10) * 10;
+      }
+    }
+    setGraphValue(scoreArrayForGraph);
+  };
+
+  //별점 평균내는 함수
+  const averageScore = () => {
+    let sum = 0;
+    for (let i = 0; i < 5; i++) {
+      sum += statistic[i] * (i + 1);
+    }
+    setAverage(Number((sum / reviewList.length).toFixed(1)));
+  };
+
   return (
     <div>
-      <div className="bg-[#FFFCED] h-[250px] px-5 py-30 rounded-lg mt-3">
+      <div className="bg-[#FFFCED] h-[250px] px-5 rounded-lg mt-3">
         <div className="pt-6">
           <div className="grid grid-cols-2">
             <div className="col-span-1 grid justify-center">
@@ -129,7 +186,7 @@ function PillDetailReview({}: Props) {
           </div>
         </div>
 
-        <div className="bg-white h-[160px] mt-5 grid grid-cols-2 rounded-lg">
+        <div className="bg-white pb-2 mt-3 grid grid-cols-2 rounded-lg">
           <div className="col-span-1  grid justify-center">
             <div className=" z-40 my-6 border border-blue-950 overflow-hidden">
               {/* starbox */}
@@ -163,10 +220,10 @@ function PillDetailReview({}: Props) {
               </div>
             </div>
 
-            <div className="text-center h-5">4.5 / 5</div>
+            <div className="text-center h-5">{average} / 5</div>
             <label
               htmlFor="my-modal-6"
-              className="btn btn-primary w-40 h-10 rounded-xl text-white"
+              className="btn btn-primary w-40 rounded-xl text-white"
               style={{
                 backgroundColor: '#90B5EA',
                 width: '170px',
@@ -178,8 +235,21 @@ function PillDetailReview({}: Props) {
               리뷰 작성하기
             </label>
           </div>
-          <div className="col-span-1 bg-green-200">
-            <div></div>
+          <div className="col-span-1">
+            <div className="w-5/6 h-36 mx-auto my-2">
+              <div className="grid grid-cols-5 text-center pt-4">
+                {graphValue.map((value, idx) => (
+                  <div className="col-span-1 rounded-lg">
+                    <div className="bg-gray-100 w-1/3 h-28 mx-auto flex items-stretch rounded-lg">
+                      <div
+                        className={`bg-blue-100 w-full h-[${value}%] self-end rounded-lg`}
+                      ></div>
+                    </div>
+                    <div>{5 - idx}점</div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </div>
