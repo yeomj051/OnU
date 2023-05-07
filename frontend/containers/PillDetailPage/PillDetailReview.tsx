@@ -137,19 +137,34 @@ function PillDetailReview({}: Props) {
 
   useEffect(() => {
     averageScore();
+    makeGraphRate();
   }, [statistic]);
 
   //별점마다 개수 세는 함수
   const makeStatistics = () => {
     let scoreArray = [0, 0, 0, 0, 0];
-    let scoreArrayForGraph = [0, 0, 0, 0, 0];
+
     reviewList.map((review, idx) => {
       scoreArray[review.rate - 1]++;
     });
     setStatistic(scoreArray);
+  };
+
+  //별점 평균내는 함수
+  const averageScore = () => {
+    let sum = 0;
+    for (let i = 0; i < 5; i++) {
+      sum += statistic[i] * (i + 1);
+    }
+    setAverage(Number((sum / reviewList.length).toFixed(1)));
+  };
+
+  //리뷰 그래프 비율계산하는 함수
+  const makeGraphRate = () => {
+    let scoreArrayForGraph = [0, 0, 0, 0, 0];
 
     for (let i = 0; i < 5; i++) {
-      let tmp = (scoreArray[i] / reviewList.length) * 100;
+      let tmp = (statistic[i] / reviewList.length) * 100;
       if (0 < tmp && tmp < 10) {
         scoreArrayForGraph[i] = 5;
       } else if (tmp == 0) {
@@ -160,16 +175,8 @@ function PillDetailReview({}: Props) {
         scoreArrayForGraph[i] = Math.round(tmp / 10) * 10;
       }
     }
+    console.log(scoreArrayForGraph);
     setGraphValue(scoreArrayForGraph);
-  };
-
-  //별점 평균내는 함수
-  const averageScore = () => {
-    let sum = 0;
-    for (let i = 0; i < 5; i++) {
-      sum += statistic[i] * (i + 1);
-    }
-    setAverage(Number((sum / reviewList.length).toFixed(1)));
   };
 
   return (
@@ -240,12 +247,17 @@ function PillDetailReview({}: Props) {
               <div className="grid grid-cols-5 text-center pt-4">
                 {graphValue.map((value, idx) => (
                   <div className="col-span-1 rounded-lg">
-                    <div className="bg-gray-100 w-1/3 h-28 mx-auto flex items-stretch rounded-lg">
+                    <div className="text-gray-400 text-xs">
+                      {statistic[idx]}
+                    </div>
+                    <div className="bg-gray-100 w-1/3 h-24 mx-auto flex items-stretch rounded-lg">
                       <div
                         className={`bg-blue-100 w-full h-[${value}%] self-end rounded-lg`}
                       ></div>
                     </div>
-                    <div>{5 - idx}점</div>
+                    <div className="text-gray-600 tx-sm">
+                      {5 - idx}점
+                    </div>
                   </div>
                 ))}
               </div>
