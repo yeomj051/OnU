@@ -42,17 +42,14 @@ const ItemList = (props: { itemList: Array<Item> }) => {
 
   return (
     <div id="item-list">
-      {props.itemList.map((item, index) => {
+      {props.itemList?.map((item, index) => {
         return (
           <div
             id="item"
             className="flex justify-start w-full my-4 min-h-28"
             key={index}
           >
-            <div
-              id="item-img"
-              // className="mask mask-squircle"
-            >
+            <div id="item-img" className="mask mask-square">
               <Image
                 src={item.imgUrl}
                 alt="item-img"

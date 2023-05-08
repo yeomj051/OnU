@@ -9,7 +9,8 @@ const SearchResultPage: NextPageWithLayout = () => {
   const searchParams = useSearchParams();
 
   const query: string | null = searchParams.get('query');
-  return <div>{query ? <SearchResult keyword={query} /> : null}</div>;
+  // return <div>{query ? <SearchResult keyword={query} /> : null}</div>;
+  return null;
 };
 
 SearchResultPage.getLayout = function getLayout(
