@@ -51,9 +51,9 @@ function CompareDrawer() {
   const [open, setOpen] = React.useState(false);
   const [itemList, setItemList] = React.useState<Item[]>([]);
   const [alert, setAlert] = React.useState(false);
-  itemStore.subscribe((state) => state);
   const { items, removeItem } = itemStore();
   const router = useRouter();
+  itemStore.subscribe((state) => state);
 
   React.useEffect(() => {
     setItemList(items);
@@ -133,17 +133,17 @@ function CompareDrawer() {
             <div className="flex flex-row w-full">
               <div className="indicator">
                 {itemList[0] ? (
-                  <div className="indicator-item badge badge-primary right-3">
+                  <div className="bg-gray-300 border-none indicator-item badge top-2 right-4">
                     <button
                       onClick={() => deleteItem(itemList[0].id)}
                     >
-                      삭제
+                      X
                     </button>
                   </div>
                 ) : null}
-                <div className="grid flex-grow w-56 h-56 card bg-base-300 rounded-box place-items-center">
-                  {itemList[0] ? (
-                    <div className="flex flex-col items-center">
+                {itemList[0] ? (
+                  <div className="grid flex-grow w-56 h-56 card rounded-box place-items-center">
+                    <div className="flex flex-col items-center flex-grow">
                       <Image
                         src={itemList[0]?.imgUrl}
                         alt="item-img"
@@ -151,26 +151,40 @@ function CompareDrawer() {
                         height={100}
                         style={{ objectFit: 'cover' }}
                       />
-                      <span>{itemList[0]?.name}</span>
+
+                      <span
+                        id="manufacturer"
+                        className="mt-0.5 text-xs font-bold text-[#909090]"
+                      >
+                        {itemList[0]?.manufacturer}
+                      </span>
+                      <span
+                        id="name"
+                        className="text-sm font-extrabold text-[#3A3A3A]"
+                      >
+                        {itemList[0]?.name}
+                      </span>
                     </div>
-                  ) : null}
-                </div>
+                  </div>
+                ) : (
+                  <div className="grid flex-grow w-56 h-56 card bg-base-300 rounded-box place-items-center" />
+                )}
               </div>
 
               <div className="divider divider-horizontal" />
               <div className="indicator">
                 {itemList[1] ? (
-                  <div className="indicator-item badge badge-primary right-3">
+                  <div className="bg-gray-300 border-none indicator-item badge top-2 right-4">
                     <button
                       onClick={() => deleteItem(itemList[1].id)}
                     >
-                      삭제
+                      X
                     </button>
                   </div>
                 ) : null}
-                <div className="grid flex-grow w-56 h-56 card bg-base-300 rounded-box place-items-center">
-                  {itemList[1] ? (
-                    <div className="flex flex-col items-center">
+                {itemList[1] ? (
+                  <div className="grid flex-grow w-56 h-56 card rounded-box place-items-center">
+                    <div className="flex flex-col items-center flex-grow">
                       <Image
                         src={itemList[1]?.imgUrl}
                         alt="item-img"
@@ -178,10 +192,24 @@ function CompareDrawer() {
                         height={100}
                         style={{ objectFit: 'cover' }}
                       />
-                      <span>{itemList[1]?.name}</span>
+
+                      <span
+                        id="manufacturer"
+                        className="mt-0.5 text-xs font-bold text-[#909090]"
+                      >
+                        {itemList[1]?.manufacturer}
+                      </span>
+                      <span
+                        id="name"
+                        className="text-sm font-extrabold text-[#3A3A3A]"
+                      >
+                        {itemList[1]?.name}
+                      </span>
                     </div>
-                  ) : null}
-                </div>
+                  </div>
+                ) : (
+                  <div className="grid flex-grow w-56 h-56 card bg-base-300 rounded-box place-items-center" />
+                )}
               </div>
             </div>
             <button

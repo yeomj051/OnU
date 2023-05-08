@@ -33,10 +33,10 @@ type Item = {
 
 const ItemList = (props: { itemList: Array<Item> }) => {
   // const itemDataList = props.data;
-  const { setItems } = itemStore();
+  const { items, setItems } = itemStore();
 
   const compareItems = (item: Item) => {
-    setItems(item);
+    if (items.length < 2) setItems(item);
     // console.log(item);
   };
 
