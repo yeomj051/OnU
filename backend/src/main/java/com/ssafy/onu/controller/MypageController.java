@@ -1,9 +1,10 @@
 package com.ssafy.onu.controller;
 
 import com.ssafy.onu.dto.*;
+import com.ssafy.onu.dto.request.ReqCombinationDto;
+import com.ssafy.onu.dto.request.ReqReviewCreateFormDto;
 import com.ssafy.onu.dto.request.ReqUserInfoDto;
-import com.ssafy.onu.dto.response.ResponseTakingDateDto;
-import com.ssafy.onu.dto.response.ResponseUserInfoDto;
+import com.ssafy.onu.dto.response.*;
 import com.ssafy.onu.entity.*;
 import com.ssafy.onu.service.MypageService;
 import com.ssafy.onu.util.TokenUtils;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +23,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/mypage")
+@RequestMapping("/api/mypage")
 @RequiredArgsConstructor
 public class MypageController {
 
@@ -81,7 +83,7 @@ public class MypageController {
     }
 
     @ApiOperation(value = "복용 날짜 조회", notes = "현재 로그인한 사용자의 영양제 복용 날짜를 조회한다.", response = Map.class)
-    @GetMapping("/{userId}/calender")
+    @GetMapping("/{userId}/calendar")
     public ResponseEntity<Map<String, Object>> getCalenderDate(@PathVariable @ApiParam(value = "회원 아이디", required = true, example = "0") int userId, Principal principal,
                                                                @ApiParam(value = "연도 + 월 정보", required = true, example = "0") @RequestParam String date) {
         Map<String, Object> resultMap = new HashMap<>();
@@ -93,7 +95,7 @@ public class MypageController {
             return new ResponseEntity<>(resultMap, status);
         }
 
-        List<String> responseTakingDateDto = mypageService.getCheckedDate(userId, date);
+        ResponseTakingDateDto responseTakingDateDto = mypageService.getCheckedDate(userId, date);
 
         if (responseTakingDateDto != null) {
             resultMap.put(MESSAGE, SUCCESS);
@@ -103,5 +105,161 @@ public class MypageController {
             resultMap.put(MESSAGE, FAIL);
             return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @ApiOperation(value = "복용 체크", notes = "캘린더에 복용했음을 체크한다.", response = Map.class)
+    @PostMapping("/{userId}/calendar")
+    public ResponseEntity<Map<String,Object>> checkDate(@ApiParam(value = "회원정보(아이디)", required = true, example = "1") @PathVariable int userId,
+                                                        Principal principal){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+
+        int continuousCount = mypageService.checkDate(userId);
+
+        if(continuousCount != -1){
+            resultMap.put(MESSAGE, SUCCESS);
+            resultMap.put("continuousCount", continuousCount);
+            status = HttpStatus.OK;
+        } else {
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+        }
+
+        return new ResponseEntity<>(resultMap, status);
+    }
+
+    @ApiOperation(value = "내 리뷰 수정", notes = "사용자는 자신이 작성한 리뷰를 수정한다.", response = Map.class)
+    @PatchMapping("/{userId}/review/{reviewId}")
+    public ResponseEntity<Map<String, Object>> editReview(@PathVariable @ApiParam(value = "회원 아이디", required = true, example = "0") int userId, Principal principal,
+                                                          @PathVariable @ApiParam(value = "리뷰 아이디", required = true, example = "0") int reviewId,
+                                                          @RequestBody ReqReviewCreateFormDto reqReviewCreateFormDto) {
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        // PathVariable로 받은 userId와 토큰에 있는 userId 비교
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+
+        ResponseReviewDto responseReviewDto = mypageService.editReview(reqReviewCreateFormDto, reviewId);
+
+        if (responseReviewDto != null) {
+            resultMap.put(MESSAGE, SUCCESS);
+            resultMap.put("editReview", responseReviewDto);
+            return new ResponseEntity<>(resultMap, HttpStatus.OK);
+        } else {
+            resultMap.put(MESSAGE, FAIL);
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @ApiOperation(value = "제품 리뷰 삭제", notes = "사용자는 자신이 등록한 리뷰를 삭제한다.", response = Map.class)
+    @DeleteMapping("/{userId}/review/{reviewId}")
+    public ResponseEntity<Map<String, Object>> deleteReview(@PathVariable @ApiParam(value = "회원 아이디", required = true, example = "0") int userId, Principal principal,
+                                                            @PathVariable @ApiParam(value = "리뷰 아이디", required = true, example = "0") int reviewId) {
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        // PathVariable로 받은 userId와 토큰에 있는 userId 비교
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+
+        if (mypageService.deleteReview(reviewId)) {
+            resultMap.put(MESSAGE, SUCCESS);
+            return new ResponseEntity<>(resultMap, HttpStatus.OK);
+        } else {
+            resultMap.put(MESSAGE, FAIL);
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @ApiOperation(value = "영양제 조합 등록", notes = "영양제 조합을 등록한다.", response = Map.class)
+    @PostMapping("/{userId}/combination")
+    public ResponseEntity<Map<String,Object>> createCombination(@ApiParam(value = "회원정보(아이디)", required = true, example = "1") @PathVariable int userId,
+                                                                @ApiParam(value = "등록할 영양제 리스트(영양제 리스트)", required = true, example  = "홍동길") @Valid @RequestBody ReqCombinationDto reqCombinationDto, Principal principal){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+        if(mypageService.createCombination(userId, reqCombinationDto)){
+            resultMap.put(MESSAGE, SUCCESS);
+            status = HttpStatus.OK;
+        } else {
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(resultMap, status);
+    }
+
+    @ApiOperation(value = "영양제 조합 삭제", notes = "영양제 조합을 삭제한다.", response = Map.class)
+    @DeleteMapping("/{userId}/combination")
+    public ResponseEntity<Map<String,Object>> deleteCombination(@ApiParam(value = "회원정보(아이디)", required = true, example = "1") @PathVariable int userId,
+                                                                @ApiParam(value = "삭제할 영양제 조합", required = true, example  = "1") @Valid @RequestParam int combinationId, Principal principal){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+
+        if(mypageService.deleteCombination(userId, combinationId)){
+            resultMap.put(MESSAGE, SUCCESS);
+            status = HttpStatus.OK;
+        } else {
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(resultMap, status);
+    }
+
+    @ApiOperation(value = "영양제 조합 목록 조회", notes = "영양제 조합 목록을 조회한다.", response = Map.class)
+    @GetMapping("/{userId}/combination")
+    public ResponseEntity<Map<String,Object>> getCombination(@ApiParam(value = "회원정보(아이디)", required = true, example = "1") @PathVariable int userId,
+                                                             Principal principal){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+        List<ResponseCombinationInfoDto> combinationList = mypageService.getCombination(userId);
+
+        resultMap.put(MESSAGE, SUCCESS);
+        resultMap.put("combinationList", combinationList);
+        status = HttpStatus.OK;
+
+        return new ResponseEntity<>(resultMap, status);
+    }
+    @ApiOperation(value = "영양제 조합에 따른 성분 목록 조회", notes = "영양제 조합에 따른 성분 목록을 조회한다.", response = Map.class)
+    @GetMapping("/{userId}/combination/ingredient")
+    public ResponseEntity<Map<String,Object>> getCombinationIngredient(@ApiParam(value = "회원정보(아이디)", required = true, example = "1") @PathVariable int userId,
+                                                                       @RequestBody ReqCombinationDto reqCombinationDto, Principal principal){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+        List<ResponseNutrientIngredientDto> nutrientIngredientList = mypageService.getCombinationIngredient(reqCombinationDto);
+
+        resultMap.put(MESSAGE, SUCCESS);
+        resultMap.put("nutrientIngredientList", nutrientIngredientList);
+        status = HttpStatus.OK;
+
+        return new ResponseEntity<>(resultMap, status);
     }
 }

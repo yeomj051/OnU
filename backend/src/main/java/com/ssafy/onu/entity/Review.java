@@ -1,5 +1,6 @@
 package com.ssafy.onu.entity;
 
+import com.ssafy.onu.dto.request.ReqReviewCreateFormDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -35,5 +36,10 @@ public class Review extends BaseEntity {
 
     public Review() {
 
+    }
+
+    public void editReview(ReqReviewCreateFormDto reqReviewCreateFormDto){
+        this.reviewContent = reqReviewCreateFormDto.getReviewContent();
+        this.reviewScore = reqReviewCreateFormDto.getReviewScore();
     }
 }
