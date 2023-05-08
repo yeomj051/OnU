@@ -6,6 +6,8 @@ import Box from '@mui/material/Box';
 import { ClickAwayListener, Drawer } from '@mui/material';
 import { itemStore } from '@/store/itemStore';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { Transition } from '@headlessui/react';
 
 const drawerBleeding = 56;
 
@@ -48,8 +50,10 @@ type Item = {
 function CompareDrawer() {
   const [open, setOpen] = React.useState(false);
   const [itemList, setItemList] = React.useState<Item[]>([]);
+  const [alert, setAlert] = React.useState(false);
   itemStore.subscribe((state) => state);
   const { items, removeItem } = itemStore();
+  const router = useRouter();
 
   React.useEffect(() => {
     setItemList(items);
@@ -58,12 +62,24 @@ function CompareDrawer() {
 
   const toggleDrawer = (newOpen: boolean) => () => {
     if (itemList.length !== 2 && !newOpen) setOpen(false);
-    else setOpen(true);
+    else if (itemList.length !== 2 && newOpen) setOpen(true);
+    else setOpen(!open);
   };
 
   const deleteItem = (id: number) => {
     removeItem(id);
     setItemList(items.filter((item) => item.id === id));
+  };
+
+  const comparePills = () => {
+    if (itemList.length >= 2)
+      router.push('/pillcompare/pill-compare');
+    else {
+      setAlert(true);
+      setTimeout(() => {
+        setAlert(false);
+      }, 3000);
+    }
   };
 
   return (
@@ -78,107 +94,123 @@ function CompareDrawer() {
           },
         }}
       />
-      <ClickAwayListener
-        onClickAway={toggleDrawer(false)}
-        mouseEvent="onClick"
+      <Drawer
+        anchor="bottom"
+        open={open}
+        onClose={toggleDrawer(false)}
+        onClick={toggleDrawer(!open)}
+        ModalProps={{
+          keepMounted: true,
+        }}
       >
-        <Drawer
-          anchor="bottom"
-          open={open}
-          onClose={toggleDrawer(false)}
-          onClick={toggleDrawer(!open)}
-          ModalProps={{
-            keepMounted: true,
+        <StyledBox
+          sx={{
+            position: 'absolute',
+            top: -drawerBleeding + 20,
+            borderTopLeftRadius: 8,
+            borderTopRightRadius: 8,
+            visibility: 'visible',
+            left: 0,
+            right: 0,
           }}
         >
-          <StyledBox
-            sx={{
-              position: 'absolute',
-              top: -drawerBleeding + 20,
-              borderTopLeftRadius: 8,
-              borderTopRightRadius: 8,
-              visibility: 'visible',
-              left: 0,
-              right: 0,
-            }}
-          >
-            <div className="p-2 mt-6">
-              <Puller />
-            </div>
-          </StyledBox>
-          <StyledBox
-            sx={{
-              px: 2,
-              pt: 2,
+          <div className="p-2 mt-6">
+            <Puller />
+          </div>
+        </StyledBox>
+        <StyledBox
+          sx={{
+            px: 2,
+            pt: 2,
 
-              height: '100%',
-              overflow: 'auto',
-            }}
-          >
-            {/* 비교함 내부 */}
+            height: '100%',
+            overflow: 'auto',
+          }}
+        >
+          {/* 비교함 내부 */}
 
-            <div className="flex flex-col items-center space-y-4">
-              <div className="flex flex-row w-full">
-                <div className="indicator">
+          <div className="flex flex-col items-center space-y-4">
+            <div className="flex flex-row w-full">
+              <div className="indicator">
+                {itemList[0] ? (
+                  <div className="indicator-item badge badge-primary right-3">
+                    <button
+                      onClick={() => deleteItem(itemList[0].id)}
+                    >
+                      삭제
+                    </button>
+                  </div>
+                ) : null}
+                <div className="grid flex-grow w-56 h-56 card bg-base-300 rounded-box place-items-center">
                   {itemList[0] ? (
-                    <div className="indicator-item badge badge-primary right-3">
-                      <button
-                        onClick={() => deleteItem(itemList[0].id)}
-                      >
-                        삭제
-                      </button>
+                    <div className="flex flex-col items-center">
+                      <Image
+                        src={itemList[0]?.imgUrl}
+                        alt="item-img"
+                        width={140}
+                        height={100}
+                        style={{ objectFit: 'cover' }}
+                      />
+                      <span>{itemList[0]?.name}</span>
                     </div>
                   ) : null}
-                  <div className="grid flex-grow w-56 h-56 card bg-base-300 rounded-box place-items-center">
-                    {itemList[0] ? (
-                      <div className="flex flex-col items-center">
-                        <Image
-                          src={itemList[0]?.imgUrl}
-                          alt="item-img"
-                          width={140}
-                          height={100}
-                          style={{ objectFit: 'cover' }}
-                        />
-                        <span>{itemList[0]?.name}</span>
-                      </div>
-                    ) : null}
-                  </div>
-                </div>
-
-                <div className="divider divider-horizontal" />
-                <div className="indicator">
-                  {itemList[1] ? (
-                    <div className="indicator-item badge badge-primary right-3">
-                      <button
-                        onClick={() => deleteItem(itemList[1].id)}
-                      >
-                        삭제
-                      </button>
-                    </div>
-                  ) : null}
-                  <div className="grid flex-grow w-56 h-56 card bg-base-300 rounded-box place-items-center">
-                    {itemList[1] ? (
-                      <div className="flex flex-col items-center">
-                        <Image
-                          src={itemList[1]?.imgUrl}
-                          alt="item-img"
-                          width={140}
-                          height={100}
-                          style={{ objectFit: 'cover' }}
-                        />
-                        <span>{itemList[1]?.name}</span>
-                      </div>
-                    ) : null}
-                  </div>
                 </div>
               </div>
-              <button className="btn btn-wide btn-sm">
-                비교하기
-              </button>
+
+              <div className="divider divider-horizontal" />
+              <div className="indicator">
+                {itemList[1] ? (
+                  <div className="indicator-item badge badge-primary right-3">
+                    <button
+                      onClick={() => deleteItem(itemList[1].id)}
+                    >
+                      삭제
+                    </button>
+                  </div>
+                ) : null}
+                <div className="grid flex-grow w-56 h-56 card bg-base-300 rounded-box place-items-center">
+                  {itemList[1] ? (
+                    <div className="flex flex-col items-center">
+                      <Image
+                        src={itemList[1]?.imgUrl}
+                        alt="item-img"
+                        width={140}
+                        height={100}
+                        style={{ objectFit: 'cover' }}
+                      />
+                      <span>{itemList[1]?.name}</span>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
             </div>
-          </StyledBox>
-        </Drawer>
-      </ClickAwayListener>
+            <button
+              className="btn btn-wide btn-sm"
+              onClick={comparePills}
+            >
+              비교하기
+            </button>
+          </div>
+        </StyledBox>
+      </Drawer>
+
+      <Transition
+        show={alert}
+        enter="transition ease-in duration-300"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition ease-out duration-300"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
+      >
+        <div className="toast">
+          <div className="alert alert-info">
+            <div>
+              <span>비교할 상품이 없습니다</span>
+            </div>
+          </div>
+        </div>
+      </Transition>
     </Root>
   );
 }
