@@ -203,4 +203,26 @@ public class MypageController {
         }
         return new ResponseEntity<>(resultMap, status);
     }
+
+    @ApiOperation(value = "영양제 조합 삭제", notes = "영양제 조합을 삭제한다.", response = Map.class)
+    @DeleteMapping("/{userId}/combination")
+    public ResponseEntity<Map<String,Object>> deleteCombination(@ApiParam(value = "회원정보(아이디)", required = true, example = "1") @PathVariable int userId,
+                                                                @ApiParam(value = "삭제할 영양제 조합", required = true, example  = "1") @Valid @RequestParam int combinationId, Principal principal){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+
+        if(mypageService.deleteCombination(userId, combinationId)){
+            resultMap.put(MESSAGE, SUCCESS);
+            status = HttpStatus.OK;
+        } else {
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(resultMap, status);
+    }
 }

@@ -111,4 +111,11 @@ public class MypageService {
         combinationRepository.save(new Combination(userId, combinationList));
         return true;
     }
+
+    public boolean deleteCombination(int userId, int combinationId) {
+        Optional<Combination> combination = combinationRepository.findByCombinationUserIdAndCombinationId(userId, combinationId);
+        if(!combination.isPresent()) return false;
+        combinationRepository.delete(combination.get());
+        return true;
+    }
 }
