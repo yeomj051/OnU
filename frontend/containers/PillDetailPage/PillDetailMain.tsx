@@ -75,7 +75,7 @@ function PillDetailMain({}: Props): React.ReactElement {
         </div>
       </div>
       {/*여기는 파란부분 */}
-      <div className="bg-[#F2F9FF] mt-8 h-full pt-6">
+      <div className="bg-[#F2F9FF] mt-8 pt-6 pb-8">
         <hr className="mx-4" />
         <div className="tabs grid grid-cols-2 justify-items-center py-4 bg-white mx-4">
           <div className="col-span-1">

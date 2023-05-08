@@ -16,8 +16,8 @@ type PersonalReview = {
 };
 
 function PillDetailReviewBox(props: Props) {
-  console.log(props.review);
-  console.log(props.review.nickname);
+  // console.log(props.review);
+  // console.log(props.review.nickname);
 
   const age = Math.floor(props.review.age / 10) * 10;
   let gender = '';
