@@ -7,6 +7,7 @@ import java.util.Date;
 
 @Entity
 @Getter
+@NoArgsConstructor
 @Table(name = "taking_date")
 public class TakingDate {
 
@@ -21,4 +22,9 @@ public class TakingDate {
     @ManyToOne
     @JoinColumn(name = "userId")
     private User userId;
+    @Builder
+    public TakingDate(String takingDateDate, User userId) {
+        this.takingDateDate = takingDateDate;
+        this.userId = userId;
+    }
 }

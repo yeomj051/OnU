@@ -107,6 +107,32 @@ public class MypageController {
         }
     }
 
+    @ApiOperation(value = "복용 체크", notes = "캘린더에 복용했음을 체크한다.", response = Map.class)
+    @GetMapping("/{userId}/calendar")
+    public ResponseEntity<Map<String,Object>> checkDate(@ApiParam(value = "회원정보(아이디)", required = true, example = "1") @PathVariable int userId,
+                                                        Principal principal){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+
+        int continuousCount = mypageService.checkDate(userId);
+
+        if(continuousCount != -1){
+            resultMap.put(MESSAGE, SUCCESS);
+            resultMap.put("continuousCount", continuousCount);
+            status = HttpStatus.OK;
+        } else {
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+        }
+
+        return new ResponseEntity<>(resultMap, status);
+    }
+
     @ApiOperation(value = "내 리뷰 수정", notes = "사용자는 자신이 작성한 리뷰를 수정한다.", response = Map.class)
     @PatchMapping("/{userId}/review/{reviewId}")
     public ResponseEntity<Map<String, Object>> editReview(@PathVariable @ApiParam(value = "회원 아이디", required = true, example = "0") int userId, Principal principal,
