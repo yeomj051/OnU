@@ -6,6 +6,7 @@ import com.ssafy.onu.dto.request.ReqReviewCreateFormDto;
 import com.ssafy.onu.dto.request.ReqUserInfoDto;
 import com.ssafy.onu.dto.response.*;
 import com.ssafy.onu.entity.*;
+import com.ssafy.onu.service.InterestNutrientService;
 import com.ssafy.onu.service.MypageService;
 import com.ssafy.onu.util.TokenUtils;
 import io.swagger.annotations.ApiOperation;
@@ -32,6 +33,7 @@ public class MypageController {
     private static final String FAIL = "fail";
 
     private final MypageService mypageService;
+    private final InterestNutrientService interestNutrientService;
 
     @ApiOperation(value = "마이페이지 회원 정보 조회", notes = "현재 로그인한 사용자의 회원 정보를 조회한다.", response = Map.class)
     @GetMapping("/{userId}")
@@ -260,6 +262,30 @@ public class MypageController {
         resultMap.put("nutrientIngredientList", nutrientIngredientList);
         status = HttpStatus.OK;
 
+        return new ResponseEntity<>(resultMap, status);
+    }
+
+    @ApiOperation(value = "관심 영양제 등록", notes = "사용자가 해당 영양제를 관심 영양제로 등록한다.", response = Map.class)
+    @PostMapping("/{userId}/interest/{nutrientId}")
+    public ResponseEntity<Map<String, Object>> createInterestNutrient(@ApiParam(value = "회원 아이디", required = true, example = "0") @PathVariable int userId,
+                                                                      @ApiParam(value = "영양제 아이디", required = true, example = "0") @PathVariable Long nutrientId, Principal principal) {
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        // PathVariable로 받은 userId와 토큰에 있는 userId 비교
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+
+        // 관심 영양제 등록되면 true, 안되면 false
+        if (interestNutrientService.creatInterestNutrient(userId, nutrientId)) {
+            resultMap.put(MESSAGE, SUCCESS);
+            status = HttpStatus.OK;
+        } else {
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+        }
         return new ResponseEntity<>(resultMap, status);
     }
 }
