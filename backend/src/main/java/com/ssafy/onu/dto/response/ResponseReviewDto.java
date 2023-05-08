@@ -22,7 +22,6 @@ public class ResponseReviewDto {
     private LocalDateTime reviewUpdateTime;
 
     public ResponseReviewDto(Review review) {
-        System.out.println(review.getUserId() +""+ review.getNutrientId());
         this.userNickname = review.getUserId().getUserNickname();
         this.nutrientName = review.getNutrientId().getNutrientName();
         this.reviewContent = review.getReviewContent();

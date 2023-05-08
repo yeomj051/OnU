@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -29,7 +30,6 @@ public class NutrientController {
 
     @ApiOperation(value = "제품 리뷰 등록", notes = "해당 영양제 제품에 대한 리뷰를 등록한다.", response = Map.class)
     @PostMapping("/{nutrientId}/{userId}")
-//    @PostMapping("/{userId}")
     public ResponseEntity<Map<String, Object>> createReview(@PathVariable @ApiParam(value = "회원 아이디", required = true, example = "0") int userId, Principal principal,
                                                             @PathVariable @ApiParam(value = "영양제 아이디", required = true, example = "0") Long nutrientId,
                                                             @RequestBody ReqReviewCreateFormDto reqReviewCreateFormDto) {
@@ -52,5 +52,18 @@ public class NutrientController {
             resultMap.put(MESSAGE, FAIL);
             return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @ApiOperation(value = "제품 리뷰 목록 조회", notes = "해당 영양제 제품에 대한 모든 리뷰를 조회한다.", response = Map.class)
+    @GetMapping("/{nutrientId}/review")
+    public ResponseEntity<Map<String, Object>> getReviewListByNutrient(@PathVariable @ApiParam(value = "영양제 아이디", required = true, example = "0") Long nutrientId) {
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        List<ResponseReviewDto> responseReviewDtoList = reviewService.getReviewListByNutrient(nutrientId);
+
+        resultMap.put(MESSAGE, SUCCESS);
+        resultMap.put("reviewListByNutrient", responseReviewDtoList);
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 }
