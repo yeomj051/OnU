@@ -3,9 +3,7 @@ package com.ssafy.onu.service;
 import com.ssafy.onu.dto.request.ReqCombinationDto;
 import com.ssafy.onu.dto.request.ReqReviewCreateFormDto;
 import com.ssafy.onu.dto.request.ReqUserInfoDto;
-import com.ssafy.onu.dto.response.ResponseReviewDto;
-import com.ssafy.onu.dto.response.ResponseTakingDateDto;
-import com.ssafy.onu.dto.response.ResponseUserInfoDto;
+import com.ssafy.onu.dto.response.*;
 import com.ssafy.onu.entity.*;
 import com.ssafy.onu.repository.*;
 import lombok.*;
@@ -16,9 +14,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,6 +23,8 @@ public class MypageService {
 
     private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
+
+    private final NutrientRepository nutrientRepository;
     private final ContinuousRepository continuousRepository;
 
     private final CombinationRepository combinationRepository;
@@ -117,5 +115,17 @@ public class MypageService {
         if(!combination.isPresent()) return false;
         combinationRepository.delete(combination.get());
         return true;
+    }
+
+    public List<ResponseCombinationInfoDto> getCombination(int userId) {
+        List<Combination> combinationList = combinationRepository.findCombinationsByCombinationUserId(userId);
+        List<ResponseCombinationInfoDto> result = new LinkedList<>();
+        combinationList.stream().forEach(combination -> {
+            List<Long> nutrients = Arrays.asList(combination.getCombinationNutrientList().split(COMMA))
+                    .stream().map(Long::parseLong).collect(Collectors.toList());
+            result.add(new ResponseCombinationInfoDto(combination, nutrientRepository.findNutrientsByNutrientIdIn(nutrients).stream()
+                    .map(nutrient -> new ResponseCombinationNutrientInfoDto(nutrient)).collect(Collectors.toList())));
+        });
+        return result;
     }
 }
