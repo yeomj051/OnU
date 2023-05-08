@@ -4,10 +4,7 @@ import com.ssafy.onu.dto.*;
 import com.ssafy.onu.dto.request.ReqCombinationDto;
 import com.ssafy.onu.dto.request.ReqReviewCreateFormDto;
 import com.ssafy.onu.dto.request.ReqUserInfoDto;
-import com.ssafy.onu.dto.response.ResponseCombinationInfoDto;
-import com.ssafy.onu.dto.response.ResponseReviewDto;
-import com.ssafy.onu.dto.response.ResponseTakingDateDto;
-import com.ssafy.onu.dto.response.ResponseUserInfoDto;
+import com.ssafy.onu.dto.response.*;
 import com.ssafy.onu.entity.*;
 import com.ssafy.onu.service.MypageService;
 import com.ssafy.onu.util.TokenUtils;
@@ -242,6 +239,25 @@ public class MypageController {
 
         resultMap.put(MESSAGE, SUCCESS);
         resultMap.put("combinationList", combinationList);
+        status = HttpStatus.OK;
+
+        return new ResponseEntity<>(resultMap, status);
+    }
+    @ApiOperation(value = "영양제 조합에 따른 성분 목록 조회", notes = "영양제 조합에 따른 성분 목록을 조회한다.", response = Map.class)
+    @GetMapping("/{userId}/combination/ingredient")
+    public ResponseEntity<Map<String,Object>> getCombinationIngredient(@ApiParam(value = "회원정보(아이디)", required = true, example = "1") @PathVariable int userId,
+                                                                       @RequestBody ReqCombinationDto reqCombinationDto, Principal principal){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+        List<ResponseNutrientIngredientDto> nutrientIngredientList = mypageService.getCombinationIngredient(reqCombinationDto);
+
+        resultMap.put(MESSAGE, SUCCESS);
+        resultMap.put("nutrientIngredientList", nutrientIngredientList);
         status = HttpStatus.OK;
 
         return new ResponseEntity<>(resultMap, status);

@@ -7,6 +7,8 @@ import com.ssafy.onu.dto.response.*;
 import com.ssafy.onu.entity.*;
 import com.ssafy.onu.repository.*;
 import lombok.*;
+import org.springframework.data.redis.core.HashOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -23,11 +25,11 @@ public class MypageService {
 
     private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
-
+    private final NutrientIngredientRepository nutrientIngredientRepository;
     private final NutrientRepository nutrientRepository;
     private final ContinuousRepository continuousRepository;
-
     private final CombinationRepository combinationRepository;
+    private final RedisTemplate redisTemplate;
     private static final String COMMA = ",";
     private static final String NUTRIENT_ID = "nutrientId:";
     private static final int ONE = 1;
@@ -125,6 +127,36 @@ public class MypageService {
                     .stream().map(Long::parseLong).collect(Collectors.toList());
             result.add(new ResponseCombinationInfoDto(combination, nutrientRepository.findNutrientsByNutrientIdIn(nutrients).stream()
                     .map(nutrient -> new ResponseCombinationNutrientInfoDto(nutrient)).collect(Collectors.toList())));
+        });
+        return result;
+    }
+
+    public List<ResponseNutrientIngredientDto> getCombinationIngredient(ReqCombinationDto reqCombinationDto) {
+        HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
+        List<ResponseNutrientIngredientDto> result = new LinkedList<>();
+        reqCombinationDto.getCombinationList().stream().forEach(nutrientId -> {
+            List<ResponseNutrientIngredientInfoDto> nutrientIngredientInfoList = new LinkedList<>();
+            String nID = NUTRIENT_ID + nutrientId;
+            //캐싱되어 있다면
+            if(hashOperations.hasKey(nID, nID)) {
+                for(Object key : hashOperations.keys(nID)){
+                    if(!key.toString().equals(nID)) {
+                        nutrientIngredientInfoList.add(new ResponseNutrientIngredientInfoDto(key.toString(), (String) hashOperations.get(nID, key.toString())));
+                    }
+                }
+                result.add(new ResponseNutrientIngredientDto(nutrientId, nutrientIngredientInfoList));
+            } else {
+                Map<String, Object> map = new HashMap<>();
+                map.put(nID, nID);
+                nutrientIngredientRepository.findNutrientIngredientsByNutrientId(nutrientId)
+                        .stream()
+                        .forEach(nutrientIngredient -> {
+                            map.put(nutrientIngredient.getIngredientId().getIngredientName(), nutrientIngredient.getIngredientAmount());
+                            nutrientIngredientInfoList.add(new ResponseNutrientIngredientInfoDto(nutrientIngredient));
+                        });
+                hashOperations.putAll(nID, map);
+                result.add(new ResponseNutrientIngredientDto(nutrientId,nutrientIngredientInfoList));
+            }
         });
         return result;
     }
