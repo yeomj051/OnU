@@ -36,7 +36,7 @@ const SearchResult = (props: SearchProps) => {
           {/** 검색결과에 따른 값
            * 검색결과 형태가 정해지면 아래 ItemList에 props로 넘겨주기
            */}
-          <ItemList />
+          {/* <ItemList /> */}
         </div>
       </div>
     );

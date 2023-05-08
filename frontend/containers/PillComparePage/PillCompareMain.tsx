@@ -7,6 +7,7 @@ import PillCompareImg from './PillCompareImg';
 import PillCompareContent from './PillCompareContent';
 import PillCompareGage from './PillCompareGage';
 import { CircleFill } from '@emotion-icons/bootstrap/CircleFill';
+import { itemStore } from '@/store/itemStore';
 
 type Props = {};
 
@@ -22,6 +23,10 @@ type nutrient = {
 };
 
 function PillCompareMain({}: Props) {
+  const { items } = itemStore();
+  //items.id로 영양제 정보 api 요청해올것
+  useEffect(() => {}, []);
+
   const [fisrtLike, setFirstLike] = useState<boolean>(true);
   const [secondLike, setSecondLike] = useState<boolean>(true);
 
@@ -209,53 +214,53 @@ function PillCompareMain({}: Props) {
 
   return (
     <div className="h-[100%] mt-20">
-      <div className="mx-4 grid grid-cols-2">
+      <div className="grid grid-cols-2 mx-4">
         <div className="col-span-1 pr-2">
-          <PillImg className="mx-auto my-6 w-4/5" />
+          <PillImg className="w-4/5 mx-auto my-6" />
 
           <div>
             <div className="grid grid-cols-4">
-              <div className="col-span-3 text-sm font-light text-gray-500 grid row-span-3 content-center ml-1">
+              <div className="grid content-center col-span-3 row-span-3 ml-1 text-sm font-light text-gray-500">
                 종근당
               </div>
 
-              <div className="col-span-1 grid justify-items-end content-center">
+              <div className="grid content-center col-span-1 justify-items-end">
                 <button onClick={fisrtLikeOrNot}>
                   {fisrtLike ? (
-                    <HeartFill className="w-8 h-8 text-red-500 pr-4" />
+                    <HeartFill className="w-8 h-8 pr-4 text-red-500" />
                   ) : (
-                    <Heart className="w-8 h-8 text-red-500 pr-4" />
+                    <Heart className="w-8 h-8 pr-4 text-red-500" />
                   )}
                 </button>
               </div>
             </div>
 
-            <div className="bg-yellow-200 text-xl font-medium mt-2">
+            <div className="mt-2 text-xl font-medium bg-yellow-200">
               비타민B 군 비타민비 고농축 고함량 활성 수용성
             </div>
           </div>
         </div>
         <div className="col-span-1 pl-2">
-          <PillImg className="mx-auto my-6 w-4/5" />
+          <PillImg className="w-4/5 mx-auto my-6" />
 
           <div>
             <div className="grid grid-cols-4">
-              <div className="col-span-3 text-sm font-light text-gray-500 grid row-span-3 content-center ml-1">
+              <div className="grid content-center col-span-3 row-span-3 ml-1 text-sm font-light text-gray-500">
                 종근당
               </div>
 
-              <div className="col-span-1 grid justify-items-end content-center">
+              <div className="grid content-center col-span-1 justify-items-end">
                 <button onClick={secondLikeOrNot}>
                   {secondLike ? (
-                    <HeartFill className="w-8 h-8 text-red-500 pr-4" />
+                    <HeartFill className="w-8 h-8 pr-4 text-red-500" />
                   ) : (
-                    <Heart className="w-8 h-8 text-red-500 pr-4" />
+                    <Heart className="w-8 h-8 pr-4 text-red-500" />
                   )}
                 </button>
               </div>
             </div>
 
-            <div className="bg-yellow-200 text-xl font-medium mt-2">
+            <div className="mt-2 text-xl font-medium bg-yellow-200">
               비타민B 군 비타민비 고농축 고함량 활성 수용성
             </div>
           </div>
@@ -264,14 +269,14 @@ function PillCompareMain({}: Props) {
       {/*여기는 파란부분 */}
       <div className="bg-[#F2F9FF] mt-8 h-full pt-6">
         {/* <hr className="mx-4" />
-        <div className="tabs grid justify-items-center py-4 bg-white mx-4">
+        <div className="grid py-4 mx-4 bg-white tabs justify-items-center">
           <div className="">인증 정보</div>
         </div>
         <hr className="mx-4" />
         <div className="mx-4">
           <div className="grid grid-cols-2 py-2">
-            <div className="bg-white col-span-1 border rounded-lg h-20 mr-2"></div>
-            <div className="bg-white col-span-1 border  rounded-lg h-20 ml-2"></div>
+            <div className="h-20 col-span-1 mr-2 bg-white border rounded-lg"></div>
+            <div className="h-20 col-span-1 ml-2 bg-white border rounded-lg"></div>
           </div>
         </div> */}
         <PillCompareBadge
@@ -290,14 +295,14 @@ function PillCompareMain({}: Props) {
           second={pillTypeB}
         />
         <hr className="mx-4" />
-        <div className="tabs grid justify-items-center py-4 bg-white mx-4">
+        <div className="grid py-4 mx-4 bg-white tabs justify-items-center">
           <div className="">영양 성분</div>
         </div>
         <hr className="mx-4" />
-        <div className="mx-4 mt-2 mb-6 bg-white col-span-1 border rounded-lg py-4">
-          <div className=" flex flex-row-reverse">
+        <div className="col-span-1 py-4 mx-4 mt-2 mb-6 bg-white border rounded-lg">
+          <div className="flex flex-row-reverse ">
             <div className="flex mx-1 mr-3">
-              <CircleFill className="text-red-400 w-3 mr-1" />
+              <CircleFill className="w-3 mr-1 text-red-400" />
               <div>과다</div>
             </div>
             <div className="flex mx-1">
@@ -305,11 +310,11 @@ function PillCompareMain({}: Props) {
               <div>적정</div>
             </div>
             <div className="flex mx-1">
-              <CircleFill className="text-yellow-400 w-3 mr-1" />
+              <CircleFill className="w-3 mr-1 text-yellow-400" />
               <div>부족</div>
             </div>
           </div>
-          <div className="grid content-center mb-3 pl-2">
+          <div className="grid content-center pl-2 mb-3">
             {nutritionProps.map((nutrient, idx) => (
               <PillCompareGage
                 key={idx}
