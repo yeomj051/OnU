@@ -6,7 +6,12 @@ import java.util.Date;
 import java.util.List;
 
 @Getter
-@AllArgsConstructor
 public class ResponseTakingDateDto {
     private List<String> takingDateDate;
+    private int continuousCount;
+
+    public ResponseTakingDateDto(List<String> takingDateDate, int continuousCount) {
+        this.takingDateDate = takingDateDate;
+        this.continuousCount = continuousCount;
+    }
 }

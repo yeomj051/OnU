@@ -23,7 +23,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("api/mypage")
+@RequestMapping("/api/mypage")
 @RequiredArgsConstructor
 public class MypageController {
 
@@ -83,7 +83,7 @@ public class MypageController {
     }
 
     @ApiOperation(value = "복용 날짜 조회", notes = "현재 로그인한 사용자의 영양제 복용 날짜를 조회한다.", response = Map.class)
-    @GetMapping("/{userId}/calender")
+    @GetMapping("/{userId}/calendar")
     public ResponseEntity<Map<String, Object>> getCalenderDate(@PathVariable @ApiParam(value = "회원 아이디", required = true, example = "0") int userId, Principal principal,
                                                                @ApiParam(value = "연도 + 월 정보", required = true, example = "0") @RequestParam String date) {
         Map<String, Object> resultMap = new HashMap<>();
@@ -95,7 +95,7 @@ public class MypageController {
             return new ResponseEntity<>(resultMap, status);
         }
 
-        List<String> responseTakingDateDto = mypageService.getCheckedDate(userId, date);
+        ResponseTakingDateDto responseTakingDateDto = mypageService.getCheckedDate(userId, date);
 
         if (responseTakingDateDto != null) {
             resultMap.put(MESSAGE, SUCCESS);
@@ -108,7 +108,7 @@ public class MypageController {
     }
 
     @ApiOperation(value = "복용 체크", notes = "캘린더에 복용했음을 체크한다.", response = Map.class)
-    @GetMapping("/{userId}/calendar")
+    @PostMapping("/{userId}/calendar")
     public ResponseEntity<Map<String,Object>> checkDate(@ApiParam(value = "회원정보(아이디)", required = true, example = "1") @PathVariable int userId,
                                                         Principal principal){
         Map<String, Object> resultMap = new HashMap<>();

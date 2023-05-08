@@ -33,6 +33,7 @@ public class MypageService {
     private static final String COMMA = ",";
     private static final String NUTRIENT_ID = "nutrientId:";
     private static final int ONE = 1;
+    private static final int ZERO = 0;
 
     // 회원 정보 조회
     public ResponseUserInfoDto getUser(int userId) {
@@ -57,10 +58,24 @@ public class MypageService {
     private final TakingDateRepository takingDateRepository;
 
     // 복용 날짜 조회
-    public List<String> getCheckedDate(int userId, String date) {
+    public ResponseTakingDateDto getCheckedDate(int userId, String date) {
+
         List<String> checkedDate = takingDateRepository.findByUserId_UserIdAndTakingDateDateContains(userId, date).stream()
                 .map(d -> d.getTakingDateDate()).collect(Collectors.toList());
-        return checkedDate;
+
+        Optional<Continuous> continuous = continuousRepository.findByContinuousUserId_UserId(userId);
+
+        if (continuous.isPresent()) {
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String lastTakingDate = dateTimeFormatter.format(LocalDateTime.now());
+
+            int betweenDays = (int) Duration.between(LocalDate.parse(continuous.get().getContinuousLastDate(), dateTimeFormatter).atStartOfDay()
+                    , LocalDate.parse(lastTakingDate, dateTimeFormatter).atStartOfDay()).toDays();
+            if (betweenDays <= ONE) {
+                return new ResponseTakingDateDto(checkedDate, continuous.get().getContinuousCount());
+            }
+        }
+        return new ResponseTakingDateDto(checkedDate, ZERO);
     }
 
     public ResponseReviewDto editReview(ReqReviewCreateFormDto reqReviewCreateFormDto, int reviewId) {
@@ -77,7 +92,7 @@ public class MypageService {
         return Boolean.TRUE;
     }
 
-    @org.springframework.transaction.annotation.Transactional
+    @Transactional
     public int checkDate(int userId){
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String lastTakingDate =  dateTimeFormatter.format(LocalDateTime.now());
@@ -93,7 +108,6 @@ public class MypageService {
         else{
             int betweenDays = (int) Duration.between(LocalDate.parse(continuous.get().getContinuousLastDate(),dateTimeFormatter).atStartOfDay()
                     , LocalDate.parse(lastTakingDate, dateTimeFormatter).atStartOfDay()).toDays();
-            System.out.println(betweenDays);
             int continuousCount = ONE;
             if(betweenDays == ONE) {
                 continuousCount = continuous.get().getContinuousCount() + ONE;
