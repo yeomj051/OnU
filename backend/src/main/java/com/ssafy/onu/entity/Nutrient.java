@@ -22,7 +22,7 @@ public class Nutrient {
     private String nutrientName;
 
     @Column
-    private String nutrientImageURl;
+    private String nutrientImageUrl;
 
     @Column
     private String nutrientBrand;
@@ -34,8 +34,12 @@ public class Nutrient {
     private String nutrientCaution;
 
     @Column
-    private String nutrient_expiration;
+    private String nutrientExpiration;
+
+    @ManyToOne
+    @JoinColumn(name = "nutrient_type_id")
+    private NutrientType nutrientTypeId;
 
     @Column
-    private String nutrient_material;
+    private String nutrientMaterial;
 }

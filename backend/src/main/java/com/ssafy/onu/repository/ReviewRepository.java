@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ReviewRepository extends JpaRepository<Review, Integer> {
-    Review findByReviewId(int reviewId);
+    Optional<Review> findByReviewId(int reviewId);
     List<Review> findByNutrientId_NutrientId(Long nutrientId);
     Optional<Review> findByUserIdAndNutrientId(User userId, Nutrient nutrientId);
 }

@@ -1,7 +1,9 @@
 package com.ssafy.onu.controller;
 
 import com.ssafy.onu.dto.*;
+import com.ssafy.onu.dto.request.ReqReviewCreateFormDto;
 import com.ssafy.onu.dto.request.ReqUserInfoDto;
+import com.ssafy.onu.dto.response.ResponseReviewDto;
 import com.ssafy.onu.dto.response.ResponseTakingDateDto;
 import com.ssafy.onu.dto.response.ResponseUserInfoDto;
 import com.ssafy.onu.entity.*;
@@ -98,6 +100,32 @@ public class MypageController {
         if (responseTakingDateDto != null) {
             resultMap.put(MESSAGE, SUCCESS);
             resultMap.put("checkedDate", responseTakingDateDto);
+            return new ResponseEntity<>(resultMap, HttpStatus.OK);
+        } else {
+            resultMap.put(MESSAGE, FAIL);
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @ApiOperation(value = "내 리뷰 수정", notes = "사용자는 자신이 작성한 리뷰를 수정한다.", response = Map.class)
+    @PatchMapping("/{userId}/review/{reviewId}")
+    public ResponseEntity<Map<String, Object>> editReview(@PathVariable @ApiParam(value = "회원 아이디", required = true, example = "0") int userId, Principal principal,
+                                                          @PathVariable @ApiParam(value = "리뷰 아이디", required = true, example = "0") int reviewId,
+                                                          @RequestBody ReqReviewCreateFormDto reqReviewCreateFormDto) {
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        // PathVariable로 받은 userId와 토큰에 있는 userId 비교
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+
+        ResponseReviewDto responseReviewDto = mypageService.editReview(reqReviewCreateFormDto, reviewId);
+
+        if (responseReviewDto != null) {
+            resultMap.put(MESSAGE, SUCCESS);
+            resultMap.put("editReview", responseReviewDto);
             return new ResponseEntity<>(resultMap, HttpStatus.OK);
         } else {
             resultMap.put(MESSAGE, FAIL);

@@ -1,9 +1,12 @@
 package com.ssafy.onu.service;
 
+import com.ssafy.onu.dto.request.ReqReviewCreateFormDto;
 import com.ssafy.onu.dto.request.ReqUserInfoDto;
+import com.ssafy.onu.dto.response.ResponseReviewDto;
 import com.ssafy.onu.dto.response.ResponseTakingDateDto;
 import com.ssafy.onu.dto.response.ResponseUserInfoDto;
 import com.ssafy.onu.entity.*;
+import com.ssafy.onu.repository.ReviewRepository;
 import com.ssafy.onu.repository.TakingDateRepository;
 import com.ssafy.onu.repository.UserRepository;
 import lombok.*;
@@ -20,6 +23,7 @@ import java.util.stream.Collectors;
 public class MypageService {
 
     private final UserRepository userRepository;
+    private final ReviewRepository reviewRepository;
 
     // 회원 정보 조회
     public ResponseUserInfoDto getUser(int userId) {
@@ -48,5 +52,12 @@ public class MypageService {
         List<String> checkedDate = takingDateRepository.findByUserId_UserIdAndTakingDateDateContains(userId, date).stream()
                 .map(d -> d.getTakingDateDate()).collect(Collectors.toList());
         return checkedDate;
+    }
+
+    public ResponseReviewDto editReview(ReqReviewCreateFormDto reqReviewCreateFormDto, int reviewId) {
+        Optional<Review> review = reviewRepository.findByReviewId(reviewId);
+        if(!review.isPresent()) return null;
+        review.get().editReview(reqReviewCreateFormDto);
+        return new ResponseReviewDto(reviewRepository.save(review.get()));
     }
 }
