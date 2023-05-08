@@ -244,13 +244,14 @@ function PillDetailReview({}: Props) {
           </div>
           <div className="col-span-1">
             <div className="w-5/6 h-36 mx-auto my-2">
-              <div className="grid grid-cols-5 text-center pt-4">
+              <div className="grid grid-cols-5 text-center pt-6">
                 {graphValue.map((value, idx) => (
                   <div className="col-span-1 rounded-lg">
-                    <div className="text-gray-400 text-xs">
-                      {statistic[idx]}
-                    </div>
-                    <div className="bg-gray-100 w-1/3 h-24 mx-auto flex items-stretch rounded-lg">
+                    <div
+                      className="tooltip tooltip-open"
+                      data-tip={statistic[idx]}
+                    ></div>
+                    <div className="bg-gray-100 w-1/3 h-20 mx-auto flex items-stretch rounded-lg">
                       <div
                         className={`bg-blue-100 w-full h-[${value}%] self-end rounded-lg`}
                       ></div>

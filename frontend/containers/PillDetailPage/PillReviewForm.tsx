@@ -7,13 +7,17 @@ function PillReviewForm({}: Props) {
   const [rating, setRating] = useState<number>(5);
   const [reviewContent, setReviewContent] = useState<string>('');
 
-  const handleStarClick = (e) => {
-    setRating(Number(e.target.value));
+  const handleStarClick = (
+    e: React.MouseEvent<HTMLInputElement, MouseEvent>,
+  ) => {
+    const target = e.target as HTMLInputElement;
+    setRating(Number(target.value));
   };
 
-  const setReviewValue = (e) => {
+  const setReviewValue = (
+    e: React.ChangeEvent<HTMLTextAreaElement>,
+  ) => {
     setReviewContent(e.target.value);
-    console.log(reviewContent);
   };
 
   const submitReview = () => {
@@ -49,35 +53,35 @@ function PillReviewForm({}: Props) {
                   type="radio"
                   name="rating-2"
                   className="mask mask-star-2 bg-orange-400 w-10"
-                  value={1}
+                  value="1"
                   onClick={handleStarClick}
                 />
                 <input
                   type="radio"
                   name="rating-2"
                   className="mask mask-star-2 bg-orange-400 w-10"
-                  value={2}
+                  value="2"
                   onClick={handleStarClick}
                 />
                 <input
                   type="radio"
                   name="rating-2"
                   className="mask mask-star-2 bg-orange-400 w-10"
-                  value={3}
+                  value="3"
                   onClick={handleStarClick}
                 />
                 <input
                   type="radio"
                   name="rating-2"
                   className="mask mask-star-2 bg-orange-400 w-10"
-                  value={4}
+                  value="4"
                   onClick={handleStarClick}
                 />
                 <input
                   type="radio"
                   name="rating-2"
                   className="mask mask-star-2 bg-orange-400 w-10"
-                  value={5}
+                  value="5"
                   onClick={handleStarClick}
                 />
               </div>

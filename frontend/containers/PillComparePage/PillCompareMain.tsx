@@ -35,7 +35,7 @@ function PillCompareMain({}: Props) {
   const [functionalityA, setFunctionalityA] = useState<Array<string>>(
     [],
   );
-  const [pillTypeA, setPillTypeA] = useState<number>();
+  const [pillTypeA, setPillTypeA] = useState<number>(0);
   const [cautionA, setCautionA] = useState<string>('');
   const [howA, setHowA] = useState<string>('');
   const [materialA, setMaterialA] = useState<Array<string>>([]);
@@ -50,7 +50,7 @@ function PillCompareMain({}: Props) {
   const [functionalityB, setFunctionalityB] = useState<Array<string>>(
     [],
   );
-  const [pillTypeB, setPillTypeB] = useState<number>();
+  const [pillTypeB, setPillTypeB] = useState<number>(0);
   const [cautionB, setCautionB] = useState<string>('');
   const [howB, setHowB] = useState<string>('');
   const [materialB, setMaterialB] = useState<Array<string>>([]);
