@@ -19,7 +19,10 @@ const IngredientCategoryList = () => {
   return (
     <div id="list" className="flex flex-wrap justify-start mt-4 ml-4">
       {ingredientDataList.map((item, index) => (
-        <button className="btn btn-sm m-1 bg-[#D8EDFF] rounded-xl border-none text-[#424B5A] active:bg-[#90B5EA] active:text-[#FFFFFF] hover:bg-[#90B5EA] hover:text-[#FFFFFF]">
+        <button
+          key={index}
+          className="btn btn-sm m-1 bg-[#D8EDFF] rounded-xl border-none text-[#424B5A] active:bg-[#90B5EA] active:text-[#FFFFFF] hover:bg-[#90B5EA] hover:text-[#FFFFFF]"
+        >
           {item}
         </button>
       ))}
