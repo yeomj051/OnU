@@ -1,6 +1,7 @@
 package com.ssafy.onu.controller;
 
 import com.ssafy.onu.dto.*;
+import com.ssafy.onu.dto.request.ReqCombinationDto;
 import com.ssafy.onu.dto.request.ReqReviewCreateFormDto;
 import com.ssafy.onu.dto.request.ReqUserInfoDto;
 import com.ssafy.onu.dto.response.ResponseReviewDto;
@@ -16,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
@@ -179,5 +181,26 @@ public class MypageController {
             resultMap.put(MESSAGE, FAIL);
             return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @ApiOperation(value = "영양제 조합 등록", notes = "영양제 조합을 등록한다.", response = Map.class)
+    @PostMapping("/{userId}/combination")
+    public ResponseEntity<Map<String,Object>> createCombination(@ApiParam(value = "회원정보(아이디)", required = true, example = "1") @PathVariable int userId,
+                                                                @ApiParam(value = "등록할 영양제 리스트(영양제 리스트)", required = true, example  = "홍동길") @Valid @RequestBody ReqCombinationDto reqCombinationDto, Principal principal){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+        if(mypageService.createCombination(userId, reqCombinationDto)){
+            resultMap.put(MESSAGE, SUCCESS);
+            status = HttpStatus.OK;
+        } else {
+            resultMap.put(MESSAGE, FAIL);
+            status = HttpStatus.BAD_REQUEST;
+        }
+        return new ResponseEntity<>(resultMap, status);
     }
 }

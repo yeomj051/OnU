@@ -1,15 +1,13 @@
 package com.ssafy.onu.service;
 
+import com.ssafy.onu.dto.request.ReqCombinationDto;
 import com.ssafy.onu.dto.request.ReqReviewCreateFormDto;
 import com.ssafy.onu.dto.request.ReqUserInfoDto;
 import com.ssafy.onu.dto.response.ResponseReviewDto;
 import com.ssafy.onu.dto.response.ResponseTakingDateDto;
 import com.ssafy.onu.dto.response.ResponseUserInfoDto;
 import com.ssafy.onu.entity.*;
-import com.ssafy.onu.repository.ContinuousRepository;
-import com.ssafy.onu.repository.ReviewRepository;
-import com.ssafy.onu.repository.TakingDateRepository;
-import com.ssafy.onu.repository.UserRepository;
+import com.ssafy.onu.repository.*;
 import lombok.*;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +29,9 @@ public class MypageService {
     private final ReviewRepository reviewRepository;
     private final ContinuousRepository continuousRepository;
 
+    private final CombinationRepository combinationRepository;
+    private static final String COMMA = ",";
+    private static final String NUTRIENT_ID = "nutrientId:";
     private static final int ONE = 1;
 
     // 회원 정보 조회
@@ -100,5 +101,14 @@ public class MypageService {
             continuous.get().changeContinuous(continuousCount, lastTakingDate);
             return continuousRepository.save(continuous.get()).getContinuousCount();
         }
+    }
+
+    public boolean createCombination(int userId, ReqCombinationDto reqCombinationDto) {
+        String combinationList = reqCombinationDto.getCombinationList().stream()
+                .map(String::valueOf)
+                .collect(Collectors.joining(COMMA));
+        if(combinationList.split(COMMA).length == 0) return false;
+        combinationRepository.save(new Combination(userId, combinationList));
+        return true;
     }
 }
