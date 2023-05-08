@@ -1,4 +1,3 @@
-FROM openjdk:8-jdk-alpine
-ARG JAR_FILE=./build/libs/dockertest-0.0.1-SNAPSHOT.jar
-COPY ${JAR_FILE} app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+FROM openjdk:8-jre
+COPY build/libs/*.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
