@@ -1,11 +1,12 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-import { StarFill } from '@emotion-icons/bootstrap';
 import PillReviewForm from './PillReviewForm';
 import tw from 'twin.macro';
 import styled from 'styled-components';
 import PillDetailReviewBox from './PillDetailReviewBox';
+import PillDetailRate from './PillDetailRate';
+import PillDetailStar from './PillDetailStar';
 
 type Props = {};
 
@@ -137,8 +138,11 @@ function PillDetailReview({}: Props) {
 
   useEffect(() => {
     averageScore();
-    makeGraphRate();
   }, [statistic]);
+
+  useEffect(() => {
+    makeGraphRate();
+  }, [average]);
 
   //별점마다 개수 세는 함수
   const makeStatistics = () => {
@@ -174,9 +178,11 @@ function PillDetailReview({}: Props) {
       } else {
         scoreArrayForGraph[i] = Math.round(tmp / 10) * 10;
       }
+      // console.log(tmp);
     }
-    console.log(scoreArrayForGraph);
+    // console.log(scoreArrayForGraph);
     setGraphValue(scoreArrayForGraph);
+    console.log(graphValue);
   };
 
   return (
@@ -195,14 +201,13 @@ function PillDetailReview({}: Props) {
 
         <div className="bg-white pb-2 mt-3 grid grid-cols-2 rounded-lg">
           <div className="col-span-1  grid justify-center">
-            <div className=" z-40 my-6 border border-blue-950 overflow-hidden">
-              {/* starbox */}
+            <PillDetailStar starRate={starRate} />
+            {/* <div className=" z-40 my-6 border border-blue-950 overflow-hidden">
               <div
                 className="text-[#FFE70D] flex z-10 relative h-8 w-[100px]"
                 // className={` text-[#FFE70D] flex z-10 w-[${starRate}%] absolute`}
                 style={{ width: starRate }}
               >
-                {/* pointOfStar */}
 
                 <StarFill />
                 <StarFill />
@@ -211,21 +216,15 @@ function PillDetailReview({}: Props) {
                 <StarFill />
               </div>
 
-              {/* backgroundStar */}
               <div className="text-gray-200 flex absolute h-8 w-[100px]">
-                {/* <StarFill className="w-[35px]" />
-                <StarFill className="w-[35px]" />
-                <StarFill className="w-[35px]" />
-                <StarFill className="w-[35px]" />
                 
-                <StarFill className="w-[35px]" /> */}
                 <StarFill />
                 <StarFill />
                 <StarFill />
                 <StarFill />
                 <StarFill />
               </div>
-            </div>
+            </div> */}
 
             <div className="text-center h-5">{average} / 5</div>
             <label
@@ -242,28 +241,11 @@ function PillDetailReview({}: Props) {
               리뷰 작성하기
             </label>
           </div>
-          <div className="col-span-1">
-            <div className="w-5/6 h-36 mx-auto my-2">
-              <div className="grid grid-cols-5 text-center pt-6">
-                {graphValue.map((value, idx) => (
-                  <div className="col-span-1 rounded-lg">
-                    <div
-                      className="tooltip tooltip-open"
-                      data-tip={statistic[idx]}
-                    ></div>
-                    <div className="bg-gray-100 w-1/3 h-20 mx-auto flex items-stretch rounded-lg">
-                      <div
-                        className={`bg-blue-100 w-full h-[${value}%] self-end rounded-lg`}
-                      ></div>
-                    </div>
-                    <div className="text-gray-600 tx-sm">
-                      {5 - idx}점
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+          {/* 평점 비율 */}
+          <PillDetailRate
+            graphValue={graphValue}
+            statistic={statistic}
+          />
         </div>
       </div>
       {wantReview && <PillReviewForm />}
