@@ -60,4 +60,11 @@ public class MypageService {
         review.get().editReview(reqReviewCreateFormDto);
         return new ResponseReviewDto(reviewRepository.save(review.get()));
     }
+
+    public boolean deleteReview(int reviewId) {
+        Optional<Review> review = reviewRepository.findByReviewId(reviewId);
+        if(!review.isPresent()) return Boolean.FALSE;
+        reviewRepository.delete(review.get());
+        return Boolean.TRUE;
+    }
 }

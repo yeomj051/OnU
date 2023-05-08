@@ -132,4 +132,26 @@ public class MypageController {
             return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @ApiOperation(value = "제품 리뷰 삭제", notes = "사용자는 자신이 등록한 리뷰를 삭제한다.", response = Map.class)
+    @DeleteMapping("/{userId}/review/{reviewId}")
+    public ResponseEntity<Map<String, Object>> deleteReview(@PathVariable @ApiParam(value = "회원 아이디", required = true, example = "0") int userId, Principal principal,
+                                                            @PathVariable @ApiParam(value = "리뷰 아이디", required = true, example = "0") int reviewId) {
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        // PathVariable로 받은 userId와 토큰에 있는 userId 비교
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+
+        if (mypageService.deleteReview(reviewId)) {
+            resultMap.put(MESSAGE, SUCCESS);
+            return new ResponseEntity<>(resultMap, HttpStatus.OK);
+        } else {
+            resultMap.put(MESSAGE, FAIL);
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+        }
+    }
 }
