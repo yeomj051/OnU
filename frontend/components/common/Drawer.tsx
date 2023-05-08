@@ -21,11 +21,8 @@ const Root = styled('div')(({ theme }) => ({
 
 const StyledBox = styled(Box)(({ theme }) => ({
   backgroundColor:
-    theme.palette.mode === 'light' ? '#F5F5F5' : grey[800],
-  // border: 1,
-  // borderStyle: 'solid',
-  // borderBottom: 'none',
-  // borderColor: 'black',
+    theme.palette.mode === 'light' ? '#FFFFFF' : grey[800],
+  boxShadow: '0 -6px 6px -6px rgba(0, 0, 0, 0.2)',
 }));
 
 const Puller = styled(Box)(({ theme }) => ({
@@ -128,7 +125,6 @@ function CompareDrawer() {
           }}
         >
           {/* 비교함 내부 */}
-
           <div className="flex flex-col items-center space-y-4">
             <div className="flex flex-row w-full">
               <div className="indicator">

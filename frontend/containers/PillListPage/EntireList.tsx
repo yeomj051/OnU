@@ -96,9 +96,6 @@ const EntireList = () => {
         </div>
       </div>
       <CompareDrawer />
-      <div id="drawer">
-        <div id="compare-box"></div>
-      </div>
     </div>
   );
 };
