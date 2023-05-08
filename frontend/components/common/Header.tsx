@@ -27,10 +27,10 @@ const Header = () => {
             className="p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
             <li>
-              <a>홈으로</a>
+              <Link href="/">홈으로</Link>
             </li>
             <li>
-              <a>프로필</a>
+              <Link href="/mypage">프로필</Link>
             </li>
           </ul>
         </div>

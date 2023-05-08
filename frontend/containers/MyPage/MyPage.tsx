@@ -2,16 +2,41 @@ import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import ButtonGroup from './ButtonGroup';
 import Profile from './Profile';
+import { useCalendar } from '@/apis/hooks';
+import userStore from '@/store/userStore';
 
 const MyPage = () => {
   const [isClient, setIsClient] = useState(false);
-
-  const today = new Date();
+  const [userId, setUserId] = useState(0);
+  const [mark, setMark] = useState();
+  const { id } = userStore();
 
   React.useEffect(() => {
+    setUserId(id);
     setIsClient(true);
   }, []);
 
+  const { data, isLoading, isSuccess, error } = useCalendar(userId);
+
+  if (isLoading) {
+    return <div>로딩중...</div>;
+  }
+
+  if (error) {
+    return <div>오류가 발생했습니다.</div>;
+  }
+
+  if (!data) {
+    return <div>404 Not found</div>;
+  }
+
+  const formatDate = (date: Date): string => {
+    console.log(date.toString().split(' ')[2]);
+    return date.toString().split(' ')[2];
+  };
+  // setMark(data);
+
+  console.log(data);
   return (
     <div className="flex flex-col items-center space-y-4 min-h-[100vh]">
       {/* <div id="header">헤더에요</div> */}
@@ -23,7 +48,8 @@ const MyPage = () => {
         {isClient && (
           <Calendar
             // onChange={onChange} // useState로 포커스 변경 시 현재 날짜 받아오기
-            // formatDay={(locale, date) => today.formatDate('DD')} // 날'일' 제외하고 숫자만 보이도록 설정
+            // formatDay={(locale, date) => date.formatDate('DD')} // 날'일' 제외하고 숫자만 보이도록 설정
+            formatDay={(locale, date) => formatDate(date)} // ��'일' �
             // value={value}
             minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
             maxDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
