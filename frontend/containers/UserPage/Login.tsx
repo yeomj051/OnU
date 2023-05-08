@@ -24,8 +24,7 @@ const Login = () => {
               <Image
                 src={kakao}
                 alt="kakaoLogin"
-                width="auto"
-                height="auto"
+                className="w-full h-full"
                 priority={true}
               />
             </Link>
