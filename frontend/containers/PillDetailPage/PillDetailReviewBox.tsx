@@ -16,7 +16,7 @@ type PersonalReview = {
   review: string;
 };
 
-const StarFillComponent = styled(StarFill)``;
+// const StarFillComponent = styled(StarFill)``;
 
 function PillDetailReviewBox(props: Props) {
   // console.log(props.review);
@@ -30,25 +30,25 @@ function PillDetailReviewBox(props: Props) {
     gender = '여';
   }
 
-  function repeatStar(score: number): JSX.Element[] {
-    let arr = [];
-    for (let i = 0; i < score; i++) {
-      arr.push(
-        <p>
-          <StarFillComponent className="w-4 text-[#FFE70D]" />
-        </p>,
-      );
-    }
-    for (let i = 0; i < 5 - score; i++) {
-      arr.push(
-        <p>
-          <StarFillComponent className="w-4 text-gray-200" />
-        </p>,
-      );
-    }
+  // function repeatStar(score: number): JSX.Element[] {
+  //   let arr = [];
+  //   for (let i = 0; i < score; i++) {
+  //     arr.push(
+  //       <p>
+  //         <StarFillComponent className="w-4 text-[#FFE70D]" />
+  //       </p>,
+  //     );
+  //   }
+  //   for (let i = 0; i < 5 - score; i++) {
+  //     arr.push(
+  //       <p>
+  //         <StarFillComponent className="w-4 text-gray-200" />
+  //       </p>,
+  //     );
+  //   }
 
-    return arr;
-  }
+  //   return arr;
+  // }
 
   return (
     <div className="bg-white min-h-[60px] px-5 py-30 rounded-lg mt-4">
@@ -64,7 +64,7 @@ function PillDetailReviewBox(props: Props) {
         </div>
         <div className="col-span-3 grid justify-items-end">
           <div className="text-sm">{props.review.date}</div>
-          <div className="flex">{repeatStar(props.review.rate)}</div>
+          {/* <div className="flex">{repeatStar(props.review.rate)}</div> */}
         </div>
       </div>
       <hr />
