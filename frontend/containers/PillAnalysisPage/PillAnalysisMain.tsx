@@ -3,7 +3,7 @@ import React from 'react';
 import PillAnalysisComb from './PillAnalysisComb';
 import PillAnalysisHave from './PillAnalysisHave';
 import PillAnalysisLike from './PillAnalysisLike';
-import { useState } from 'react';
+// import { useState } from 'react';
 
 function PillAnalysisMain() {
   //조합(선택한 영양제id 리스트로 저장)
