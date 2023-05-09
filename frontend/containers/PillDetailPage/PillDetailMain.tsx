@@ -5,6 +5,7 @@ import { Heart, HeartFill } from '@emotion-icons/bootstrap';
 import PillDetailInfo from './PillDetailInfo';
 import PillDetailReview from './PillDetailReview';
 import tw from 'twin.macro';
+import styled from '@emotion/styled';
 
 type Props = {};
 
@@ -17,6 +18,9 @@ type Props = {};
 //   }
 
 // `;
+
+const HeartComponent = styled(Heart)``;
+const HeartFillComponent = styled(HeartFill)``;
 
 function PillDetailMain({}: Props): React.ReactElement {
   const [infoSwitch, setInfoSwitch] = useState<boolean>(true);
@@ -54,9 +58,9 @@ function PillDetailMain({}: Props): React.ReactElement {
             <div className="col-span-1 grid justify-items-end content-center">
               <button onClick={likeOrNot}>
                 {like ? (
-                  <HeartFill className="w-8 h-8 text-red-500 pr-4" />
+                  <HeartFillComponent className="w-8 h-8 text-red-500 pr-4" />
                 ) : (
-                  <Heart className="w-8 h-8 text-red-500 pr-4" />
+                  <HeartComponent className="w-8 h-8 text-red-500 pr-4" />
                 )}
               </button>
             </div>

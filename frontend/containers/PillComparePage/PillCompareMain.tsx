@@ -8,6 +8,7 @@ import PillCompareContent from './PillCompareContent';
 import PillCompareGage from './PillCompareGage';
 import { CircleFill } from '@emotion-icons/bootstrap/CircleFill';
 import { itemStore } from '@/store/itemStore';
+import styled from '@emotion/styled';
 
 type Props = {};
 
@@ -21,6 +22,10 @@ type nutrient = {
   name: string;
   amount: number;
 };
+
+const HeartComponent = styled(Heart)``;
+const HeartFillComponent = styled(HeartFill)``;
+const CircleFillComponent = styled(CircleFill)``;
 
 function PillCompareMain({}: Props) {
   const { items } = itemStore();
@@ -227,9 +232,9 @@ function PillCompareMain({}: Props) {
               <div className="grid content-center col-span-1 justify-items-end">
                 <button onClick={fisrtLikeOrNot}>
                   {fisrtLike ? (
-                    <HeartFill className="w-8 h-8 pr-4 text-red-500" />
+                    <HeartFillComponent className="w-8 h-8 pr-4 text-red-500" />
                   ) : (
-                    <Heart className="w-8 h-8 pr-4 text-red-500" />
+                    <HeartComponent className="w-8 h-8 pr-4 text-red-500" />
                   )}
                 </button>
               </div>
@@ -252,9 +257,9 @@ function PillCompareMain({}: Props) {
               <div className="grid content-center col-span-1 justify-items-end">
                 <button onClick={secondLikeOrNot}>
                   {secondLike ? (
-                    <HeartFill className="w-8 h-8 pr-4 text-red-500" />
+                    <HeartFillComponent className="w-8 h-8 pr-4 text-red-500" />
                   ) : (
-                    <Heart className="w-8 h-8 pr-4 text-red-500" />
+                    <HeartComponent className="w-8 h-8 pr-4 text-red-500" />
                   )}
                 </button>
               </div>
@@ -302,15 +307,15 @@ function PillCompareMain({}: Props) {
         <div className="col-span-1 py-4 mx-4 mt-2 mb-6 bg-white border rounded-lg">
           <div className="flex flex-row-reverse ">
             <div className="flex mx-1 mr-3">
-              <CircleFill className="w-3 mr-1 text-red-400" />
+              <CircleFillComponent className="w-3 mr-1 text-red-400" />
               <div>과다</div>
             </div>
             <div className="flex mx-1">
-              <CircleFill className="text-[#79D096] w-3 mr-1" />
+              <CircleFillComponent className="text-[#79D096] w-3 mr-1" />
               <div>적정</div>
             </div>
             <div className="flex mx-1">
-              <CircleFill className="w-3 mr-1 text-yellow-400" />
+              <CircleFillComponent className="w-3 mr-1 text-yellow-400" />
               <div>부족</div>
             </div>
           </div>

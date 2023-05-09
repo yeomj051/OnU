@@ -1,6 +1,7 @@
 import React from 'react';
 import { PersonCircle } from '@emotion-icons/bootstrap/PersonCircle';
 import { StarFill } from '@emotion-icons/bootstrap';
+import styled from '@emotion/styled';
 
 type Props = {
   review: PersonalReview;
@@ -14,6 +15,8 @@ type PersonalReview = {
   rate: number;
   review: string;
 };
+
+const StarFillComponent = styled(StarFill)``;
 
 function PillDetailReviewBox(props: Props) {
   // console.log(props.review);
@@ -32,14 +35,14 @@ function PillDetailReviewBox(props: Props) {
     for (let i = 0; i < score; i++) {
       arr.push(
         <p>
-          <StarFill className="w-4 text-[#FFE70D]" />
+          <StarFillComponent className="w-4 text-[#FFE70D]" />
         </p>,
       );
     }
     for (let i = 0; i < 5 - score; i++) {
       arr.push(
         <p>
-          <StarFill className="w-4 text-gray-200" />
+          <StarFillComponent className="w-4 text-gray-200" />
         </p>,
       );
     }

@@ -1,9 +1,12 @@
 import React from 'react';
 import { StarFill } from '@emotion-icons/bootstrap';
+import styled from '@emotion/styled';
 
 type Props = {
   starRate: number;
 };
+
+const StarFillComponent = styled(StarFill)``;
 
 function PillDetailStar(props: Props) {
   return (
@@ -13,19 +16,19 @@ function PillDetailStar(props: Props) {
         // className={` text-[#FFE70D] flex z-10 w-[${starRate}%] absolute`}
         style={{ width: props.starRate }}
       >
-        <StarFill />
-        <StarFill />
-        <StarFill />
-        <StarFill />
-        <StarFill />
+        <StarFillComponent />
+        <StarFillComponent />
+        <StarFillComponent />
+        <StarFillComponent />
+        <StarFillComponent />
       </div>
 
       <div className="text-gray-200 flex absolute h-8 w-[100px]">
-        <StarFill />
-        <StarFill />
-        <StarFill />
-        <StarFill />
-        <StarFill />
+        <StarFillComponent />
+        <StarFillComponent />
+        <StarFillComponent />
+        <StarFillComponent />
+        <StarFillComponent />
       </div>
     </div>
   );

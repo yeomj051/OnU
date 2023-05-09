@@ -7,8 +7,11 @@ import PillAnalysisHave from './PillAnalysisHave';
 import PillAnalysisLike from './PillAnalysisLike';
 import { useState, useEffect } from 'react';
 import PillAnalysisGraph from './PillAnalysisGraph';
+import styled from '@emotion/styled';
 
 type Props = {};
+
+const PlusCircleComponent = styled(PlusCircle)``;
 
 function PillAnalysisMain({}: Props) {
   //조합(선택한 영양제id 리스트로 저장)
@@ -37,7 +40,7 @@ function PillAnalysisMain({}: Props) {
             </div>
             <div className="col-span-1 flex justify-end mb-1">
               <button onClick={addLikeList}>
-                <PlusCircle className="w-5 h-5" />
+                <PlusCircleComponent className="w-5 h-5" />
               </button>
             </div>
           </div>
