@@ -8,6 +8,7 @@ import java.util.List;
 @Getter
 public class ReqCombinationDto {
 
+    private Long interestNutrient;
     @NotNull(message = "영양제 정보는 필수 값입니다.")
     private List<Long> combinationList;
 }
