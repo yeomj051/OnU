@@ -4,7 +4,7 @@ import PillDetailBadge from './PillDetailBadge';
 import PillDetailImg from './PillDetailImg';
 import PillDetailContents from './PillDetailContents';
 import PillDetailNutrientGage from './PillDetailNutrientGage';
-import { CircleFill } from '@emotion-icons/bootstrap/CircleFill';
+// import { CircleFill } from '@emotion-icons/bootstrap/CircleFill';
 import styled from '@emotion/styled';
 
 type Props = {};
@@ -14,7 +14,7 @@ type nutrient = {
   amount: number;
 };
 
-const CircleFillComponent = styled(CircleFill)``;
+// const CircleFillComponent = styled(CircleFill)``;
 
 function PillDetailInfo({}: Props) {
   const [nutrientList, setNutrientList] = useState<Array<nutrient>>(
@@ -70,7 +70,7 @@ function PillDetailInfo({}: Props) {
         <div className="col-span-1 grid content-center">영양성분</div>
         <div className="col-span-5 mt-5">
           <div className=" flex flex-row-reverse">
-            <div className="flex mx-1">
+            {/* <div className="flex mx-1">
               <CircleFillComponent className="text-red-400 w-3 mr-1" />
               <div>과다</div>
             </div>
@@ -81,7 +81,7 @@ function PillDetailInfo({}: Props) {
             <div className="flex mx-1">
               <CircleFillComponent className="text-yellow-400 w-3 mr-1" />
               <div>부족</div>
-            </div>
+            </div> */}
           </div>
           <div className="grid content-center mb-3 pl-2">
             {nutrientList.map((nutrient, idx) => (

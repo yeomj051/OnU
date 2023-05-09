@@ -1,6 +1,6 @@
 import React from 'react';
-import { PersonCircle } from '@emotion-icons/bootstrap/PersonCircle';
-import { StarFill } from '@emotion-icons/bootstrap';
+// import { PersonCircle } from '@emotion-icons/bootstrap/PersonCircle';
+// import { StarFill } from '@emotion-icons/bootstrap';
 import styled from '@emotion/styled';
 
 type Props = {
@@ -54,7 +54,7 @@ function PillDetailReviewBox(props: Props) {
     <div className="bg-white min-h-[60px] px-5 py-30 rounded-lg mt-4">
       <div className="grid grid-cols-8 pt-6">
         <div className="w-10 col-span-1 pt-0.5">
-          <PersonCircle />
+          {/* <PersonCircle /> */}
         </div>
         <div className="col-span-4 pb-1">
           <div className="text-xl">{props.review.nickname}</div>
