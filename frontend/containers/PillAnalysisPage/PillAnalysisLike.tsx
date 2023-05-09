@@ -1,11 +1,9 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import eundan from '../../public/eundan.png';
 
-type Props = {};
-
-function PillAnalysisHave({}: Props) {
+function PillAnalysisHave() {
   //이 영양제가 선택되었는지 여부를 저장
   const [isSelected, setIsSelected] = useState<boolean>(false);
   //영양제 조합 삭제API 연결해서 조합 삭제
@@ -31,10 +29,10 @@ function PillAnalysisHave({}: Props) {
           isSelected ? 'bg-[#90B5EA]' : 'bg-[#D8EDFF]'
         } w-32 h-32 rounded-lg mx-auto grid content-center`}
       >
-        <div className="bg-white w-28 h-28 mx-auto rounded-lg">
-          <div className=" grid justify-items-end">
+        <div className="mx-auto bg-white rounded-lg w-28 h-28">
+          <div className="grid justify-items-end">
             <button
-              className="absolute w-5 h-5 text-gray-500 mr-1 mt-1"
+              className="absolute w-5 h-5 mt-1 mr-1 text-gray-500"
               onClick={deleteLike}
             >
               ✕

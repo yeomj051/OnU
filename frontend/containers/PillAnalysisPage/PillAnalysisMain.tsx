@@ -1,21 +1,13 @@
 import React from 'react';
-import Image from 'next/image';
-import eundan from '../../public/eundan.png';
 // import { PlusCircle } from '@emotion-icons/bootstrap';
 import PillAnalysisComb from './PillAnalysisComb';
 import PillAnalysisHave from './PillAnalysisHave';
 import PillAnalysisLike from './PillAnalysisLike';
-import { useState, useEffect } from 'react';
-import PillAnalysisGraph from './PillAnalysisGraph';
-import styled from '@emotion/styled';
+import { useState } from 'react';
 
-type Props = {};
-
-// const PlusCircleComponent = styled(PlusCircle)``;
-
-function PillAnalysisMain({}: Props) {
+function PillAnalysisMain() {
   //조합(선택한 영양제id 리스트로 저장)
-  const [choiceList, setChoiceList] = useState<Array<number>>([]);
+  // const [choiceList, setChoiceList] = useState<Array<number>>([]);
   //조합 저장하는 함수
   const saveCombination = () => {};
 
