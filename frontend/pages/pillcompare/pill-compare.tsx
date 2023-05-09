@@ -4,8 +4,6 @@ import AppLayout from '@/components/layout/AppLayout';
 import HeaderLayout from '@/components/layout/HeaderLayout';
 import PillCompareMain from '@/containers/PillComparePage/PillCompareMain';
 
-type Props = {};
-
 const PillCompare: NextPageWithLayout = () => {
   return <PillCompareMain />;
 };

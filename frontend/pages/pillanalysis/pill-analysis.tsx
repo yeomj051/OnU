@@ -4,8 +4,6 @@ import AppLayout from '@/components/layout/AppLayout';
 import HeaderLayout from '@/components/layout/HeaderLayout';
 import PillAnalysisMain from '@/containers/PillAnalysisPage/PillAnalysisMain';
 
-type Props = {};
-
 const PillAnalysis: NextPageWithLayout = () => {
   return <PillAnalysisMain />;
 };
