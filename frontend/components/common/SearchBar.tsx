@@ -28,7 +28,7 @@ export const SearchBar = () => {
     // });
   };
 
-  const handleKeypress = (e: any) => {
+  const handleKeypress = (e: React.KeyboardEvent) => {
     e.preventDefault();
 
     const key: string = e.code;

@@ -3,7 +3,7 @@ import { Global } from '@emotion/react';
 import { styled } from '@mui/material/styles';
 import { grey } from '@mui/material/colors';
 import Box from '@mui/material/Box';
-import { ClickAwayListener, Drawer } from '@mui/material';
+import { Drawer } from '@mui/material';
 import { itemStore } from '@/store/itemStore';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';

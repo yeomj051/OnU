@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import { NextPageWithLayout } from './_app';
 import AppLayout from '@/components/layout/AppLayout';
 import HeaderLayout from '@/components/layout/HeaderLayout';

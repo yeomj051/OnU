@@ -7,22 +7,7 @@ import PillDetailReview from './PillDetailReview';
 import tw from 'twin.macro';
 import styled from '@emotion/styled';
 
-type Props = {};
-
-// const ButtonToChange = tw.button`
-//   w-full
-//   font-semibold
-
-//   button-change-info-review{
-//     font-color: ${({infoSwitch})=>(infoSwitch? 'red' : 'green')};
-//   }
-
-// `;
-
-// const HeartComponent = styled(Heart)``;
-// const HeartFillComponent = styled(HeartFill)``;
-
-function PillDetailMain({}: Props): React.ReactElement {
+function PillDetailMain(): React.ReactElement {
   const [infoSwitch, setInfoSwitch] = useState<boolean>(true);
   const [like, setLike] = useState<boolean>(true);
 
@@ -43,33 +28,33 @@ function PillDetailMain({}: Props): React.ReactElement {
   return (
     <div className="h-[100vh] mt-20">
       <div className="mx-4">
-        <PillImg className="mx-auto my-6 w-1/2" />
+        <PillImg className="w-1/2 mx-auto my-6" />
 
         <div>
           <div className="grid grid-cols-12">
-            <div className="col-span-8 text-sm font-light text-gray-500 grid row-span-3 content-center ml-1">
+            <div className="grid content-center col-span-8 row-span-3 ml-1 text-sm font-light text-gray-500">
               종근당
             </div>
-            <div className="col-span-3 grid justify-items-end row-span-3 content-center">
-              <button className="badge badge-outline text-gray-500 w-24 h-6">
+            <div className="grid content-center col-span-3 row-span-3 justify-items-end">
+              <button className="w-24 h-6 text-gray-500 badge badge-outline">
                 비교하기
               </button>
             </div>
-            <div className="col-span-1 grid justify-items-end content-center">
+            <div className="grid content-center col-span-1 justify-items-end">
               <button onClick={likeOrNot}>
                 {/* {like ? (
-                  <HeartFillComponent className="w-8 h-8 text-red-500 pr-4" />
+                  <HeartFillComponent className="w-8 h-8 pr-4 text-red-500" />
                 ) : (
-                  <HeartComponent className="w-8 h-8 text-red-500 pr-4" />
+                  <HeartComponent className="w-8 h-8 pr-4 text-red-500" />
                 )} */}
               </button>
             </div>
           </div>
 
-          <div className="bg-yellow-200 text-xl font-medium mt-2">
+          <div className="mt-2 text-xl font-medium bg-yellow-200">
             비타민B 군 비타민비 고농축 고함량 활성 수용성
           </div>
-          <div className=" mt-5 shadow-md">
+          <div className="mt-5 shadow-md ">
             영양제 설명설명설명
             <br />
             건강에 좋고 어쩌구 저쩌구
@@ -81,7 +66,7 @@ function PillDetailMain({}: Props): React.ReactElement {
       {/*여기는 파란부분 */}
       <div className="bg-[#F2F9FF] mt-8 pt-6 pb-8">
         <hr className="mx-4" />
-        <div className="tabs grid grid-cols-2 justify-items-center py-4 bg-white mx-4">
+        <div className="grid grid-cols-2 py-4 mx-4 bg-white tabs justify-items-center">
           <div className="col-span-1">
             <button
               className={`w-full font-semibold ${

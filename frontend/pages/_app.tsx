@@ -6,7 +6,6 @@ import {
   QueryClientProvider,
 } from '@tanstack/react-query';
 import type { AppProps } from 'next/app';
-import AppLayout from '@/components/layout/AppLayout';
 import { NextPage } from 'next';
 
 export type NextPageWithLayout = NextPage & {

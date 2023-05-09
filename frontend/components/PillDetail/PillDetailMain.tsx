@@ -1,10 +1,8 @@
 import React from 'react';
 
-type Props = {};
-
-function PillDetailMain({}: Props) {
+function PillDetailMain() {
   return (
-    <div className="bg-red-300 w-2/5 mx-auto">PillDetailMain</div>
+    <div className="w-2/5 mx-auto bg-red-300">PillDetailMain</div>
   );
 }
 
