@@ -288,4 +288,25 @@ public class MypageController {
         }
         return new ResponseEntity<>(resultMap, status);
     }
+
+    @ApiOperation(value = "관심 영양제 삭제", notes = "사용자가 관심 영양제를 삭제한다.", response = Map.class)
+    @DeleteMapping("/{userId}/interest/{nutrientId}")
+    public ResponseEntity<Map<String, Object>> deleteInterestNutrient(@ApiParam(value = "회원 아이디", required = true, example = "0") @PathVariable int userId,
+                                                                      @ApiParam(value = "영양제 아이디", required = true, example = "0") @PathVariable Long nutrientId, Principal principal) {
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        // PathVariable로 받은 userId와 토큰에 있는 userId 비교
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+        if (mypageService.deleteInterestNutrient(userId, nutrientId)) {
+            resultMap.put(MESSAGE, SUCCESS);
+            return new ResponseEntity<>(resultMap, HttpStatus.OK);
+        } else {
+            resultMap.put(MESSAGE, FAIL);
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+        }
+    }
 }
