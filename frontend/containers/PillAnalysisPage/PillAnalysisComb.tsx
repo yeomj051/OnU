@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
-import Image from 'next/image';
-import eundan from '@/public/eundan.png';
+// import Image from 'next/image';
+// import eundan from '@/public/eundan.png';
 
 type Props = {};
 
@@ -29,7 +29,7 @@ function PillAnalysisComb({}: Props) {
         } rounded-xl p-2 mb-4`}
       >
         <div className="pb-5 bg-white rounded-xl">
-          <div className="grid  justify-items-end">
+          <div className="grid justify-items-end">
             <button
               className="absolute w-5 h-5 mt-3 mr-3 text-gray-500"
               onClick={deleteCombination}
@@ -41,11 +41,11 @@ function PillAnalysisComb({}: Props) {
             <div className="w-1/3 mt-6">
               <div className="mx-auto bg-white rounded-lg w-28 h-28">
                 <div className="relative w-16 h-16 mx-auto">
-                  <Image
+                  {/* <Image
                     className="w-full h-full"
                     src={eundan}
                     alt="사진깨짐"
-                  />
+                  /> */}
                 </div>
                 <div className="text-xs leading-3 text-center text-gray-400">
                   고려은단
@@ -59,11 +59,11 @@ function PillAnalysisComb({}: Props) {
             <div className="w-1/3 mt-6">
               <div className="mx-auto bg-white rounded-lg w-28 h-28">
                 <div className="relative w-16 h-16 mx-auto">
-                  <Image
+                  {/* <Image
                     className="w-full h-full"
                     src={eundan}
                     alt="사진깨짐"
-                  />
+                  /> */}
                 </div>
                 <div className="text-xs leading-3 text-center text-gray-400">
                   고려은단
@@ -77,11 +77,11 @@ function PillAnalysisComb({}: Props) {
             <div className="w-1/3 mt-6">
               <div className="mx-auto bg-white rounded-lg w-28 h-28">
                 <div className="relative w-16 h-16 mx-auto">
-                  <Image
+                  {/* <Image
                     className="w-full h-full"
                     src={eundan}
                     alt="사진깨짐"
-                  />
+                  /> */}
                 </div>
                 <div className="text-xs leading-3 text-center text-gray-400">
                   고려은단
@@ -95,11 +95,11 @@ function PillAnalysisComb({}: Props) {
             <div className="w-1/3 mt-6">
               <div className="mx-auto bg-white rounded-lg w-28 h-28 ">
                 <div className="relative w-16 h-16 mx-auto">
-                  <Image
+                  {/* <Image
                     className="w-full h-full"
                     src={eundan}
                     alt="사진깨짐"
-                  />
+                  /> */}
                 </div>
                 <div className="text-xs leading-3 text-center text-gray-400">
                   고려은단

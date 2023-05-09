@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
-import Image from 'next/image';
-import eundan from '@/public/eundan.png';
+// import Image from 'next/image';
+// import eundan from '@/public/eundan.png';
 
 function PillAnalysisHave() {
   //이 영양제가 선택되었는지 여부를 저장
@@ -39,11 +39,11 @@ function PillAnalysisHave() {
             </button>
           </div>
           <div className="relative w-16 h-16 mx-auto">
-            <Image
+            {/* <Image
               className="w-full h-full"
               src={eundan}
               alt="사진깨짐"
-            />
+            /> */}
           </div>
           <div className="text-xs leading-3 text-center text-gray-400">
             고려은단

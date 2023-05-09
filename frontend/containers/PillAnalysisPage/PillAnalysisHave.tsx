@@ -1,7 +1,7 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import eundan from '../../public/eundan.png';
+import { useState } from 'react';
+// import Image from 'next/image';
+// import eundan from '@/public/eundan.png';
 
 type Props = {};
 
@@ -20,13 +20,13 @@ function PillAnalysisHave({}: Props) {
           isSelected ? 'bg-[#90B5EA]' : 'bg-[#D8EDFF]'
         } w-32 h-32 rounded-lg mx-auto grid content-center`}
       >
-        <div className="bg-white w-28 h-28 mx-auto rounded-lg">
+        <div className="mx-auto bg-white rounded-lg w-28 h-28">
           <div className="relative w-16 h-16 mx-auto">
-            <Image
+            {/* <Image
               className="w-full h-full"
               src={eundan}
               alt="사진깨짐"
-            />
+            /> */}
           </div>
           <div className="text-xs leading-3 text-center text-gray-400">
             고려은단
