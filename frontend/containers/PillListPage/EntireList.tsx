@@ -1,4 +1,3 @@
-//전체 영양제 리스트
 //'use client'
 
 import React, { useState } from 'react';
