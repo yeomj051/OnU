@@ -37,7 +37,6 @@
     "react-calendar": "^4.2.1",
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
-    "react-spring": "^9.7.1",
     "resizable-box": "^1.0.0",
     "styled-components": "^5.3.10",
     "sweetalert2": "^11.7.3",
