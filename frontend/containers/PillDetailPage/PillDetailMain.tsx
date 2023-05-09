@@ -1,11 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
-import PillImg from '../../public/jong_pill.svg';
-// import { Heart, HeartFill } from '@emotion-icons/bootstrap';
+// import PillImg from '../../public/jong_pill.svg';
 import PillDetailInfo from './PillDetailInfo';
 import PillDetailReview from './PillDetailReview';
-import tw from 'twin.macro';
-import styled from '@emotion/styled';
+import fillHeart from '../../public/fillHeart.png';
+import emptyHeart from '../../public/emptyHeart.png';
+import Image from 'next/image';
 
 function PillDetailMain(): React.ReactElement {
   const [infoSwitch, setInfoSwitch] = useState<boolean>(true);
@@ -28,7 +28,7 @@ function PillDetailMain(): React.ReactElement {
   return (
     <div className="h-[100vh] mt-20">
       <div className="mx-4">
-        <PillImg className="w-1/2 mx-auto my-6" />
+        {/* <PillImg className="w-1/2 mx-auto my-6" /> */}
 
         <div>
           <div className="grid grid-cols-12">
@@ -42,11 +42,19 @@ function PillDetailMain(): React.ReactElement {
             </div>
             <div className="grid content-center col-span-1 justify-items-end">
               <button onClick={likeOrNot}>
-                {/* {like ? (
-                  <HeartFillComponent className="w-8 h-8 pr-4 text-red-500" />
+                {like ? (
+                  <Image
+                    className="w-7 h-8"
+                    src={emptyHeart}
+                    alt="사진깨짐"
+                  />
                 ) : (
-                  <HeartComponent className="w-8 h-8 pr-4 text-red-500" />
-                )} */}
+                  <Image
+                    className="w-7 h-8"
+                    src={fillHeart}
+                    alt="사진깨짐"
+                  />
+                )}
               </button>
             </div>
           </div>

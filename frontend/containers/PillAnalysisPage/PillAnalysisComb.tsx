@@ -1,11 +1,26 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import PillAnalysisCombMem from './PillAnalysisCombMem';
 // import Image from 'next/image';
 // import eundan from '@/public/eundan.png';
 
-type Props = {};
+type InfoList = {
+  nutrientId: number;
+  nutrientName: string;
+  nutrientImageUrl: string;
+  nutrientBrand: string;
+};
 
-function PillAnalysisComb({}: Props) {
+type combination = {
+  combinationId: number;
+  nutrientInfoList: Array<InfoList>;
+};
+
+type Props = {
+  combination: combination;
+};
+
+function PillAnalysisComb(props: Props) {
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
   const selectThis = (event: React.MouseEvent) => {
@@ -37,79 +52,10 @@ function PillAnalysisComb({}: Props) {
               ✕
             </button>
           </div>
-          <div className="flex flex-wrap justify-between">
-            <div className="w-1/3 mt-6">
-              <div className="mx-auto bg-white rounded-lg w-28 h-28">
-                <div className="relative w-16 h-16 mx-auto">
-                  {/* <Image
-                    className="w-full h-full"
-                    src={eundan}
-                    alt="사진깨짐"
-                  /> */}
-                </div>
-                <div className="text-xs leading-3 text-center text-gray-400">
-                  고려은단
-                </div>
-                {/* 디자인상 이유로 영양제 이름 2줄에서 자름 ( 수정 가능 일단 2줄로 설정 ) */}
-                <div className="leading-4 text-center line-clamp-2">
-                  고려은단비타민C300
-                </div>
-              </div>
-            </div>
-            <div className="w-1/3 mt-6">
-              <div className="mx-auto bg-white rounded-lg w-28 h-28">
-                <div className="relative w-16 h-16 mx-auto">
-                  {/* <Image
-                    className="w-full h-full"
-                    src={eundan}
-                    alt="사진깨짐"
-                  /> */}
-                </div>
-                <div className="text-xs leading-3 text-center text-gray-400">
-                  고려은단
-                </div>
-                {/* 디자인상 이유로 영양제 이름 2줄에서 자름 ( 수정 가능 일단 2줄로 설정 ) */}
-                <div className="leading-4 text-center line-clamp-2">
-                  고려은단비타민C300
-                </div>
-              </div>
-            </div>
-            <div className="w-1/3 mt-6">
-              <div className="mx-auto bg-white rounded-lg w-28 h-28">
-                <div className="relative w-16 h-16 mx-auto">
-                  {/* <Image
-                    className="w-full h-full"
-                    src={eundan}
-                    alt="사진깨짐"
-                  /> */}
-                </div>
-                <div className="text-xs leading-3 text-center text-gray-400">
-                  고려은단
-                </div>
-                {/* 디자인상 이유로 영양제 이름 2줄에서 자름 ( 수정 가능 일단 2줄로 설정 ) */}
-                <div className="leading-4 text-center line-clamp-2">
-                  고려은단비타민C300
-                </div>
-              </div>
-            </div>
-            <div className="w-1/3 mt-6">
-              <div className="mx-auto bg-white rounded-lg w-28 h-28 ">
-                <div className="relative w-16 h-16 mx-auto">
-                  {/* <Image
-                    className="w-full h-full"
-                    src={eundan}
-                    alt="사진깨짐"
-                  /> */}
-                </div>
-                <div className="text-xs leading-3 text-center text-gray-400">
-                  고려은단
-                </div>
-                {/* 디자인상 이유로 영양제 이름 2줄에서 자름 ( 수정 가능 일단 2줄로 설정 ) */}
-                <div className="leading-4 text-center line-clamp-2">
-                  고려은단비타민C300
-                </div>
-              </div>
-            </div>
+          <div className="flex flex-wrap">
+            {props.combination.nutrientInfoList.map((item, idx) => (
+              <PillAnalysisCombMem nutrient={item} />
+            ))}
           </div>
         </div>
       </div>

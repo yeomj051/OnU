@@ -1,8 +1,8 @@
 import React from 'react';
 // import { PersonCircle } from '@emotion-icons/bootstrap/PersonCircle';
-// import { StarFill } from '@emotion-icons/bootstrap';
-import styled from '@emotion/styled';
-
+import Image from 'next/image';
+import fillStar from '../../public/fillStar.png';
+import emptyStar from '../../public/emptyStar.png';
 type Props = {
   review: PersonalReview;
 };
@@ -30,25 +30,29 @@ function PillDetailReviewBox(props: Props) {
     gender = '여';
   }
 
-  // function repeatStar(score: number): JSX.Element[] {
-  //   let arr = [];
-  //   for (let i = 0; i < score; i++) {
-  //     arr.push(
-  //       <p>
-  //         <StarFillComponent className="w-4 text-[#FFE70D]" />
-  //       </p>,
-  //     );
-  //   }
-  //   for (let i = 0; i < 5 - score; i++) {
-  //     arr.push(
-  //       <p>
-  //         <StarFillComponent className="w-4 text-gray-200" />
-  //       </p>,
-  //     );
-  //   }
+  function repeatStar(score: number): JSX.Element[] {
+    let arr = [];
+    for (let i = 0; i < score; i++) {
+      arr.push(
+        <p>
+          <Image src={fillStar} alt="fillStar" className="w-4 h-4" />
+        </p>,
+      );
+    }
+    for (let i = 0; i < 5 - score; i++) {
+      arr.push(
+        <p>
+          <Image
+            src={emptyStar}
+            alt="emptyStar"
+            className="w-4 h-4"
+          />
+        </p>,
+      );
+    }
 
-  //   return arr;
-  // }
+    return arr;
+  }
 
   return (
     <div className="bg-white min-h-[60px] px-5 py-30 rounded-lg mt-4">
@@ -64,7 +68,7 @@ function PillDetailReviewBox(props: Props) {
         </div>
         <div className="col-span-3 grid justify-items-end">
           <div className="text-sm">{props.review.date}</div>
-          {/* <div className="flex">{repeatStar(props.review.rate)}</div> */}
+          <div className="flex">{repeatStar(props.review.rate)}</div>
         </div>
       </div>
       <hr />

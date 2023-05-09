@@ -1,16 +1,18 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import PillImg from '../../public/jong_pill.svg';
-// import { Heart, HeartFill } from '@emotion-icons/bootstrap';
+// import PillImg from '../../public/jong_pill.svg';
 import PillCompareBadge from './PillCompareBadge';
 import PillCompareImg from './PillCompareImg';
 import PillCompareContent from './PillCompareContent';
 import PillCompareGage from './PillCompareGage';
-// import { CircleFill } from '@emotion-icons/bootstrap/CircleFill';
 import { itemStore } from '@/store/itemStore';
-import styled from '@emotion/styled';
+import fillHeart from '../../public/fillHeart.png';
+import emptyHeart from '../../public/emptyHeart.png';
+import yellowCircle from '../../public/yellowCircle.png';
+import greenCircle from '../../public/greenCircle.png';
+import redCircle from '../../public/redCircle.png';
 
-type Props = {};
+import Image from 'next/image';
 
 type compareAmount = {
   name: string | undefined;
@@ -23,11 +25,7 @@ type nutrient = {
   amount: number;
 };
 
-// const HeartComponent = styled(Heart)``;
-// const HeartFillComponent = styled(HeartFill)``;
-// const CircleFillComponent = styled(CircleFill)``;
-
-function PillCompareMain({}: Props) {
+function PillCompareMain() {
   const { items } = itemStore();
   //items.id로 영양제 정보 api 요청해올것
   useEffect(() => {}, []);
@@ -221,7 +219,7 @@ function PillCompareMain({}: Props) {
     <div className="h-[100%] mt-20">
       <div className="grid grid-cols-2 mx-4">
         <div className="col-span-1 pr-2">
-          <PillImg className="w-4/5 mx-auto my-6" />
+          {/* <PillImg className="w-4/5 mx-auto my-6" /> */}
 
           <div>
             <div className="grid grid-cols-4">
@@ -231,11 +229,19 @@ function PillCompareMain({}: Props) {
 
               <div className="grid content-center col-span-1 justify-items-end">
                 <button onClick={fisrtLikeOrNot}>
-                  {/* {fisrtLike ? (
-                    <HeartFillComponent className="w-8 h-8 pr-4 text-red-500" />
+                  {firstLike ? (
+                    <Image
+                      className="w-6 h-6"
+                      src={emptyHeart}
+                      alt="사진깨짐"
+                    />
                   ) : (
-                    <HeartComponent className="w-8 h-8 pr-4 text-red-500" />
-                  )} */}
+                    <Image
+                      className="w-6 h-6"
+                      src={fillHeart}
+                      alt="사진깨짐"
+                    />
+                  )}
                 </button>
               </div>
             </div>
@@ -246,7 +252,7 @@ function PillCompareMain({}: Props) {
           </div>
         </div>
         <div className="col-span-1 pl-2">
-          <PillImg className="w-4/5 mx-auto my-6" />
+          {/* <PillImg className="w-4/5 mx-auto my-6" /> */}
 
           <div>
             <div className="grid grid-cols-4">
@@ -256,11 +262,19 @@ function PillCompareMain({}: Props) {
 
               <div className="grid content-center col-span-1 justify-items-end">
                 <button onClick={secondLikeOrNot}>
-                  {/* {secondLike ? (
-                    <HeartFillComponent className="w-8 h-8 pr-4 text-red-500" />
+                  {secondLike ? (
+                    <Image
+                      className="w-6 h-6"
+                      src={emptyHeart}
+                      alt="사진깨짐"
+                    />
                   ) : (
-                    <HeartComponent className="w-8 h-8 pr-4 text-red-500" />
-                  )} */}
+                    <Image
+                      className="w-6 h-6"
+                      src={fillHeart}
+                      alt="사진깨짐"
+                    />
+                  )}
                 </button>
               </div>
             </div>
@@ -273,17 +287,6 @@ function PillCompareMain({}: Props) {
       </div>
       {/*여기는 파란부분 */}
       <div className="bg-[#F2F9FF] mt-8 h-full pt-6">
-        {/* <hr className="mx-4" />
-        <div className="grid py-4 mx-4 bg-white tabs justify-items-center">
-          <div className="">인증 정보</div>
-        </div>
-        <hr className="mx-4" />
-        <div className="mx-4">
-          <div className="grid grid-cols-2 py-2">
-            <div className="h-20 col-span-1 mr-2 bg-white border rounded-lg"></div>
-            <div className="h-20 col-span-1 ml-2 bg-white border rounded-lg"></div>
-          </div>
-        </div> */}
         <PillCompareBadge
           subject="인증정보"
           first={certificationA}
@@ -305,21 +308,33 @@ function PillCompareMain({}: Props) {
         </div>
         <hr className="mx-4" />
         <div className="col-span-1 py-4 mx-4 mt-2 mb-6 bg-white border rounded-lg">
-          <div className="flex flex-row-reverse ">
-            {/* <div className="flex mx-1 mr-3">
-              <CircleFillComponent className="w-3 mr-1 text-red-400" />
+          <div className="flex flex-row-reverse pr-2">
+            <div className="flex mx-1 items-center">
+              <Image
+                src={redCircle}
+                alt="빨강"
+                className="w-3 h-3 mr-1"
+              />
               <div>과다</div>
             </div>
-            <div className="flex mx-1">
-              <CircleFillComponent className="text-[#79D096] w-3 mr-1" />
+            <div className="flex mx-1 items-center">
+              <Image
+                src={greenCircle}
+                alt="초록"
+                className="w-3 h-3 mr-1"
+              />
               <div>적정</div>
             </div>
-            <div className="flex mx-1">
-              <CircleFillComponent className="w-3 mr-1 text-yellow-400" />
+            <div className="flex mx-1 items-center">
+              <Image
+                src={yellowCircle}
+                alt="노랑"
+                className="w-3 h-3 mr-1"
+              />
               <div>부족</div>
-            </div> */}
+            </div>
           </div>
-          <div className="grid content-center pl-2 mb-3">
+          <div className="grid content-center px-2 mb-3">
             {nutritionProps.map((nutrient, idx) => (
               <PillCompareGage
                 key={idx}

@@ -6,6 +6,40 @@ import { useState } from 'react';
 type Props = {};
 
 function PillAnalysisHave({}: Props) {
+  const data = {
+    message: true,
+    nutrientList: [
+      {
+        nutrientId: 6002000845,
+        nutrientName: '에스론 우먼 골드',
+        nutrientImageUrl:
+          'https://shopping-phinf.pstatic.net/main_1266476/12664762425.8.jpg',
+        nutrientBrand: '하이리빙',
+      },
+      {
+        nutrientId: 6002000845,
+        nutrientName: '에스론 우먼 골드',
+        nutrientImageUrl:
+          'https://shopping-phinf.pstatic.net/main_1266476/12664762425.8.jpg',
+        nutrientBrand: '하이리빙',
+      },
+      {
+        nutrientId: 6002000845,
+        nutrientName: '에스론 우먼 골드',
+        nutrientImageUrl:
+          'https://shopping-phinf.pstatic.net/main_1266476/12664762425.8.jpg',
+        nutrientBrand: '하이리빙',
+      },
+      {
+        nutrientId: 6002000845,
+        nutrientName: '에스론 우먼 골드',
+        nutrientImageUrl:
+          'https://shopping-phinf.pstatic.net/main_1266476/12664762425.8.jpg',
+        nutrientBrand: '하이리빙',
+      },
+    ],
+  };
+
   //이 영양제가 선택되었는지 여부를 저장
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
