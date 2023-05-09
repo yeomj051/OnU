@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import Image from 'next/image';
-import eundan from '../../public/eundan.png';
+import eundan from '@/public/eundan.png';
 
 function PillAnalysisHave() {
   //이 영양제가 선택되었는지 여부를 저장
