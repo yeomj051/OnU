@@ -54,7 +54,6 @@ function CompareDrawer() {
 
   React.useEffect(() => {
     setItemList(items);
-    console.log(itemList);
   }, [itemList, items]);
 
   const toggleDrawer = (newOpen: boolean) => () => {

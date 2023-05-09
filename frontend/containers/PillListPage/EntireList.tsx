@@ -1,7 +1,7 @@
 //'use client'
 
 import React, { useState } from 'react';
-import { SearchBar } from '@/components/common/SearchBar';
+// import { SearchBar } from '@/components/common/SearchBar';
 import ItemList from '@/containers/PillListPage/ItemList';
 import WorryCategoryList from '@/containers/PillListPage/WorryCategoryList';
 import IngredientCategoryList from '@/containers/PillListPage/IngredientCategoryList';
@@ -48,7 +48,7 @@ const EntireList = () => {
 
   return (
     <div className="grid grid-rows h-[100vh] bg-white pt-20 mx-4 space-y-8">
-      <SearchBar />
+      {/* <SearchBar /> */}
       <div id="list">
         <label className="ml-2 text-xl font-extrabold text-[#1E266E]">
           영양제 한눈에 보기
