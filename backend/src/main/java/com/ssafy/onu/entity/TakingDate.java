@@ -19,7 +19,7 @@ public class TakingDate {
     @Column(name = "taking_date_date")
     private String takingDateDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private User userId;
     @Builder
