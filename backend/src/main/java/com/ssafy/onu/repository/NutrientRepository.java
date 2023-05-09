@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface NutrientRepository extends JpaRepository<Nutrient, Integer> {
     Optional<Nutrient> findByNutrientId(Long nutrientId);
-
     List<Nutrient> findNutrientsByNutrientIdIn(List<Long> nutrientIds);
+    List<Nutrient> findByNutrientTypeId_NutrientTypeIdInAndNutrientChildAndNutrientPregnant(List<Integer> typeId, boolean nutrientChild, boolean pregnant);
 }

@@ -42,4 +42,13 @@ public class Nutrient {
 
     @Column
     private String nutrientMaterial;
+
+    @Column
+    private boolean nutrientPregnant;
+
+    @Column
+    private boolean nutrientChild;
+
+    @Column
+    private int nutrientGender;
 }
