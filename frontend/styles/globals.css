@@ -180,16 +180,17 @@ abbr[title] {
 }
 
 #searchbar > #searchbar-input {
-  transition: width 0.5s linear;
+  transition: width 0.4s linear;
   width: 300px;
 }
 
 #searchbar-hidden {
+  /* transition: visibility 0.5s linear; */
   visibility: hidden;
 }
 
 #searchbar-hidden > #searchbar-input-hidden {
-  transition: width 0.35s linear;
+  /* transition: width 0.2s linear; */
   width: 0px;
 }
 
@@ -202,4 +203,14 @@ abbr[title] {
   transition: visibility 0.35s linear;
   width: 0px;
   visibility: hidden;
+}
+
+.navbar-center {
+  transition: visibility 0.3s linear;
+  width: 150px;
+  visibility: visible;
+}
+
+.navbar-center-hidden {
+  visibility: collapse;
 }

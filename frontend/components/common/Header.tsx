@@ -96,14 +96,26 @@ const Header = (): React.ReactElement => {
           </ul>
         </div>
       </div>
-      {/* <div className="navbar-center">
-        <Link
-          href="/"
-          className="text-xl text-blue-900 normal-case btn btn-ghost"
-        >
-          <Logo />
-        </Link>
-      </div> */}
+
+      {isClicked ? (
+        <div className="absolute navbar-center left-1/3">
+          <Link
+            href="/"
+            className="text-xl text-blue-900 normal-case btn btn-ghost"
+          >
+            <Logo />
+          </Link>
+        </div>
+      ) : (
+        <div className="navbar-center-hidden">
+          <Link
+            href="/"
+            className="text-xl text-blue-900 normal-case btn btn-ghost"
+          >
+            <Logo />
+          </Link>
+        </div>
+      )}
 
       {!isClicked ? (
         <div className="navbar-end">
