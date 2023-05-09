@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import PillImg from '../../public/jong_pill.svg';
-import { Heart, HeartFill } from '@emotion-icons/bootstrap';
+// import { Heart, HeartFill } from '@emotion-icons/bootstrap';
 import PillDetailInfo from './PillDetailInfo';
 import PillDetailReview from './PillDetailReview';
 import tw from 'twin.macro';
@@ -19,8 +19,8 @@ type Props = {};
 
 // `;
 
-const HeartComponent = styled(Heart)``;
-const HeartFillComponent = styled(HeartFill)``;
+// const HeartComponent = styled(Heart)``;
+// const HeartFillComponent = styled(HeartFill)``;
 
 function PillDetailMain({}: Props): React.ReactElement {
   const [infoSwitch, setInfoSwitch] = useState<boolean>(true);
@@ -57,11 +57,11 @@ function PillDetailMain({}: Props): React.ReactElement {
             </div>
             <div className="col-span-1 grid justify-items-end content-center">
               <button onClick={likeOrNot}>
-                {like ? (
+                {/* {like ? (
                   <HeartFillComponent className="w-8 h-8 text-red-500 pr-4" />
                 ) : (
                   <HeartComponent className="w-8 h-8 text-red-500 pr-4" />
-                )}
+                )} */}
               </button>
             </div>
           </div>

@@ -1,12 +1,12 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import PillImg from '../../public/jong_pill.svg';
-import { Heart, HeartFill } from '@emotion-icons/bootstrap';
+// import { Heart, HeartFill } from '@emotion-icons/bootstrap';
 import PillCompareBadge from './PillCompareBadge';
 import PillCompareImg from './PillCompareImg';
 import PillCompareContent from './PillCompareContent';
 import PillCompareGage from './PillCompareGage';
-import { CircleFill } from '@emotion-icons/bootstrap/CircleFill';
+// import { CircleFill } from '@emotion-icons/bootstrap/CircleFill';
 import { itemStore } from '@/store/itemStore';
 import styled from '@emotion/styled';
 
@@ -23,16 +23,16 @@ type nutrient = {
   amount: number;
 };
 
-const HeartComponent = styled(Heart)``;
-const HeartFillComponent = styled(HeartFill)``;
-const CircleFillComponent = styled(CircleFill)``;
+// const HeartComponent = styled(Heart)``;
+// const HeartFillComponent = styled(HeartFill)``;
+// const CircleFillComponent = styled(CircleFill)``;
 
 function PillCompareMain({}: Props) {
   const { items } = itemStore();
   //items.id로 영양제 정보 api 요청해올것
   useEffect(() => {}, []);
 
-  const [fisrtLike, setFirstLike] = useState<boolean>(true);
+  const [firstLike, setFirstLike] = useState<boolean>(true);
   const [secondLike, setSecondLike] = useState<boolean>(true);
 
   //api 사용해서 받아올 내용 useState
@@ -210,7 +210,7 @@ function PillCompareMain({}: Props) {
 
   //좋아요 on/off
   const fisrtLikeOrNot = () => {
-    setFirstLike(!fisrtLike);
+    setFirstLike(!firstLike);
   };
 
   const secondLikeOrNot = () => {
@@ -231,11 +231,11 @@ function PillCompareMain({}: Props) {
 
               <div className="grid content-center col-span-1 justify-items-end">
                 <button onClick={fisrtLikeOrNot}>
-                  {fisrtLike ? (
+                  {/* {fisrtLike ? (
                     <HeartFillComponent className="w-8 h-8 pr-4 text-red-500" />
                   ) : (
                     <HeartComponent className="w-8 h-8 pr-4 text-red-500" />
-                  )}
+                  )} */}
                 </button>
               </div>
             </div>
@@ -256,11 +256,11 @@ function PillCompareMain({}: Props) {
 
               <div className="grid content-center col-span-1 justify-items-end">
                 <button onClick={secondLikeOrNot}>
-                  {secondLike ? (
+                  {/* {secondLike ? (
                     <HeartFillComponent className="w-8 h-8 pr-4 text-red-500" />
                   ) : (
                     <HeartComponent className="w-8 h-8 pr-4 text-red-500" />
-                  )}
+                  )} */}
                 </button>
               </div>
             </div>
@@ -306,7 +306,7 @@ function PillCompareMain({}: Props) {
         <hr className="mx-4" />
         <div className="col-span-1 py-4 mx-4 mt-2 mb-6 bg-white border rounded-lg">
           <div className="flex flex-row-reverse ">
-            <div className="flex mx-1 mr-3">
+            {/* <div className="flex mx-1 mr-3">
               <CircleFillComponent className="w-3 mr-1 text-red-400" />
               <div>과다</div>
             </div>
@@ -317,7 +317,7 @@ function PillCompareMain({}: Props) {
             <div className="flex mx-1">
               <CircleFillComponent className="w-3 mr-1 text-yellow-400" />
               <div>부족</div>
-            </div>
+            </div> */}
           </div>
           <div className="grid content-center pl-2 mb-3">
             {nutritionProps.map((nutrient, idx) => (
