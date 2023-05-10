@@ -29,6 +29,7 @@ public class MypageService {
     private final NutrientRepository nutrientRepository;
     private final ContinuousRepository continuousRepository;
     private final CombinationRepository combinationRepository;
+    private final InterestNutrientRepository interestNutrientRepository;
     private final RedisTemplate redisTemplate;
     private static final String COMMA = ",";
     private static final String NUTRIENT_ID = "nutrientId:";
@@ -173,5 +174,12 @@ public class MypageService {
             }
         });
         return result;
+    }
+
+    public boolean deleteInterestNutrient(int userId, Long nutrientId) {
+        Optional<InterestNutrient> interestNutrient = interestNutrientRepository.findByNutrient_NutrientIdAndUser_UserId(nutrientId, userId);
+        if(!interestNutrient.isPresent()) return false;
+        interestNutrientRepository.delete(interestNutrient.get());
+        return true;
     }
 }
