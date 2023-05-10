@@ -1,4 +1,6 @@
+import api from '@/apis/config';
 import { itemStore } from '@/store/itemStore';
+import userStore from '@/store/userStore';
 import Image from 'next/image';
 import React from 'react';
 
@@ -13,10 +15,25 @@ type Item = {
 const ItemList = (props: { itemList: Array<Item> }) => {
   // const itemDataList = props.data;
   const { items, setItems } = itemStore();
+  const { id } = userStore();
 
   const compareItems = (item: Item) => {
     if (items.length < 2) setItems(item);
     // console.log(item);
+  };
+
+  const addItemToInterest = (itemId: number): void => {
+    try {
+      api.addInterestPill(id, itemId);
+      console.log('success');
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleInterest = (itemId: number): void => {
+    if (window.confirm('관심 영양제로 추가하시겠습니까?'))
+      addItemToInterest(itemId);
   };
 
   return (
@@ -68,6 +85,7 @@ const ItemList = (props: { itemList: Array<Item> }) => {
                 <button
                   id="add-btn"
                   className="btn btn-sm border-[#90B5EA] text-[#90B5EA] btn-outline"
+                  onClick={() => handleInterest(item.id)}
                 >
                   추가하기
                 </button>
