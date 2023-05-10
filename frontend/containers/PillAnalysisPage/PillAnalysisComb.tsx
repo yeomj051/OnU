@@ -40,9 +40,9 @@ function PillAnalysisComb(props: Props) {
 
   //영양제 조합 삭제API 연결해서 조합 삭제
   const deleteCombination = (event: React.MouseEvent) => {
-    //이미 선택되어있는 상태였다면 x를 눌러 삭제했을 때 seledtedList에서 제거해줘야 함
-    if (isSelected) {
-    }
+    //이미 선택되어있는 상태였다면 x를 눌러 삭제했을 때 seledtedList에서 제거해줘야 함 (main에서 다시 api 호출하고 데이터 리렌더링되면 상관없음)
+    // if (isSelected) {
+    // }
 
     //삭제 api 연결
 

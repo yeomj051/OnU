@@ -5,6 +5,8 @@ import PillAnalysisComb from './PillAnalysisComb';
 import PillAnalysisHave from './PillAnalysisHave';
 import PillAnalysisLike from './PillAnalysisLike';
 import { useState, useEffect } from 'react';
+import PillAnalysisGraph from './PillAnalysisGraph';
+import { combinationStore } from '@/store/combinationStore';
 
 type combination = {
   combinationId: number;
@@ -98,6 +100,7 @@ function PillAnalysisMain() {
     ],
     message: 'success',
   };
+  const { combinations, setCombinations } = combinationStore();
 
   //API로 받아온 리스트 저장
   const [combinationList, setCombinationList] = useState<
@@ -108,7 +111,11 @@ function PillAnalysisMain() {
   //삭제된 조합 id 저장할 state => 근데 꼭 필요한가?? 자동 리렌더링 되면 api도 다시 받아올거니까 필요없을듯 일단 주석
   // const [deletedComb, setDeletedComb] = useState<number>(0);
 
+  const [showChart, setShowchart] = useState<number>(-1);
+  const [dataId, setDataId] = useState<number>(-1);
+
   useEffect(() => {
+    // setCombinations(data.combinationList);
     setCombinationList(data.combinationList);
   }, []);
 
@@ -176,8 +183,11 @@ function PillAnalysisMain() {
             </button>
           </div>
         </div>
-        <div className="w-full bg-white rounded-lg">
-          {/* <PillAnalysisGraph /> */}
+        <div className="w-full bg-white rounded-lg h-auto">
+          <PillAnalysisGraph
+            analysisType={showChart}
+            dataId={dataId}
+          />
         </div>
         <div className="">
           <div className="col-span-1 text-xl">나의 영양제 조합</div>

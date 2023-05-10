@@ -1,202 +1,153 @@
 import React from 'react';
-import { ResponsiveBar } from '@nivo/bar';
+// import { ResponsiveBar } from '@nivo/bar';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 
-type Props = {};
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+);
 
-function PillAnalysisGraph({}: Props) {
-  const data = [
-    {
-      country: 'AD',
-      'hot dog': 29,
-      'hot dogColor': 'hsl(218, 70%, 50%)',
-      burger: 100,
-      burgerColor: 'hsl(172, 70%, 50%)',
-      sandwich: 29,
-      sandwichColor: 'hsl(320, 70%, 50%)',
-      kebab: 17,
-      kebabColor: 'hsl(239, 70%, 50%)',
-      fries: 29,
-      friesColor: 'hsl(50, 70%, 50%)',
-      donut: 120,
-      donutColor: 'hsl(172, 70%, 50%)',
+export const options = {
+  scales: {
+    x: {
+      grid: {
+        drawOnChartArea: false, //차트 뒤 가로 격자 없애줌
+        drawTicks: false, //그래프의 눈금 라벨 없애주는 설정
+        drawBorder: false, //그래프의 눈금 라벨 있는 쪽 border 없애주는 설정
+      },
+      beginAtZero: true, //그래프의 눈금 라벨 없애주는 설정
+      ticks: {
+        //그래프의 index 표시 없애주는 설정
+        display: false,
+      },
     },
-    {
-      country: 'AE',
-      'hot dog': 185,
-      'hot dogColor': 'hsl(54, 70%, 50%)',
-      burger: 89,
-      burgerColor: 'hsl(214, 70%, 50%)',
-      sandwich: 177,
-      sandwichColor: 'hsl(336, 70%, 50%)',
-      kebab: 96,
-      kebabColor: 'hsl(190, 70%, 50%)',
-      fries: 194,
-      friesColor: 'hsl(230, 70%, 50%)',
-      donut: 75,
-      donutColor: 'hsl(200, 70%, 50%)',
+    y: {
+      grid: {
+        drawOnChartArea: false, //차트 뒤 세로 격자 없애줌
+      },
     },
-    {
-      country: 'AF',
-      'hot dog': 52,
-      'hot dogColor': 'hsl(76, 70%, 50%)',
-      burger: 97,
-      burgerColor: 'hsl(274, 70%, 50%)',
-      sandwich: 118,
-      sandwichColor: 'hsl(318, 70%, 50%)',
-      kebab: 41,
-      kebabColor: 'hsl(337, 70%, 50%)',
-      fries: 65,
-      friesColor: 'hsl(325, 70%, 50%)',
-      donut: 20,
-      donutColor: 'hsl(302, 70%, 50%)',
+  },
+
+  indexAxis: 'y' as const, //이부분이 bar차트의 가로 세로 구분 위치
+  elements: {
+    bar: {
+      borderWidth: 2, //이건 legend에 붙어있는 bar(색 표현)의 테두리 두께 설정
     },
-    {
-      country: 'AG',
-      'hot dog': 137,
-      'hot dogColor': 'hsl(191, 70%, 50%)',
-      burger: 67,
-      burgerColor: 'hsl(128, 70%, 50%)',
-      sandwich: 134,
-      sandwichColor: 'hsl(344, 70%, 50%)',
-      kebab: 86,
-      kebabColor: 'hsl(182, 70%, 50%)',
-      fries: 33,
-      friesColor: 'hsl(229, 70%, 50%)',
-      donut: 178,
-      donutColor: 'hsl(109, 70%, 50%)',
+  },
+  responsive: true,
+  plugins: {
+    legend: {
+      //legend(옆에 붙어있는 어떤 데이터인지 정보제공 색 ( 범례 ))
+      position: 'right' as const,
     },
-    {
-      country: 'AI',
-      'hot dog': 87,
-      'hot dogColor': 'hsl(157, 70%, 50%)',
-      burger: 167,
-      burgerColor: 'hsl(21, 70%, 50%)',
-      sandwich: 71,
-      sandwichColor: 'hsl(24, 70%, 50%)',
-      kebab: 127,
-      kebabColor: 'hsl(330, 70%, 50%)',
-      fries: 10,
-      friesColor: 'hsl(256, 70%, 50%)',
-      donut: 44,
-      donutColor: 'hsl(140, 70%, 50%)',
+    tooltip: {
+      //tooltip을 밑에서 올라오는 말풍선으로 만드는 속성
+      yAlign: 'bottom',
     },
+  },
+};
+
+const labels = [
+  '비타민A',
+  '비타민B',
+  '비타민C',
+  '비타민D',
+  '비타민E',
+  '비타민F',
+  '비타민G',
+  '비타민H',
+  '비타민I',
+  '비타민G',
+  '비타민H',
+
+  '비타민H',
+  '비타민I',
+];
+
+export const data = {
+  labels,
+  datasets: [
     {
-      country: 'AL',
-      'hot dog': 46,
-      'hot dogColor': 'hsl(302, 70%, 50%)',
-      burger: 141,
-      burgerColor: 'hsl(252, 70%, 50%)',
-      sandwich: 119,
-      sandwichColor: 'hsl(122, 70%, 50%)',
-      kebab: 183,
-      kebabColor: 'hsl(29, 70%, 50%)',
-      fries: 20,
-      friesColor: 'hsl(251, 70%, 50%)',
-      donut: 127,
-      donutColor: 'hsl(272, 70%, 50%)',
+      label: '과연', //legend 이름
+      //위 라벨은 툴팁처럼 써도 될듯
+      data: [4, 5, 6, 7, 8, 9, 10],
+      barThickness: 13, //bar의 두께 조절해주는 설정
+      borderRadius: 10,
+      borderColor: [
+        'rgba(255, 99, 132, 0.7)', //컬러코드 1, 2, 3, opacity
+        'rgba(255, 159, 64, 0.7)',
+        'rgba(255, 205, 86, 0.7)',
+        'rgba(75, 192, 192, 0.7)',
+        'rgba(54, 162, 235, 0.7)',
+        'rgba(153, 102, 255, 0.7)',
+        'rgba(201, 203, 207, 0.7)',
+      ],
+      backgroundColor: [
+        'rgba(255, 99, 132, 0.7)',
+        'rgba(255, 159, 64, 0.7)',
+        'rgba(255, 205, 86, 0.7)',
+        'rgba(75, 192, 192, 0.7)',
+        'rgba(54, 162, 235, 0.7)',
+        'rgba(153, 102, 255, 0.7)',
+        'rgba(201, 203, 207, 0.7)',
+      ],
+      // hoverborderColor: [
+      //   //hover시 색 변하도록
+      //   'rgba(255, 99, 132, 1)',
+      //   'rgba(255, 159, 64, 1)',
+      //   'rgba(255, 205, 86, 1)',
+      //   'rgba(75, 192, 192, 1)',
+      //   'rgba(54, 162, 235, 1)',
+      //   'rgba(153, 102, 255, 1)',
+      //   'rgba(201, 203, 207, 1)',
+      // ],
+      // hoverBackgroundColor: [
+      //   'rgba(255, 99, 132, 1)',
+      //   'rgba(255, 159, 64, 1)',
+      //   'rgba(255, 205, 86, 1)',
+      //   'rgba(75, 192, 192, 1)',
+      //   'rgba(54, 162, 235, 1)',
+      //   'rgba(153, 102, 255, 1)',
+      //   'rgba(201, 203, 207, 1)',
+      // ],
     },
-    {
-      country: 'AM',
-      'hot dog': 175,
-      'hot dogColor': 'hsl(54, 70%, 50%)',
-      burger: 98,
-      burgerColor: 'hsl(1, 70%, 50%)',
-      sandwich: 133,
-      sandwichColor: 'hsl(8, 70%, 50%)',
-      kebab: 37,
-      kebabColor: 'hsl(27, 70%, 50%)',
-      fries: 83,
-      friesColor: 'hsl(78, 70%, 50%)',
-      donut: 177,
-      donutColor: 'hsl(122, 70%, 50%)',
-    },
-  ];
+  ],
+};
+
+type Props = {
+  analysisType: number;
+  dataId: number;
+};
+
+function PillAnalysisGraph(props: Props) {
+  // useEffect(()=>{
+  //   //-1일경우는 복용중인영양제로 리스트를 보여준다.
+  //   if(props.analysisType===-1){
+
+  //   }else if(props.analysisType==0){ //0일경우는 저장된 조합 누를경우
+
+  //   }else{//1일경우는 조합 만들면서 복용중/관심 누를때
+
+  //   }
+
+  // },[])
+
   return (
-    <div>
-      <ResponsiveBar
-        data={data}
-        keys={[
-          'hot dog',
-          'burger',
-          'sandwich',
-          'kebab',
-          'fries',
-          'donut',
-        ]}
-        indexBy="country"
-        margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
-        padding={0.3}
-        layout="horizontal"
-        valueScale={{ type: 'linear' }}
-        indexScale={{ type: 'band', round: true }}
-        colors={{ scheme: 'nivo' }}
-        defs={[
-          {
-            id: 'dots',
-            type: 'patternDots',
-            background: 'inherit',
-            color: '#38bcb2',
-            size: 4,
-            padding: 1,
-            stagger: true,
-          },
-          {
-            id: 'lines',
-            type: 'patternLines',
-            background: 'inherit',
-            color: '#eed312',
-            rotation: -45,
-            lineWidth: 6,
-            spacing: 10,
-          },
-        ]}
-        fill={[
-          {
-            match: {
-              id: 'fries',
-            },
-            id: 'dots',
-          },
-          {
-            match: {
-              id: 'sandwich',
-            },
-            id: 'lines',
-          },
-        ]}
-        borderColor={{
-          from: 'color',
-          modifiers: [['darker', 1.6]],
-        }}
-        axisTop={null}
-        axisRight={null}
-        axisBottom={null}
-        axisLeft={{
-          tickSize: 0,
-          tickPadding: 8,
-          tickRotation: 0,
-          legend: '',
-          legendPosition: 'middle',
-          legendOffset: -40,
-        }}
-        enableGridY={false}
-        labelSkipWidth={12}
-        labelSkipHeight={12}
-        labelTextColor={{
-          from: 'color',
-          modifiers: [['darker', 1.6]],
-        }}
-        legends={[]}
-        role="application"
-        ariaLabel="Nivo bar chart demo"
-        barAriaLabel={(e) =>
-          e.id +
-          ': ' +
-          e.formattedValue +
-          ' in country: ' +
-          e.indexValue
-        }
-      />
+    <div className="p-6">
+      <Bar options={options} data={data} className="w-full h-full" />
     </div>
   );
 }
