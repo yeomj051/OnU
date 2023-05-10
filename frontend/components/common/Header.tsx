@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import Logo from 'public/logo.svg';
 
 const Header = (): React.ReactElement => {
-  const [isClicked, setIsClicked] = useState(false);
-
+  const [isClicked, setIsClicked] = useState(true);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const router = useRouter();
+  const inputRef = useRef(null);
 
   //입력결과 state로 저장
   const handleInput = (
@@ -27,9 +27,9 @@ const Header = (): React.ReactElement => {
       setIsClicked(!isClicked);
       return;
     } else {
+      setSearchKeyword('');
       setIsClicked(!isClicked);
       router.push(`/search?query=${searchKeyword}`);
-      setSearchKeyword('');
     }
 
     //next/router(Next.js 13이전 버전)에서 사용하던 방식
@@ -51,8 +51,8 @@ const Header = (): React.ReactElement => {
           return;
         } else {
           setIsClicked(!isClicked);
-          router.push(`/search?query=${searchKeyword}`);
           setSearchKeyword('');
+          router.push(`/search?query=${searchKeyword}`);
         }
         break;
     }
@@ -61,6 +61,10 @@ const Header = (): React.ReactElement => {
   const handleAlarm = () => {
     if (window.confirm('복용 알림을 설정하시겠습니까?'))
       router.push('/user/phoneauth');
+  };
+
+  const startSearch = () => {
+    setIsClicked(!isClicked);
   };
 
   return (
@@ -130,6 +134,8 @@ const Header = (): React.ReactElement => {
               className="w-full max-w-xs input input-bordered input-sm"
               onChange={handleInput}
               onKeyDown={handleKeypress}
+              value={searchKeyword}
+              ref={inputRef}
             />
 
             <button
@@ -211,7 +217,7 @@ const Header = (): React.ReactElement => {
           <button
             id="btn-search"
             className="btn btn-ghost btn-circle"
-            onClick={() => setIsClicked(!isClicked)}
+            onClick={startSearch}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
