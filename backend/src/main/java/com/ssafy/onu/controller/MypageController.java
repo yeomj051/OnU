@@ -6,8 +6,10 @@ import com.ssafy.onu.dto.request.ReqReviewCreateFormDto;
 import com.ssafy.onu.dto.request.ReqUserInfoDto;
 import com.ssafy.onu.dto.response.*;
 import com.ssafy.onu.entity.*;
+import com.ssafy.onu.repository.UserRepository;
 import com.ssafy.onu.service.InterestNutrientService;
 import com.ssafy.onu.service.MypageService;
+import com.ssafy.onu.service.TakingNutrientService;
 import com.ssafy.onu.util.TokenUtils;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -35,6 +37,7 @@ public class MypageController {
 
     private final MypageService mypageService;
     private final InterestNutrientService interestNutrientService;
+    private final TakingNutrientService takingNutrientService;
 
     @ApiOperation(value = "마이페이지 회원 정보 조회", notes = "현재 로그인한 사용자의 회원 정보를 조회한다.", response = Map.class)
     @GetMapping("/{userId}")
@@ -303,6 +306,53 @@ public class MypageController {
             return new ResponseEntity<>(resultMap, status);
         }
         if (mypageService.deleteInterestNutrient(userId, nutrientId)) {
+            resultMap.put(MESSAGE, SUCCESS);
+            return new ResponseEntity<>(resultMap, HttpStatus.OK);
+        } else {
+            resultMap.put(MESSAGE, FAIL);
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    //복용중인 영양제 등록
+    @ApiOperation(value = "복용중인 영양제 등록", notes = "사용자가 복용중인 영양제를 등록합니다.", response = Map.class)
+    @PostMapping("/{userId}/taking/{nutrientId}")
+    public ResponseEntity<Map<String, Object>> createTakingNutrient(@ApiParam(value = "회원 아이디", example = "1") @PathVariable int userId,
+                                                                    @ApiParam(value = "영양제 아이디", example = "4002000847") @PathVariable Long nutrientId, Principal principal) {
+        Map<String, Object> resultMap = new HashMap<>();
+        int result = takingNutrientService.createTakingNutrient(userId, nutrientId);
+
+        if(result == 1) {
+            resultMap.put(MESSAGE, SUCCESS);
+            return new ResponseEntity<>(resultMap, HttpStatus.OK);
+        } else {
+            resultMap.put(MESSAGE, FAIL);
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    //복용중인 영양제 목록 조회
+    @ApiOperation(value = "복용중인 영양제 목록 조회", notes = "사용자가 복용중인 영양제 목록을 조회합니다.", response = Map.class)
+    @GetMapping("/{userId}/taking")
+    public ResponseEntity<Map<String, Object>> getTakingNutrient(@ApiParam(value = "회원 아이디", example = "1") @PathVariable int userId, Principal principal) {
+        Map<String, Object> resultMap = new HashMap<>();
+
+        List<ResponseTakingNutrientDto> takingNutrientDtoList = takingNutrientService.getTakingNutrientList(userId);
+        resultMap.put("takingNutrientList", takingNutrientDtoList);
+        resultMap.put(MESSAGE, SUCCESS);
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
+    //복용중인 영양제 삭제
+    @ApiOperation(value = "복용중인 영양제를 삭제합니다.", notes = "복용중인 영양제에서 해당 영양제를 삭제합니다.", response = Map.class)
+    @DeleteMapping("/{userId}/taking/{nutrientId}")
+    public ResponseEntity<Map<String, Object>> deleteTakingNutrient(@ApiParam(value = "회원 아이디", example = "1") @PathVariable int userId,
+                                                                    @ApiParam(value = "영양제 아이디", example = "4002000847") @PathVariable Long nutrientId, Principal principal) {
+        Map<String, Object> resultMap = new HashMap<>();
+
+        int result = takingNutrientService.deleteTakingNutrient(userId, nutrientId);
+
+        if(result == 1) {
             resultMap.put(MESSAGE, SUCCESS);
             return new ResponseEntity<>(resultMap, HttpStatus.OK);
         } else {
