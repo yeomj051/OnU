@@ -1,3 +1,4 @@
+import React from 'react';
 import Image from 'next/image';
 import ButtonGroup from './ButtonGroup';
 import profileImg1 from '@/public/liquid.png';
@@ -18,13 +19,15 @@ const iconImgSet = [
   profileImg4,
 ];
 
-const Profile = () => {
-  const bgRandom = Math.floor(
-    Math.random() * (bgImgSet.length - 0.5),
-  );
-  const iconRandom = Math.floor(
-    Math.random() * (iconImgSet.length - 0.5),
-  );
+const Profile = (): React.ReactElement => {
+  // const bgRandom = Math.floor(
+  //   Math.random() * (bgImgSet.length - 0.5),
+  // );
+  // const iconRandom = Math.floor(
+  //   Math.random() * (iconImgSet.length - 0.5),
+  // );
+  const bgRandom = 0;
+  const iconRandom = 0;
 
   //캘린더 조회 api 호출
 
