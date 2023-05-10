@@ -18,13 +18,24 @@ type combination = {
 
 type Props = {
   combination: combination;
+  selectCombination: (id: number) => void;
+  selectedComb: number;
+  // deleteCombination: (id: number) => void;
 };
 
 function PillAnalysisComb(props: Props) {
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (props.selectedComb === props.combination.combinationId) {
+      setIsSelected(true);
+    } else {
+      setIsSelected(false);
+    }
+  }, [props.selectedComb]);
+
   const selectThis = (event: React.MouseEvent) => {
-    setIsSelected(!isSelected);
+    props.selectCombination(props.combination.combinationId);
   };
 
   //영양제 조합 삭제API 연결해서 조합 삭제
@@ -32,6 +43,11 @@ function PillAnalysisComb(props: Props) {
     //이미 선택되어있는 상태였다면 x를 눌러 삭제했을 때 seledtedList에서 제거해줘야 함
     if (isSelected) {
     }
+
+    //삭제 api 연결
+
+    // //그리고 자기 아이디 부모에게 전달
+    // props.deleteCombination(props.combination.combinationId);
 
     event.stopPropagation();
   };
