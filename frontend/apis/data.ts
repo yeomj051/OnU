@@ -1,12 +1,11 @@
 type Item = {
   id: number; //itemId
   name: string; //제품명
-  rating?: number;
+  rating: number;
   manufacturer?: string; //제조사
   imgUrl: string; //썸네일 이미지
   itemUrl: string; //상세정보 링크
 };
-
 export const itemDataList: Array<Item> = [
   {
     id: 1,

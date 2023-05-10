@@ -61,13 +61,13 @@ const ItemList = (props: { itemList: Array<Item> }) => {
             <div id="buttons" className="flex justify-end space-x-2">
               <button
                 id="update-btn"
-                className="btn btn-sm border-[#90B5EA] text-[#90B5EA] btn-outline"
+                className="btn btn-sm border-none text-[#909090] btn-outline"
               >
                 수정
               </button>
               <button
                 id="delete-btn"
-                className="btn btn-sm border-[#90B5EA] text-[#90B5EA] btn-outline"
+                className="btn btn-sm border-none text-[#909090] btn-outline"
               >
                 삭제
               </button>
