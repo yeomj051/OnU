@@ -29,7 +29,6 @@ public class TakingNutrientService {
         if(!user.isPresent()) return 0;
         if(!nutrient.isPresent()) return 0;
 
-        System.out.println("여까진 온다");
         ReqTakingNutrientDto reqTakingNutrientDto = new ReqTakingNutrientDto();
         reqTakingNutrientDto.setNutrient(nutrient.get());
         reqTakingNutrientDto.setUser(user.get());
