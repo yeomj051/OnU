@@ -24,7 +24,7 @@ const ItemList = (props: { itemList: Array<Item> }) => {
             <Image
               src={item.imgUrl}
               alt="item-img"
-              width={140}
+              width={100}
               height={100}
             />
           </div>
