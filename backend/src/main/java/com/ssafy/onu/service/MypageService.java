@@ -185,6 +185,7 @@ public class MypageService {
             redisUtil.cacheNutrient(nID, map);
         }
         return new ResponseNutrientIngredientDto(nutrientId,nutrientIngredientInfoList);
+    }
 
     public boolean deleteInterestNutrient(int userId, Long nutrientId) {
         Optional<InterestNutrient> interestNutrient = interestNutrientRepository.findByNutrient_NutrientIdAndUser_UserId(nutrientId, userId);
