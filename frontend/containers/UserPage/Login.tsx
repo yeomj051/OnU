@@ -1,14 +1,12 @@
 //'use client'
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import Main from '/public/main.svg';
 import Image from 'next/image';
 import kakao from '/public/kakao_login_large_wide.png';
 import Link from 'next/link';
 
 const Login = () => {
-  useEffect((): void => {}, []);
-
   return (
     <div className="grid grid-rows h-[100vh] bg-white pt-20">
       {/* 로고화면

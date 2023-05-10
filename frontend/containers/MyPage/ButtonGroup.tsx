@@ -14,7 +14,7 @@ const ButtonGroup = () => {
     >
       <button
         className="flex flex-col items-center col-start-1 col-end-2"
-        onClick={() => router.push('/')}
+        onClick={() => router.push('/mypage')}
       >
         <HeartIcon />
         <span>영양분석</span>
