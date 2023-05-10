@@ -315,8 +315,10 @@ public class MypageController {
     }
 
     //복용중인 영양제 등록
+    @ApiOperation(value = "복용중인 영양제 등록", notes = "사용자가 복용중인 영양제를 등록합니다.", response = Map.class)
     @PostMapping("/{userId}/taking/{nutrientId}")
-    public ResponseEntity<Map<String, Object>> createTakingNutrient(@PathVariable int userId, @PathVariable Long nutrientId, Principal principal) {
+    public ResponseEntity<Map<String, Object>> createTakingNutrient(@ApiParam(value = "회원 아이디", example = "1") @PathVariable int userId,
+                                                                    @ApiParam(value = "영양제 아이디", example = "4002000847") @PathVariable Long nutrientId, Principal principal) {
         Map<String, Object> resultMap = new HashMap<>();
         int result = takingNutrientService.createTakingNutrient(userId, nutrientId);
 
@@ -330,8 +332,9 @@ public class MypageController {
     }
 
     //복용중인 영양제 목록 조회
+    @ApiOperation(value = "복용중인 영양제 목록 조회", notes = "사용자가 복용중인 영양제 목록을 조회합니다.", response = Map.class)
     @GetMapping("/{userId}/taking")
-    public ResponseEntity<Map<String, Object>> getTakingNutrient(@PathVariable int userId, Principal principal) {
+    public ResponseEntity<Map<String, Object>> getTakingNutrient(@ApiParam(value = "회원 아이디", example = "1") @PathVariable int userId, Principal principal) {
         Map<String, Object> resultMap = new HashMap<>();
 
         List<ResponseTakingNutrientDto> takingNutrientDtoList = takingNutrientService.getTakingNutrientList(userId);
@@ -341,8 +344,10 @@ public class MypageController {
     }
 
     //복용중인 영양제 삭제
+    @ApiOperation(value = "복용중인 영양제를 삭제합니다.", notes = "복용중인 영양제에서 해당 영양제를 삭제합니다.", response = Map.class)
     @DeleteMapping("/{userId}/taking/{nutrientId}")
-    public ResponseEntity<Map<String, Object>> deleteTakingNutrient(@PathVariable int userId, @PathVariable Long nutrientId, Principal principal) {
+    public ResponseEntity<Map<String, Object>> deleteTakingNutrient(@ApiParam(value = "회원 아이디", example = "1") @PathVariable int userId,
+                                                                    @ApiParam(value = "영양제 아이디", example = "4002000847") @PathVariable Long nutrientId, Principal principal) {
         Map<String, Object> resultMap = new HashMap<>();
 
         int result = takingNutrientService.deleteTakingNutrient(userId, nutrientId);
