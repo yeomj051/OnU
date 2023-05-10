@@ -10,17 +10,16 @@ export const SearchBar = () => {
     e: React.ChangeEvent<HTMLInputElement>,
   ): void => {
     e.preventDefault();
-
     setSearchKeyword(e.target.value);
   };
 
   const handleSearch = (): void => {
     //검색결과 페이지로 이동
-
     //검색어가 없거나 공백일 경우 검색하지 않음
     if (!searchKeyword.trim()) return;
+    alert(searchKeyword);
     router.push(`/search?query=${searchKeyword}`);
-
+    // setSearchKeyword('');
     //next/router(Next.js 13이전 버전)에서 사용하던 방식
     // router.push({
     //   pathname: '/search',
@@ -36,6 +35,7 @@ export const SearchBar = () => {
       case 'Enter':
         if (!searchKeyword.trim()) return;
         router.push(`/search?query=${searchKeyword}`);
+        // setSearchKeyword('');
         break;
     }
   };

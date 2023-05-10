@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import React from 'react';
 
 type Item = {
@@ -11,6 +12,7 @@ type Item = {
 
 const ItemList = (props: { itemList: Array<Item> }) => {
   // const itemDataList = props.data;
+  const router = useRouter();
 
   return (
     <div className="grid grid-cols-2 gap-4 w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md items-baseline px-8">
@@ -19,6 +21,8 @@ const ItemList = (props: { itemList: Array<Item> }) => {
           id="item"
           className="flex flex-col items-center w-[180px] my-4 min-h-28"
           key={index}
+          // onClick={() => router.push(`${item.itemUrl}`)}
+          style={{ cursor: 'pointer' }}
         >
           <div id="item-img" className="mask mask-square">
             <Image
