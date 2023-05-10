@@ -1,37 +1,44 @@
 import { create } from 'zustand';
 
-type Have = {
+type Ingredient = {
+  ingredientId: number;
+  ingredientName: String;
+  ingredientAmount: String;
+};
+
+type have = {
   nutrientId: number;
-  nutrientName: string;
-  nutrientImageUrl: string;
-  nutrientBrand: string;
+  nutrientName: String;
+  nutrientImageUrl: String;
+  nutrientBrand: String;
+  nutrientIngredientList: Array<Ingredient>;
 };
 
-type HaveState = {
-  HaveList: Array<Have>;
+type haveState = {
+  haveList: Array<have>;
 
-  setHaves: (newHave: Have) => void;
-  removeHave: (nutrientId: number) => void;
-  resetHaves: () => void;
+  sethaves: (newhave: have) => void;
+  removehave: (nutrientId: number) => void;
+  resethaves: () => void;
 };
 
-export const HaveStore = create<HaveState>((set) => ({
-  HaveList: [],
+export const haveStore = create<haveState>((set) => ({
+  haveList: [],
 
-  setHaves: (newHave: Have): void =>
-    set((state: HaveState): { HaveList: Array<Have> } => ({
-      HaveList: [...state.HaveList, newHave],
+  sethaves: (newhave: have): void =>
+    set((state: haveState): { haveList: Array<have> } => ({
+      haveList: [...state.haveList, newhave],
     })),
 
-  removeHave: (HaveId: number): void =>
-    set((state: HaveState): { HaveList: Array<Have> } => ({
-      HaveList: state.HaveList.filter(
-        (Have: Have) => Have.nutrientId !== HaveId,
+  removehave: (haveId: number): void =>
+    set((state: haveState): { haveList: Array<have> } => ({
+      haveList: state.haveList.filter(
+        (have: have) => have.nutrientId !== haveId,
       ),
     })),
 
-  resetHaves: (): void =>
+  resethaves: (): void =>
     set(() => ({
-      HaveList: [],
+      haveList: [],
     })),
 }));

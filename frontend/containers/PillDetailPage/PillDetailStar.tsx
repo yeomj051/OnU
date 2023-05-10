@@ -1,6 +1,8 @@
 import React from 'react';
-// import { StarFill } from '@emotion-icons/bootstrap';
 import styled from '@emotion/styled';
+import Image from 'next/image';
+// import { fillFiveStar } from '../../public/fillFiveStar.png';
+// import { emptyFiveStar } from '../../public/emptyFiveStar.png';
 
 type Props = {
   starRate: number;
@@ -9,29 +11,25 @@ type Props = {
 // const StarFillComponent = styled(StarFill)``;
 
 function PillDetailStar(props: Props) {
-  return (
-    <div className=" z-40 my-6 border border-blue-950 overflow-hidden">
-      {/* <div
-        className="text-[#FFE70D] flex z-10 relative h-8 w-[100px]"
-        // className={` text-[#FFE70D] flex z-10 w-[${starRate}%] absolute`}
-        style={{ width: props.starRate }}
-      >
-        <StarFillComponent />
-        <StarFillComponent />
-        <StarFillComponent />
-        <StarFillComponent />
-        <StarFillComponent />
-      </div>
-
-      <div className="text-gray-200 flex absolute h-8 w-[100px]">
-        <StarFillComponent />
-        <StarFillComponent />
-        <StarFillComponent />
-        <StarFillComponent />
-        <StarFillComponent />
-      </div> */}
-    </div>
-  );
+  // return (
+  //   // <div>
+  //   //   <div
+  //   //     className="z-1000 ml-[55px] mr-[10px] h-[19px] overflow-hidden"
+  //   //     style={{ width: '100px' }}
+  //   //   >
+  //   //     <Image
+  //   //       className="z-10 h-[19px] w-[100px]"
+  //   //       src={fillFiveStar}
+  //   //       alt="사진깨짐"
+  //   //     />
+  //   //   </div>
+  //   //   <Image
+  //   //     className="absolute ml-[84px] w-[100px] h-[19px]"
+  //   //     src={fillFiveStar}
+  //   //     alt="사진깨짐"
+  //   //   />
+  //   // </div>
+  // );
 }
 
 export default PillDetailStar;

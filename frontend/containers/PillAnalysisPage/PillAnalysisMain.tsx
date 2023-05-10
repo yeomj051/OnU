@@ -5,6 +5,8 @@ import PillAnalysisComb from './PillAnalysisComb';
 import PillAnalysisHave from './PillAnalysisHave';
 import PillAnalysisLike from './PillAnalysisLike';
 import { useState, useEffect } from 'react';
+import PillAnalysisGraph from './PillAnalysisGraph';
+import { combinationStore } from '@/store/combinationStore';
 
 type combination = {
   combinationId: number;
@@ -98,14 +100,29 @@ function PillAnalysisMain() {
     ],
     message: 'success',
   };
+  const { combinations, setCombinations } = combinationStore();
 
+  //API로 받아온 리스트 저장
   const [combinationList, setCombinationList] = useState<
     Array<combination>
   >([]);
+  //어떤 조합이 선택되어있는지 id 저장
+  const [selectedComb, setSelectedComb] = useState<number>(0);
+  //삭제된 조합 id 저장할 state => 근데 꼭 필요한가?? 자동 리렌더링 되면 api도 다시 받아올거니까 필요없을듯 일단 주석
+  // const [deletedComb, setDeletedComb] = useState<number>(0);
+
+  const [showChart, setShowchart] = useState<number>(-1);
+  const [dataId, setDataId] = useState<number>(-1);
 
   useEffect(() => {
+    // setCombinations(data.combinationList);
     setCombinationList(data.combinationList);
   }, []);
+
+  // useEffect(() => {
+  //   //여기에서 deletecomb랑 아이디 같은 영양제 조합
+  //   //combinationList에서 filter로 제거해줌
+  // }, [deletedComb]);
 
   //조합(선택한 영양제id 리스트로 저장)
   // const [choiceList, setChoiceList] = useState<Array<number>>([]);
@@ -114,6 +131,13 @@ function PillAnalysisMain() {
 
   // 관심 영양제 추가하는 함수
   const addLikeList = () => {};
+
+  const selectCombination = (id: number) => {
+    setSelectedComb(id);
+  };
+  // const deleteCombination = (id: number) => {
+  //   setSelectedComb(id);
+  // };
 
   return (
     <div className="h-[100vh] mt-20">
@@ -159,13 +183,21 @@ function PillAnalysisMain() {
             </button>
           </div>
         </div>
-        <div className="w-full bg-white rounded-lg">
-          {/* <PillAnalysisGraph /> */}
+        <div className="w-full bg-white rounded-lg h-auto">
+          <PillAnalysisGraph
+            analysisType={showChart}
+            dataId={dataId}
+          />
         </div>
         <div className="">
           <div className="col-span-1 text-xl">나의 영양제 조합</div>
           {combinationList.map((combination, idx) => (
-            <PillAnalysisComb combination={combination} />
+            <PillAnalysisComb
+              combination={combination}
+              selectCombination={selectCombination}
+              selectedComb={selectedComb}
+              // deleteCombination={deleteCombination}
+            />
           ))}
         </div>
       </div>

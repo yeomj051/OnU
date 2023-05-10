@@ -1,39 +1,32 @@
 import { create } from 'zustand';
 
-type Ingredient = {
-  ingredientId: number;
-  ingredientName: String;
-  ingredientAmount: String;
-};
-
-type Like = {
+type like = {
   nutrientId: number;
-  nutrientName: String;
-  nutrientImageUrl: String;
-  nutrientBrand: String;
-  nutrientIngredientList: Array<Ingredient>;
+  nutrientName: string;
+  nutrientImageUrl: string;
+  nutrientBrand: string;
 };
 
-type LikeState = {
-  likeList: Array<Like>;
+type likeState = {
+  likeList: Array<like>;
 
-  setLikes: (newLike: Like) => void;
+  setLikes: (newlike: like) => void;
   removeLike: (nutrientId: number) => void;
   resetLikes: () => void;
 };
 
-export const likeStore = create<LikeState>((set) => ({
+export const likeStore = create<likeState>((set) => ({
   likeList: [],
 
-  setLikes: (newLike: Like): void =>
-    set((state: LikeState): { likeList: Array<Like> } => ({
+  setLikes: (newLike: like): void =>
+    set((state: likeState): { likeList: Array<like> } => ({
       likeList: [...state.likeList, newLike],
     })),
 
   removeLike: (likeId: number): void =>
-    set((state: LikeState): { likeList: Array<Like> } => ({
+    set((state: likeState): { likeList: Array<like> } => ({
       likeList: state.likeList.filter(
-        (like: Like) => like.nutrientId !== likeId,
+        (like: like) => like.nutrientId !== likeId,
       ),
     })),
 
