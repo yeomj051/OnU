@@ -30,6 +30,7 @@ public class MypageService {
     private final ContinuousRepository continuousRepository;
     private final CombinationRepository combinationRepository;
     private final RedisUtil redisUtil;
+    private final InterestNutrientRepository interestNutrientRepository;
     private static final String COMMA = ",";
     private static final String NUTRIENT_ID = "nutrientId:";
     private static final String DATE_FORMAT = "yyyy-MM-dd";
@@ -161,6 +162,7 @@ public class MypageService {
 
         return result;
     }
+    
     public ResponseNutrientIngredientDto getNutrientIngredientInfo(Long nutrientId){
         List<ResponseNutrientIngredientInfoDto> nutrientIngredientInfoList = new LinkedList<>();
         String nID = NUTRIENT_ID + nutrientId;
@@ -183,5 +185,11 @@ public class MypageService {
             redisUtil.cacheNutrient(nID, map);
         }
         return new ResponseNutrientIngredientDto(nutrientId,nutrientIngredientInfoList);
+
+    public boolean deleteInterestNutrient(int userId, Long nutrientId) {
+        Optional<InterestNutrient> interestNutrient = interestNutrientRepository.findByNutrient_NutrientIdAndUser_UserId(nutrientId, userId);
+        if(!interestNutrient.isPresent()) return false;
+        interestNutrientRepository.delete(interestNutrient.get());
+        return true;
     }
 }
