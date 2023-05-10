@@ -1,8 +1,9 @@
 package com.ssafy.onu.controller;
 
 import com.ssafy.onu.dto.request.ReqReviewCreateFormDto;
+import com.ssafy.onu.dto.response.ResponseNutrientListDto;
 import com.ssafy.onu.dto.response.ResponseReviewDto;
-import com.ssafy.onu.entity.Review;
+import com.ssafy.onu.service.NutrientService;
 import com.ssafy.onu.service.ReviewService;
 import com.ssafy.onu.util.TokenUtils;
 import io.swagger.annotations.ApiOperation;
@@ -11,6 +12,7 @@ import lombok.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import reactor.util.annotation.Nullable;
 
 import java.security.Principal;
 import java.util.HashMap;
@@ -27,6 +29,7 @@ public class NutrientController {
     private static final String FAIL = "fail";
 
     private final ReviewService reviewService;
+    private final NutrientService nutrientService;
 
     @ApiOperation(value = "제품 리뷰 등록", notes = "해당 영양제 제품에 대한 리뷰를 등록한다.", response = Map.class)
     @PostMapping("/{nutrientId}/{userId}")
@@ -66,4 +69,47 @@ public class NutrientController {
         resultMap.put("reviewListByNutrient", responseReviewDtoList);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
+
+    @ApiOperation(value = "성분별 영양제 목록 조회", notes = "성분별 영양제에 대한 목록을 조회한다.", response = Map.class)
+    @GetMapping("/ingredient/{ingredientId}")
+    public ResponseEntity<Map<String, Object>> getNutrientByIngredient(@PathVariable @ApiParam(value = "성분 아이디", required = true, example = "0") int ingredientId,
+                                                                        @RequestParam @Nullable @ApiParam(value = "회원 아이디", required = true, example = "0")int userId, Principal principal) {
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        // PathVariable로 받은 userId와 토큰에 있는 userId 비교
+        if(userId > 0 && TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+
+        List<ResponseNutrientListDto> nutrientListByIngreidientList = nutrientService.getNutrientByIngredient(ingredientId, userId);
+
+        resultMap.put(MESSAGE, SUCCESS);
+        resultMap.put("reviewListByNutrient", nutrientListByIngreidientList);
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "기능별 영양제 목록 조회", notes = "기능별 영양제에 대한 목록을 조회한다.", response = Map.class)
+    @GetMapping("/function/{functionId}")
+    public ResponseEntity<Map<String, Object>> getNutrientByFunction(@PathVariable @ApiParam(value = "기능 아이디", required = true, example = "0") int functionId,
+                                                                       @RequestParam @Nullable @ApiParam(value = "회원 아이디", required = true, example = "0")int userId, Principal principal) {
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        // PathVariable로 받은 userId와 토큰에 있는 userId 비교
+        if(userId > 0 && TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+
+        List<ResponseNutrientListDto> nutrientListByIngreidientList = nutrientService.getNutrientByFunction(functionId, userId);
+
+        resultMap.put(MESSAGE, SUCCESS);
+        resultMap.put("reviewListByNutrient", nutrientListByIngreidientList);
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
+    }
+
+
+
 }

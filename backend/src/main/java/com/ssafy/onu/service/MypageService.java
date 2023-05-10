@@ -176,7 +176,7 @@ public class MypageService {
         } else {
             Map<String, Object> map = new HashMap<>();
             map.put(nID, nID);
-            nutrientIngredientRepository.findNutrientIngredientsByNutrientId(nutrientId)
+            nutrientIngredientRepository.findNutrientIngredientsByNutrientId_NutrientId(nutrientId)
                     .stream()
                     .forEach(nutrientIngredient -> {
                         map.put(nutrientIngredient.getIngredientId().getIngredientName(), nutrientIngredient.getIngredientAmount());

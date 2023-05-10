@@ -1,6 +1,5 @@
 package com.ssafy.onu.entity;
 
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicInsert;
@@ -9,21 +8,16 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@DynamicInsert
 @NoArgsConstructor
-@Table(name = "nutrient_ingredient")
-public class NutrientIngredient {
+@Table(name = "nutrient_function")
+public class NutrientFunction {
     @Id
-    private int nutrientIngredientId;
+    private int nutrientFunctionId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "function_id")
+    private Function functionId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nutrient_id")
     private Nutrient nutrientId;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ingredient_id")
-    private Ingredient ingredientId;
-
-    @Column
-    private String ingredientAmount;
 }
