@@ -1,8 +1,8 @@
 import { itemDataList } from '@/apis/data';
-import ItemList from '../PillListPage/ItemList';
+import ItemList from '@/components/list/ReviewList';
 
 //내가 쓴 리뷰 리스트
-const Review = () => {
+const Review = (): React.ReactElement => {
   return (
     <div>
       <p className="ml-2 text-xl font-extrabold text-[#1E266E] mb-2">

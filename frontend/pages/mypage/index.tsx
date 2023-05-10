@@ -12,6 +12,7 @@ const MyPage: NextPageWithLayout = (): React.ReactElement => {
     <div className="flex flex-col items-center text-center space-y-4 min-h-[100vh]">
       {/* <div id="header">헤더에요</div> */}
       <Profile />
+      {/** 여기에 영양분석 배너 추가 */}
       <Calendar />
     </div>
   );

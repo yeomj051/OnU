@@ -1,7 +1,7 @@
 import api from '@/apis/config';
 import { SearchBar } from '@/components/common/SearchBar';
 import React from 'react';
-import ItemList from '../PillListPage/ItemList';
+import ItemList from '../../components/list/ItemList';
 import { useSearch } from '@/apis/hooks';
 
 type SearchProps = {

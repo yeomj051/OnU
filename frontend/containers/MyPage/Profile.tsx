@@ -19,7 +19,7 @@ const iconImgSet = [
   profileImg4,
 ];
 
-const Profile = () => {
+const Profile = (): React.ReactElement => {
   // const bgRandom = Math.floor(
   //   Math.random() * (bgImgSet.length - 0.5),
   // );

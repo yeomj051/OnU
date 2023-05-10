@@ -13,7 +13,7 @@ const ItemList = (props: { itemList: Array<Item> }) => {
   // const itemDataList = props.data;
 
   return (
-    <div className="grid grid-cols-2 gap-4 w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md items-baseline p-4">
+    <div className="grid grid-cols-2 gap-4 w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md items-baseline px-8">
       {props.itemList?.map((item, index) => (
         <div
           id="item"

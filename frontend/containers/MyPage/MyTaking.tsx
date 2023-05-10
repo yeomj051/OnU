@@ -1,8 +1,8 @@
 import { itemDataList } from '@/apis/data';
-import ItemList from '../PillListPage/ItemList';
+import ItemList from '../../components/list/BaseItemList';
 
 //나의 복용중인 영양제 리스트
-const Taking = () => {
+const Taking = (): React.ReactElement => {
   return (
     <div>
       <p className="ml-2 text-xl font-extrabold text-[#1E266E] mb-2">
