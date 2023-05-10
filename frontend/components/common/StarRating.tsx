@@ -10,7 +10,7 @@ const StarRating = (props: {
   const uniqueId = `_${Math.random().toString(36).substr(2, 9)}`; // 고유한 ID 생성
 
   const calcStarRates = () => {
-    let tempStarRatesArr = [0, 0, 0, 0, 0];
+    const tempStarRatesArr = [0, 0, 0, 0, 0];
     let starVerScore = (AVR_RATE * 70) / 100;
     let idx = 0;
     while (starVerScore > 14) {
