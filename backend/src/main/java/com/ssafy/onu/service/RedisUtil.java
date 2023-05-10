@@ -4,6 +4,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
+import java.util.Map;
+import java.util.Set;
 
 @Service
 public class RedisUtil {
@@ -23,5 +25,20 @@ public class RedisUtil {
 
     public void deleteDate(String key) {
         redisTemplate.delete(key);
+    }
+
+    public boolean hasNutrient(String key, String value) {
+        return redisTemplate.opsForHash().hasKey(key, value);
+    }
+    public Set<String> getKeys(String key){
+        return redisTemplate.opsForHash().keys(key);
+    }
+
+    public String getNutrientInfo(String nutrientId, String key){
+        return (String) redisTemplate.opsForHash().get(nutrientId, key);
+    }
+
+    public void cacheNutrient(String nutrientId, Map<String, Object> nutrientInfo){
+        redisTemplate.opsForHash().putAll(nutrientId, nutrientInfo);
     }
 }

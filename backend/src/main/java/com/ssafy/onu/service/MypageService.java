@@ -29,10 +29,11 @@ public class MypageService {
     private final NutrientRepository nutrientRepository;
     private final ContinuousRepository continuousRepository;
     private final CombinationRepository combinationRepository;
+    private final RedisUtil redisUtil;
     private final InterestNutrientRepository interestNutrientRepository;
-    private final RedisTemplate redisTemplate;
     private static final String COMMA = ",";
     private static final String NUTRIENT_ID = "nutrientId:";
+    private static final String DATE_FORMAT = "yyyy-MM-dd";
     private static final int ONE = 1;
     private static final int ZERO = 0;
 
@@ -67,7 +68,7 @@ public class MypageService {
         Optional<Continuous> continuous = continuousRepository.findByContinuousUserId_UserId(userId);
 
         if (continuous.isPresent()) {
-            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
             String lastTakingDate = dateTimeFormatter.format(LocalDateTime.now());
 
             int betweenDays = (int) Duration.between(LocalDate.parse(continuous.get().getContinuousLastDate(), dateTimeFormatter).atStartOfDay()
@@ -95,7 +96,7 @@ public class MypageService {
 
     @Transactional
     public int checkDate(int userId){
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern(DATE_FORMAT);
         String lastTakingDate =  dateTimeFormatter.format(LocalDateTime.now());
 
         Optional<User> user = userRepository.findByUserId(userId);
@@ -146,34 +147,44 @@ public class MypageService {
         return result;
     }
 
-    public List<ResponseNutrientIngredientDto> getCombinationIngredient(ReqCombinationDto reqCombinationDto) {
-        HashOperations<String, Object, Object> hashOperations = redisTemplate.opsForHash();
-        List<ResponseNutrientIngredientDto> result = new LinkedList<>();
+    public HashMap<String, Object> getCombinationIngredient(ReqCombinationDto reqCombinationDto) {
+        HashMap<String, Object> result = new HashMap<>();
+        List<ResponseNutrientIngredientDto> nutrientIngredientList = new LinkedList<>();
+
         reqCombinationDto.getCombinationList().stream().forEach(nutrientId -> {
-            List<ResponseNutrientIngredientInfoDto> nutrientIngredientInfoList = new LinkedList<>();
-            String nID = NUTRIENT_ID + nutrientId;
-            //캐싱되어 있다면
-            if(hashOperations.hasKey(nID, nID)) {
-                for(Object key : hashOperations.keys(nID)){
-                    if(!key.toString().equals(nID)) {
-                        nutrientIngredientInfoList.add(new ResponseNutrientIngredientInfoDto(key.toString(), (String) hashOperations.get(nID, key.toString())));
-                    }
-                }
-                result.add(new ResponseNutrientIngredientDto(nutrientId, nutrientIngredientInfoList));
-            } else {
-                Map<String, Object> map = new HashMap<>();
-                map.put(nID, nID);
-                nutrientIngredientRepository.findNutrientIngredientsByNutrientId(nutrientId)
-                        .stream()
-                        .forEach(nutrientIngredient -> {
-                            map.put(nutrientIngredient.getIngredientId().getIngredientName(), nutrientIngredient.getIngredientAmount());
-                            nutrientIngredientInfoList.add(new ResponseNutrientIngredientInfoDto(nutrientIngredient));
-                        });
-                hashOperations.putAll(nID, map);
-                result.add(new ResponseNutrientIngredientDto(nutrientId,nutrientIngredientInfoList));
-            }
+            nutrientIngredientList.add(getNutrientIngredientInfo(nutrientId));
         });
+        if(reqCombinationDto.getInterestNutrient() != null){
+            result.put("interestNutrientIngredient", getNutrientIngredientInfo(reqCombinationDto.getInterestNutrient()));
+        }
+
+        result.put("nutrientIngredientList", nutrientIngredientList);
+
         return result;
+    }
+    
+    public ResponseNutrientIngredientDto getNutrientIngredientInfo(Long nutrientId){
+        List<ResponseNutrientIngredientInfoDto> nutrientIngredientInfoList = new LinkedList<>();
+        String nID = NUTRIENT_ID + nutrientId;
+        //캐싱되어 있다면
+        if(redisUtil.hasNutrient(nID, nID)) {
+            for(Object key : redisUtil.getKeys(nID)){
+                if(!key.toString().equals(nID)) {
+                    nutrientIngredientInfoList.add(new ResponseNutrientIngredientInfoDto(key.toString(), redisUtil.getNutrientInfo(nID, key.toString())));
+                }
+            }
+        } else {
+            Map<String, Object> map = new HashMap<>();
+            map.put(nID, nID);
+            nutrientIngredientRepository.findNutrientIngredientsByNutrientId(nutrientId)
+                    .stream()
+                    .forEach(nutrientIngredient -> {
+                        map.put(nutrientIngredient.getIngredientId().getIngredientName(), nutrientIngredient.getIngredientAmount());
+                        nutrientIngredientInfoList.add(new ResponseNutrientIngredientInfoDto(nutrientIngredient));
+                    });
+            redisUtil.cacheNutrient(nID, map);
+        }
+        return new ResponseNutrientIngredientDto(nutrientId,nutrientIngredientInfoList);
     }
 
     public boolean deleteInterestNutrient(int userId, Long nutrientId) {

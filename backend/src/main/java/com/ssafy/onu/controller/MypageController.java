@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -256,12 +257,12 @@ public class MypageController {
             status = HttpStatus.BAD_REQUEST;
             return new ResponseEntity<>(resultMap, status);
         }
-        List<ResponseNutrientIngredientDto> nutrientIngredientList = mypageService.getCombinationIngredient(reqCombinationDto);
+
+        HashMap<String, Object> nutrientIngredient = mypageService.getCombinationIngredient(reqCombinationDto);
 
         resultMap.put(MESSAGE, SUCCESS);
-        resultMap.put("nutrientIngredientList", nutrientIngredientList);
+        resultMap.put("nutrientIngredient", nutrientIngredient);
         status = HttpStatus.OK;
-
         return new ResponseEntity<>(resultMap, status);
     }
 

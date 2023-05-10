@@ -19,7 +19,7 @@ public class NutrientIngredient {
     @Column
     private long nutrientId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ingredient_id")
     private Ingredient ingredientId;
 

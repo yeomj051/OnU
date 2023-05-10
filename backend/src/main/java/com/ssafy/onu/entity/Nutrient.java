@@ -36,10 +36,19 @@ public class Nutrient {
     @Column
     private String nutrientExpiration;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nutrient_type_id")
     private NutrientType nutrientTypeId;
 
     @Column
     private String nutrientMaterial;
+
+    @Column
+    private boolean nutrientPregnant;
+
+    @Column
+    private boolean nutrientChild;
+
+    @Column
+    private int nutrientGender;
 }

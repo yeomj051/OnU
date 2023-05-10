@@ -15,7 +15,7 @@ public class Continuous {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int continuousId;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "continuous_user_id")
     private User continuousUserId;
 
