@@ -2,7 +2,6 @@ import axios from 'axios';
 import { setCookie, getCookie } from './cookie';
 import userStore from '@/store/userStore';
 
-const { id } = userStore();
 const BASE_URL = process.env.REACT_APP_API_URL;
 
 //인증이 필요하지 않은 요청에 대한 인스턴스
@@ -43,6 +42,8 @@ export const authAPI = (url: string, options: any) => {
       const originalRequest = error.config; //기존 요청 저장
       //토큰이 만료되었을 때(Unauthorized)
       if (error.response.status === 401) {
+        const id = userStore((state) => state.id);
+
         const refreshToken: string = getCookie('refreshToken');
         //리프레시 토큰으로 새로운 토큰 재발급 요청
         const response = await axios({

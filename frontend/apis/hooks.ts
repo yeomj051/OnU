@@ -15,18 +15,3 @@ export const useSearch = (
 
   return useQuery([queryKey, keyword], queryFn, { ...options });
 };
-
-//나의 복용날짜를 가져오는 api
-export const useCalendar = (
-  userId: number,
-  options?: QueryOptions,
-) => {
-  const queryKey = process.env.REACT_APP_API_URL;
-
-  const queryFn = async () => {
-    const res = await api.getCalendar(userId);
-    return res;
-  };
-
-  return useQuery([queryKey, userId], queryFn, { ...options });
-};
