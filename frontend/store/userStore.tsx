@@ -6,14 +6,12 @@ type UserState = {
   age: number;
   gender: string;
   accessToken: string;
-  refreshToken: string;
   setUser: (
     id: number,
     nickname: string,
     age: number,
     gender: string,
     accessToken: string,
-    refreshToken: string,
   ) => void;
 };
 
@@ -30,7 +28,6 @@ export const userStore = create<UserState>((set) => ({
     age: number,
     gender: string,
     accessToken: string,
-    refreshToken: string,
   ) =>
     set({
       id,
@@ -38,7 +35,6 @@ export const userStore = create<UserState>((set) => ({
       age,
       gender,
       accessToken,
-      refreshToken,
     }),
 }));
 

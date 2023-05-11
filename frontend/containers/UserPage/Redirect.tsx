@@ -16,7 +16,6 @@ const Redirect = () => {
   const age: number = Number(params.get('age')) || 0;
   const gender: string = params.get('gender') || '';
   const accessToken: string = params.get('accessToken') || '';
-  const refreshToken: string = params.get('refreshToken') || '';
 
   const userData = {
     id: id,
@@ -24,18 +23,16 @@ const Redirect = () => {
     age: age,
     gender: gender,
     accessToken: accessToken,
-    refreshToken: refreshToken,
   };
 
   useEffect(() => {
     //내부 전역상태에 유저 정보 저장
-    setUser(id, nickname, age, gender, accessToken, refreshToken);
+    setUser(id, nickname, age, gender, accessToken);
     //백업용 스토리지에 유저 정보 저장
     localStorage.setItem('userData', JSON.stringify(userData));
     localStorage.setItem('userId', id.toString());
-    //일단은 쿠키에 리프레시토큰 저장..
-    setCookie('refreshToken', refreshToken);
-  }, [id, nickname, age, gender, accessToken, refreshToken]);
+    localStorage.setItem('accessToken', accessToken);
+  }, [id, nickname, age, gender, accessToken]);
 
   //유저 정보가 없으면 회원가입 페이지로 이동
   useEffect(() => {
