@@ -36,7 +36,7 @@ const authInstance = (url: string) => {
       return response;
     },
     async (error) => {
-      // const originalRequest = error.config; //기존 요청 저장
+      const originalRequest = error.config; //기존 요청 저장
       //토큰이 만료되었을 때(Unauthorized)
       if (error.response.status === 401) {
         const id = localStorage.getItem('userId');
