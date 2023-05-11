@@ -8,10 +8,10 @@ import {
   Title,
   Tooltip,
   Legend,
-  ChartOptions,
-  CoreChartOptions,
-  ScaleChartOptions,
-  ChartTypeRegistry,
+  // ChartOptions,
+  // CoreChartOptions,
+  // ScaleChartOptions,
+  // ChartTypeRegistry,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import ItemList from '@/components/list/GridList';
 import { itemDataList } from '@/apis/data';
 import { useSearch } from '@/apis/hooks';
+import { AxiosResponse } from 'axios';
 
 type SearchProps = {
   keyword: string;
@@ -21,16 +22,17 @@ const SearchResult = (props: SearchProps) => {
   const [itemDataList, setItemDataList] = useState<Item[]>([]);
 
   //검색어를 받아왔으니 검색 API 호출
-  const { isLoading, isError, isSuccess, data, error } = useSearch(
+  const { isLoading, isError, data, error } = useSearch(
     props.keyword,
   );
 
   useEffect(() => {
-    setItemDataList(data?.data.searchedList);
+    const res: AxiosResponse = data as AxiosResponse;
+    setItemDataList(res?.data.searchedList);
   }, [data]);
 
   if (isLoading) {
-    console.log('로딩중...');
+    console.log(`🚀`);
     return <div>로딩증...</div>;
   }
   if (isError) {
