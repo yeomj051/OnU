@@ -1,16 +1,8 @@
-import api from '@/apis/config';
+import api, { Item } from '@/apis/config';
 import { itemStore } from '@/store/itemStore';
 import userStore from '@/store/userStore';
 import Image from 'next/image';
 import React from 'react';
-
-type Item = {
-  nutrientId: number;
-  nutrientName: string;
-  nutrientImageUrl: string;
-  nutrientBrand: string;
-  isInterested: boolean;
-};
 
 const ItemList = (props: { itemList: Array<Item> }) => {
   // const itemDataList = props.data;
