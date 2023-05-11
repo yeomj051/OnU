@@ -1,10 +1,12 @@
 //react-query를 사용한 hook
 import {
   QueryOptions,
+  UseQueryResult,
   useMutation,
   useQuery,
 } from '@tanstack/react-query';
 import api from './config';
+import axios, { AxiosResponse } from 'axios';
 
 export const queryKey = process.env.REACT_APP_API_URL;
 
@@ -12,10 +14,12 @@ export const queryKey = process.env.REACT_APP_API_URL;
 export const useSearch = (
   keyword: string,
   options?: QueryOptions,
-) => {
+): UseQueryResult => {
   const queryKey = process.env.REACT_APP_API_URL;
   const queryFn = async () => {
-    const res = await api.searchPill(keyword);
+    const res: AxiosResponse = await axios.get(
+      `https://k8a703.p.ssafy.io/api/search/${keyword}`,
+    );
     return res;
   };
 

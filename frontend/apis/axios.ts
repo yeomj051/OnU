@@ -1,24 +1,21 @@
-import axios from 'axios';
-import { setCookie, getCookie } from './cookie';
-import userStore from '@/store/userStore';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import { getCookie } from './cookie';
 
-const BASE_URL = process.env.REACT_APP_API_URL;
+export const BASE_URL = process.env.REACT_APP_API_URL;
 
 //인증이 필요하지 않은 요청에 대한 인스턴스
-export const baseAPI = (url: string, options: any) => {
+const baseInstance = (url: string) => {
   const instance = axios.create({
     baseURL: BASE_URL + url,
-    ...options,
   });
 
   return instance;
 };
 
 //인증이 필요한 요청에 대한 인스턴스
-export const authAPI = (url: string, options: any) => {
+const authInstance = (url: string) => {
   const instance = axios.create({
     baseURL: BASE_URL + url,
-    ...options,
   });
 
   //request interceptor
@@ -42,13 +39,13 @@ export const authAPI = (url: string, options: any) => {
       const originalRequest = error.config; //기존 요청 저장
       //토큰이 만료되었을 때(Unauthorized)
       if (error.response.status === 401) {
-        const id = userStore((state) => state.id);
+        const id = localStorage.getItem('userId');
 
         const refreshToken: string = getCookie('refreshToken');
         //리프레시 토큰으로 새로운 토큰 재발급 요청
         const response = await axios({
           method: 'POST',
-          url: 'https://o-nu.com/auth/reissue',
+          url: 'https://k8a703.p.ssafy.io/auth/reissue',
           data: {
             refreshToken: refreshToken,
             userId: id,
@@ -68,4 +65,20 @@ export const authAPI = (url: string, options: any) => {
   );
 
   return instance;
+};
+
+export const baseAPI = async (
+  url: string,
+  options: AxiosRequestConfig,
+) => {
+  const res: AxiosResponse = await baseInstance(url).request(options);
+  return res;
+};
+
+export const authAPI = async (
+  url: string,
+  options: AxiosRequestConfig,
+) => {
+  const res: AxiosResponse = await authInstance(url).request(options);
+  return res;
 };

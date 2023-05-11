@@ -2,7 +2,6 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 
 import PillReviewForm from './PillReviewForm';
-import tw from 'twin.macro';
 import PillDetailReviewBox from './PillDetailReviewBox';
 import PillDetailRate from './PillDetailRate';
 import StarRating from '@/components/common/StarRating';
@@ -10,7 +9,7 @@ import { usePillReviewList } from '@/apis/hooks';
 import api from '@/apis/config';
 import axios from 'axios';
 
-type Props = {};
+// type Props = {};
 
 type PersonalReview = {
   nickname: string;
@@ -21,16 +20,16 @@ type PersonalReview = {
   review: string;
 };
 
-type reviewContents = {
-  userNickname: string;
-  nutrientName: string;
-  reviewContent: string;
-  reviewScore: number;
-  reviewCreateTime: string;
-  reviewUpdateTime: string;
-};
+// type reviewContents = {
+//   userNickname: string;
+//   nutrientName: string;
+//   reviewContent: string;
+//   reviewScore: number;
+//   reviewCreateTime: string;
+//   reviewUpdateTime: string;
+// };
 
-function PillDetailReview({}: Props) {
+function PillDetailReview() {
   const [wantReview, setWantReview] = useState<boolean>(false);
   // const [starRate, setStarRate] = useState<number>(80);
   const [reviewList, setReviewList] = useState<Array<reviewContents>>(
@@ -181,10 +180,10 @@ function PillDetailReview({}: Props) {
       <div className="bg-[#FFFCED] h-[250px] px-5 rounded-lg mt-3">
         <div className="pt-6">
           <div className="grid grid-cols-2">
-            <div className="col-span-1 grid justify-center">
+            <div className="grid justify-center col-span-1">
               총 평점
             </div>
-            <div className="col-span-1 grid justify-center">
+            <div className="grid justify-center col-span-1">
               평점 비율
             </div>
           </div>
@@ -199,7 +198,7 @@ function PillDetailReview({}: Props) {
             <div className="text-center h-2 mb-3">{average} / 5</div>
             <label
               htmlFor="my-modal-6"
-              className="btn btn-primary w-40 rounded-xl text-white"
+              className="w-40 text-white btn btn-primary rounded-xl"
               style={{
                 backgroundColor: '#90B5EA',
                 width: '170px',

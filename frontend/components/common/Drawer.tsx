@@ -8,6 +8,7 @@ import { itemStore } from '@/store/itemStore';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Transition } from '@headlessui/react';
+import { Item } from '@/apis/config';
 
 const drawerBleeding = 56;
 
@@ -36,14 +37,6 @@ const Puller = styled(Box)(({ theme }) => ({
   left: 'calc(50% - 15px)',
 }));
 
-type Item = {
-  id: number; //itemId
-  name: string; //제목
-  manufacturer?: string; //제조사
-  imgUrl: string; //썸네일 이미지
-  itemUrl: string; //상세정보 링크
-};
-
 function CompareDrawer() {
   const [open, setOpen] = React.useState(false);
   const [itemList, setItemList] = React.useState<Item[]>([]);
@@ -64,7 +57,7 @@ function CompareDrawer() {
 
   const deleteItem = (id: number) => {
     removeItem(id);
-    setItemList(items.filter((item) => item.id === id));
+    setItemList(items.filter((item) => item.nutrientId === id));
   };
 
   const comparePills = () => {
@@ -130,7 +123,9 @@ function CompareDrawer() {
                 {itemList[0] ? (
                   <div className="bg-gray-300 border-none indicator-item badge top-2 right-4">
                     <button
-                      onClick={() => deleteItem(itemList[0].id)}
+                      onClick={() =>
+                        deleteItem(itemList[0].nutrientId)
+                      }
                     >
                       X
                     </button>
@@ -140,7 +135,7 @@ function CompareDrawer() {
                   <div className="grid flex-grow w-56 h-56 card rounded-box place-items-center">
                     <div className="flex flex-col items-center flex-grow">
                       <Image
-                        src={itemList[0]?.imgUrl}
+                        src={itemList[0]?.nutrientImageUrl}
                         alt="item-img"
                         width={140}
                         height={100}
@@ -151,13 +146,13 @@ function CompareDrawer() {
                         id="manufacturer"
                         className="mt-0.5 text-xs font-bold text-[#909090]"
                       >
-                        {itemList[0]?.manufacturer}
+                        {itemList[0]?.nutrientBrand}
                       </span>
                       <span
                         id="name"
                         className="text-sm font-extrabold text-[#3A3A3A]"
                       >
-                        {itemList[0]?.name}
+                        {itemList[0]?.nutrientName}
                       </span>
                     </div>
                   </div>
@@ -171,7 +166,9 @@ function CompareDrawer() {
                 {itemList[1] ? (
                   <div className="bg-gray-300 border-none indicator-item badge top-2 right-4">
                     <button
-                      onClick={() => deleteItem(itemList[1].id)}
+                      onClick={() =>
+                        deleteItem(itemList[1].nutrientId)
+                      }
                     >
                       X
                     </button>
@@ -181,7 +178,7 @@ function CompareDrawer() {
                   <div className="grid flex-grow w-56 h-56 card rounded-box place-items-center">
                     <div className="flex flex-col items-center flex-grow">
                       <Image
-                        src={itemList[1]?.imgUrl}
+                        src={itemList[1]?.nutrientImageUrl}
                         alt="item-img"
                         width={140}
                         height={100}
@@ -192,13 +189,13 @@ function CompareDrawer() {
                         id="manufacturer"
                         className="mt-0.5 text-xs font-bold text-[#909090]"
                       >
-                        {itemList[1]?.manufacturer}
+                        {itemList[1]?.nutrientBrand}
                       </span>
                       <span
                         id="name"
                         className="text-sm font-extrabold text-[#3A3A3A]"
                       >
-                        {itemList[1]?.name}
+                        {itemList[1]?.nutrientName}
                       </span>
                     </div>
                   </div>

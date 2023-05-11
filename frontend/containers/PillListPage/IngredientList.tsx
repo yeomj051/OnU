@@ -1,5 +1,4 @@
 import { BASE_URL } from '@/apis/axios';
-import { itemDataList } from '@/apis/data';
 import ItemList from '@/components/list/ItemList';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
@@ -51,7 +50,6 @@ const IngredientCategoryList = () => {
         `${BASE_URL}/nutrient/ingredient/${ingredientId}?userId=${userId}`,
       )
       .then((res) => {
-        console.log(res.data);
         setItemData(res.data.reviewListByNutrient);
       });
   }, [userId, ingredientId]);

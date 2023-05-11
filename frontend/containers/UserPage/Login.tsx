@@ -6,7 +6,11 @@ import Image from 'next/image';
 import kakao from '/public/kakao_login_large_wide.png';
 import Link from 'next/link';
 
+const KAKAO_URL: string = process.env.REACT_APP_KAKAO_URL as string;
+// const KAKAO_URL: string = process.env.REACT_APP_TEST_URL as string;
+
 const Login = () => {
+  console.log(KAKAO_URL);
   return (
     <div className="grid grid-rows h-[100vh] bg-white pt-20">
       {/* 로고화면
@@ -18,7 +22,7 @@ const Login = () => {
       <div className="grid grid-cols-4">
         <div className="col-start-2 col-end-4">
           <button>
-            <Link href="">
+            <Link href={KAKAO_URL}>
               <Image
                 src={kakao}
                 alt="kakaoLogin"

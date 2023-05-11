@@ -1,3 +1,5 @@
+//고민별로 되어있지만 기능별입니다 나중에 고칠게요
+
 import React, { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Eye } from '@emotion-icons/entypo/Eye';
