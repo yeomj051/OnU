@@ -1,7 +1,6 @@
 import React from 'react';
 // import api from '@/apis/config';
 // import { useSearch } from '@/apis/hooks';
-import { SearchBar } from '@/components/common/SearchBar';
 import ItemList from '@/components/list/GridList';
 import { itemDataList } from '@/apis/data';
 
