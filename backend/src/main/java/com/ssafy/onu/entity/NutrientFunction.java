@@ -16,8 +16,8 @@ public class NutrientFunction {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "function_id")
-    private Function functionId;
+    private Function function;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nutrient_id")
-    private Nutrient nutrientId;
+    private Nutrient nutrient;
 }

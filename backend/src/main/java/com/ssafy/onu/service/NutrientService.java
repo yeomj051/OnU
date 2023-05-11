@@ -25,14 +25,14 @@ public class NutrientService {
     private final NutrientFunctionRepository nutrientFunctionRepository;
 
     public List<ResponseNutrientListDto> getNutrientByIngredient(int ingredientId, int userId) {
-        List<NutrientIngredient> nutrientIngredientList = nutrientIngredientRepository.findNutrientIngredientByIngredientId_IngredientId(ingredientId);
+        List<NutrientIngredient> nutrientIngredientList = nutrientIngredientRepository.findNutrientIngredientByIngredient_IngredientId(ingredientId);
         List<ResponseNutrientListDto> nutrientByIngreidientList = new ArrayList<>();
 
         List<InterestNutrient> interestNutrientList = new ArrayList<>();
         if(userId > 0) interestNutrientList = interestNutrientRepository.findByUser_UserId(userId);
 
         for (NutrientIngredient nutrientIngredient : nutrientIngredientList) {
-            Optional<Nutrient> nutrientOptional = nutrientRepository.findByNutrientId(nutrientIngredient.getNutrientId().getNutrientId());
+            Optional<Nutrient> nutrientOptional = nutrientRepository.findByNutrientId(nutrientIngredient.getNutrient().getNutrientId());
 
             if(nutrientOptional.isPresent()){
                 Nutrient nutrient = nutrientOptional.get();
@@ -52,7 +52,7 @@ public class NutrientService {
     }
 
     public List<ResponseNutrientListDto> getNutrientByFunction(int functionId, int userId) {
-        List<NutrientFunction> nutrientFuntionList = nutrientFunctionRepository.findNutrientFuntionByFunctionId_FunctionId(functionId);
+        List<NutrientFunction> nutrientFuntionList = nutrientFunctionRepository.findNutrientFuntionByFunction_FunctionId(functionId);
         List<ResponseNutrientListDto> nutrientByIngreidientList = new ArrayList<>();
 
         List<InterestNutrient> interestNutrientList = new ArrayList<>();
@@ -60,7 +60,7 @@ public class NutrientService {
 
         for (NutrientFunction nutrientFunction : nutrientFuntionList) {
 
-                Nutrient nutrient = nutrientFunction.getNutrientId();
+                Nutrient nutrient = nutrientFunction.getNutrient();
                 ResponseNutrientListDto nutrientByIngreidientDto = new ResponseNutrientListDto(nutrient.getNutrientId(),nutrient.getNutrientName(),nutrient.getNutrientImageUrl(),nutrient.getNutrientBrand());
 
                 boolean isInterested = false;

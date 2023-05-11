@@ -73,7 +73,7 @@ public class NutrientController {
     @ApiOperation(value = "성분별 영양제 목록 조회", notes = "성분별 영양제에 대한 목록을 조회한다.", response = Map.class)
     @GetMapping("/ingredient/{ingredientId}")
     public ResponseEntity<Map<String, Object>> getNutrientByIngredient(@PathVariable @ApiParam(value = "성분 아이디", required = true, example = "0") int ingredientId,
-                                                                        @RequestParam @Nullable @ApiParam(value = "회원 아이디", required = true, example = "0")int userId, Principal principal) {
+                                                                        @RequestParam @ApiParam(value = "회원 아이디", required = false, example = "0")int userId, Principal principal) {
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
 
@@ -93,7 +93,7 @@ public class NutrientController {
     @ApiOperation(value = "기능별 영양제 목록 조회", notes = "기능별 영양제에 대한 목록을 조회한다.", response = Map.class)
     @GetMapping("/function/{functionId}")
     public ResponseEntity<Map<String, Object>> getNutrientByFunction(@PathVariable @ApiParam(value = "기능 아이디", required = true, example = "0") int functionId,
-                                                                       @RequestParam @Nullable @ApiParam(value = "회원 아이디", required = true, example = "0")int userId, Principal principal) {
+                                                                       @RequestParam @ApiParam(value = "회원 아이디", required = false, example = "0")int userId, Principal principal) {
         Map<String, Object> resultMap = new HashMap<>();
         HttpStatus status = null;
 

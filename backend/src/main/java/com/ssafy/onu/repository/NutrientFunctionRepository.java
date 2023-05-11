@@ -7,5 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface NutrientFunctionRepository extends JpaRepository<NutrientFunction, Integer> {
-    List<NutrientFunction> findNutrientFuntionByFunctionId_FunctionId(int functionId);
+    List<NutrientFunction> findNutrientFuntionByFunction_FunctionId(int functionId);
 }

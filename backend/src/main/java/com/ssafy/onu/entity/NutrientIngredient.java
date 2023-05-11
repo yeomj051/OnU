@@ -18,11 +18,11 @@ public class NutrientIngredient {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "nutrient_id")
-    private Nutrient nutrientId;
+    private Nutrient nutrient;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ingredient_id")
-    private Ingredient ingredientId;
+    private Ingredient ingredient;
 
     @Column
     private String ingredientAmount;
