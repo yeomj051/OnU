@@ -1,12 +1,14 @@
 import React from 'react';
-
 // import { PlusCircle } from '@emotion-icons/bootstrap';
 import PillAnalysisComb from './PillAnalysisComb';
-import PillAnalysisHave from './PillAnalysisHave';
-import PillAnalysisLike from './PillAnalysisLike';
 import { useState, useEffect } from 'react';
 import PillAnalysisGraph from './PillAnalysisGraph';
 import { combinationStore } from '@/store/combinationStore';
+import PillAnalysisHaveBox from './PillAnalysisHaveBox';
+import PillAnalysisLikeBox from './PillAnalysisLikeBox';
+import Image from 'next/image';
+import more from '../../public/more.png';
+import { useRouter } from 'next/navigation';
 
 type combination = {
   combinationId: number;
@@ -113,6 +115,7 @@ function PillAnalysisMain() {
 
   const [showChart, setShowchart] = useState<number>(-1);
   const [dataId, setDataId] = useState<number>(-1);
+  const router = useRouter();
 
   useEffect(() => {
     // setCombinations(data.combinationList);
@@ -130,7 +133,9 @@ function PillAnalysisMain() {
   const saveCombination = () => {};
 
   // 관심 영양제 추가하는 함수
-  const addLikeList = () => {};
+  const addLikeList = () => {
+    router.push(`/search`);
+  };
 
   const selectCombination = (id: number) => {
     setSelectedComb(id);
@@ -140,15 +145,11 @@ function PillAnalysisMain() {
   // };
 
   return (
-    <div className="h-[100vh] mt-20">
+    <div className="mt-20">
       <div className="mx-4">
         <div className="py-5">
           <div className="text-xl">복용중인 영양제</div>
-          <div className="flex justify-between">
-            <PillAnalysisHave />
-            <PillAnalysisHave />
-            <PillAnalysisHave />
-          </div>
+          <PillAnalysisHaveBox />
         </div>
         <div className="py-5">
           <div className="grid grid-cols-2">
@@ -157,15 +158,15 @@ function PillAnalysisMain() {
             </div>
             <div className="flex justify-end col-span-1 mb-1">
               <button onClick={addLikeList}>
-                {/* <PlusCircleComponent className="w-5 h-5" /> */}
+                <Image
+                  src={more}
+                  alt="추가하기"
+                  className="w-5 h-5 mr-1"
+                />
               </button>
             </div>
           </div>
-          <div className="flex justify-between">
-            <PillAnalysisLike />
-            <PillAnalysisLike />
-            <PillAnalysisLike />
-          </div>
+          <PillAnalysisLikeBox />
         </div>
       </div>
 

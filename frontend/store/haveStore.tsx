@@ -16,28 +16,33 @@ type have = {
 
 type haveState = {
   haveList: Array<have>;
-
-  sethaves: (newhave: have) => void;
-  removehave: (nutrientId: number) => void;
-  resethaves: () => void;
+  setAllHaves: (allHaves: Array<have>) => void;
+  setHaves: (newhave: have) => void;
+  removeHave: (nutrientId: number) => void;
+  resetHaves: () => void;
 };
 
 export const haveStore = create<haveState>((set) => ({
   haveList: [],
 
-  sethaves: (newhave: have): void =>
+  setAllHaves: (allHaves: Array<have>): void =>
+    set((state: haveState): { haveList: Array<have> } => ({
+      haveList: [...allHaves],
+    })),
+
+  setHaves: (newhave: have): void =>
     set((state: haveState): { haveList: Array<have> } => ({
       haveList: [...state.haveList, newhave],
     })),
 
-  removehave: (haveId: number): void =>
+  removeHave: (haveId: number): void =>
     set((state: haveState): { haveList: Array<have> } => ({
       haveList: state.haveList.filter(
         (have: have) => have.nutrientId !== haveId,
       ),
     })),
 
-  resethaves: (): void =>
+  resetHaves: (): void =>
     set(() => ({
       haveList: [],
     })),
