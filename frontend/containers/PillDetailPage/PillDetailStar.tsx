@@ -11,25 +11,25 @@ type Props = {
 // const StarFillComponent = styled(StarFill)``;
 
 function PillDetailStar(props: Props) {
-  // return (
-  //   // <div>
-  //   //   <div
-  //   //     className="z-1000 ml-[55px] mr-[10px] h-[19px] overflow-hidden"
-  //   //     style={{ width: '100px' }}
-  //   //   >
-  //   //     <Image
-  //   //       className="z-10 h-[19px] w-[100px]"
-  //   //       src={fillFiveStar}
-  //   //       alt="사진깨짐"
-  //   //     />
-  //   //   </div>
-  //   //   <Image
-  //   //     className="absolute ml-[84px] w-[100px] h-[19px]"
-  //   //     src={fillFiveStar}
-  //   //     alt="사진깨짐"
-  //   //   />
-  //   // </div>
-  // );
+  return (
+    <div>
+      {/* <div
+        className="z-1000 ml-[55px] mr-[10px] h-[19px] overflow-hidden"
+        style={{ width: '100px' }}
+      >
+        <Image
+          className="z-10 h-[19px] w-[100px]"
+          src={fillFiveStar}
+          alt="사진깨짐"
+        />
+      </div>
+      <Image
+        className="absolute ml-[84px] w-[100px] h-[19px]"
+        src={fillFiveStar}
+        alt="사진깨짐"
+      /> */}
+    </div>
+  );
 }
 
 export default PillDetailStar;

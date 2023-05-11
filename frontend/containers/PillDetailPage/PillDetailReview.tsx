@@ -3,10 +3,9 @@ import { useState, useEffect } from 'react';
 
 import PillReviewForm from './PillReviewForm';
 import tw from 'twin.macro';
-import styled from 'styled-components';
 import PillDetailReviewBox from './PillDetailReviewBox';
 import PillDetailRate from './PillDetailRate';
-import PillDetailStar from './PillDetailStar';
+import StarRating from '@/components/common/StarRating';
 
 type Props = {};
 
@@ -19,42 +18,9 @@ type PersonalReview = {
   review: string;
 };
 
-// const StarRating = styled.div`
-//   color: #aaa9a9;
-//   position: relative;
-//   unicode-bidi: bidi-override;
-//   width: max-content;
-//   -webkit-text-fill-color: transparent;
-//   -webkit-text-stroke-width: 1.3px;
-//   -webkit-text-stroke-color: #2b2a29;
-// `;
-
-// const RatingBase = styled.div`
-//   ${tw`pt-5 space-x-1 text-red-100 w-7`}
-
-//   star-ratings-base {
-//     z-index: 0;
-//     padding: 0;
-//   }
-// `;
-
-// const RatingFill = styled.div`
-//   ${tw`pt-5 space-x-1 text-red-400 w-7`}
-
-//   star-ratings-fill {
-//     position: absolute;
-//     z-index: 1;
-//     display: flex;
-//     top: 0;
-//     left: 0;
-//     overflow: hidden;
-//     -webkit-text-fill-color: gold;
-//   }
-// `;
-
 function PillDetailReview({}: Props) {
   const [wantReview, setWantReview] = useState<boolean>(false);
-  const [starRate, setStarRate] = useState<number>(80);
+  // const [starRate, setStarRate] = useState<number>(80);
   const [reviewList, setReviewList] = useState<Array<PersonalReview>>(
     [],
   );
@@ -69,32 +35,6 @@ function PillDetailReview({}: Props) {
   const openReviewForm = () => {
     setWantReview(true);
   };
-
-  //별점 구현
-  //별점
-  // const [rate, setRate] = useState<number>(80);
-  // const starInde = ['first', 'second', 'third', 'fourth', 'fifth'];
-  // const [ratesStatus, setRateStatus] = useState<number[]>([
-  //   0, 0, 0, 0, 0,
-  // ]);
-
-  // const calcStarRate = () => {
-  //   let tempStarRates = [0, 0, 0, 0, 0];
-  //   let starVerScore = (rate * 140) / 100;
-  //   let idx = 0;
-
-  //   while (starVerScore > 28) {
-  //     tempStarRates[idx] = 28;
-  //     idx += 1;
-  //     starVerScore -= 28;
-  //   }
-  //   tempStarRates[idx] = starVerScore;
-  //   return tempStarRates;
-  // };
-
-  // useEffect(() => {
-  //   setRateStatus(calcStarRate);
-  // }, []);
 
   const Items = {
     data: [
@@ -201,30 +141,9 @@ function PillDetailReview({}: Props) {
 
         <div className="bg-white pb-2 mt-3 grid grid-cols-2 rounded-lg">
           <div className="col-span-1  grid justify-center">
-            <PillDetailStar starRate={starRate} />
-            {/* <div className=" z-40 my-6 border border-blue-950 overflow-hidden">
-              <div
-                className="text-[#FFE70D] flex z-10 relative h-8 w-[100px]"
-                // className={` text-[#FFE70D] flex z-10 w-[${starRate}%] absolute`}
-                style={{ width: starRate }}
-              >
-
-                <StarFill />
-                <StarFill />
-                <StarFill />
-                <StarFill />
-                <StarFill />
-              </div>
-
-              <div className="text-gray-200 flex absolute h-8 w-[100px]">
-                
-                <StarFill />
-                <StarFill />
-                <StarFill />
-                <StarFill />
-                <StarFill />
-              </div>
-            </div> */}
+            <div className=" bg-red-200 grid justify-center">
+              <StarRating rating={average} size="detail" />
+            </div>
 
             <div className="text-center h-5">{average} / 5</div>
             <label

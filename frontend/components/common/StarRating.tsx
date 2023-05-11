@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const StarRating = (props: {
   rating: number;
+  size?: string;
 }): React.ReactElement => {
   const AVR_RATE: number = props.rating * 20;
   const STAR_IDX_ARR = ['first', 'second', 'third', 'fourth', 'last'];

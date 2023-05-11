@@ -8,8 +8,20 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartOptions,
+  CoreChartOptions,
+  ScaleChartOptions,
+  ChartTypeRegistry,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+
+// type _DeepPartialObject<T> = {
+//   [P in keyof T]?: _DeepPartialObject<T[P]>;
+// };
+
+// type BarChartOptions = _DeepPartialObject<CoreChartOptions<'bar'>> & {
+//   scales?: Partial<{ [key in keyof ChartTypeRegistry]: { [key in keyof ChartTypeRegistry[key]['scales']]?: any } }>;
+// };
 
 ChartJS.register(
   CategoryScale,
@@ -20,13 +32,13 @@ ChartJS.register(
   Legend,
 );
 
-export const options = {
+export const options: any = {
   scales: {
     x: {
       grid: {
         drawOnChartArea: false, //차트 뒤 가로 격자 없애줌
         drawTicks: false, //그래프의 눈금 라벨 없애주는 설정
-        drawBorder: false, //그래프의 눈금 라벨 있는 쪽 border 없애주는 설정
+        // drawBorder: false, //그래프의 눈금 라벨 있는 쪽 border 없애주는 설정
       },
       beginAtZero: true, //그래프의 눈금 라벨 없애주는 설정
       ticks: {
