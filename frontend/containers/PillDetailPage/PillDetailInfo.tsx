@@ -15,7 +15,31 @@ type nutrient = {
   amount: number;
 };
 
-function PillDetailInfo() {
+type detail = {
+  message: string;
+  nutrientId: number;
+  nutrientName: string;
+  nutrientImageUrl: string;
+  nutrientBrand: string;
+  nutrientIntake: string;
+  nutrientCaution: string;
+  nutrientExpiration: string;
+  nutrientType: string;
+  nutrientMaterial: string;
+  isInterested: boolean;
+  ingredientList: {
+    ingredientName: string;
+    ingredientAmount: string;
+    recommendedIntake: number;
+  };
+  functionList: Array<string>;
+};
+
+type Props = {
+  nutrientList: detail;
+};
+
+function PillDetailInfo(props: Props) {
   const [nutrientList, setNutrientList] = useState<Array<nutrient>>(
     [],
   );
@@ -111,7 +135,7 @@ function PillDetailInfo() {
         subject="섭취 시 주의사항"
         content={caution}
       />
-      <PillDetailBadge subject="원료" badges={material} />
+      <PillDetailContents subject="원재료" content={material} />
     </div>
   );
 }

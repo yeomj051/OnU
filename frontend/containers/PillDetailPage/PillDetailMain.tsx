@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // import PillImg from '../../public/jong_pill.svg';
 import PillDetailInfo from './PillDetailInfo';
 import PillDetailReview from './PillDetailReview';
@@ -36,6 +36,7 @@ type detail = {
 function PillDetailMain(): React.ReactElement {
   const [infoSwitch, setInfoSwitch] = useState<boolean>(true);
   const [like, setLike] = useState<boolean>(true);
+  const [nutrientList, setNutrientList] = useState<detail>();
 
   //제품상세정보<->리뷰
   const switchInfo = () => {
@@ -73,6 +74,10 @@ function PillDetailMain(): React.ReactElement {
     },
     functionList: ['뼈 및 관절 건강과 근력 개선', '', ''],
   };
+
+  useEffect(() => {
+    setNutrientList(items);
+  }, []);
 
   return (
     <div className="h-[100vh] mt-20">
@@ -144,7 +149,11 @@ function PillDetailMain(): React.ReactElement {
         </div>
         <hr className="mx-4" />
         <div className="mx-4">
-          {infoSwitch ? <PillDetailInfo /> : <PillDetailReview />}
+          {infoSwitch ? (
+            <PillDetailInfo nutrientList={nutrientList} />
+          ) : (
+            <PillDetailReview />
+          )}
         </div>
       </div>
     </div>

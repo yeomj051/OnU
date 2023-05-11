@@ -35,8 +35,10 @@ const StarRating = (props: {
           <span className="star_icon" key={`${item}_${idx}`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
+              // width="16"
+              // height="16"
+              width={props.size === 'detail' ? '30' : '16'}
+              height={props.size === 'detail' ? '30' : '16'}
               viewBox="0 0 14 12"
               fill="#cacaca"
             >
@@ -51,7 +53,7 @@ const StarRating = (props: {
               <use
                 clipPath={`url(#${clipPathId})`}
                 href={`#${starId}`}
-                fill="#FFE70D"
+                fill={props.size === 'detail' ? '#FFC106' : '#FFE70D'}
               />
             </svg>
           </span>

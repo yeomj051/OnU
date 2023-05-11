@@ -9,7 +9,7 @@ type like = {
 
 type likeState = {
   likeList: Array<like>;
-
+  setAllLikes: (allLikes: Array<like>) => void;
   setLikes: (newlike: like) => void;
   removeLike: (nutrientId: number) => void;
   resetLikes: () => void;
@@ -17,6 +17,11 @@ type likeState = {
 
 export const likeStore = create<likeState>((set) => ({
   likeList: [],
+
+  setAllLikes: (allLikes: Array<like>): void =>
+    set((state: likeState): { likeList: Array<like> } => ({
+      likeList: [...allLikes],
+    })),
 
   setLikes: (newLike: like): void =>
     set((state: likeState): { likeList: Array<like> } => ({

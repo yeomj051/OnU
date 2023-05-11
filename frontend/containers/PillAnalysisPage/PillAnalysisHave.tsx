@@ -2,10 +2,10 @@ import React from 'react';
 import { useState } from 'react';
 // import Image from 'next/image';
 // import eundan from '@/public/eundan.png';
+import { haveStore } from '@/store/haveStore';
+import { makeCombinationStore } from '@/store/makeCombinationStore';
 
-type Props = {};
-
-function PillAnalysisHave({}: Props) {
+function PillAnalysisHave() {
   const data = {
     message: true,
     nutrientList: [
@@ -43,8 +43,16 @@ function PillAnalysisHave({}: Props) {
   //이 영양제가 선택되었는지 여부를 저장
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
+  const { addSelected, removeSelected } = makeCombinationStore();
   //영양제 선택하면 css 변경 및 선택 영양제 리스트에 id제공여부 결정하는 함수
   const selectThis = (event: React.MouseEvent) => {
+    //선택 되어있으면
+    if (isSelected) {
+      // removeSelected(영양제 ID);
+    } else {
+      // addSelected(영양제ID);
+    }
+
     setIsSelected(!isSelected);
   };
   return (
