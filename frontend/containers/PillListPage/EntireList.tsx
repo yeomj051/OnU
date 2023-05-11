@@ -48,7 +48,7 @@ const EntireList = () => {
           <IngredientCategoryList />
         )}
 
-        <div id="list-body">
+        {/* <div id="list-body">
           {tabState ? (
             <div id="ingredient-list">
               <ItemList itemList={itemDataList} />
@@ -58,7 +58,7 @@ const EntireList = () => {
               <ItemList itemList={itemDataList} />
             </div>
           )}
-        </div>
+        </div> */}
       </div>
       <CompareDrawer />
     </div>

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { setCookie, getCookie } from './cookie';
 import userStore from '@/store/userStore';
 
-const BASE_URL = process.env.REACT_APP_API_URL;
+export const BASE_URL = process.env.REACT_APP_API_URL;
 
 //인증이 필요하지 않은 요청에 대한 인스턴스
 export const baseAPI = (url: string, options: any) => {
