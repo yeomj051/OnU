@@ -7,6 +7,8 @@ import PillDetailReviewBox from './PillDetailReviewBox';
 import PillDetailRate from './PillDetailRate';
 import StarRating from '@/components/common/StarRating';
 import { usePillReviewList } from '@/apis/hooks';
+import api from '@/apis/config';
+import axios from 'axios';
 
 type Props = {};
 
@@ -31,7 +33,7 @@ type reviewContents = {
 function PillDetailReview({}: Props) {
   const [wantReview, setWantReview] = useState<boolean>(false);
   // const [starRate, setStarRate] = useState<number>(80);
-  const [reviewList, setReviewList] = useState<Array<PersonalReview>>(
+  const [reviewList, setReviewList] = useState<Array<reviewContents>>(
     [],
   );
   const [statistic, setStatistic] = useState<Array<number>>([
@@ -78,25 +80,47 @@ function PillDetailReview({}: Props) {
     ],
   };
 
-  const { isLoading, data, isError, error, refetch } =
-    usePillReviewList(4002000847);
+  // const { isLoading, data, isError, isSuccess } =
+  //   usePillReviewList(4002000847);
+  // // setReviewList(Items.data);
 
-  if (isLoading) {
-    return <div>로딩중 ...</div>;
-  }
+  // // setReviewList(data);
 
-  if (isError) {
-    return <div>오류가 발생했습니다.</div>;
-  }
+  // // useEffect(() => {
+  // if (isError) {
+  //   console.log('here');
+  // }
 
-  if (!data) {
-    return <div>404 Not Found</div>;
-  }
+  // if (isSuccess) {
+  //   console.log('isSuscess');
+  //   console.log(data);
+  //   // setReviewList(data.reviewListByNutrient);
+  // }
+  // // }, []);
 
-  setReviewList(data);
+  // useEffect(() => {
+  //   getReviewData();
+  // }, []);
+
+  // const getReviewData = async () => {
+  //   // api.getPillReviewList(4002000847).then((res) => console.log(res));
+  //   const response = await api.getPillReviewList(4002000847);
+  //   // response.then((res) => console.log(res));
+  //   console.log(response);
+  // };
 
   useEffect(() => {
-    setReviewList(Items.data);
+    axios
+      .get(`https://k8a703.p.ssafy.io/api/nutrient/4002000847/review`)
+      .then((res) => {
+        console.log(res);
+        setReviewList(res.data.reviewListByNutrient);
+        console.log(res.data.reviewListByNutrient);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    // getReviewData();
   }, []);
 
   useEffect(() => {
@@ -116,7 +140,7 @@ function PillDetailReview({}: Props) {
     let scoreArray = [0, 0, 0, 0, 0];
 
     reviewList.map((review, idx) => {
-      scoreArray[review.rate - 1]++;
+      scoreArray[review.reviewScore - 1]++;
     });
     setStatistic(scoreArray);
   };
@@ -168,11 +192,11 @@ function PillDetailReview({}: Props) {
 
         <div className="bg-white pb-2 mt-3 grid grid-cols-2 rounded-lg">
           <div className="col-span-1  grid justify-center">
-            <div className=" bg-red-200 grid justify-center">
+            <div className="grid justify-center mt-3 mb-1">
               <StarRating rating={average} size="detail" />
             </div>
 
-            <div className="text-center h-5">{average} / 5</div>
+            <div className="text-center h-2 mb-3">{average} / 5</div>
             <label
               htmlFor="my-modal-6"
               className="btn btn-primary w-40 rounded-xl text-white"

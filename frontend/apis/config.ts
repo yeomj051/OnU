@@ -1,25 +1,35 @@
 //API 호출에 사용할 함수들을 정리해놓은 파일입니다
-import { AxiosInstance } from 'axios';
 import { baseAPI, authAPI } from './axios';
 
 //사용은 api.함수명()으로 하면 됩니다
 const api = {
+  //토큰 재발급
+  async reissueToken(userId: number, refreshToken: string) {
+    return await authAPI(`/auth/reissue`, {
+      method: 'POST',
+      body: {
+        userId: userId,
+        refreshToken: refreshToken,
+      },
+    });
+  },
+
   //로그아웃
-  async logoutUser(userId: number): Promise<AxiosInstance> {
+  async logoutUser(userId: number) {
     return await authAPI(`/user/logout/${userId}`, {
       method: 'GET',
     });
   },
 
   //회원탈퇴
-  async deleteUser(userId: number): Promise<AxiosInstance> {
+  async deleteUser(userId: number) {
     return await authAPI(`/user/${userId}`, {
       method: 'DELETE',
     });
   },
 
   //닉네임 중복검사
-  async checkNickname(userNickname: string): Promise<AxiosInstance> {
+  async checkNickname(userNickname: string) {
     return await baseAPI(`/user/${userNickname}`, {
       method: 'GET',
     });
@@ -28,134 +38,99 @@ const api = {
   //전화번호 인증 메시지 전송
   async sendVerificationCode(
     userId: number,
-    phone: string,
-    authCode: string,
-  ): Promise<AxiosInstance> {
-    return await authAPI(`/user/sms`, {
+    userPhoneNumber: string,
+  ) {
+    return await authAPI(`/user/phone`, {
       method: 'POST', //GET?
-      data: {
-        userId,
-        phone,
-        authCode,
+      body: {
+        userId: userId,
+        phoneNumber: userPhoneNumber,
       },
     });
   },
 
-  //전화번호 인증(인증번호 일치여부 확인)
-  async verifyPhoneNumber(
-    userId: number,
-    phone: string,
-    authCode: string,
-  ): Promise<AxiosInstance> {
+  //전화번호 인증
+  async verifyPhoneNumber() {
     return await authAPI(`/user/phone`, {
       method: 'POST',
-      data: {
-        authCode,
-        phone,
-        userId,
-      },
     });
   },
 
   //회원정보 조회(마이페이지)
-  async getUserInfo(userId: number): Promise<AxiosInstance> {
+  async getUserInfo(userId: number) {
     return await authAPI(`/mypage/${userId}`, {
       method: 'GET',
     });
   },
 
-  //회원정보 수정(추가정보 등록)
+  //회원정보 수정
   async updateUserInfo(
     userId: number,
-    nickname: string,
+    userNickname: string,
     gender: string,
-    age: number,
-  ): Promise<AxiosInstance> {
+    userPhoneNumber: string,
+  ) {
     return await authAPI(`/mypage/${userId}`, {
       method: 'PATCH',
-      data: {
-        userAge: age,
-        userGender: gender,
-        userNickname: nickname,
+      body: {
+        userNickname: userNickname,
+        gender: gender,
+        phoneNumber: userPhoneNumber,
       },
     });
   },
 
-  //캘린더 조회(복용날짜 조회)
-  async getCalendar(
-    userId: number,
-    date: string,
-  ): Promise<AxiosInstance> {
+  //캘린더 조회
+  async getCalendar(userId: number) {
     return await authAPI(`/mypage/${userId}/calendar`, {
       method: 'GET',
-      params: {
-        date: date, //"2023-05" 같은 형식
-      },
     });
   },
 
   //복용여부 체크
-  async checkPill(userId: number): Promise<AxiosInstance> {
+  async checkPill(userId: number) {
     return await authAPI(`/mypage/${userId}/calendar`, {
       method: 'POST',
     });
   },
 
   //복용중인 영양제 목록 조회
-  async getTakingPillList(userId: number): Promise<AxiosInstance> {
+  async getTakingPillList(userId: number) {
     return await authAPI(`/mypage/${userId}/taking`, {
       method: 'GET',
     });
   },
 
   //복용중인 영양제 등록
-  async addTakingPill(
-    userId: number,
-    takingPillId: number,
-  ): Promise<AxiosInstance> {
+  async addTakingPill(userId: number, takingPillId: number) {
     return await authAPI(`/mypage/${userId}/taking/${takingPillId}`, {
       method: 'POST',
     });
   },
 
   //복용중인 영양제 삭제
-  async deleteTakingPill(
-    userId: number,
-    takingPillId: number,
-  ): Promise<AxiosInstance> {
+  async deleteTakingPill(userId: number, takingPillId: number) {
     return await authAPI(`/mypage/${userId}/taking/${takingPillId}`, {
       method: 'DELETE',
     });
   },
 
-  //회원이 쓴 모든 리뷰 조회
+  //회원리뷰 조회
   async getReviewList(userId: number) {
     return await authAPI(`/mypage/${userId}/review`, {
       method: 'GET',
     });
   },
 
-  //회원이 쓴 리뷰 수정
-  async updateReview(
-    userId: number,
-    reviewId: number,
-    reviewContent: string,
-    reviewScore: number,
-  ): Promise<AxiosInstance> {
+  //회원리뷰 수정
+  async updateReview(userId: number, reviewId: number) {
     return await authAPI(`/mypage/${userId}/review/${reviewId}`, {
       method: 'PATCH',
-      data: {
-        reviewContent,
-        reviewScore,
-      },
     });
   },
 
-  //회원이 쓴리뷰 삭제
-  async deleteReview(
-    userId: number,
-    reviewId: number,
-  ): Promise<AxiosInstance> {
+  //회원리뷰 삭제
+  async deleteReview(userId: number, reviewId: number) {
     return await authAPI(`/mypage/${userId}/review/${reviewId}`, {
       method: 'DELETE',
     });
@@ -175,21 +150,15 @@ const api = {
     });
   },
 
-  //관심 영양제 삭제
-  async deleteInterestPill(
-    userId: number,
-    nutrientId: number,
-  ): Promise<AxiosInstance> {
+  //관심 영양제 취소
+  async deleteInterestPill(userId: number, nutrientId: number) {
     return await authAPI(`/mypage/${userId}/interest/${nutrientId}`, {
       method: 'DELETE',
     });
   },
 
   //관심 영양제 등록
-  async addInterestPill(
-    userId: number,
-    nutrientId: number,
-  ): Promise<AxiosInstance> {
+  async addInterestPill(userId: number, nutrientId: number) {
     return await authAPI(`/mypage/${userId}/interest/${nutrientId}`, {
       method: 'POST',
     });
@@ -203,52 +172,30 @@ const api = {
   },
 
   //영양제 조합 목록 조회
-  async getCombList(userId: number): Promise<AxiosInstance> {
-    return await authAPI(`/mypage/${userId}/combination`, {
+  async getCombList() {
+    return await authAPI(`/mypage/combination`, {
       method: 'GET',
     });
   },
 
   //영양제 조합 저장
-  async saveComb(
-    userId: number,
-    combinationList: string[],
-    interestNutrient: string,
-  ): Promise<AxiosInstance> {
-    return await authAPI(`/mypage/${userId}/combination`, {
+  async saveComb() {
+    return await authAPI(`/mypage/combination`, {
       method: 'POST',
-      data: {
-        combinationList: combinationList,
-        interestNutrient: interestNutrient,
-      },
     });
   },
 
   //영양제 조합 삭제
-  async deleteComb(
-    userId: number,
-    combinationId: number,
-  ): Promise<AxiosInstance> {
-    return await authAPI(`/mypage/${userId}/combination`, {
+  async deleteComb() {
+    return await authAPI(`/mypage/combination`, {
       method: 'DELETE',
-      params: {
-        combinationId,
-      },
     });
   },
 
-  //영양제 조합에 따른 성분목록 조회
-  async getIngredientListByCombination(
-    userId: number,
-    combinationList: string[],
-    interestNutrient: string,
-  ): Promise<AxiosInstance> {
-    return await authAPI(`/mypage/${userId}/combination/ingredient`, {
-      method: 'GET',
-      data: {
-        combinationList: combinationList,
-        interestNutrient: interestNutrient,
-      },
+  //회원리뷰 등록
+  async addReview(userId: number, nutrientId: number) {
+    return await authAPI(`/nutrient/${nutrientId}/${userId}`, {
+      method: 'POST',
     });
   },
 
@@ -271,39 +218,22 @@ const api = {
 
   //영양제 상세정보 조회
   async getPillDetail(nutrientId: number) {
-    return await authAPI(`/nutrient/${nutrientId}`, {
+    return await baseAPI(`/nutrient/${nutrientId}`, {
       method: 'GET',
     });
   },
 
   //선택한 영양제 리뷰목록 조회
-  async getPillReviewList(
-    nutrientId: number,
-  ): Promise<AxiosInstance> {
-    return await authAPI(`/nutrient/${nutrientId}/review`, {
+  async getPillReviewList(nutrientId: number) {
+    const response = await baseAPI(`/nutrient/${nutrientId}/review`, {
       method: 'GET',
     });
-  },
-
-  //선택한 제품에 리뷰 등록
-  async addReview(
-    userId: number,
-    nutrientId: number,
-    reviewContent: string,
-    reviewScore: number,
-  ): Promise<AxiosInstance> {
-    return await authAPI(`/nutrient/${nutrientId}/${userId}`, {
-      method: 'POST',
-      body: {
-        reviewContent,
-        reviewScore,
-      },
-    });
+    return response;
   },
 
   //비교할 영양제 정보 조회
   async comparePill(nutrientId: number, compareId: number) {
-    return await authAPI(`/compare/${nutrientId}/${compareId}`, {
+    return await baseAPI(`/compare/${nutrientId}/${compareId}`, {
       method: 'GET',
     });
   },

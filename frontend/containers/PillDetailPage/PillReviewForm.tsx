@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
 
@@ -22,6 +23,15 @@ function PillReviewForm({}: Props) {
 
   const submitReview = () => {
     //별점이랑 리뷰 axios
+    axios
+      .post(
+        'https://k8a703.p.ssafy.io/api/nutrient/${nutrientId}/${userId}',
+        {
+          reviewContent: { reviewContent },
+          reviewScore: { rating },
+        },
+      )
+      .then((res) => console.log(res));
   };
 
   return (
