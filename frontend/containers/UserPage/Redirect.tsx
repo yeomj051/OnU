@@ -1,9 +1,8 @@
 //로그인 이후 리다이렉트될 화면
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import userStore from '@/store/userStore';
-import { setCookie } from '@/apis/cookie';
 
 const Redirect = () => {
   const params = useSearchParams();
@@ -39,9 +38,9 @@ const Redirect = () => {
     if (nickname === '' || age === 0 || gender === '') {
       router.push('/user/signup');
     } else router.push('/');
-  }, []);
+  }, [nickname, age, gender]);
 
-  return null;
+  return <></>;
 };
 
 export default Redirect;

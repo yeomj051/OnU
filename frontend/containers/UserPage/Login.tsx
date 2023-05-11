@@ -6,12 +6,11 @@ import Image from 'next/image';
 import kakao from '/public/kakao_login_large_wide.png';
 import Link from 'next/link';
 
-const KAKAO_URL: string =
-  process.env.REACT_APP_KAKAO_URL !== undefined
-    ? process.env.REACT_APP_KAKAO_URL
-    : 'https://k8a703.p.ssafy.io/api/oauth2/authorize/kakao?redirect_uri=https://localhost:3000/api/user/redirect';
+const KAKAO_URL: string = process.env.REACT_APP_KAKAO_URL as string;
+// const KAKAO_URL: string = process.env.REACT_APP_TEST_URL as string;
 
 const Login = () => {
+  console.log(KAKAO_URL);
   return (
     <div className="grid grid-rows h-[100vh] bg-white pt-20">
       {/* 로고화면
