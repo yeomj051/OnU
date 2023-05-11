@@ -44,17 +44,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().configurationSource(corsConfigurationSource())
 
                 .and()
-                .authorizeRequests()
-
-                .antMatchers("/api/test/test2").hasRole("ARTIST")
-                .and()
                 .oauth2Login()
                 .authorizationEndpoint()
-                .baseUri("/oauth2/authorize")
+                .baseUri("/api/oauth2/authorize")
                 .authorizationRequestRepository(cookieAuthorizationRequestRepository())
                 .and()
                 .redirectionEndpoint()
-                .baseUri("/oauth2/callback/*")
+                .baseUri("/api/oauth2/callback/*")
                 .and()
                 .userInfoEndpoint()
                 .userService(customOAuth2UserService)
@@ -76,6 +72,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         configuration.addAllowedOrigin("http://localhost:3000");
         configuration.addAllowedOrigin("https://k8a703.p.ssafy.io:3000");
         configuration.addAllowedOrigin("https://k8a703.p.ssafy.io");
+        configuration.addAllowedOrigin("https://o-nu.com");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
         configuration.setAllowCredentials(true);
