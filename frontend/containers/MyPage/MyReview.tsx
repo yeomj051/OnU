@@ -1,5 +1,4 @@
-import { itemDataList } from '@/apis/data';
-import ItemList from '@/components/list/ReviewList';
+// import ItemList from '@/components/list/ReviewList';
 
 //내가 쓴 리뷰 리스트
 const Review = (): React.ReactElement => {
@@ -9,7 +8,7 @@ const Review = (): React.ReactElement => {
         내가 쓴 리뷰
       </p>
       <div className="flex flex-col items-center w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md p-4">
-        <ItemList itemList={itemDataList} />
+        {/* <ItemList itemList={itemDataList} /> */}
       </div>
     </div>
   );
