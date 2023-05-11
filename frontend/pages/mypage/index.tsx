@@ -3,9 +3,9 @@
 import React from 'react';
 import Profile from '@/containers/MyPage/Profile';
 
-import Calendar from 'react-calendar';
 import { NextPageWithLayout } from '../_app';
 import AppLayout from '@/components/layout/AppLayout';
+import { MyCalendar } from '@/containers/MyPage/Calendar';
 
 const MyPage: NextPageWithLayout = (): React.ReactElement => {
   return (
@@ -13,7 +13,7 @@ const MyPage: NextPageWithLayout = (): React.ReactElement => {
       {/* <div id="header">헤더에요</div> */}
       <Profile />
       {/** 여기에 영양분석 배너 추가 */}
-      <Calendar />
+      <MyCalendar />
     </div>
   );
 };

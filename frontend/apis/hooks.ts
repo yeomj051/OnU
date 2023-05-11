@@ -22,21 +22,6 @@ export const useSearch = (
   return useQuery([queryKey, keyword], queryFn, { ...options });
 };
 
-//나의 복용날짜를 가져오는 api
-export const useCalendar = (
-  userId: number,
-  options?: QueryOptions,
-) => {
-  const queryKey = process.env.REACT_APP_API_URL;
-
-  const queryFn = async () => {
-    const res = await api.getCalendar(userId);
-    return res;
-  };
-
-  return useQuery([queryKey, userId], queryFn, { ...options });
-};
-
 //상세페이지
 
 //영양제 상세 정보 조회하는 api
@@ -92,20 +77,20 @@ export const useComparePill = (
   });
 };
 
-//영양제 조합 목록 조회
-export const useCombList = () => {
-  const queryFn = async () => {
-    const res = await api.getCombList();
-    return res;
-  };
-  return useQuery([queryKey], queryFn);
-};
+// //영양제 조합 목록 조회
+// export const useCombList = () => {
+//   const queryFn = async () => {
+//     const res = await api.getCombList();
+//     return res;
+//   };
+//   return useQuery([queryKey], queryFn);
+// };
 
-//영양제 조합 저장
-export const useSaveComb = () => {
-  const mutateFn = async () => {
-    const res = await api.getCombList();
-    return res;
-  };
-  return useMutation([queryKey], mutateFn);
-};
+// //영양제 조합 저장
+// export const useSaveComb = () => {
+//   const mutateFn = async () => {
+//     const res = await api.getCombList();
+//     return res;
+//   };
+//   return useMutation([queryKey], mutateFn);
+// };
