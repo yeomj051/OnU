@@ -5,6 +5,7 @@ import {
   useQuery,
 } from '@tanstack/react-query';
 import api from './config';
+import axios from 'axios';
 
 export const queryKey = process.env.REACT_APP_API_URL;
 
@@ -15,7 +16,9 @@ export const useSearch = (
 ) => {
   const queryKey = process.env.REACT_APP_API_URL;
   const queryFn = async () => {
-    const res = await api.searchPill(keyword);
+    const res = await axios.get(
+      `https://k8a703.p.ssafy.io/api/search/${keyword}`,
+    );
     return res;
   };
 
