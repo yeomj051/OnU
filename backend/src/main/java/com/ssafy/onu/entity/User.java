@@ -52,7 +52,7 @@ public class User extends BaseEntity{
 
     public void createUserInfo(ReqUserInfoDto reqUserInfoDto){
         this.userNickname = reqUserInfoDto.getUserNickname();
-        this.userAge = LocalDateTime.now().getYear() - reqUserInfoDto.getUserAge().getYear() + 1;
+        this.userAge = reqUserInfoDto.getUserAge().getYear();
         this.userGender = Gender.valueOf(reqUserInfoDto.getUserGender());
     }
 

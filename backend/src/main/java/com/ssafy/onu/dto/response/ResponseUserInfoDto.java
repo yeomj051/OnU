@@ -5,6 +5,8 @@ import com.ssafy.onu.entity.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Getter
 @NoArgsConstructor
 public class ResponseUserInfoDto {
@@ -14,7 +16,7 @@ public class ResponseUserInfoDto {
 
     public ResponseUserInfoDto(User user) {
         this.userNickname = user.getUserNickname();
-        this.userAge = user.getUserAge();
+        this.userAge = LocalDateTime.now().getYear() - user.getUserAge() + 1;
         this.userGender = user.getUserGender();
     }
 }
