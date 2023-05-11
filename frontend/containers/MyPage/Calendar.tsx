@@ -1,79 +1,99 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
-import { useCalendar } from '@/apis/hooks';
-import userStore from '@/store/userStore';
+import api from '@/apis/config';
 
 export const MyCalendar = () => {
-  const [isClient, setIsClient] = useState(false);
-  const [userId, setUserId] = useState(0);
-  const [mark, setMark] = useState();
-  const [page, setPage] = useState<number>(0);
-  const { id } = userStore();
+  const [value, setValue] = useState<Date>(new Date());
+  const [dateData, setDateData] = useState<string>('');
 
-  useEffect(() => {
-    setUserId(id);
+  const [isClient, setIsClient] = useState<boolean>(false);
+  const [userId, setUserId] = useState<number>(0);
+  const [mark, setMark] = useState<string[]>([]);
+  const [page, setPage] = useState<number>(0);
+
+  useEffect((): void => {
+    if (localStorage.getItem('userData')) {
+      const userData: string | null =
+        localStorage.getItem('userData');
+      if (userData !== null)
+        setUserId(Number.parseInt(JSON.parse(userData).id));
+    }
+
     setIsClient(true);
   }, []);
 
-  // const { data, isLoading, isSuccess, error } = useCalendar(userId);
+  useEffect((): void => {
+    getCalendar();
+  }, [dateData]);
 
-  // if (isLoading) {
-  //   return <div>로딩중...</div>;
-  // }
+  const getCalendar = async () => {
+    await api.getCalendar(userId, dateData).then((res): void => {
+      // setMark(res);
+      console.log(res);
+    });
+  };
+  const formatDate = (date: Date): string => {
+    return date.toString().split(' ')[2];
+  };
 
-  // if (error) {
-  //   return <div>오류가 발생했습니다.</div>;
-  // }
+  const formatDate2 = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
 
-  // if (!data) {
-  //   return <div>404 Not found</div>;
-  // }
-
-  // const formatDate = (date: Date): string => {
-  //   // console.log(date.toString().split(' ')[2]);
-  //   return date.toString().split(' ')[2];
-  // };
-  // setMark(data);
-
-  // console.log(data);
+    const result = `${day}-${month}-${year}`;
+    return result;
+  };
 
   return (
     <div id="calendar">
       <p className="ml-2 text-xl font-extrabold text-[#1E266E] mb-2">
         나의 복용일수 체크하기
       </p>
-      {/* {isClient && (
+      {isClient && (
         <Calendar
-          // onChange={onChange} // useState로 포커스 변경 시 현재 날짜 받아오기
-          // formatDay={(locale, date) => formatDate(date)}
-          // value={value}
+          onChange={() => {
+            setValue(value);
+          }} // useState로 포커스 변경 시 현재 날짜 받아오기
+          formatDay={(locale, date: Date): string => formatDate(date)}
+          onActiveStartDateChange={({ activeStartDate }): void => {
+            const year: number | undefined =
+              activeStartDate?.getFullYear();
+            const month: number | undefined =
+              activeStartDate?.getMonth();
+
+            if (year !== undefined && month !== undefined) {
+              setDateData(
+                `${year}-${
+                  month + 1 < 10 ? `0${month + 1}` : month + 1
+                }`,
+              );
+            }
+          }}
+          value={value}
           minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
           maxDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
           showNeighboringMonth={false} //  이전, 이후 달의 날짜는 보이지 않도록 설정
           className="w-full mx-auto text-sm text-center border-b"
-          // tileContent={({ date, view }) => {
-          //   // 날짜 타일에 컨텐츠 추가하기 (html 태그)
-          //   // 추가할 html 태그를 변수 초기화
-          //   let html = [];
-          //   // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
-          //   if (
-          //     mark.find(
-          //       (x) => x === moment(date).format('YYYY-MM-DD'),
-          //     )
-          //   ) {
-          //     html.push(<div className="dot"></div>);
-          //   }
-          //   // 다른 조건을 주어서 html.push 에 추가적인 html 태그를 적용할 수 있음.
-          //   return (
-          //     <>
-          //       <div className="flex items-center justify-center absoluteDiv">
-          //         {html}
-          //       </div>
-          //     </>
-          //   );
-          // }}
+          tileContent={({ date }) => {
+            // 날짜 타일에 컨텐츠 추가하기 (html 태그)
+            // 추가할 html 태그를 변수 초기화
+            const html = [];
+            // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
+            if (mark.find((x) => x === formatDate2(date))) {
+              html.push(<div className="dot" />);
+            }
+            // 다른 조건을 주어서 html.push 에 추가적인 html 태그를 적용할 수 있음.
+            return (
+              <>
+                <div className="flex items-center justify-center absoluteDiv">
+                  {html}
+                </div>
+              </>
+            );
+          }}
         />
-      )} */}
+      )}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import React from 'react';
 
 type Item = {
@@ -12,7 +12,7 @@ type Item = {
 
 const ItemList = (props: { itemList: Array<Item> }) => {
   // const itemDataList = props.data;
-  const router = useRouter();
+  // const router = useRouter();
 
   return (
     <div className="grid grid-cols-2 gap-4 w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md items-baseline px-8">
