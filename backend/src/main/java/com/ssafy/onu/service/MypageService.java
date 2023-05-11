@@ -176,10 +176,10 @@ public class MypageService {
         } else {
             Map<String, Object> map = new HashMap<>();
             map.put(nID, nID);
-            nutrientIngredientRepository.findNutrientIngredientsByNutrientId(nutrientId)
+            nutrientIngredientRepository.findNutrientIngredientsByNutrient_NutrientId(nutrientId)
                     .stream()
                     .forEach(nutrientIngredient -> {
-                        map.put(nutrientIngredient.getIngredientId().getIngredientName(), nutrientIngredient.getIngredientAmount());
+                        map.put(nutrientIngredient.getIngredient().getIngredientName(), nutrientIngredient.getIngredientAmount());
                         nutrientIngredientInfoList.add(new ResponseNutrientIngredientInfoDto(nutrientIngredient));
                     });
             redisUtil.cacheNutrient(nID, map);
