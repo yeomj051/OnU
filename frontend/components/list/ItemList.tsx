@@ -22,19 +22,26 @@ const ItemList = (props: { itemList: Array<Item> }) => {
     // console.log(item);
   };
 
-  const addItemToInterest = (itemId: number): void => {
-    try {
-      api.addInterestPill(id, itemId);
-      console.log('success');
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleInterest = (itemId: number): void => {
+  //   if (window.confirm('관심 영양제로 추가하시겠습니까?')) {
+  //     try {
+  //       api.addInterestPill(id, itemId);
+  //       console.log('success');
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
 
-  const handleInterest = (itemId: number): void => {
-    if (window.confirm('관심 영양제로 추가하시겠습니까?'))
-      addItemToInterest(itemId);
-  };
+  // const removeInterest = (itemId: number): void => {
+  //   if (window.confirm('관심 영양제 목록에서 제거하시겠습니까?')) {
+  //     try {
+  //       api.deleteInterestPill(id, itemId);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
 
   return (
     <div id="item-list">
@@ -82,13 +89,23 @@ const ItemList = (props: { itemList: Array<Item> }) => {
                 >
                   비교하기
                 </button>
-                <button
-                  id="add-btn"
-                  className="btn btn-sm border-[#90B5EA] text-[#90B5EA] btn-outline"
-                  onClick={() => handleInterest(item.id)}
-                >
-                  추가하기
-                </button>
+                {/* {!item.isInterested ? (
+                  <button
+                    id="add-btn"
+                    className="btn btn-sm border-[#90B5EA] text-[#90B5EA] btn-outline"
+                    onClick={() => handleInterest(item.id)}
+                  >
+                    관심목록 추가
+                  </button>
+                ) : (
+                  <button
+                    id="add-btn"
+                    className="btn btn-sm border-[#90B5EA] text-[#90B5EA] btn-outline"
+                    onClick={() => removeInterest(item.id)}
+                  >
+                    관심목록 제거
+                  </button>
+                )} */}
               </div>
             </div>
           </div>
