@@ -5,11 +5,11 @@ import Image from 'next/image';
 import React from 'react';
 
 type Item = {
-  id: number; //itemId
-  name: string; //제품명
-  manufacturer?: string; //제조사
-  imgUrl: string; //썸네일 이미지
-  itemUrl: string; //상세정보 링크
+  nutrientId: number;
+  nutrientName: string;
+  nutrientImageUrl: string;
+  nutrientBrand: string;
+  isInterested: boolean;
 };
 
 const ItemList = (props: { itemList: Array<Item> }) => {
@@ -22,26 +22,26 @@ const ItemList = (props: { itemList: Array<Item> }) => {
     // console.log(item);
   };
 
-  // const handleInterest = (itemId: number): void => {
-  //   if (window.confirm('관심 영양제로 추가하시겠습니까?')) {
-  //     try {
-  //       api.addInterestPill(id, itemId);
-  //       console.log('success');
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // };
+  const handleInterest = (itemId: number): void => {
+    if (window.confirm('관심 영양제로 추가하시겠습니까?')) {
+      try {
+        api.addInterestPill(id, itemId);
+        console.log('success');
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
-  // const removeInterest = (itemId: number): void => {
-  //   if (window.confirm('관심 영양제 목록에서 제거하시겠습니까?')) {
-  //     try {
-  //       api.deleteInterestPill(id, itemId);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // };
+  const removeInterest = (itemId: number): void => {
+    if (window.confirm('관심 영양제 목록에서 제거하시겠습니까?')) {
+      try {
+        api.deleteInterestPill(id, itemId);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   return (
     <div id="item-list">
@@ -54,7 +54,7 @@ const ItemList = (props: { itemList: Array<Item> }) => {
           >
             <div id="item-img" className="mask mask-square">
               <Image
-                src={item.imgUrl}
+                src={item.nutrientImageUrl}
                 alt="item-img"
                 width={140}
                 height={100}
@@ -69,13 +69,13 @@ const ItemList = (props: { itemList: Array<Item> }) => {
                   id="manufacturer"
                   className="text-xs font-bold text-[#909090]"
                 >
-                  {item.manufacturer}
+                  {item.nutrientBrand}
                 </span>
                 <span
                   id="name"
                   className="text-sm font-extrabold text-[#3A3A3A]"
                 >
-                  {item.name}
+                  {item.nutrientName}
                 </span>
               </div>
               <div
@@ -89,11 +89,11 @@ const ItemList = (props: { itemList: Array<Item> }) => {
                 >
                   비교하기
                 </button>
-                {/* {!item.isInterested ? (
+                {!item.isInterested ? (
                   <button
                     id="add-btn"
                     className="btn btn-sm border-[#90B5EA] text-[#90B5EA] btn-outline"
-                    onClick={() => handleInterest(item.id)}
+                    onClick={() => handleInterest(item.nutrientId)}
                   >
                     관심목록 추가
                   </button>
@@ -101,11 +101,11 @@ const ItemList = (props: { itemList: Array<Item> }) => {
                   <button
                     id="add-btn"
                     className="btn btn-sm border-[#90B5EA] text-[#90B5EA] btn-outline"
-                    onClick={() => removeInterest(item.id)}
+                    onClick={() => removeInterest(item.nutrientId)}
                   >
                     관심목록 제거
                   </button>
-                )} */}
+                )}
               </div>
             </div>
           </div>

@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { Eye } from '@emotion-icons/entypo/Eye';
+import ItemList from '@/components/list/ItemList';
+import { itemDataList } from '@/apis/data';
 
 const EyeIcon = styled(Eye)`
   color: #424b5a;
@@ -21,15 +23,18 @@ const worryDataList: string[] = [
 
 const WorryCategoryList = () => {
   return (
-    <div id="list" className="flex flex-wrap mt-4 ml-4">
-      {worryDataList.map((item, index) => (
-        <button className="btn btn-xl m-2 bg-[#D8EDFF] rounded-2xl border-none text-[#424B5A]  active:bg-[#90B5EA] active:text-[#FFFFFF] hover:bg-[#90B5EA] hover:text-[#FFFFFF] text-xs w-24 h-20">
-          <div className="flex flex-col items-center">
-            <EyeIcon className="w-6 h-6" />
-            {item}
-          </div>
-        </button>
-      ))}
+    <div>
+      <div id="list" className="flex flex-wrap mt-4 ml-4">
+        {worryDataList.map((item, index) => (
+          <button className="btn btn-xl m-2 bg-[#D8EDFF] rounded-2xl border-none text-[#424B5A]  active:bg-[#90B5EA] active:text-[#FFFFFF] hover:bg-[#90B5EA] hover:text-[#FFFFFF] text-xs w-24 h-20">
+            <div className="flex flex-col items-center">
+              <EyeIcon className="w-6 h-6" />
+              {item}
+            </div>
+          </button>
+        ))}
+      </div>
+      <ItemList itemList={itemDataList} />
     </div>
   );
 };

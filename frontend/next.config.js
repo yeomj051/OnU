@@ -5,7 +5,7 @@ const nextConfig = {
     domains: ['shopping-phinf.pstatic.net'],
   },
   env: {
-    REACT_APP_API_URL: 'https://o-nu.com/api',
+    REACT_APP_API_URL: 'https://k8a703.p.ssafy.io/api',
   },
   reactStrictMode: true,
   webpack: (config) => {
