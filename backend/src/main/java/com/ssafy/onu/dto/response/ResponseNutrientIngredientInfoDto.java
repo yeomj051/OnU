@@ -9,7 +9,7 @@ public class ResponseNutrientIngredientInfoDto {
     private String ingredientAmount;
 
     public ResponseNutrientIngredientInfoDto(NutrientIngredient nutrientIngredient) {
-        this.ingredientName = nutrientIngredient.getIngredientId().getIngredientName();
+        this.ingredientName = nutrientIngredient.getIngredient().getIngredientName();
         this.ingredientAmount = nutrientIngredient.getIngredientAmount();
     }
 
