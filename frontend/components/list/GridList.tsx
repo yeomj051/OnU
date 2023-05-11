@@ -1,14 +1,7 @@
+import { Item } from '@/apis/config';
 import Image from 'next/image';
 // import { useRouter } from 'next/router';
 import React from 'react';
-
-type Item = {
-  nutrientId: number; //itemId
-  nutrientName: string; //제품명
-  nutrientBrand: string; //제조사
-  nutrientImageUrl: string; //썸네일 이미지
-  isInterested?: boolean; //
-};
 
 const ItemList = (props: { itemList: Array<Item> }) => {
   // const itemDataList = props.data;

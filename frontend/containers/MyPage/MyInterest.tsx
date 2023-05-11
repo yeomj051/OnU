@@ -5,15 +5,6 @@ import { useEffect, useState } from 'react';
 import api from '@/apis/config';
 // import { useRouter } from 'next/navigation';
 
-// type Item = {
-//   id: number; //itemId
-//   name: string; //제품명
-//   rating: number;
-//   manufacturer?: string; //제조사
-//   imgUrl: string; //썸네일 이미지
-//   itemUrl: string; //상세정보 링크
-// };
-
 const Interest = (): React.ReactElement => {
   const [userId, setUserId] = useState<number>(0);
   // const [itemData, setItemData] = useState<Item[]>([]);

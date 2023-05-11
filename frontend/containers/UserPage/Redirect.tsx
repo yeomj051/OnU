@@ -32,6 +32,7 @@ const Redirect = () => {
     setUser(id, nickname, age, gender, accessToken, refreshToken);
     //백업용 스토리지에 유저 정보 저장
     localStorage.setItem('userData', JSON.stringify(userData));
+    localStorage.setItem('userId', id.toString());
     //일단은 쿠키에 리프레시토큰 저장..
     setCookie('refreshToken', refreshToken);
   }, [id, nickname, age, gender, accessToken, refreshToken]);

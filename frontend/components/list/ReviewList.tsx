@@ -1,17 +1,9 @@
 import Image from 'next/image';
 import React from 'react';
 import StarRating from '@/components/common/StarRating';
+import { Review } from '@/apis/config';
 
-type Item = {
-  id: number; //itemId
-  name: string; //제품명
-  rating: number;
-  manufacturer?: string; //제조사
-  imgUrl: string; //썸네일 이미지
-  itemUrl: string; //상세정보 링크
-};
-
-const ItemList = (props: { itemList: Array<Item> }) => {
+const ItemList = (props: { itemList: Array<Review> }) => {
   return (
     <div id="item-list">
       {props.itemList.map((item, index) => (
@@ -23,7 +15,7 @@ const ItemList = (props: { itemList: Array<Item> }) => {
           <div className="flex flex-col w-48">
             <div id="item-img" className="mask mask-square">
               <Image
-                src={item.imgUrl}
+                src={item.nutrientImageUrl}
                 alt="item-img"
                 width={100}
                 height={100}
@@ -37,13 +29,13 @@ const ItemList = (props: { itemList: Array<Item> }) => {
                 id="manufacturer"
                 className="text-xs font-bold text-[#909090]"
               >
-                {item.manufacturer}
+                {item.nutrientBrand}
               </span>
               <span
                 id="name"
                 className="text-sm font-extrabold text-[#3A3A3A]"
               >
-                {item.name}
+                {item.nutrientName}
               </span>
             </div>
           </div>

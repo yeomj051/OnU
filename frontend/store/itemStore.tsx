@@ -1,12 +1,5 @@
+import { Item } from '@/apis/config';
 import { create } from 'zustand';
-
-type Item = {
-  nutrientId: number;
-  nutrientName: string;
-  nutrientImageUrl: string;
-  nutrientBrand: string;
-  isInterested: boolean;
-};
 
 type ItemState = {
   items: Array<Item>;

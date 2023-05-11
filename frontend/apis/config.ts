@@ -1,25 +1,42 @@
 //API 호출에 사용할 함수들을 정리해놓은 파일입니다
-import { AxiosInstance } from 'axios';
+import { AxiosResponse } from 'axios';
 import { baseAPI, authAPI } from './axios';
+
+export type Item = {
+  nutrientId: number; //제품ID
+  nutrientName: string; //제품명
+  nutrientBrand: string; //제조사
+  nutrientImageUrl: string; //썸네일 이미지
+  isInterested?: boolean; //관심목록 추가여부
+  rating?: number; //별점(리뷰용)
+};
+
+export type Review = {
+  nutrientId: number; //itemId
+  nutrientName: string; //제품명
+  nutrientBrand: string; //제조사
+  nutrientImageUrl: string; //썸네일 이미지
+  rating: number;
+};
 
 //사용은 api.함수명()으로 하면 됩니다
 const api = {
   //로그아웃
-  async logoutUser(userId: number): Promise<AxiosInstance> {
+  async logoutUser(userId: number): Promise<AxiosResponse> {
     return await authAPI(`/user/logout/${userId}`, {
       method: 'GET',
     });
   },
 
   //회원탈퇴
-  async deleteUser(userId: number): Promise<AxiosInstance> {
+  async deleteUser(userId: number): Promise<AxiosResponse> {
     return await authAPI(`/user/${userId}`, {
       method: 'DELETE',
     });
   },
 
   //닉네임 중복검사
-  async checkNickname(userNickname: string): Promise<AxiosInstance> {
+  async checkNickname(userNickname: string): Promise<AxiosResponse> {
     return await baseAPI(`/user/${userNickname}`, {
       method: 'GET',
     });
@@ -30,7 +47,7 @@ const api = {
     userId: number,
     phone: string,
     authCode: string,
-  ): Promise<AxiosInstance> {
+  ): Promise<AxiosResponse> {
     return await authAPI(`/user/sms`, {
       method: 'POST', //GET?
       data: {
@@ -46,7 +63,7 @@ const api = {
     userId: number,
     phone: string,
     authCode: string,
-  ): Promise<AxiosInstance> {
+  ): Promise<AxiosResponse> {
     return await authAPI(`/user/phone`, {
       method: 'POST',
       data: {
@@ -58,7 +75,7 @@ const api = {
   },
 
   //회원정보 조회(마이페이지)
-  async getUserInfo(userId: number): Promise<AxiosInstance> {
+  async getUserInfo(userId: number): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}`, {
       method: 'GET',
     });
@@ -70,7 +87,7 @@ const api = {
     nickname: string,
     gender: string,
     age: number,
-  ): Promise<AxiosInstance> {
+  ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}`, {
       method: 'PATCH',
       data: {
@@ -85,7 +102,7 @@ const api = {
   async getCalendar(
     userId: number,
     date: string,
-  ): Promise<AxiosInstance> {
+  ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/calendar`, {
       method: 'GET',
       params: {
@@ -95,14 +112,14 @@ const api = {
   },
 
   //복용여부 체크
-  async checkPill(userId: number): Promise<AxiosInstance> {
+  async checkPill(userId: number): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/calendar`, {
       method: 'POST',
     });
   },
 
   //복용중인 영양제 목록 조회
-  async getTakingPillList(userId: number): Promise<AxiosInstance> {
+  async getTakingPillList(userId: number): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/taking`, {
       method: 'GET',
     });
@@ -112,7 +129,7 @@ const api = {
   async addTakingPill(
     userId: number,
     takingPillId: number,
-  ): Promise<AxiosInstance> {
+  ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/taking/${takingPillId}`, {
       method: 'POST',
     });
@@ -122,7 +139,7 @@ const api = {
   async deleteTakingPill(
     userId: number,
     takingPillId: number,
-  ): Promise<AxiosInstance> {
+  ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/taking/${takingPillId}`, {
       method: 'DELETE',
     });
@@ -141,7 +158,7 @@ const api = {
     reviewId: number,
     reviewContent: string,
     reviewScore: number,
-  ): Promise<AxiosInstance> {
+  ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/review/${reviewId}`, {
       method: 'PATCH',
       data: {
@@ -155,7 +172,7 @@ const api = {
   async deleteReview(
     userId: number,
     reviewId: number,
-  ): Promise<AxiosInstance> {
+  ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/review/${reviewId}`, {
       method: 'DELETE',
     });
@@ -179,7 +196,7 @@ const api = {
   async deleteInterestPill(
     userId: number,
     nutrientId: number,
-  ): Promise<AxiosInstance> {
+  ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/interest/${nutrientId}`, {
       method: 'DELETE',
     });
@@ -189,7 +206,7 @@ const api = {
   async addInterestPill(
     userId: number,
     nutrientId: number,
-  ): Promise<AxiosInstance> {
+  ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/interest/${nutrientId}`, {
       method: 'POST',
     });
@@ -203,7 +220,7 @@ const api = {
   },
 
   //영양제 조합 목록 조회
-  async getCombList(userId: number): Promise<AxiosInstance> {
+  async getCombList(userId: number): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/combination`, {
       method: 'GET',
     });
@@ -214,7 +231,7 @@ const api = {
     userId: number,
     combinationList: string[],
     interestNutrient: string,
-  ): Promise<AxiosInstance> {
+  ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/combination`, {
       method: 'POST',
       data: {
@@ -228,7 +245,7 @@ const api = {
   async deleteComb(
     userId: number,
     combinationId: number,
-  ): Promise<AxiosInstance> {
+  ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/combination`, {
       method: 'DELETE',
       params: {
@@ -242,7 +259,7 @@ const api = {
     userId: number,
     combinationList: string[],
     interestNutrient: string,
-  ): Promise<AxiosInstance> {
+  ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/combination/ingredient`, {
       method: 'GET',
       data: {
@@ -279,7 +296,7 @@ const api = {
   //선택한 영양제 리뷰목록 조회
   async getPillReviewList(
     nutrientId: number,
-  ): Promise<AxiosInstance> {
+  ): Promise<AxiosResponse> {
     return await authAPI(`/nutrient/${nutrientId}/review`, {
       method: 'GET',
     });
@@ -291,10 +308,10 @@ const api = {
     nutrientId: number,
     reviewContent: string,
     reviewScore: number,
-  ): Promise<AxiosInstance> {
+  ): Promise<AxiosResponse> {
     return await authAPI(`/nutrient/${nutrientId}/${userId}`, {
       method: 'POST',
-      body: {
+      data: {
         reviewContent,
         reviewScore,
       },
@@ -319,7 +336,7 @@ const api = {
   async getSurveyResult(userId: number) {
     return await authAPI(``, {
       method: 'POST',
-      body: {
+      data: {
         userId: userId,
         survey: {},
       },
