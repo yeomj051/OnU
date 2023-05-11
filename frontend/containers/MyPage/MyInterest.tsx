@@ -12,12 +12,9 @@ const Interest = (): React.ReactElement => {
 
   //관심 영양제 호출 api
   useEffect(() => {
-    if (localStorage.getItem('userData')) {
-      const userData: string | null =
-        localStorage.getItem('userData');
-      if (userData !== null)
-        setUserId(Number.parseInt(JSON.parse(userData).id));
-    }
+    const id: string | null = localStorage.getItem('userId');
+    if (id !== null) setUserId(Number.parseInt(id));
+
     api.getInterestPillList(userId).then((res) => {
       console.log(res);
       // setItemData(res.data);

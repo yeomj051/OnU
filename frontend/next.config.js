@@ -6,6 +6,8 @@ const nextConfig = {
   },
   env: {
     REACT_APP_API_URL: 'https://k8a703.p.ssafy.io/api',
+    REACT_APP_KAKAO_URL:
+      'https://k8a703.p.ssafy.io/api/oauth2/authorize/kakao?redirect_uri=https://k8a703.p.ssafy.io/api/user/redirect',
   },
   reactStrictMode: true,
   webpack: (config) => {
