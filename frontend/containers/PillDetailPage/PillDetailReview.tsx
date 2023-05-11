@@ -6,6 +6,7 @@ import tw from 'twin.macro';
 import PillDetailReviewBox from './PillDetailReviewBox';
 import PillDetailRate from './PillDetailRate';
 import StarRating from '@/components/common/StarRating';
+import { usePillReviewList } from '@/apis/hooks';
 
 type Props = {};
 
@@ -16,6 +17,15 @@ type PersonalReview = {
   date: string;
   rate: number;
   review: string;
+};
+
+type reviewContents = {
+  userNickname: string;
+  nutrientName: string;
+  reviewContent: string;
+  reviewScore: number;
+  reviewCreateTime: string;
+  reviewUpdateTime: string;
 };
 
 function PillDetailReview({}: Props) {
@@ -67,6 +77,23 @@ function PillDetailReview({}: Props) {
       },
     ],
   };
+
+  const { isLoading, data, isError, error, refetch } =
+    usePillReviewList(4002000847);
+
+  if (isLoading) {
+    return <div>로딩중 ...</div>;
+  }
+
+  if (isError) {
+    return <div>오류가 발생했습니다.</div>;
+  }
+
+  if (!data) {
+    return <div>404 Not Found</div>;
+  }
+
+  setReviewList(data);
 
   useEffect(() => {
     setReviewList(Items.data);
