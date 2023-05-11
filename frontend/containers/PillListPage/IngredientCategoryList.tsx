@@ -34,9 +34,9 @@ type Item = {
 const IngredientCategoryList = () => {
   const [itemData, setItemData] = useState<Item[]>([]);
   const [ingredientId, setIngredientId] = useState<number>(
-    Math.floor(Math.random() * 16),
+    Math.ceil(Math.random() * 16),
   );
-  const [userId, setUserId] = useState<number>(-1);
+  const [userId, setUserId] = useState<number>(0);
 
   useEffect(() => {
     if (localStorage.getItem('userData')) {
