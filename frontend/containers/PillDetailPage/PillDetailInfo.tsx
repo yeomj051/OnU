@@ -36,7 +36,7 @@ type detail = {
 };
 
 type Props = {
-  nutrientList: detail;
+  nutrientList?: detail;
 };
 
 function PillDetailInfo(props: Props) {

@@ -6,6 +6,7 @@ import PillDetailReview from './PillDetailReview';
 import fillHeart from '../../public/fillHeart.png';
 import emptyHeart from '../../public/emptyHeart.png';
 import Image from 'next/image';
+import { usePillDetail } from '@/apis/hooks';
 
 type ingredient = {
   ingredientName: string;
@@ -25,11 +26,7 @@ type detail = {
   nutrientType: string;
   nutrientMaterial: string;
   isInterested: boolean;
-  ingredientList: {
-    ingredientName: string;
-    ingredientAmount: string;
-    recommendedIntake: number;
-  };
+  ingredientList: ingredient;
   functionList: Array<string>;
 };
 
@@ -37,6 +34,17 @@ function PillDetailMain(): React.ReactElement {
   const [infoSwitch, setInfoSwitch] = useState<boolean>(true);
   const [like, setLike] = useState<boolean>(true);
   const [nutrientList, setNutrientList] = useState<detail>();
+
+  // const { isLoading, data, isError, isSuccess } = usePillDetail(11);
+
+  // useEffect(() => {
+  //   if (isError) {
+  //   }
+
+  //   if (isSuccess) {
+  //     setNutrientList(data.data.nutrientDetail);
+  //   }
+  // }, []);
 
   //제품상세정보<->리뷰
   const switchInfo = () => {
@@ -49,6 +57,12 @@ function PillDetailMain(): React.ReactElement {
 
   //좋아요 on/off
   const likeOrNot = () => {
+    // 좋아요 되어있는 영양제인지 확인하고 좋아요 되어있으면 => ZUStand에 관심영양제 저장한 리스트에서 있는지 확인해야할듯?
+    if (like) {
+      //좋아요 추가
+    } else {
+      //좋아요 삭제
+    }
     setLike(!like);
   };
 

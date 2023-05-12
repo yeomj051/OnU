@@ -20,14 +20,16 @@ type PersonalReview = {
   review: string;
 };
 
-// type reviewContents = {
-//   userNickname: string;
-//   nutrientName: string;
-//   reviewContent: string;
-//   reviewScore: number;
-//   reviewCreateTime: string;
-//   reviewUpdateTime: string;
-// };
+type reviewContents = {
+  userNickname: string;
+  nutrientName: string;
+  reviewContent: string;
+  userAge: number;
+  userGender: string;
+  reviewScore: number;
+  reviewCreateTime: string;
+  reviewUpdateTime: string;
+};
 
 function PillDetailReview() {
   const [wantReview, setWantReview] = useState<boolean>(false);
@@ -47,79 +49,16 @@ function PillDetailReview() {
     setWantReview(true);
   };
 
-  const Items = {
-    data: [
-      {
-        nickname: '약먹자',
-        age: 25,
-        gender: 'm',
-        date: '23.05.01.(월)',
-        rate: 4,
-        review:
-          '체력이 너무 떨어져서 사먹었는데 몸이 좋아졌어요 강추^^가족들이랑 같이 먹어요 색도 노란색이라 귀여움 봄에 먹기 딱입니다.. 봄이지만 외부활동 별로 안하시고 기운없고 피곤한 사람이라면 그냥 사서 먹으세요 얼ㄹㄹㄹ른....',
-      },
-      {
-        nickname: '약싫어싫어',
-        age: 42,
-        gender: 'f',
-        date: '23.05.01.(월)',
-        rate: 3,
-        review:
-          '체력이 너무 떨어져서 사먹었는데 몸이 안 좋아졌어요 비추^^ 너무 비싸고 색도 노란색이라 귀엽기만 함.  봄에 먹기 딱이긴 합니다.. 봄이니까 그냥 운동이나 해서 체력을 키워보세요 구매 ㄴㄴ',
-      },
-      {
-        nickname: '약최고',
-        age: 13,
-        gender: 'f',
-        date: '23.05.01.(월)',
-        rate: 3,
-        review:
-          '체력이 너무 떨어져서 사먹었는데 몸이 안 좋아졌어요 비추^^ 너무 비싸고 색도 노란색이라 귀엽기만 함.  봄에 먹기 딱이긴 합니다.. 봄이니까 그냥 운동이나 해서 체력을 키워보세요 구매 ㄴㄴ',
-      },
-    ],
-  };
-
-  // const { isLoading, data, isError, isSuccess } =
-  //   usePillReviewList(4002000847);
-  // // setReviewList(Items.data);
-
-  // // setReviewList(data);
-
-  // // useEffect(() => {
-  // if (isError) {
-  //   console.log('here');
-  // }
-
-  // if (isSuccess) {
-  //   console.log('isSuscess');
-  //   console.log(data);
-  //   // setReviewList(data.reviewListByNutrient);
-  // }
-  // // }, []);
-
-  // useEffect(() => {
-  //   getReviewData();
-  // }, []);
-
-  // const getReviewData = async () => {
-  //   // api.getPillReviewList(4002000847).then((res) => console.log(res));
-  //   const response = await api.getPillReviewList(4002000847);
-  //   // response.then((res) => console.log(res));
-  //   console.log(response);
-  // };
+  const { isLoading, data, isError, isSuccess } =
+    usePillReviewList(4002000847);
 
   useEffect(() => {
-    axios
-      .get(`https://k8a703.p.ssafy.io/api/nutrient/4002000847/review`)
-      .then((res) => {
-        console.log(res);
-        setReviewList(res.data.reviewListByNutrient);
-        console.log(res.data.reviewListByNutrient);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    // getReviewData();
+    if (isError) {
+    }
+
+    if (isSuccess) {
+      setReviewList(data.data.reviewListByNutrient);
+    }
   }, []);
 
   useEffect(() => {

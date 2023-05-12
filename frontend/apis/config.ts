@@ -215,6 +215,10 @@ const api = {
   ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/combination`, {
       method: 'POST',
+      data: {
+        combinationList: combinationList,
+        interestNutrient: interestNutrient,
+      },
     });
   },
 
@@ -225,6 +229,9 @@ const api = {
   ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/combination`, {
       method: 'DELETE',
+      data: {
+        combinationId: combinationId,
+      },
     });
   },
 
@@ -237,8 +244,8 @@ const api = {
     return await authAPI(`/mypage/${userId}/combination/ingredient`, {
       method: 'GET',
       data: {
-        combinationList: combinationList,
         interestNutrient: interestNutrient,
+        combinationList: combinationList,
       },
     });
   },
@@ -271,7 +278,7 @@ const api = {
   async getPillReviewList(
     nutrientId: number,
   ): Promise<AxiosResponse> {
-    return await authAPI(`/nutrient/${nutrientId}/review`, {
+    return await baseAPI(`/nutrient/${nutrientId}/review`, {
       method: 'GET',
     });
   },

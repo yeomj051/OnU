@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // import { ResponsiveBar } from '@nivo/bar';
 import {
   Chart as ChartJS,
@@ -8,20 +8,10 @@ import {
   Title,
   Tooltip,
   Legend,
-  // ChartOptions,
-  // CoreChartOptions,
-  // ScaleChartOptions,
-  // ChartTypeRegistry,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-
-// type _DeepPartialObject<T> = {
-//   [P in keyof T]?: _DeepPartialObject<T[P]>;
-// };
-
-// type BarChartOptions = _DeepPartialObject<CoreChartOptions<'bar'>> & {
-//   scales?: Partial<{ [key in keyof ChartTypeRegistry]: { [key in keyof ChartTypeRegistry[key]['scales']]?: any } }>;
-// };
+import { makeCombinationStore } from '@/store/makeCombinationStore';
+import { useIngreByComb } from '@/apis/hooks';
 
 ChartJS.register(
   CategoryScale,
@@ -145,17 +135,20 @@ type Props = {
 };
 
 function PillAnalysisGraph(props: Props) {
-  // useEffect(()=>{
-  //   //-1일경우는 복용중인영양제로 리스트를 보여준다.
-  //   if(props.analysisType===-1){
-
-  //   }else if(props.analysisType==0){ //0일경우는 저장된 조합 누를경우
-
-  //   }else{//1일경우는 조합 만들면서 복용중/관심 누를때
-
-  //   }
-
-  // },[])
+  useEffect(() => {
+    //-1일경우는 복용중인영양제로 리스트를 보여준다.
+    if (props.analysisType === -1) {
+    } else if (props.analysisType == 0) {
+      //0일경우는 저장된 조합 누를경우
+    } else {
+      //1일경우는 조합 만들면서 복용중/관심 누를때
+      const { combList } = makeCombinationStore(); //zstand에 들어있는 combList에서 영양제 id 가져옴
+      //가져온 id를 바탕으로 api 호출
+      // const { isError, isSuccess, data } = useIngreByComb(userId, interestNutrient, combList);
+      // if (isError) {
+      // }
+    }
+  }, []);
 
   return (
     <div className="p-6">

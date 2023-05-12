@@ -4,6 +4,7 @@ import profile from '../../public/profile.png';
 import Image from 'next/image';
 import fillStar from '../../public/fillStar.png';
 import emptyStar from '../../public/emptyStar.png';
+import { userAgent } from 'next/server';
 type Props = {
   review: reviewContents;
 };
@@ -12,33 +13,22 @@ type reviewContents = {
   userNickname: string;
   nutrientName: string;
   reviewContent: string;
+  userAge: number;
+  userGender: string;
   reviewScore: number;
   reviewCreateTime: string;
   reviewUpdateTime: string;
 };
 
-// type PersonalReview = {
-//   nickname: string;
-//   age: number;
-//   gender: string;
-//   date: string;
-//   rate: number;
-//   review: string;
-// };
-
-// const StarFillComponent = styled(StarFill)``;
-
 function PillDetailReviewBox(props: Props) {
-  // console.log(props.review);
-  // console.log(props.review.nickname);
-
-  // const age = Math.floor(props.review.age / 10) * 10;
-  // let gender = '';
-  // if (props.review.gender === 'm') {
-  //   gender = '남';
-  // } else {
-  //   gender = '여';
-  // }
+  const date = new Date().getFullYear();
+  const age = Math.floor((date - props.review.userAge) / 10) * 10;
+  let gender = '';
+  if (props.review.userGender === 'm') {
+    gender = '남';
+  } else {
+    gender = '여';
+  }
 
   function repeatStar(score: number): JSX.Element[] {
     let arr = [];
@@ -71,10 +61,10 @@ function PillDetailReviewBox(props: Props) {
           <Image src={profile} className="w-10 h-10" alt="프로필" />
         </div>
         <div className="col-span-4 pb-1">
-          {/* <div className="text-xl">{props.review.nickname}</div>
+          <div className="text-xl">{props.review.userNickname}</div>
           <div className="text-sm">
             {age}대 {gender}성
-          </div> */}
+          </div>
         </div>
         <div className="col-span-3 grid justify-items-end">
           <div className="text-sm">
