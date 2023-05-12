@@ -18,6 +18,7 @@ import {
 } from '@/apis/hooks';
 import { likeStore } from '@/store/likeStore';
 import { haveStore } from '@/store/haveStore';
+import PillAnalysisCombBox from './PillAnalysisCombBox';
 
 type combination = {
   combinationId: number;
@@ -32,7 +33,6 @@ type InfoList = {
 };
 
 function PillAnalysisMain() {
-  /////////////////////////////////////////////////////////////////영양제 조합 목록 조회//////
   const data = {
     combinationList: [
       {
@@ -111,44 +111,26 @@ function PillAnalysisMain() {
     ],
     message: 'success',
   };
-  const {};
-  const {} = likeStore();
-
-  //API
-  //조합 목록 저장
-  const [combinationList, setCombinationList] = useState<
-    Array<combination>
-  >([]);
-
-  //어떤 조합이 선택되어있는지 id 저장
-  const [selectedComb, setSelectedComb] = useState<number>(0);
-  //삭제된 조합 id 저장할 state => 근데 꼭 필요한가?? 자동 리렌더링 되면 api도 다시 받아올거니까 필요없을듯 일단 주석
-  // const [deletedComb, setDeletedComb] = useState<number>(0);
 
   const [showChart, setShowchart] = useState<number>(-1);
   const [dataId, setDataId] = useState<number>(-1);
   const router = useRouter();
-
-  const userData = JSON.parse('userData' || '{}');
-  const userId: number = userData?.id as number;
+  const [userId, setUserId] = useState<number>(0);
 
   useEffect(() => {
-    saveCombinationPill();
+    if (typeof window !== 'undefined') {
+      const getUserFromLocal = localStorage.getItem('userData');
+      const userData = JSON.parse(getUserFromLocal || '{}');
+      const userIdTmp: number = userData?.id as number;
 
-    // setCombinations(data.combinationList);
-    // setCombinationList(data.combinationList);
+      setUserId(userIdTmp);
+
+      // saveCombinationPill();
+
+      // setCombinations(data.combinationList);
+      // setCombinationList(data.combinationList);
+    }
   }, []);
-
-  const saveCombinationPill = () => {
-    const { isLoading, data, isError, isSuccess } =
-      useCombList(userId);
-    if (isError) {
-      // console.log(error);
-    }
-    if (isSuccess) {
-      setCombinationList(data.data.combinationList);
-    }
-  };
 
   // useEffect(() => {
   //   //여기에서 deletecomb랑 아이디 같은 영양제 조합
@@ -158,7 +140,7 @@ function PillAnalysisMain() {
   //조합(선택한 영양제id 리스트로 저장)
   // const [choiceList, setChoiceList] = useState<Array<number>>([]);
 
-  //조합 저장하는 함수
+  //조합 저장하는 함수 => zustand에 저장되어 있는 리스트를 서버에 보내준다.
   const saveCombination = () => {
     // const { error, isError, isSuccess } = useSaveComb(
     //   userId,
@@ -170,13 +152,6 @@ function PillAnalysisMain() {
   const addLikeList = () => {
     router.push(`/search`);
   };
-
-  const selectCombination = (id: number) => {
-    setSelectedComb(id);
-  };
-  // const deleteCombination = (id: number) => {
-  //   setSelectedComb(id);
-  // };
 
   return (
     <div className="mt-20">
@@ -226,14 +201,7 @@ function PillAnalysisMain() {
         </div>
         <div className="">
           <div className="col-span-1 text-xl">나의 영양제 조합</div>
-          {combinationList.map((combination, idx) => (
-            <PillAnalysisComb
-              combination={combination}
-              selectCombination={selectCombination}
-              selectedComb={selectedComb}
-              // deleteCombination={deleteCombination}
-            />
-          ))}
+          <PillAnalysisCombBox userId={userId} />
         </div>
       </div>
     </div>

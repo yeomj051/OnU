@@ -20,18 +20,16 @@ function PillAnalysisLikeBox(props: Props) {
   const [interestList, setInterestList] = useState<Array<interest>>();
   const { likeList, setAllLikes } = likeStore();
 
-  useEffect(() => {
-    const { isLoading, data, isError, isSuccess } = useInterestPill(
-      props.userId,
-    );
-    if (isError) {
-      // console.log(error);
-    }
-    if (isSuccess) {
-      setAllLikes(data.data.inter);
-      setInterestList(data.data.interestNutrientList);
-    }
-  }, []);
+  const { isLoading, data, isError, isSuccess } = useInterestPill(
+    props.userId,
+  );
+  if (isError) {
+    // console.log(error);
+  }
+  if (isSuccess) {
+    setAllLikes(data.data.inter);
+    setInterestList(data.data.interestNutrientList);
+  }
 
   return (
     <div className="flex justify-between">
