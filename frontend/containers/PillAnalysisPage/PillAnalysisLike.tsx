@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // import Image from 'next/image';
 // import eundan from '@/public/eundan.png';
 import { makeCombinationStore } from '../../store/makeCombinationStore';
@@ -10,6 +10,7 @@ function PillAnalysisHave() {
     makeCombinationStore();
   const { removeLike } = likeStore();
 
+  useEffect(() => {}, []);
   //이 영양제가 선택되었는지 여부를 저장
   const [isSelected, setIsSelected] = useState<boolean>(false);
   //영양제 조합 삭제API 연결해서 조합 삭제
@@ -29,8 +30,9 @@ function PillAnalysisHave() {
   const selectThis = (event: React.MouseEvent) => {
     if (isSelected) {
       // removeSelected(영양제ID);
+      console.log(combList);
     } else {
-      // addSelectedId(영양제ID);
+      // addSelected(영양제ID);
     }
     setIsSelected(!isSelected);
   };
