@@ -76,7 +76,7 @@ const api = {
 
   //회원정보 조회(마이페이지)
   async getUserInfo(userId: number): Promise<AxiosResponse> {
-    return await baseAPI(`/mypage/${userId}`, {
+    return await authAPI(`/mypage/${userId}`, {
       method: 'GET',
     });
   },

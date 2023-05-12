@@ -9,11 +9,11 @@ const Redirect = () => {
   const router = useRouter();
 
   //url에서 파라미터로 유저 정보 받아오기
-  const id: number = Number(params.get('userId')) || 0;
-  const nickname: string = params.get('userNickname') || '';
-  const age: number = Number(params.get('userAge')) || 0;
-  const gender: string = params.get('userGender') || '';
-  const accessToken: string = params.get('accessToken') || '';
+  const id: number = Number(params.get('userId')) as number;
+  const nickname: string = params.get('userNickname') as string;
+  const age: number = Number(params.get('userAge')) as number;
+  const gender: string = params.get('userGender') as string;
+  const accessToken: string = params.get('accessToken') as string;
 
   useEffect(() => {
     const user = {
@@ -31,9 +31,10 @@ const Redirect = () => {
     localStorage.setItem('userAge', age.toString());
     localStorage.setItem('userGender', gender);
 
-    if (nickname === '' || age === 0 || gender === '') {
+    if (id === undefined || id === null) {
       router.push('/user/signup');
     } else router.push('/');
+    return;
   }, [id, nickname, age, gender]);
 
   return <></>;

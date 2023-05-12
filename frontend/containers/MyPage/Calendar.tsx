@@ -14,7 +14,7 @@ export const MyCalendar = () => {
   );
 
   const [isClient, setIsClient] = useState<boolean>(false);
-  const [userId, setUserId] = useState<number>(0);
+  const [userId, setUserId] = useState<number>(-1);
   const [mark, setMark] = useState<string[]>([]);
   const [streak, setStreak] = useState<number>(0);
   const [page, setPage] = useState<number>(0);
@@ -31,7 +31,7 @@ export const MyCalendar = () => {
   }, []);
 
   useEffect(() => {
-    if (dateData && userId) getCal();
+    if (dateData && userId !== -1) getCal();
   }, [userId, dateData]);
 
   const getCal = async () => {
@@ -103,7 +103,10 @@ export const MyCalendar = () => {
             // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
             if (mark.find((x) => x === formatDate2(date))) {
               html.push(
-                <div className="absolute w-6 h-6 bg-red-400 opacity-50 mb-7 rounded-xl" />,
+                <div
+                  className="absolute w-6 h-6 bg-red-400 opacity-50 mb-7 rounded-xl"
+                  key={date.toString()}
+                />,
               );
             }
             // 다른 조건을 주어서 html.push 에 추가적인 html 태그를 적용할 수 있음.

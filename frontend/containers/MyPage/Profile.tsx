@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import ButtonGroup from './ButtonGroup';
 import profileImg1 from '@/public/liquid.png';
@@ -7,6 +7,10 @@ import profileImg3 from '@/public/jelly.png';
 import profileImg4 from '@/public/powder.png';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useRouter } from 'next/navigation';
+import useUserStore from '@/store/userStore';
+import api from '@/apis/config';
+import Router from 'next/router';
+import { readSync } from 'fs';
 
 const bgImgSet: string[] = [
   'https://images.unsplash.com/photo-1612540943977-98ce54bea8a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
@@ -32,11 +36,29 @@ const Profile = (): React.ReactElement => {
   const iconRandom = 0;
   const router = useRouter();
 
+  const [userInfo, setUserInfo] = useState<IUser>();
   //캘린더 조회 api 호출
 
   const handleAlarm = () => {
     if (window.confirm('복용 알림을 설정하시겠습니까?'))
       router.push('/user/phoneauth');
+  };
+
+  useEffect((): void => {
+    getUser(
+      Number.parseInt(localStorage.getItem('userId') as string),
+    );
+  }, []);
+
+  const getUser = async (userId: number) => {
+    await api.getUserInfo(userId).then((res) => {
+      setUserInfo({
+        id: userId,
+        nickname: res.data.userInfo.userNickname,
+        age: res.data.userInfo.userAge,
+        gender: res.data.userInfo.userGender,
+      });
+    });
   };
 
   return (
@@ -60,8 +82,11 @@ const Profile = (): React.ReactElement => {
             </div>
             <div className="flex items-center justify-between w-full">
               <div className="flex flex-col mt-4">
-                <p>닉네임</p>
-                <p className="mb-5">나이 성별</p>
+                <p className="mr-8">{userInfo?.nickname}</p>
+                <p className="mb-5">
+                  {Math.floor((userInfo?.age as number) / 10) * 10}대{' '}
+                  {userInfo?.gender === 'male' ? '남성' : '여성'}
+                </p>
               </div>
               <div id="buttons" className="flex items-center">
                 <button
@@ -88,7 +113,7 @@ const Profile = (): React.ReactElement => {
                 </button>
                 <button
                   className="btn btn-ghost btn-circle"
-                  onClick={() => router.push('/user/signup')}
+                  // onClick={() => router.push('/user/signup')}
                 >
                   <SettingsOutlinedIcon />
                 </button>

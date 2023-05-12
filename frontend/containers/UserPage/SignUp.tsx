@@ -23,22 +23,19 @@ const SignUp = () => {
 
   useEffect((): void => {
     //추후 서버에서 닉네임 중복확인 api를 받아와서 사용
-    // api.checkNickname(nickname).then((res) => {
-    //   if (res.code === 200) {
-    //     setNicknameLabel('사용 가능한 닉네임입니다.');
-    //   } else {
-    //     setNicknameLabel('사용 불가능한 닉네임입니다');
-    //   }
-    // });
-    if (nickname.length >= 2 && nickname.length <= 15) {
-      setNicknameLabel('사용 가능한 닉네임입니다');
+    if (nickname.length >= 4 && nickname.length <= 15) {
+      api.checkNickname(nickname).then((res) => {
+        if (res.status === 200) {
+          setNicknameLabel('사용 가능한 닉네임입니다.');
+        } else {
+          setNicknameLabel('사용 불가능한 닉네임입니다');
+        }
+      });
     } else if (nickname.length > 15) {
       setNicknameLabel('사용 불가능한 닉네임입니다');
     } else {
       setNicknameLabel('');
     }
-
-    // setNicknameLabel('사용 불가능한 닉네임입니다');
   }, [nickname]);
 
   //타이핑시 닉네임 중복확인
@@ -50,12 +47,12 @@ const SignUp = () => {
   };
 
   //회원가입 완료처리
-  const registerUser = () => {
+  const registerUser = async () => {
     const id: number = useUserStore.getState().user?.id as number;
     const age = `${birth}-12-31`;
 
     // 회원정보 보내고
-    api.signupUser(id, nickname, age, gender).then((res) => {
+    await api.signupUser(id, nickname, age, gender).then((res) => {
       console.log(res);
       router.push('/');
     });
