@@ -33,7 +33,7 @@ const Redirect = () => {
     if (nickname === '' || age === 0 || gender === '') {
       router.push('/user/signup');
     } else router.push('/');
-  }, []);
+  }, [nickname, age, gender]);
 
   return <></>;
 };
