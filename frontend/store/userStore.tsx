@@ -1,41 +1,41 @@
+import api from '@/apis/config';
+import { useStorage } from '@/apis/hooks';
+import { AxiosResponse } from 'axios';
 import { create } from 'zustand';
 
-type UserState = {
-  id: number;
-  nickname: string;
-  age: number;
-  gender: string;
-  accessToken: string;
-  setUser: (
-    id: number,
-    nickname: string,
-    age: number,
-    gender: string,
-    accessToken: string,
-  ) => void;
-};
+export const useUserStore = create<UserStore>((set) => ({
+  id: Number.parseInt(useStorage('userId') as string),
 
-export const userStore = create<UserState>((set) => ({
-  id: 0,
-  nickname: '',
-  age: 0,
-  gender: '',
-  accessToken: '',
-  refreshToken: '',
-  setUser: (
-    id: number,
-    nickname: string,
-    age: number,
-    gender: string,
-    accessToken: string,
-  ) =>
-    set({
-      id,
-      nickname,
-      age,
-      gender,
-      accessToken,
-    }),
+  initialize: () => {
+    const id: number = Number.parseInt(
+      useStorage('userId') as string,
+    );
+
+    api
+      .getUserInfo(id)
+      .then((res: AxiosResponse): void => {
+        if (res.status / 100 !== 2) {
+          throw new Error();
+        }
+        const user: IUser = {
+          id,
+          nickname: res.data.userNickname,
+          gender: res.data.gender,
+          age: res.data.age,
+        };
+        set((x) => ({ ...x, user }));
+      })
+      .catch(() => {
+        localStorage.removeItem('userId');
+        localStorage.removeItem('accessToken');
+        set((x) => ({ ...x, user: undefined }));
+      });
+  },
+
+  setUser: (user: IUser) => set((x) => ({ ...x, user })),
+  resetUser: () => {
+    set((x) => ({ ...x, user: undefined }));
+  },
 }));
 
-export default userStore;
+export default useUserStore;

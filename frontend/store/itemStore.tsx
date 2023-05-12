@@ -1,4 +1,3 @@
-import { Item } from '@/apis/config';
 import { create } from 'zustand';
 
 type ItemState = {
