@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -7,12 +7,24 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import HomeIcon from '@mui/icons-material/Home';
 import LoginIcon from '@mui/icons-material/Login';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import useUserStore from '@/store/userStore';
 
 const Header = (): React.ReactElement => {
   const [isClicked, setIsClicked] = useState(true);
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const router = useRouter();
   const inputRef = useRef(null);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (useUserStore.getState().user?.id) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+
+    console.log('isLoggedIn', isLoggedIn);
+  }, []);
 
   //입력결과 state로 저장
   const handleInput = (
@@ -242,10 +254,22 @@ const Header = (): React.ReactElement => {
             </Link>
           </li>
           <li>
-            <Link href="/user/login">
-              <LoginIcon />
-              로그인
-            </Link>
+            {isLoggedIn ? (
+              <div
+                onClick={() => {
+                  useUserStore.getState().resetUser();
+                  router.refresh();
+                }}
+              >
+                <LoginIcon />
+                로그아웃
+              </div>
+            ) : (
+              <Link href="/user/login">
+                <LoginIcon />
+                로그인
+              </Link>
+            )}
           </li>
           <li>
             <Link href="/mypage">

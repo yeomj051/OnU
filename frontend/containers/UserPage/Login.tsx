@@ -6,13 +6,10 @@ import Image from 'next/image';
 import kakao from '/public/kakao_login_large_wide.png';
 import Link from 'next/link';
 
-const KAKAO_URL: string =
-  window.location.hostname !== 'localhost'
-    ? (process.env.REACT_APP_KAKAO_URL as string)
-    : (process.env.REACT_APP_TEST_URL as string);
+const KAKAO_URL = process.env.REACT_APP_KAKAO_URL as string;
+// const KAKAO_URL = process.env.REACT_APP_TEST_URL as string;
 
 const Login = () => {
-  console.log(window.location.hostname);
   return (
     <div className="grid grid-rows h-[100vh] bg-white pt-20">
       {/* 로고화면
