@@ -8,7 +8,6 @@ import { itemStore } from '@/store/itemStore';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Transition } from '@headlessui/react';
-import { Item } from '@/apis/config';
 
 const drawerBleeding = 56;
 

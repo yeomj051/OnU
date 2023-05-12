@@ -6,6 +6,9 @@ import TextInput from '@/components/common/TextInput';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
+import api from '@/apis/config';
+import useUserStore from '@/store/userStore';
+import { useRouter } from 'next/navigation';
 
 const SignUp = () => {
   const [nicknameLabel, setNicknameLabel] = React.useState('');
@@ -13,8 +16,11 @@ const SignUp = () => {
   const [randomNumber, setRandomNumber] = React.useState(
     Math.floor(Math.random() * 100),
   );
-  const [birth, setBirth] = React.useState<Date | null>();
+  const [birth, setBirth] = React.useState<number>();
+  const [age, setAge] = React.useState<number>(0);
   const [gender, setGender] = React.useState('');
+
+  const router = useRouter();
 
   useEffect((): void => {
     //추후 서버에서 닉네임 중복확인 api를 받아와서 사용
@@ -32,8 +38,17 @@ const SignUp = () => {
     } else {
       setNicknameLabel('');
     }
+
     // setNicknameLabel('사용 불가능한 닉네임입니다');
   }, [nickname]);
+
+  useEffect(() => {
+    if (birth !== undefined && birth !== null) {
+      const date = new Date().getFullYear();
+      setAge(date - birth + 1);
+      console.log(nickname, age, gender);
+    }
+  }, [age, birth]);
 
   //타이핑시 닉네임 중복확인
   const checkNickname = (
@@ -45,16 +60,12 @@ const SignUp = () => {
 
   //회원가입 완료처리
   const registerUser = () => {
-    const data = {
-      nickname,
-      birth,
-      gender,
-    };
-
+    const id: number = useUserStore.getState().user?.id as number;
     // 회원정보 보내고
-    // api.updateUserInfo(data).then((res) => {});
-
-    // 다음페이지로 이동
+    api.updateUserInfo(id, nickname, gender, age).then(() => {
+      console.log(res);
+      router.push('/');
+    });
   };
 
   return (
@@ -102,10 +113,11 @@ const SignUp = () => {
             </label>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
               <DesktopDatePicker
-                value={birth}
                 format="YYYY-MM-DD"
-                onChange={(newValue) => {
-                  setBirth(newValue);
+                onYearChange={(date: Date) => {
+                  setBirth(
+                    Number.parseInt(date.toString().split(' ')[3]),
+                  );
                 }}
               />
             </LocalizationProvider>
@@ -119,7 +131,7 @@ const SignUp = () => {
                   type="radio"
                   name="radio-2"
                   className="radio radio-info"
-                  checked
+                  onClick={() => setGender('male')}
                 />
                 <span>남성</span>
               </div>
@@ -128,6 +140,7 @@ const SignUp = () => {
                   type="radio"
                   name="radio-2"
                   className="radio radio-info"
+                  onClick={() => setGender('female')}
                 />
                 <span>여성</span>
               </div>

@@ -1,11 +1,15 @@
-import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, {
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse,
+} from 'axios';
 import { getCookie } from './cookie';
 
 export const BASE_URL = process.env.REACT_APP_API_URL;
 
 //인증이 필요하지 않은 요청에 대한 인스턴스
-const baseInstance = (url: string) => {
-  const instance = axios.create({
+const baseInstance = (url: string): AxiosInstance => {
+  const instance: AxiosInstance = axios.create({
     baseURL: BASE_URL + url,
   });
 
@@ -13,8 +17,8 @@ const baseInstance = (url: string) => {
 };
 
 //인증이 필요한 요청에 대한 인스턴스
-const authInstance = (url: string) => {
-  const instance = axios.create({
+const authInstance = (url: string): AxiosInstance => {
+  const instance: AxiosInstance = axios.create({
     baseURL: BASE_URL + url,
   });
 
@@ -32,7 +36,7 @@ const authInstance = (url: string) => {
 
   //response interceptor
   instance.interceptors.response.use(
-    (response) => {
+    (response: AxiosResponse): AxiosResponse => {
       return response;
     },
     async (error) => {
@@ -43,7 +47,7 @@ const authInstance = (url: string) => {
 
         const refreshToken: string = getCookie('refreshToken');
         //리프레시 토큰으로 새로운 토큰 재발급 요청
-        const response = await axios({
+        const response: AxiosResponse = await axios({
           method: 'POST',
           url: 'https://k8a703.p.ssafy.io/auth/reissue',
           data: {
@@ -70,7 +74,7 @@ const authInstance = (url: string) => {
 export const baseAPI = async (
   url: string,
   options: AxiosRequestConfig,
-) => {
+): Promise<AxiosResponse> => {
   const res: AxiosResponse = await baseInstance(url).request(options);
   return res;
 };
@@ -78,7 +82,7 @@ export const baseAPI = async (
 export const authAPI = async (
   url: string,
   options: AxiosRequestConfig,
-) => {
+): Promise<AxiosResponse> => {
   const res: AxiosResponse = await authInstance(url).request(options);
   return res;
 };
