@@ -29,17 +29,15 @@ function PillAnalysisHaveBox(props: Props) {
   //복용중 목록 저장
   const [havingList, setHaveList] = useState<Array<have>>();
 
-  useEffect(() => {
-    const { isLoading, data, isError, isSuccess } =
-      useTakingPillIngredient(props.userId);
-    if (isError) {
-      // console.log(error);
-    }
-    if (isSuccess) {
-      setAllHaves(data.data.havingNutrientList); //전역변수 저장
-      setHaveList(data.data.havingNutrientList); //state 저장
-    }
-  }, []);
+  const { isLoading, data, isError, isSuccess } =
+    useTakingPillIngredient(props.userId);
+  if (isError) {
+    // console.log(error);
+  }
+  if (isSuccess) {
+    setAllHaves(data.data.havingNutrientList); //전역변수 저장
+    setHaveList(data.data.havingNutrientList); //state 저장
+  }
 
   return (
     <div className="flex justify-between">
