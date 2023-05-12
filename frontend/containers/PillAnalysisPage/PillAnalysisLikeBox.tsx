@@ -1,7 +1,7 @@
 import React from 'react';
 import PillAnalysisLike from './PillAnalysisLike';
 
-function PillAnalysisLikeBox({}: Props) {
+function PillAnalysisLikeBox() {
   return (
     <div className="flex justify-between">
       <PillAnalysisLike />

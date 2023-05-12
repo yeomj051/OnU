@@ -62,7 +62,7 @@ const SignUp = () => {
   const registerUser = () => {
     const id: number = useUserStore.getState().user?.id as number;
     // 회원정보 보내고
-    api.updateUserInfo(id, nickname, gender, age).then(() => {
+    api.updateUserInfo(id, nickname, gender, age).then((res) => {
       console.log(res);
       router.push('/');
     });

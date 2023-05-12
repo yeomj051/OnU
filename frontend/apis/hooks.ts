@@ -189,7 +189,6 @@ export const useComparePill = (
   });
 };
 
-<<<<<<< frontend/apis/hooks.ts
 //영양제 조합 목록 조회
 export const useCombList = (
   userId: number,
@@ -249,8 +248,7 @@ export const useIngreByComb = (
     [queryKey, userId, combinationList, interestNutrient],
     queryFn,
   );
-
-}
+};
 export const useStorage = (key: string) => {
   if (typeof window !== 'undefined') {
     const item = localStorage.getItem(key);

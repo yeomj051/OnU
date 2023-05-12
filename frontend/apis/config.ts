@@ -4,17 +4,6 @@ import { baseAPI, authAPI } from './axios';
 
 //사용은 api.함수명()으로 하면 됩니다
 const api = {
-  //토큰 재발급
-  async reissueToken(userId: number, refreshToken: string) {
-    return await authAPI(`/auth/reissue`, {
-      method: 'POST',
-      body: {
-        userId: userId,
-        refreshToken: refreshToken,
-      },
-    });
-  },
-
   //로그아웃
   async logoutUser(userId: number): Promise<AxiosResponse> {
     return await authAPI(`/user/logout/${userId}`, {
@@ -44,9 +33,10 @@ const api = {
   ): Promise<AxiosResponse> {
     return await authAPI(`/user/sms`, {
       method: 'POST', //GET?
-      body: {
-        userId: userId,
-        phoneNumber: userPhoneNumber,
+      data: {
+        userId,
+        phone,
+        authCode,
       },
     });
   },
@@ -59,6 +49,11 @@ const api = {
   ): Promise<AxiosResponse> {
     return await authAPI(`/user/phone`, {
       method: 'POST',
+      data: {
+        authCode,
+        phone,
+        userId,
+      },
     });
   },
 
@@ -69,19 +64,19 @@ const api = {
     });
   },
 
-  //회원정보 수정
+  //회원정보 수정(추가정보 등록)
   async updateUserInfo(
     userId: number,
-    userNickname: string,
+    nickname: string,
     gender: string,
     age: number,
   ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}`, {
       method: 'PATCH',
-      body: {
-        userNickname: userNickname,
-        gender: gender,
-        phoneNumber: userPhoneNumber,
+      data: {
+        userAge: age,
+        userGender: gender,
+        userNickname: nickname,
       },
     });
   },
@@ -93,6 +88,9 @@ const api = {
   ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/calendar`, {
       method: 'GET',
+      params: {
+        date: date, //"2023-05" 같은 형식
+      },
     });
   },
 
@@ -130,7 +128,7 @@ const api = {
     });
   },
 
-  //회원리뷰 조회
+  //회원이 쓴 모든 리뷰 조회
   async getReviewList(userId: number) {
     return await authAPI(`/mypage/${userId}/review`, {
       method: 'GET',
@@ -146,6 +144,10 @@ const api = {
   ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/review/${reviewId}`, {
       method: 'PATCH',
+      data: {
+        reviewContent,
+        reviewScore,
+      },
     });
   },
 
@@ -229,8 +231,8 @@ const api = {
   ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/combination`, {
       method: 'DELETE',
-      data: {
-        combinationId: combinationId,
+      params: {
+        combinationId,
       },
     });
   },
@@ -244,8 +246,8 @@ const api = {
     return await authAPI(`/mypage/${userId}/combination/ingredient`, {
       method: 'GET',
       data: {
-        interestNutrient: interestNutrient,
         combinationList: combinationList,
+        interestNutrient: interestNutrient,
       },
     });
   },
@@ -269,7 +271,7 @@ const api = {
 
   //영양제 상세정보 조회
   async getPillDetail(nutrientId: number) {
-    return await baseAPI(`/nutrient/${nutrientId}`, {
+    return await authAPI(`/nutrient/${nutrientId}`, {
       method: 'GET',
     });
   },
@@ -278,7 +280,7 @@ const api = {
   async getPillReviewList(
     nutrientId: number,
   ): Promise<AxiosResponse> {
-    return await baseAPI(`/nutrient/${nutrientId}/review`, {
+    return await authAPI(`/nutrient/${nutrientId}/review`, {
       method: 'GET',
     });
   },
@@ -301,7 +303,7 @@ const api = {
 
   //비교할 영양제 정보 조회
   async comparePill(nutrientId: number, compareId: number) {
-    return await baseAPI(`/compare/${nutrientId}/${compareId}`, {
+    return await authAPI(`/compare/${nutrientId}/${compareId}`, {
       method: 'GET',
     });
   },

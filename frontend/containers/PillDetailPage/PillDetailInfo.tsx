@@ -90,10 +90,10 @@ function PillDetailInfo(props: Props) {
       <PillDetailImg subject="제형" pillType={pillType} />
 
       <div className="bg-white min-h-[60px] px-5 py-30 grid grid-cols-6 rounded-lg mt-3">
-        <div className="col-span-1 grid content-center">영양성분</div>
+        <div className="grid content-center col-span-1">영양성분</div>
         <div className="col-span-5 mt-5">
-          <div className=" flex flex-row-reverse">
-            <div className="flex mx-1 items-center">
+          <div className="flex flex-row-reverse ">
+            <div className="flex items-center mx-1">
               <Image
                 src={redCircle}
                 alt="빨강"
@@ -101,7 +101,7 @@ function PillDetailInfo(props: Props) {
               />
               <div>과다</div>
             </div>
-            <div className="flex mx-1 items-center">
+            <div className="flex items-center mx-1">
               <Image
                 src={greenCircle}
                 alt="초록"
@@ -109,7 +109,7 @@ function PillDetailInfo(props: Props) {
               />
               <div>적정</div>
             </div>
-            <div className="flex mx-1 items-center">
+            <div className="flex items-center mx-1">
               <Image
                 src={yellowCircle}
                 alt="노랑"
@@ -118,7 +118,7 @@ function PillDetailInfo(props: Props) {
               <div>부족</div>
             </div>
           </div>
-          <div className="grid content-center mb-3 pl-2">
+          <div className="grid content-center pl-2 mb-3">
             {nutrientList.map((nutrient, idx) => (
               <PillDetailNutrientGage
                 key={idx}
@@ -135,7 +135,7 @@ function PillDetailInfo(props: Props) {
         subject="섭취 시 주의사항"
         content={caution}
       />
-      <PillDetailContents subject="원재료" content={material} />
+      <PillDetailContents subject="원재료" content={how} />
     </div>
   );
 }
