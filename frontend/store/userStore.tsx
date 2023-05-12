@@ -24,16 +24,27 @@ export const useUserStore = create<UserStore>((set) => ({
           age: res.data.age,
         };
         set((x) => ({ ...x, user }));
+        console.log(user);
       })
-      .catch(() => {
-        localStorage.removeItem('userId');
-        localStorage.removeItem('accessToken');
-        set((x) => ({ ...x, user: undefined }));
+      .catch((error) => {
+        console.log(
+          `(´･_･) 이게뭐지
+
+        (´っ_c) 내가 잘못봤나?
+
+        (´◎ω◎) 띠용?!
+
+        ＿人人 人人＿
+        ＞ (´◎ω◎)  ＜ ${error.code} ${error.message} 잖아?!
+        ￣Y^Y^Y^Y￣`,
+        );
       });
   },
 
   setUser: (user: IUser) => set((x) => ({ ...x, user })),
   resetUser: () => {
+    localStorage.removeItem('userId');
+    localStorage.removeItem('accessToken');
     set((x) => ({ ...x, user: undefined }));
   },
 }));
