@@ -1,35 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import api from '@/apis/config';
+import useUserStore from '@/store/userStore';
 
 export const MyCalendar = () => {
   const [value, setValue] = useState<Date>(new Date());
-  const [dateData, setDateData] = useState<string>('');
+  const [dateData, setDateData] = useState<string>(
+    `${value.getFullYear()}-${
+      value.getMonth() + 1 < 10
+        ? `0${value.getMonth() + 1}`
+        : value.getMonth() + 1
+    }`,
+  );
 
   const [isClient, setIsClient] = useState<boolean>(false);
-  const [userId, setUserId] = useState<number>(0);
+  const [userId, setUserId] = useState<number>(-1);
   const [mark, setMark] = useState<string[]>([]);
+  const [streak, setStreak] = useState<number>(0);
   const [page, setPage] = useState<number>(0);
 
   useEffect((): void => {
-    if (localStorage.getItem('userData')) {
-      const userData: string | null =
-        localStorage.getItem('userData');
-      if (userData !== null)
-        setUserId(Number.parseInt(JSON.parse(userData).id));
-    }
+    const id = useUserStore.getState().user?.id;
+    if (id) setUserId(id);
+    else
+      setUserId(
+        Number.parseInt(localStorage.getItem('userId') as string),
+      );
 
     setIsClient(true);
   }, []);
 
-  useEffect((): void => {
-    getCalendar();
-  }, [dateData]);
+  useEffect(() => {
+    if (dateData && userId !== -1) getCal();
+  }, [userId, dateData]);
 
-  const getCalendar = async () => {
+  const getCal = async () => {
     await api.getCalendar(userId, dateData).then((res): void => {
-      // setMark(res);
-      console.log(res);
+      // setMark(res.data.checkedDate.takingDateDate);
+      setMark(['2023-05-11', '2023-05-10', '2023-04-10']);
+    });
+
+    await api.checkPill(userId).then((res) => {
+      setStreak(res.data.continuousCount);
     });
   };
   const formatDate = (date: Date): string => {
@@ -41,20 +53,29 @@ export const MyCalendar = () => {
     const month = date.getMonth() + 1;
     const day = date.getDate();
 
-    const result = `${day}-${month}-${year}`;
+    const result = `${year}-${
+      month < 10 ? `0${month}` : month
+    }-${day}`;
+    // console.log(result);
     return result;
   };
 
   return (
     <div id="calendar">
-      <p className="ml-2 text-xl font-extrabold text-[#1E266E] mb-2">
+      <p className="ml-2 text-xl font-extrabold text-[#1E266E] mb-1 text-left">
         나의 복용일수 체크하기
+      </p>
+      <p className="ml-2 text-sm font-base text-[black] mb-2 text-left">
+        현재 {streak}일 연속 복용중!
       </p>
       {isClient && (
         <Calendar
           onChange={() => {
             setValue(value);
           }} // useState로 포커스 변경 시 현재 날짜 받아오기
+          onClickDay={(date) => {
+            console.log(formatDate2(date));
+          }}
           formatDay={(locale, date: Date): string => formatDate(date)}
           onActiveStartDateChange={({ activeStartDate }): void => {
             const year: number | undefined =
@@ -81,7 +102,12 @@ export const MyCalendar = () => {
             const html = [];
             // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
             if (mark.find((x) => x === formatDate2(date))) {
-              html.push(<div className="dot" />);
+              html.push(
+                <div
+                  className="absolute w-6 h-6 bg-red-400 opacity-50 mb-7 rounded-xl"
+                  key={date.toString()}
+                />,
+              );
             }
             // 다른 조건을 주어서 html.push 에 추가적인 html 태그를 적용할 수 있음.
             return (

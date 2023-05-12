@@ -10,7 +10,7 @@ import api from '@/apis/config';
 import useUserStore from '@/store/userStore';
 import { useRouter } from 'next/navigation';
 
-const SignUp = () => {
+const Update = () => {
   const [nicknameLabel, setNicknameLabel] = React.useState('');
   const [nickname, setNickname] = React.useState('');
   const [randomNumber, setRandomNumber] = React.useState(
@@ -46,8 +46,8 @@ const SignUp = () => {
     setNickname(e.target.value);
   };
 
-  //회원가입 완료처리
-  const registerUser = async () => {
+  //회원정보 수정 완료처리
+  const updateUser = async () => {
     const id: number = useUserStore.getState().user?.id as number;
     const age = `${birth}-12-31`;
 
@@ -97,20 +97,13 @@ const SignUp = () => {
               </button>
             </div>
           ) : null}
-          <div className="flex flex-col mb-4 space-y-2">
-            <label className="pl-1 text-base font-bold label-text">
-              생년월일
-            </label>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DesktopDatePicker
-                format="YYYY-MM-DD"
-                onYearChange={(date: Date) => {
-                  setBirth(
-                    Number.parseInt(date.toString().split(' ')[3]),
-                  );
-                }}
-              />
-            </LocalizationProvider>
+          <div className="flex justify-end mb-4 space-y-2">
+            <button
+              className="bg-[#90B5EA] text-lg border-none btn btn-sm"
+              onClick={() => router.push('/user/phoneauth')}
+            >
+              인증하기
+            </button>
           </div>
 
           <div className="flex justify-between mb-4">
@@ -138,9 +131,9 @@ const SignUp = () => {
           </div>
           <button
             className="bg-[#90B5EA] text-lg border-none btn btn-wide"
-            onClick={registerUser}
+            onClick={updateUser}
           >
-            회원가입 완료
+            회원정보 수정
           </button>
         </div>
       </div>
@@ -148,4 +141,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Update;

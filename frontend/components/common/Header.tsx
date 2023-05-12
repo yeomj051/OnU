@@ -22,8 +22,6 @@ const Header = (): React.ReactElement => {
     } else {
       setIsLoggedIn(false);
     }
-
-    console.log('isLoggedIn', isLoggedIn);
   }, []);
 
   //입력결과 state로 저장
@@ -247,13 +245,13 @@ const Header = (): React.ReactElement => {
           tabIndex={0}
           className="w-40 p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box"
         >
-          <li>
+          <li key="home">
             <Link href="/">
               <HomeIcon />
               홈으로
             </Link>
           </li>
-          <li>
+          <li key="login">
             {isLoggedIn ? (
               <div
                 onClick={() => {
@@ -271,7 +269,7 @@ const Header = (): React.ReactElement => {
               </Link>
             )}
           </li>
-          <li>
+          <li key="mypage">
             <Link href="/mypage">
               <AccountCircleIcon />
               마이페이지

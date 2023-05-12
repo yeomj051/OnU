@@ -14,7 +14,6 @@ export const useUserStore = create<UserStore>((set) => ({
       age: Number.parseInt(useStorage('userId') as string),
     };
     set((x) => ({ ...x, user }));
-    console.log(useUserStore.getState().user?.id);
   },
 
   setUser: (user: IUser) => set((x) => ({ ...x, user })),
