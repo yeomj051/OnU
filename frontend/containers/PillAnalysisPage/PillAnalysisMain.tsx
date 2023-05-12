@@ -3,12 +3,21 @@ import React from 'react';
 import PillAnalysisComb from './PillAnalysisComb';
 import { useState, useEffect } from 'react';
 import PillAnalysisGraph from './PillAnalysisGraph';
-import { combinationStore } from '@/store/combinationStore';
+import { makeCombinationStore } from '../../store/makeCombinationStore';
 import PillAnalysisHaveBox from './PillAnalysisHaveBox';
 import PillAnalysisLikeBox from './PillAnalysisLikeBox';
 import Image from 'next/image';
 import more from '../../public/more.png';
 import { useRouter } from 'next/navigation';
+import {
+  useCombList,
+  useInterestPill,
+  useSaveComb,
+  useTakingPill,
+  useTakingPillIngredient,
+} from '@/apis/hooks';
+import { likeStore } from '@/store/likeStore';
+import { haveStore } from '@/store/haveStore';
 
 type combination = {
   combinationId: number;
@@ -102,12 +111,15 @@ function PillAnalysisMain() {
     ],
     message: 'success',
   };
-  const { combinations, setCombinations } = combinationStore();
+  const {};
+  const {} = likeStore();
 
-  //API로 받아온 리스트 저장
+  //API
+  //조합 목록 저장
   const [combinationList, setCombinationList] = useState<
     Array<combination>
   >([]);
+
   //어떤 조합이 선택되어있는지 id 저장
   const [selectedComb, setSelectedComb] = useState<number>(0);
   //삭제된 조합 id 저장할 state => 근데 꼭 필요한가?? 자동 리렌더링 되면 api도 다시 받아올거니까 필요없을듯 일단 주석
@@ -117,10 +129,26 @@ function PillAnalysisMain() {
   const [dataId, setDataId] = useState<number>(-1);
   const router = useRouter();
 
+  const userData = JSON.parse('userData' || '{}');
+  const userId: number = userData?.id as number;
+
   useEffect(() => {
+    saveCombinationPill();
+
     // setCombinations(data.combinationList);
-    setCombinationList(data.combinationList);
+    // setCombinationList(data.combinationList);
   }, []);
+
+  const saveCombinationPill = () => {
+    const { isLoading, data, isError, isSuccess } =
+      useCombList(userId);
+    if (isError) {
+      // console.log(error);
+    }
+    if (isSuccess) {
+      setCombinationList(data.data.combinationList);
+    }
+  };
 
   // useEffect(() => {
   //   //여기에서 deletecomb랑 아이디 같은 영양제 조합
@@ -129,8 +157,14 @@ function PillAnalysisMain() {
 
   //조합(선택한 영양제id 리스트로 저장)
   // const [choiceList, setChoiceList] = useState<Array<number>>([]);
+
   //조합 저장하는 함수
-  const saveCombination = () => {};
+  const saveCombination = () => {
+    // const { error, isError, isSuccess } = useSaveComb(
+    //   userId,
+    //   combinations,
+    // );
+  };
 
   // 관심 영양제 추가하는 함수
   const addLikeList = () => {
@@ -149,7 +183,7 @@ function PillAnalysisMain() {
       <div className="mx-4">
         <div className="py-5">
           <div className="text-xl">복용중인 영양제</div>
-          <PillAnalysisHaveBox />
+          <PillAnalysisHaveBox userId={userId} />
         </div>
         <div className="py-5">
           <div className="grid grid-cols-2">
@@ -166,7 +200,7 @@ function PillAnalysisMain() {
               </button>
             </div>
           </div>
-          <PillAnalysisLikeBox />
+          <PillAnalysisLikeBox userId={userId} />
         </div>
       </div>
 

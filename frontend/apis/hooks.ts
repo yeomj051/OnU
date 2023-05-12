@@ -106,10 +106,10 @@ export const useDeleteTakingPill = (
   return useQuery([queryKey, userId, takingPillId], mutateFn);
 };
 
-//관심 영양제 목록 조회(성분 포함)
-export const useInterestPillIngredient = (userId: number) => {
+//복용중인 영양제 목록 조회(성분 포함)
+export const useTakingPillIngredient = (userId: number) => {
   const queryFn = async () => {
-    const res = await api.getInterestPillIngredientList(userId);
+    const res = await api.getTakingPillIngredientList(userId);
     return res;
   };
   return useQuery([queryKey, userId], queryFn);
@@ -205,14 +205,9 @@ export const useCombList = (
 export const useSaveComb = (
   userId: number,
   combinationList: string[],
-  interestNutrient: string,
 ) => {
   const mutateFn = async () => {
-    const res = await api.saveComb(
-      userId,
-      combinationList,
-      interestNutrient,
-    );
+    const res = await api.saveComb(userId, combinationList);
     return res;
   };
   return useMutation([queryKey], mutateFn);
@@ -234,20 +229,15 @@ export const useDeleteComb = (
 export const useIngreByComb = (
   userId: number,
   combinationList: string[],
-  interestNutrient: string,
 ) => {
   const queryFn = async () => {
     const res = await api.getIngredientListByCombination(
       userId,
       combinationList,
-      interestNutrient,
     );
     return res;
   };
-  return useQuery(
-    [queryKey, userId, combinationList, interestNutrient],
-    queryFn,
-  );
+  return useQuery([queryKey, userId, combinationList], queryFn);
 };
 export const useStorage = (key: string) => {
   if (typeof window !== 'undefined') {
