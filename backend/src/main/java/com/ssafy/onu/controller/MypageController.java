@@ -250,7 +250,7 @@ public class MypageController {
         return new ResponseEntity<>(resultMap, status);
     }
     @ApiOperation(value = "영양제 조합에 따른 성분 목록 조회", notes = "영양제 조합에 따른 성분 목록을 조회한다.", response = Map.class)
-    @GetMapping("/{userId}/combination/ingredient")
+    @PostMapping("/{userId}/combination/ingredient")
     public ResponseEntity<Map<String,Object>> getCombinationIngredient(@ApiParam(value = "회원정보(아이디)", required = true, example = "1") @PathVariable int userId,
                                                                        @RequestBody ReqCombinationDto reqCombinationDto, Principal principal){
         Map<String, Object> resultMap = new HashMap<>();
@@ -261,7 +261,7 @@ public class MypageController {
             return new ResponseEntity<>(resultMap, status);
         }
 
-        HashMap<String, Object> nutrientIngredient = mypageService.getCombinationIngredient(reqCombinationDto);
+        List<ResponseNutrientIngredientDto> nutrientIngredient = mypageService.getCombinationIngredient(reqCombinationDto);
 
         resultMap.put(MESSAGE, SUCCESS);
         resultMap.put("nutrientIngredient", nutrientIngredient);
