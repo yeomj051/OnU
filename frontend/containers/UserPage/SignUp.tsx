@@ -17,7 +17,6 @@ const SignUp = () => {
     Math.floor(Math.random() * 100),
   );
   const [birth, setBirth] = React.useState<number>();
-  const [age, setAge] = React.useState<number>(0);
   const [gender, setGender] = React.useState('');
 
   const router = useRouter();
@@ -42,14 +41,6 @@ const SignUp = () => {
     // setNicknameLabel('사용 불가능한 닉네임입니다');
   }, [nickname]);
 
-  useEffect(() => {
-    if (birth !== undefined && birth !== null) {
-      const date = new Date().getFullYear();
-      setAge(date - birth + 1);
-      console.log(nickname, age, gender);
-    }
-  }, [age, birth]);
-
   //타이핑시 닉네임 중복확인
   const checkNickname = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -61,8 +52,10 @@ const SignUp = () => {
   //회원가입 완료처리
   const registerUser = () => {
     const id: number = useUserStore.getState().user?.id as number;
+    const age = `${birth}-12-31`;
+
     // 회원정보 보내고
-    api.updateUserInfo(id, nickname, gender, age).then((res) => {
+    api.signupUser(id, nickname, age, gender).then((res) => {
       console.log(res);
       router.push('/');
     });

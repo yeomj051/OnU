@@ -11,6 +11,23 @@ const api = {
     });
   },
 
+  //회원가입
+  async signupUser(
+    userId: number,
+    nickname: string,
+    age: string,
+    gender: string,
+  ): Promise<AxiosResponse> {
+    return await authAPI(`/user/${userId}`, {
+      method: 'POST',
+      data: {
+        userNickname: nickname,
+        userAge: age,
+        userGender: gender,
+      },
+    });
+  },
+
   //회원탈퇴
   async deleteUser(userId: number): Promise<AxiosResponse> {
     return await authAPI(`/user/${userId}`, {

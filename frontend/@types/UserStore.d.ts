@@ -3,4 +3,5 @@ interface UserStore {
   user?: IUser;
   initialize: () => void;
   setUser: (user: IUser) => void;
+  resetUser: () => void;
 }
