@@ -120,7 +120,7 @@ public class MypageService {
     }
 
     public boolean createCombination(int userId, ReqCombinationDto reqCombinationDto) {
-        String combinationList = reqCombinationDto.getCombinationList().stream()
+        String combinationList = reqCombinationDto.getNutrientList().stream()
                 .map(String::valueOf)
                 .collect(Collectors.joining(COMMA));
         if(combinationList.split(COMMA).length == 0) return false;
@@ -147,20 +147,14 @@ public class MypageService {
         return result;
     }
 
-    public HashMap<String, Object> getCombinationIngredient(ReqCombinationDto reqCombinationDto) {
-        HashMap<String, Object> result = new HashMap<>();
+    public List<ResponseNutrientIngredientDto> getCombinationIngredient(ReqCombinationDto reqCombinationDto) {
         List<ResponseNutrientIngredientDto> nutrientIngredientList = new LinkedList<>();
 
-        reqCombinationDto.getCombinationList().stream().forEach(nutrientId -> {
+        reqCombinationDto.getNutrientList().stream().forEach(nutrientId -> {
             nutrientIngredientList.add(getNutrientIngredientInfo(nutrientId));
         });
-        if(reqCombinationDto.getInterestNutrient() != null){
-            result.put("interestNutrientIngredient", getNutrientIngredientInfo(reqCombinationDto.getInterestNutrient()));
-        }
 
-        result.put("nutrientIngredientList", nutrientIngredientList);
-
-        return result;
+        return nutrientIngredientList;
     }
     
     public ResponseNutrientIngredientDto getNutrientIngredientInfo(Long nutrientId){
