@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
 import StarRating from '@/components/common/StarRating';
-import { Review } from '@/apis/config';
 
 const ItemList = (props: { itemList: Array<Review> }) => {
   return (

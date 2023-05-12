@@ -2,15 +2,15 @@ import { create } from 'zustand';
 
 type Ingredient = {
   ingredientId: number;
-  ingredientName: String;
-  ingredientAmount: String;
+  ingredientName: string;
+  ingredientAmount: string;
 };
 
 type have = {
   nutrientId: number;
-  nutrientName: String;
-  nutrientImageUrl: String;
-  nutrientBrand: String;
+  nutrientName: string;
+  nutrientImageUrl: string;
+  nutrientBrand: string;
   nutrientIngredientList: Array<Ingredient>;
 };
 

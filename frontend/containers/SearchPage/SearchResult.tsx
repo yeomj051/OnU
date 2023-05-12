@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 // import api from '@/apis/config';
 // import { useSearch } from '@/apis/hooks';
 import ItemList from '@/components/list/GridList';
-import { itemDataList } from '@/apis/data';
 import { useSearch } from '@/apis/hooks';
 import { AxiosResponse } from 'axios';
 

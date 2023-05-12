@@ -7,6 +7,13 @@ import {
 } from '@tanstack/react-query';
 import type { AppProps } from 'next/app';
 import { NextPage } from 'next';
+import useUserStore from '@/store/userStore';
+
+if (typeof window !== 'undefined') {
+  // Perform localStorage action
+  console.log('로그인 체크중...');
+  useUserStore.getState().initialize();
+}
 
 export type NextPageWithLayout = NextPage & {
   getLayout?: (page: React.ReactElement) => React.ReactNode;
