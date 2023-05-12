@@ -7,6 +7,7 @@ type Ingredient = {
 };
 
 type have = {
+  havingNutrientList: number;
   nutrientId: number;
   nutrientName: string;
   nutrientImageUrl: string;

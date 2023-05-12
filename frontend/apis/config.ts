@@ -178,9 +178,9 @@ const api = {
     });
   },
 
-  //관심 영양제 목록 조회(성분 포함)
-  async getInterestPillIngredientList(userId: number) {
-    return await authAPI(`/mypage/${userId}/ingredient/interest`, {
+  //복용 영양제 목록 조회(성분 포함)
+  async getTakingPillIngredientList(userId: number) {
+    return await authAPI(`/mypage/${userId}/taking/ingredient`, {
       method: 'GET',
     });
   },
@@ -230,13 +230,11 @@ const api = {
   async saveComb(
     userId: number,
     combinationList: string[],
-    interestNutrient: string,
   ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/combination`, {
       method: 'POST',
       data: {
         combinationList: combinationList,
-        interestNutrient: interestNutrient,
       },
     });
   },
@@ -258,13 +256,11 @@ const api = {
   async getIngredientListByCombination(
     userId: number,
     combinationList: string[],
-    interestNutrient: string,
   ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/combination/ingredient`, {
-      method: 'GET',
+      method: 'POST',
       data: {
         combinationList: combinationList,
-        interestNutrient: interestNutrient,
       },
     });
   },
