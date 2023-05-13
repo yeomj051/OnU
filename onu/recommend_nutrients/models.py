@@ -27,6 +27,42 @@ class Nutrient(models.Model):
     class Meta:
         db_table = 'nutrient'
 
+
+class Auth(models.Model):
+    auth_id = models.BigIntegerField(primary_key= True)
+    user_phone_number = models.TextField()
+    user_provider = models.TextField()
+    user_provider_id = models.TextField()
+
+    class Meta:
+        db_table = 'auth'
+
+
+class User(models.Model):
+    user_id = models.BigIntegerField(primary_key= True)
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
+    user_age = models.IntegerField()
+    user_gender = models.TextField()
+    user_nickname = models.TextField()
+    user_auth = models.ForeignKey(Auth, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'user'
+
+
+class Taking_Nutrient(models.Model):
+    taking_nutrient_id = models.IntegerField(primary_key= True)
+    nutrient = models.ForeignKey(Nutrient, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'taking_nutrient'
+
+
+
+
+
 '''
     @Id
     private Long nutrientId;
