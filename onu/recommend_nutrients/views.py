@@ -23,7 +23,7 @@ def nutrients_all(request):
     taking_nutrient_from_survey = request.data.get('takingList')
 
     # 사용자와 복용영양제 테이블을 조인
-    taking = Taking_Nutrient.objects
+    taking = Taking_Nutrient.objects.order_by('taking_nutrient_id')
 
     # 사용자와 복용한 영양제 정보를 가져온다
     taking_by_user = list(taking.filter(user_id=request.data.get('user')))
@@ -38,7 +38,6 @@ def nutrients_all(request):
     for except_taking_nutrient_from_survey in taking_nutrient_from_survey:
         except_list.append(except_taking_nutrient_from_survey)
     except_list = list(set(except_list))
-
     # 사용자 아이디만을 가져와서 배열로 변환
     users = []
     for user in user_list:
@@ -54,9 +53,7 @@ def nutrients_all(request):
 
     # 딕셔너리를 테이블로 변환
     table = DataFrame(result)
-
     taking_metrix = table.pivot(index='user_id', columns='nutrient_id', values='value')
-
     matrix_dummy = taking_metrix.copy().fillna(0)
     user_similarity = cosine_similarity(matrix_dummy, matrix_dummy)
     user_similarity = pd.DataFrame(user_similarity,
@@ -103,5 +100,4 @@ def nutrients_all(request):
 
     s = set(except_list)
     result = [x for x in recom_nutrient(request.data.get('user'), n_items=50, neighbor_size=20) if x not in s]
-
     return Response(result)
