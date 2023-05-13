@@ -3,9 +3,6 @@
 import React, { useEffect } from 'react';
 import TextInput from '@/components/common/TextInput';
 
-import { LocalizationProvider } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { DesktopDatePicker } from '@mui/x-date-pickers/DesktopDatePicker';
 import api from '@/apis/config';
 import useUserStore from '@/store/userStore';
 import { useRouter } from 'next/navigation';

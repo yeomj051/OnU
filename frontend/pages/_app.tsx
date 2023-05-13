@@ -8,6 +8,7 @@ import {
 import type { AppProps } from 'next/app';
 import { NextPage } from 'next';
 import useUserStore from '@/store/userStore';
+import ScrollTopBtn from '@/components/common/ScrollTopBtn';
 
 if (typeof window !== 'undefined') {
   // Perform localStorage action
@@ -48,6 +49,7 @@ export default function App({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       {getLayout(<Component {...pageProps} />)}
+      <ScrollTopBtn />
     </QueryClientProvider>
   );
 }
