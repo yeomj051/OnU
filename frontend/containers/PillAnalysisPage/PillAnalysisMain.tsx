@@ -19,6 +19,8 @@ import {
 import { likeStore } from '@/store/likeStore';
 import { haveStore } from '@/store/haveStore';
 import PillAnalysisCombBox from './PillAnalysisCombBox';
+import api from '@/apis/config';
+import useUserStore from '@/store/userStore';
 
 type combination = {
   combinationId: number;
@@ -138,18 +140,19 @@ function PillAnalysisMain() {
   // }, [deletedComb]);
 
   //조합(선택한 영양제id 리스트로 저장)
-  // const [choiceList, setChoiceList] = useState<Array<number>>([]);
+  const [choiceList, setChoiceList] = useState<Array<string>>([]);
 
   //조합 저장하는 함수 => zustand에 저장되어 있는 리스트를 서버에 보내준다.
-  const saveCombination = () => {
-    // const { error, isError, isSuccess } = useSaveComb(
-    //   userId,
-    //   combinations,
-    // );
+  const saveCombination = async () => {
+    const id: number = useUserStore.getState().user?.id as number;
+    await api
+      .saveComb(id, choiceList)
+      .then((res) => console.log(res));
   };
 
   // 관심 영양제 추가하는 함수
   const addLikeList = () => {
+    //검색페이지로 이동
     router.push(`/search`);
   };
 

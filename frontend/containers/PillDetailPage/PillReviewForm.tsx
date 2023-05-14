@@ -1,10 +1,14 @@
+import api from '@/apis/config';
+import useUserStore from '@/store/userStore';
 import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
 
-type Props = {};
+type Props = {
+  nutrientId: number;
+};
 
-function PillReviewForm({}: Props) {
+function PillReviewForm(props: Props) {
   const [rating, setRating] = useState<number>(5);
   const [reviewContent, setReviewContent] = useState<string>('');
 
@@ -32,6 +36,9 @@ function PillReviewForm({}: Props) {
         },
       )
       .then((res) => console.log(res));
+
+    const id: number = useUserStore.getState().user?.id as number;
+    api.addReview(id, props.nutrientId, reviewContent, rating);
   };
 
   return (

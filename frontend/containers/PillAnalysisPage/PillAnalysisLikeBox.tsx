@@ -20,11 +20,10 @@ function PillAnalysisLikeBox(props: Props) {
   const [interestList, setInterestList] = useState<Array<interest>>();
   const { likeList, setAllLikes } = likeStore();
 
-  const { isLoading, data, isError, isSuccess } = useInterestPill(
-    props.userId,
-  );
+  const { isLoading, data, isError, isSuccess, error } =
+    useInterestPill(props.userId);
   if (isError) {
-    // console.log(error);
+    console.log(error);
   }
   if (isSuccess) {
     setAllLikes(data.data.inter);

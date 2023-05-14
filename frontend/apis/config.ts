@@ -270,14 +270,14 @@ const api = {
     userId: number,
     ingredientId: number,
   ) {
-    return await authAPI(`/nutrient/${ingredientId}/${userId}`, {
+    return await baseAPI(`/nutrient/${ingredientId}/${userId}`, {
       method: 'GET',
     });
   },
 
   //기능별 영양제 목록 조회
   async getPillListByFunction(userId: number, functionId: number) {
-    return await authAPI(`/nutrient/${functionId}/${userId}`, {
+    return await baseAPI(`/nutrient/${functionId}/${userId}`, {
       method: 'GET',
     });
   },
@@ -293,7 +293,7 @@ const api = {
   async getPillReviewList(
     nutrientId: number,
   ): Promise<AxiosResponse> {
-    return await authAPI(`/nutrient/${nutrientId}/review`, {
+    return await baseAPI(`/nutrient/${nutrientId}/review`, {
       method: 'GET',
     });
   },
