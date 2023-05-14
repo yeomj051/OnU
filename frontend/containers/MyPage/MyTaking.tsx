@@ -21,6 +21,7 @@ const Taking = (): React.ReactElement => {
   const getItemData = async () => {
     return await api.getTakingPillList(userId).then((res) => {
       setItemData(res.data.takingNutrientList);
+      console.log(res.data);
     });
   };
 
