@@ -89,8 +89,9 @@ public class NutrientService {
         getNutrientDetailFromCache(nutrientDetail);
 
         boolean isInterested = false;
-        if(interestNutrientRepository.findByUser_UserIdAndNutrient_NutrientId(userId,nutrientId) > 0) isInterested = true;
+        if(interestNutrientRepository.findByUser_UserIdAndNutrient_NutrientId(userId,nutrientId) != null) isInterested = true;
 
+        nutrientDetail.setInterested(isInterested);
         return nutrientDetail;
     }
 
@@ -102,7 +103,7 @@ public class NutrientService {
 
         if(redisUtil.hasNutrient(nID,nID)){
             for(Object key : redisUtil.getKeys(nID)){
-                if(!key.toString().equals(nID)) {
+                if(!key.toString().equals(nID) && !key.toString().equals("function")) {
                     // 성분별 함량
                     ResponseNutrientIngredientInfoDto nutrienIngredientInfo = new ResponseNutrientIngredientInfoDto(key.toString(), redisUtil.getNutrientInfo(nID, key.toString()));
 
@@ -116,8 +117,9 @@ public class NutrientService {
             }
 
             // 기능
-            if(redisUtil.hasNutrient(nID,"funtion")){
-                String function = redisUtil.getNutrientInfo(nID,"funtion");
+            if(redisUtil.hasNutrient(nID,"function")){
+
+                String function = redisUtil.getNutrientInfo(nID, String.valueOf(new StringBuilder("function")));
                 StringTokenizer stringTokenizer = new StringTokenizer(function,COMMA);
                 while(stringTokenizer.hasMoreTokens()){
                     functionList.add(stringTokenizer.nextToken());
@@ -132,7 +134,7 @@ public class NutrientService {
                         });
 
                 functionString.delete(functionString.length()-1, functionString.length());
-                redisUtil.getHash(nID).put("funtion",functionString);
+                redisUtil.getHash(nID).put("function",functionString);
             }
 
         } else {
@@ -167,7 +169,7 @@ public class NutrientService {
                     });
 
             functionString.delete(functionString.length()-1, functionString.length());
-            map.put("funtion",functionString);
+            map.put("function",functionString.toString());
 
             redisUtil.cacheNutrient(nID, map);
         }

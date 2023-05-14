@@ -11,5 +11,5 @@ public interface InterestNutrientRepository extends JpaRepository<InterestNutrie
 
     List<InterestNutrient> findByUser_UserId(int userId);
 
-    int findByUser_UserIdAndNutrient_NutrientId(int userId, long nutrientId);
+    InterestNutrient findByUser_UserIdAndNutrient_NutrientId(int userId, long nutrientId);
 }
