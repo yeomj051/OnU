@@ -261,7 +261,7 @@ public class MypageController {
             return new ResponseEntity<>(resultMap, status);
         }
 
-        List<ResponseNutrientIngredientDto> nutrientIngredient = mypageService.getCombinationIngredient(reqCombinationDto);
+        List<ResponseIngredientTotalDto> nutrientIngredient = mypageService.getCombinationIngredient(reqCombinationDto);
 
         resultMap.put(MESSAGE, SUCCESS);
         resultMap.put("nutrientIngredient", nutrientIngredient);
