@@ -192,7 +192,7 @@ public class MypageService {
             if(ingredientTotal.containsKey(ingredientName)){
                 tmp += ingredientTotal.get(ingredientName);
             }
-            ingredientTotal.put(ingredientName, tmp);
+            ingredientTotal.put(ingredientName, Math.round(tmp*1000)/1000.0);
         }
     }
     
