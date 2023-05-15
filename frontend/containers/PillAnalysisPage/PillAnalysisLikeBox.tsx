@@ -6,6 +6,7 @@ import api from '@/apis/config';
 
 type Props = {
   userId: number;
+  reRendering: () => void;
 };
 
 type interest = {
@@ -39,7 +40,11 @@ function PillAnalysisLikeBox(props: Props) {
     <div className="flex flex-wrap">
       {interestList &&
         interestList.map((nutrient, idx) => (
-          <PillAnalysisLike key={idx} nutrient={nutrient} />
+          <PillAnalysisLike
+            key={idx}
+            nutrient={nutrient}
+            reRendering={props.reRendering}
+          />
         ))}
     </div>
   );

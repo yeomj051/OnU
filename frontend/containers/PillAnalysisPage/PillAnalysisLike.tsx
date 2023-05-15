@@ -17,6 +17,7 @@ type interest = {
 
 type Props = {
   nutrient: interest;
+  reRendering: () => void;
 };
 
 function PillAnalysisLike(props: Props) {
@@ -35,6 +36,8 @@ function PillAnalysisLike(props: Props) {
       removeSelected(props.nutrient.nutrientId);
       removeLike(props.nutrient.nutrientId);
     }
+
+    props.reRendering();
 
     await api
       .deleteInterestPill(id, props.nutrient.nutrientId)
