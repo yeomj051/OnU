@@ -78,7 +78,7 @@ function PillCompareMain(props: { query: string; compare: string }) {
 
   useEffect(() => {
     comparePills();
-  }, [userId, props]);
+  }, [userId, props.compare, props.query]);
 
   const comparePills = async () => {
     const res1 = await api
