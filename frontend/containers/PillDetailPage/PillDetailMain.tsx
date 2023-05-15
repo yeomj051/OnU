@@ -7,6 +7,7 @@ import emptyHeart from '../../public/emptyHeart.png';
 import Image from 'next/image';
 import api from '@/apis/config';
 import useUserStore from '@/store/userStore';
+import { useRouter } from 'next/navigation';
 
 function PillDetailMain(props: {
   itemId: number;
@@ -14,19 +15,20 @@ function PillDetailMain(props: {
   const [infoSwitch, setInfoSwitch] = useState<boolean>(true);
   const [like, setLike] = useState<boolean>(true);
   const [nutrientList, setNutrientList] = useState<nutrientDetail>();
-  const [userID, setUserId] = useState<number>(0);
+  const [userID, setUserId] = useState<number>();
+  const router = useRouter();
 
   useEffect(() => {
     setUserId(parseInt(localStorage.getItem('userId') as string));
     if (props.itemId !== null) {
-      getDetailData(userID).then((res) => {
+      getDetailData().then((res) => {
         setNutrientList(res?.data?.nutrientDetail);
       });
     }
   }, [userID]);
 
-  const getDetailData = async (id: number) => {
-    return await api.getPillDetail(props.itemId, id);
+  const getDetailData = async () => {
+    return await api.getPillDetail(props.itemId);
   };
 
   useEffect(() => {
@@ -40,37 +42,54 @@ function PillDetailMain(props: {
   };
 
   const switchReview = () => {
-    setInfoSwitch(false);
+    if (userID) setInfoSwitch(false);
+    else {
+      if (
+        window.confirm(
+          '로그인이 필요한 서비스입니다. 로그인하시겠습니까?',
+        )
+      ) {
+        router.push('/user/login');
+      }
+    }
   };
 
   //좋아요 on/off
   const likeOrNot = () => {
     // 좋아요 되어있는 영양제인지 확인하고 좋아요 되어있으면 => ZUStand에 관심영양제 저장한 리스트에서 있는지 확인해야할듯?
-    if (like) {
-      //좋아요 추가
-      addInterest();
+    if (userID) {
+      if (like) {
+        //좋아요 추가
+        addInterest();
+      } else {
+        //좋아요 삭제
+        removeInterest();
+      }
+      setLike(!like);
     } else {
-      //좋아요 삭제
-      removeInterest();
+      if (
+        window.confirm(
+          '로그인이 필요한 서비스입니다. 로그인하시겠습니까?',
+        )
+      ) {
+        router.push('/user/login');
+      }
     }
-    setLike(!like);
   };
 
   const addInterest = async () => {
-    const id: number = useUserStore.getState().user?.id as number;
-    if (nutrientList !== undefined) {
+    if (nutrientList !== undefined && userID) {
       await api
-        .addInterestPill(id, nutrientList.nutrientId)
+        .addInterestPill(userID, nutrientList.nutrientId)
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
     }
   };
 
   const removeInterest = async () => {
-    const id: number = useUserStore.getState().user?.id as number;
-    if (nutrientList !== undefined) {
+    if (nutrientList !== undefined && userID) {
       await api
-        .deleteInterestPill(id, nutrientList.nutrientId)
+        .deleteInterestPill(userID, nutrientList.nutrientId)
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
     }
