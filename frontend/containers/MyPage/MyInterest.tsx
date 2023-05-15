@@ -21,16 +21,19 @@ const Interest = (): React.ReactElement => {
   }, []);
 
   useEffect(() => {
-    // getItemData();
-    setItemData(itemDataList);
-  }, []);
+    if (userId !== null) {
+      getItemData(userId).then((res) => {
+        // API 응답의 데이터 구조에 대한 안전한 처리를 추가합니다.
+        if (res?.data?.interestNutrientList) {
+          setItemData(res.data.interestNutrientList);
+        }
+      });
+    }
+  }, [userId]);
 
-  // const getItemData = async () => {
-  //   return await api.getInterestPillList(userId).then((res) => {
-  //     setItemData(res.data.interestNutrientList);
-  //     console.log(res.data);
-  //   });
-  // };
+  const getItemData = async (id: number) => {
+    return await api.getInterestPillList(id);
+  };
 
   return (
     <div>
