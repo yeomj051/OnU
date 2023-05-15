@@ -121,11 +121,10 @@ function PillAnalysisMain() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const getUserFromLocal = localStorage.getItem('userData');
-      const userData = JSON.parse(getUserFromLocal || '{}');
-      const userIdTmp: number = userData?.id as number;
-
-      setUserId(userIdTmp);
+      const userData = JSON.parse(
+        localStorage.getItem('userId') || '{}',
+      );
+      setUserId(userData);
 
       // saveCombinationPill();
 
@@ -174,6 +173,8 @@ function PillAnalysisMain() {
                   src={more}
                   alt="추가하기"
                   className="w-5 h-5 mr-1"
+                  width={100}
+                  height={100}
                 />
               </button>
             </div>
@@ -204,7 +205,7 @@ function PillAnalysisMain() {
         </div>
         <div className="">
           <div className="col-span-1 text-xl">나의 영양제 조합</div>
-          <PillAnalysisCombBox userId={userId} />
+          {/* <PillAnalysisCombBox userId={userId} /> */}
         </div>
       </div>
     </div>

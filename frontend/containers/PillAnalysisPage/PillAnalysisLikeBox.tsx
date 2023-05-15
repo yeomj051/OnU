@@ -22,13 +22,16 @@ function PillAnalysisLikeBox(props: Props) {
 
   const { isLoading, data, isError, isSuccess, error } =
     useInterestPill(props.userId);
-  if (isError) {
-    console.log(error);
-  }
-  if (isSuccess) {
-    setAllLikes(data.data.inter);
-    setInterestList(data.data.interestNutrientList);
-  }
+
+  useEffect(() => {
+    if (isError) {
+      console.log(error);
+    }
+    if (isSuccess) {
+      setAllLikes(data.data.inter);
+      setInterestList(data.data.interestNutrientList);
+    }
+  }, []);
 
   return (
     <div className="flex justify-between">

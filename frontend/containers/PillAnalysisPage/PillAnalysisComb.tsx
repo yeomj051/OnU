@@ -76,7 +76,7 @@ function PillAnalysisComb(props: Props) {
           </div>
           <div className="flex flex-wrap">
             {props.combination.nutrientInfoList.map((item, idx) => (
-              <PillAnalysisCombMem nutrient={item} />
+              <PillAnalysisCombMem key={idx} nutrient={item} />
             ))}
           </div>
         </div>
