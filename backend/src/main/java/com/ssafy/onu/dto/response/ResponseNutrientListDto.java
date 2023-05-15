@@ -20,4 +20,11 @@ public class ResponseNutrientListDto {
         this.nutrientImageUrl = nutrientImageUrl;
         this.nutrientBrand = nutrientBrand;
     }
+    public ResponseNutrientListDto(Long nutrientId, String nutrientName, String nutrientImageUrl, String nutrientBrand, boolean isInterested) {
+        this.nutrientId = nutrientId;
+        this.nutrientName = nutrientName;
+        this.nutrientImageUrl = nutrientImageUrl;
+        this.nutrientBrand = nutrientBrand;
+        this.isInterested = isInterested;
+    }
 }

@@ -360,4 +360,43 @@ public class MypageController {
             return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
         }
     }
+
+    @ApiOperation(value = "관심 영양제 목록 조회", notes = "관심 영양제 목록을 조회한다.", response = Map.class)
+    @GetMapping("/{userId}/interest")
+    public ResponseEntity<Map<String,Object>> getInterestList(@ApiParam(value = "회원정보(아이디)", required = true, example = "1") @PathVariable int userId,
+                                                             Principal principal){
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+        List<ResponseNutrientListDto> interestNutrientList = mypageService.getInterestList(userId);
+
+        resultMap.put(MESSAGE, SUCCESS);
+        resultMap.put("interestNutrientList", interestNutrientList);
+        status = HttpStatus.OK;
+
+        return new ResponseEntity<>(resultMap, status);
+    }
+
+    @ApiOperation(value = "복용중인 영양제 목록 조회(성분포함) ", notes = "복용중 영양제 리스트와 해당 영양제 별 영양 성분 리스트를 조회한다.", response = Map.class)
+    @GetMapping("/{userId}/ingredient/taking")
+    public ResponseEntity<Map<String, Object>> getTakingNutrientWithIngredient(@ApiParam(value = "회원 아이디", example = "1") @PathVariable int userId, Principal principal) {
+        Map<String, Object> resultMap = new HashMap<>();
+        HttpStatus status = null;
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            status = HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(resultMap, status);
+        }
+        List<ResponseTakingNutrientInfoDto> takingNutrientList = mypageService.getTakingNutrientWithIngredient(userId);
+
+        resultMap.put(MESSAGE, SUCCESS);
+        resultMap.put("interestNutrientList", takingNutrientList);
+        status = HttpStatus.OK;
+
+        return new ResponseEntity<>(resultMap, status);
+    }
 }
