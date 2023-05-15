@@ -13,4 +13,6 @@ import java.util.Optional;
 public interface TakingNutrientRepository extends JpaRepository<TakingNutrient, Integer> {
     List<TakingNutrient> findByUser(User user);
     Optional<TakingNutrient> findByUserAndNutrient(User user, Nutrient nutrient);
+    List<TakingNutrient> findByUser_UserId(int userId);
+
 }

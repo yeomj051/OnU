@@ -31,6 +31,7 @@ public class MypageService {
     private final CombinationRepository combinationRepository;
     private final RedisUtil redisUtil;
     private final InterestNutrientRepository interestNutrientRepository;
+    private final TakingNutrientRepository takingNutrientRepository;
     private static final String COMMA = ",";
     private static final String NUTRIENT_ID = "nutrientId:";
     private static final String DATE_FORMAT = "yyyy-MM-dd";
@@ -186,5 +187,27 @@ public class MypageService {
         if(!interestNutrient.isPresent()) return false;
         interestNutrientRepository.delete(interestNutrient.get());
         return true;
+    }
+
+    public List<ResponseNutrientListDto> getInterestList(int userId) {
+        List<InterestNutrient> interestNutrientList =  interestNutrientRepository.findByUser_UserId(userId);
+        List<ResponseNutrientListDto> nutrientList = new ArrayList<>();
+
+        for (InterestNutrient interestNutrient:interestNutrientList) {
+            nutrientList.add(new ResponseNutrientListDto(interestNutrient.getNutrient().getNutrientId(), interestNutrient.getNutrient().getNutrientName(),interestNutrient.getNutrient().getNutrientImageUrl(),interestNutrient.getNutrient().getNutrientBrand(),true));
+        }
+
+        return nutrientList;
+    }
+
+    public List<ResponseTakingNutrientInfoDto> getTakingNutrientWithIngredient(int userId) {
+        List<ResponseTakingNutrientInfoDto> takingNutrientList = new ArrayList<>();
+
+        takingNutrientRepository.findByUser_UserId(userId).stream().forEach(takingNutrient -> {
+            List<ResponseNutrientIngredientInfoDto> nutrientIngredientInfoList = getNutrientIngredientInfo(takingNutrient.getNutrient().getNutrientId()).getIngredientInfoList();
+            takingNutrientList.add(new ResponseTakingNutrientInfoDto(takingNutrient,nutrientIngredientInfoList));
+        });
+
+        return takingNutrientList;
     }
 }
