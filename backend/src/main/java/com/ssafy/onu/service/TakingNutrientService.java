@@ -29,6 +29,10 @@ public class TakingNutrientService {
         if(!user.isPresent()) return 0;
         if(!nutrient.isPresent()) return 0;
 
+        //이미 복용중인 영양제로 등록되어 있는지 체크 (복용중이면 return 2)
+        Optional<TakingNutrient> checkTakingNutrient = takingNutrientRepository.findByUserAndNutrient(user.get(), nutrient.get());
+        if(checkTakingNutrient.isPresent()) return 2;
+
         ReqTakingNutrientDto reqTakingNutrientDto = new ReqTakingNutrientDto();
         reqTakingNutrientDto.setNutrient(nutrient.get());
         reqTakingNutrientDto.setUser(user.get());
