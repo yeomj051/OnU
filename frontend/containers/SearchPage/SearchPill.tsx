@@ -17,7 +17,9 @@ const SearchPill = (): React.ReactElement => {
 
   return (
     <div className="flex flex-col pt-20 items-center space-y-4 min-h-[100vh]">
-      <span>원하시는 영양제의 이름이나 성분을 검색해보세요!</span>
+      <span className="">
+        원하시는 영양제의 이름이나 성분을 검색해보세요!
+      </span>
       <SearchBar />
       <Interest />
     </div>

@@ -61,7 +61,9 @@ function CompareDrawer() {
 
   const comparePills = () => {
     if (itemList.length >= 2)
-      router.push('/pillcompare/pill-compare');
+      router.push(
+        `/pillcompare/pill-compare?query=${itemList[0].nutrientId}&compare=${itemList[1].nutrientId}`,
+      );
     else {
       setAlert(true);
       setTimeout(() => {
