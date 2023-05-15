@@ -320,11 +320,20 @@ public class MypageController {
     public ResponseEntity<Map<String, Object>> createTakingNutrient(@ApiParam(value = "회원 아이디", example = "1") @PathVariable int userId,
                                                                     @ApiParam(value = "영양제 아이디", example = "4002000847") @PathVariable Long nutrientId, Principal principal) {
         Map<String, Object> resultMap = new HashMap<>();
+
+        // PathVariable로 받은 userId와 토큰에 있는 userId 비교
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+        }
+
         int result = takingNutrientService.createTakingNutrient(userId, nutrientId);
 
         if(result == 1) {
             resultMap.put(MESSAGE, SUCCESS);
             return new ResponseEntity<>(resultMap, HttpStatus.OK);
+        } else if(result == 2) {
+            resultMap.put(MESSAGE, "duplicated");
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
         } else {
             resultMap.put(MESSAGE, FAIL);
             return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
@@ -336,6 +345,11 @@ public class MypageController {
     @GetMapping("/{userId}/taking")
     public ResponseEntity<Map<String, Object>> getTakingNutrient(@ApiParam(value = "회원 아이디", example = "1") @PathVariable int userId, Principal principal) {
         Map<String, Object> resultMap = new HashMap<>();
+
+        // PathVariable로 받은 userId와 토큰에 있는 userId 비교
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+        }
 
         List<ResponseTakingNutrientDto> takingNutrientDtoList = takingNutrientService.getTakingNutrientList(userId);
         resultMap.put("takingNutrientList", takingNutrientDtoList);
@@ -349,6 +363,11 @@ public class MypageController {
     public ResponseEntity<Map<String, Object>> deleteTakingNutrient(@ApiParam(value = "회원 아이디", example = "1") @PathVariable int userId,
                                                                     @ApiParam(value = "영양제 아이디", example = "4002000847") @PathVariable Long nutrientId, Principal principal) {
         Map<String, Object> resultMap = new HashMap<>();
+
+        // PathVariable로 받은 userId와 토큰에 있는 userId 비교
+        if(TokenUtils.compareUserIdAndToken(userId, principal,resultMap)) {
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+        }
 
         int result = takingNutrientService.deleteTakingNutrient(userId, nutrientId);
 
