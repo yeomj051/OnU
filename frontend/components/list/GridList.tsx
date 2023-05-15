@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
@@ -13,28 +13,31 @@ const ItemList = (props: { itemList: Array<Item> }) => {
 
   const id = useUserStore.getState().user?.id as number;
 
-  // console.log(props.itemList);
-  // const handleInterest = (itemId: number): void => {
-  //   if (window.confirm('관심 영양제로 추가하시겠습니까?')) {
-  //     try {
-  //       api.addInterestPill(id, itemId);
-  //       router.reload();
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // };
+  useEffect(() => {
+    console.log(props.itemList);
+  }, [props]);
 
-  // const removeInterest = (itemId: number): void => {
-  //   if (window.confirm('관심 영양제 목록에서 제거하시겠습니까?')) {
-  //     try {
-  //       api.deleteInterestPill(id, itemId);
-  //       router.reload();
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // };
+  const handleInterest = (itemId: number): void => {
+    if (window.confirm('관심 영양제로 추가하시겠습니까?')) {
+      try {
+        api.addInterestPill(id, itemId);
+        router.reload();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  const removeInterest = (itemId: number): void => {
+    if (window.confirm('관심 영양제 목록에서 제거하시겠습니까?')) {
+      try {
+        api.deleteInterestPill(id, itemId);
+        router.reload();
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
 
   return (
     <div className="grid grid-cols-2 space-y-2 gap-4 w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md items-baseline px-8">
@@ -46,28 +49,28 @@ const ItemList = (props: { itemList: Array<Item> }) => {
             key={index}
             style={{ cursor: 'pointer' }}
           >
-            {/* //   {item.isInterested ? (
-          //     <div className="text-red-500 bg-opacity-0 border-none indicator-item badge top-2 right-8">
-          //       <button
-          //         onClick={() => removeInterest(item.nutrientId)}
-          //       >
-          //         <FavoriteIcon />
-          //       </button>
-          //     </div>
-          //   ) : (
-          //     <div className="text-red-500 bg-opacity-0 border-none indicator-item badge top-2 right-8">
-          //       <button
-          //         onClick={() => handleInterest(item.nutrientId)}
-          //       >
-          //         <FavoriteBorderIcon />
-          //       </button>
-          //     </div>
-          //   )}
-          //   <div className="text-[#90B5EA] border-none bg-opacity-0 indicator-item badge top-2 right-2">
-          //     <button>
-          //       <AddCircleOutlineRoundedIcon />
-          //     </button>
-          //   </div> */}
+            {item.isInterested ? (
+              <div className="text-red-500 bg-opacity-0 border-none indicator-item badge top-2 right-8">
+                <button
+                  onClick={() => removeInterest(item.nutrientId)}
+                >
+                  <FavoriteIcon />
+                </button>
+              </div>
+            ) : (
+              <div className="text-red-500 bg-opacity-0 border-none indicator-item badge top-2 right-8">
+                <button
+                  onClick={() => handleInterest(item.nutrientId)}
+                >
+                  <FavoriteBorderIcon />
+                </button>
+              </div>
+            )}
+            <div className="text-[#90B5EA] border-none bg-opacity-0 indicator-item badge top-2 right-2">
+              <button>
+                <AddCircleOutlineRoundedIcon />
+              </button>
+            </div>
             <div id="item-img" className="mask mask-square">
               <Image
                 src={item.nutrientImageUrl}
