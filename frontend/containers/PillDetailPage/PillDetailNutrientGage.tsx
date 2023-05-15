@@ -16,13 +16,13 @@ function PillDetailNutrientGage(props: Props) {
   const [color, setColor] = useState<string>('');
 
   useEffect(() => {
-    const regex = /[^0-9]/g;
+    const regex = /[^0-9.]/g;
     setAmout(parseInt(props.ingredientAmount.replace(regex, '')));
     setStart(
       parseInt(props.recommendedIntakeStart.replace(regex, '')),
     );
     setEnd(parseInt(props.recommendedIntakeEnd.replace(regex, '')));
-  }, []);
+  }, [props]);
 
   useEffect(() => {
     console.log('양 ' + amount);

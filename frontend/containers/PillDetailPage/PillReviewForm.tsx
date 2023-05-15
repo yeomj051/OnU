@@ -25,21 +25,19 @@ function PillReviewForm(props: Props) {
     setReviewContent(e.target.value);
   };
 
+  //리뷰 등록 버튼
   const submitReview = async () => {
-    //별점이랑 리뷰 axios
-    // axios
-    //   .post(
-    //     'https://k8a703.p.ssafy.io/api/nutrient/${nutrientId}/${userId}',
-    //     {
-    //       reviewContent: { reviewContent },
-    //       reviewScore: { rating },
-    //     },
-    //   )
-    //   .then((res) => console.log(res));
-
+    console.log(reviewContent);
+    console.log(rating);
     const id: number = useUserStore.getState().user?.id as number;
-    await api.addReview(id, 4002000847, reviewContent, rating);
-    // api.addReview(id, props.nutrientId, reviewContent, rating);
+    await api
+      .addReview(id, props.nutrientId, reviewContent, rating)
+      .then((res) => console.log(res))
+      .catch((error) =>
+        alert(
+          '이미 리뷰를 등록하셨습니다. 리뷰는 수정 및 삭제만 가능합니다.',
+        ),
+      );
   };
 
   return (

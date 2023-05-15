@@ -26,7 +26,6 @@ type Props = {
 
 function PillDetailReview(props: Props) {
   const [wantReview, setWantReview] = useState<boolean>(false);
-  // const [starRate, setStarRate] = useState<number>(80);
   const [reviewList, setReviewList] = useState<Array<reviewContents>>(
     [],
   );
@@ -42,30 +41,18 @@ function PillDetailReview(props: Props) {
     setWantReview(true);
   };
 
-  // const { isLoading, data, isError, isSuccess, error } =
-  //   usePillReviewList(4002000847);
-
-  // useEffect(() => {
-  //   if (isError) {
-  //     console.log(error);
-  //   }
-
-  //   if (isSuccess) {
-  //     setReviewList(data.data.reviewListByNutrient);
-  //   }
-  // }, []);
-
   useEffect(() => {
+    const getReviewData = async () => {
+      await api
+        .getPillReviewList(props.nutrientId)
+        .then((res) => setReviewList(res.data.reviewListByNutrient));
+    };
+
     getReviewData();
   }, []);
 
-  const getReviewData = async () => {
-    await api
-      .getPillReviewList(4002000847)
-      .then((res) => setReviewList(res.data.reviewListByNutrient));
-  };
-
   useEffect(() => {
+    console.log(reviewList);
     makeStatistics();
   }, [reviewList]);
 
@@ -94,7 +81,12 @@ function PillDetailReview(props: Props) {
     for (let i = 0; i < 5; i++) {
       sum += statistic[i] * (i + 1);
     }
-    setAverage(Number((sum / reviewList.length).toFixed(1)));
+
+    if (reviewList.length != 0) {
+      setAverage(Number((sum / reviewList.length).toFixed(1)));
+    } else {
+      setAverage(0);
+    }
   };
 
   //리뷰 그래프 비율계산하는 함수

@@ -11,9 +11,9 @@ import useUserStore from '@/store/userStore';
 import { useRouter } from 'next/router';
 
 function PillDetailMain(): React.ReactElement {
-  const router = useRouter();
-  const { id } = router.query;
-  console.log(id);
+  // const router = useRouter();
+  // const { id } = router.query;
+  // console.log(id);
   const Items = {
     message: 'success or fail',
     nutrientDetail: {
@@ -65,6 +65,7 @@ function PillDetailMain(): React.ReactElement {
       .then((res) => {
         console.log(res);
         setNutrientList(res.data.nutrientDetail);
+        console.log(res.data.nutrientDetail);
       });
   };
 
@@ -94,19 +95,17 @@ function PillDetailMain(): React.ReactElement {
     const id: number = useUserStore.getState().user?.id as number;
     await api
       .addInterestPill(id, nutrientList.nutrientId)
-      .then((res) => console.log(res));
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
 
   const removeInterest = async () => {
     const id: number = useUserStore.getState().user?.id as number;
     await api
       .deleteInterestPill(id, nutrientList.nutrientId)
-      .then((res) => console.log(res));
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
   };
-
-  useEffect(() => {
-    setNutrientList(Items.nutrientDetail);
-  }, []);
 
   return (
     <div className="h-[100vh] mt-20">
@@ -158,7 +157,7 @@ function PillDetailMain(): React.ReactElement {
         </div>
       </div>
       {/*여기는 파란부분 */}
-      <div className="bg-[#F2F9FF] mt-8 pt-6 pb-8 h-full">
+      <div className="bg-[#F2F9FF] mt-8 pt-6 pb-8 ">
         <hr className="mx-4" />
         <div className="grid grid-cols-2 py-4 mx-4 bg-white tabs justify-items-center">
           <div className="col-span-1">
