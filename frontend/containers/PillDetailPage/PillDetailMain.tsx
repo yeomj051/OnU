@@ -5,10 +5,8 @@ import PillDetailReview from './PillDetailReview';
 import fillHeart from '../../public/fillHeart.png';
 import emptyHeart from '../../public/emptyHeart.png';
 import Image from 'next/image';
-import { usePillDetail } from '@/apis/hooks';
 import api from '@/apis/config';
 import useUserStore from '@/store/userStore';
-import { useRouter } from 'next/router';
 
 function PillDetailMain(): React.ReactElement {
   // const router = useRouter();
@@ -132,13 +130,13 @@ function PillDetailMain(): React.ReactElement {
               <button onClick={likeOrNot}>
                 {like ? (
                   <Image
-                    className="w-7 h-8"
+                    className="h-8 w-7"
                     src={emptyHeart}
                     alt="사진깨짐"
                   />
                 ) : (
                   <Image
-                    className="w-7 h-8"
+                    className="h-8 w-7"
                     src={fillHeart}
                     alt="사진깨짐"
                   />
