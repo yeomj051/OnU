@@ -55,7 +55,7 @@ const ItemList = (props: { itemList: Array<Item> }) => {
                 height={100}
                 onClick={() =>
                   router.push(
-                    `/pilldetail/pill-detail/${item.nutrientId}`,
+                    `/pilldetail/pill-detail?id=${item.nutrientId}`,
                   )
                 }
               />

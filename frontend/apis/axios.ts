@@ -27,6 +27,7 @@ const authInstance = (url: string): AxiosInstance => {
     (config) => {
       const token = localStorage.getItem('accessToken');
       config.headers.Authorization = `Bearer ${token}`;
+      console.log(`Bearer ${token}`);
       return config;
     },
     (error) => {

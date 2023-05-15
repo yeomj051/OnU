@@ -1,8 +1,10 @@
 import Image from 'next/image';
 import React from 'react';
 import StarRating from '@/components/common/StarRating';
+import { useRouter } from 'next/navigation';
 
 const ItemList = (props: { itemList: Array<Review> }) => {
+  const router = useRouter();
   return (
     <div id="item-list">
       {props.itemList.map((item, index) => (
@@ -18,6 +20,11 @@ const ItemList = (props: { itemList: Array<Review> }) => {
                 alt="item-img"
                 width={100}
                 height={100}
+                onClick={() =>
+                  router.push(
+                    `/pilldetail/pill-detail?id=${item.nutrientId}`,
+                  )
+                }
               />
             </div>
             <div
