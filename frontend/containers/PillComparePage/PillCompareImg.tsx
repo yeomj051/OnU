@@ -9,21 +9,11 @@ import tablet from '../../public/tablet.png';
 
 type Props = {
   subject: string;
-  first: number;
-  second: number;
+  first: string;
+  second: string;
 };
 
 function PillCompareImg(props: Props) {
-  const pillTypeList = [
-    '약',
-    '가루',
-    '액상',
-    '젤리',
-    '캡슐',
-    '환',
-    '정',
-  ];
-
   const pillTypeImage = [
     powder,
     powder,
@@ -33,6 +23,33 @@ function PillCompareImg(props: Props) {
     sphere,
     tablet,
   ];
+
+  const whatType = (type: string): number => {
+    let num = 0;
+
+    switch (type) {
+      case '가루':
+        num = 1;
+        break;
+      case '액상':
+        num = 2;
+        break;
+      case '젤리':
+        num = 3;
+        break;
+      case '캡슐':
+        num = 4;
+        break;
+      case '환':
+        num = 5;
+        break;
+      case '정':
+        num = 6;
+        break;
+    }
+
+    return num;
+  };
 
   return (
     <div className="mb-6">
@@ -47,20 +64,20 @@ function PillCompareImg(props: Props) {
             <div className="grid justify-center my-5">
               <Image
                 className="w-10 h-10"
-                src={pillTypeImage[props.first]}
+                src={pillTypeImage[whatType(props.first)]}
                 alt="사진깨짐"
               />
-              <div>{pillTypeList[props.first]}</div>
+              <div className="mt-1 ml-1">{props.first}</div>
             </div>
           </div>
           <div className="col-span-1 ml-2 bg-white border rounded-lg">
             <div className="grid justify-center my-5">
               <Image
                 className="w-10 h-10"
-                src={pillTypeImage[props.second]}
+                src={pillTypeImage[whatType(props.second)]}
                 alt="사진깨짐"
               />
-              <div>{pillTypeList[props.second]}</div>
+              <div className="mt-1 ml-1">{props.second}</div>
             </div>
           </div>
         </div>

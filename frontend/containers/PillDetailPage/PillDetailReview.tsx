@@ -9,17 +9,6 @@ import { usePillReviewList } from '@/apis/hooks';
 import api from '@/apis/config';
 import axios from 'axios';
 
-// type Props = {};
-
-type PersonalReview = {
-  nickname: string;
-  age: number;
-  gender: string;
-  date: string;
-  rate: number;
-  review: string;
-};
-
 type reviewContents = {
   userNickname: string;
   nutrientName: string;
@@ -31,7 +20,11 @@ type reviewContents = {
   reviewUpdateTime: string;
 };
 
-function PillDetailReview() {
+type Props = {
+  nutrientId: number;
+};
+
+function PillDetailReview(props: Props) {
   const [wantReview, setWantReview] = useState<boolean>(false);
   // const [starRate, setStarRate] = useState<number>(80);
   const [reviewList, setReviewList] = useState<Array<reviewContents>>(
@@ -49,17 +42,28 @@ function PillDetailReview() {
     setWantReview(true);
   };
 
-  const { isLoading, data, isError, isSuccess } =
-    usePillReviewList(4002000847);
+  // const { isLoading, data, isError, isSuccess, error } =
+  //   usePillReviewList(4002000847);
+
+  // useEffect(() => {
+  //   if (isError) {
+  //     console.log(error);
+  //   }
+
+  //   if (isSuccess) {
+  //     setReviewList(data.data.reviewListByNutrient);
+  //   }
+  // }, []);
 
   useEffect(() => {
-    if (isError) {
-    }
-
-    if (isSuccess) {
-      setReviewList(data.data.reviewListByNutrient);
-    }
+    getReviewData();
   }, []);
+
+  const getReviewData = async () => {
+    api
+      .getPillReviewList(4002000847)
+      .then((res) => setReviewList(res.data.reviewListByNutrient));
+  };
 
   useEffect(() => {
     makeStatistics();
@@ -78,6 +82,7 @@ function PillDetailReview() {
     let scoreArray = [0, 0, 0, 0, 0];
 
     reviewList.map((review, idx) => {
+      const key = idx;
       scoreArray[review.reviewScore - 1]++;
     });
     setStatistic(scoreArray);
@@ -111,7 +116,6 @@ function PillDetailReview() {
     }
     // console.log(scoreArrayForGraph);
     setGraphValue(scoreArrayForGraph);
-    console.log(graphValue);
   };
 
   return (
@@ -156,7 +160,7 @@ function PillDetailReview() {
           />
         </div>
       </div>
-      {wantReview && <PillReviewForm />}
+      {wantReview && <PillReviewForm nutrientId={props.nutrientId} />}
       {reviewList.map((review, idx) => (
         <PillDetailReviewBox key={idx} review={review} />
       ))}

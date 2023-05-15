@@ -12,7 +12,7 @@ function PillDetailContents(props: Props) {
         <div className="col-span-1 grid content-center">
           {props.subject}
         </div>
-        <div className="col-span-5 grid content-center">
+        <div className="col-span-5 grid content-center py-8 text-sm">
           {props.content}
         </div>
       </div>

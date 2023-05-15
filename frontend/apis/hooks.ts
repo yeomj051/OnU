@@ -152,13 +152,12 @@ export const usePillDetail = (
 export const useAddInterest = (
   userId: number,
   nutrientId: number,
-  options?: QueryOptions,
 ) => {
   const mutateFn = async () => {
     const res = await api.addInterestPill(userId, nutrientId);
     return res;
   };
-  return useMutation(mutateFn, { ...options });
+  return useMutation([queryKey, userId, nutrientId], mutateFn);
 };
 
 //선택한 영양제 리뷰목록 조회하는 api
@@ -178,15 +177,12 @@ export const usePillReviewList = (
 export const useComparePill = (
   nutrientId: number,
   compareId: number,
-  options?: QueryOptions,
 ) => {
   const queryFn = async () => {
     const res = await api.comparePill(nutrientId, compareId);
     return res;
   };
-  return useQuery([queryKey, nutrientId, compareId], queryFn, {
-    ...options,
-  });
+  return useQuery([queryKey, nutrientId, compareId], queryFn);
 };
 
 //영양제 조합 목록 조회

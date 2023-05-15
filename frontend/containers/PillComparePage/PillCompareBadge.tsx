@@ -17,24 +17,28 @@ function PillCompareBox(props: Props) {
       <div className="mx-4">
         <div className="grid grid-cols-2 py-2">
           <div className="col-span-1 py-4 mr-2 bg-white border rounded-lg">
-            {props.first.map((item, idx) => (
-              <div
-                className="badge bg-[#90B5EA] badge-ghost text-white block my-2 mx-auto h-6 w-20 text-center"
-                key={idx}
-              >
-                {item}
-              </div>
-            ))}
+            <ul>
+              {props.first.map((item, idx) => (
+                <li
+                  className="bg-[#90B5EA] text-white my-1 mx-3 text-center rounded-2xl py-1"
+                  key={idx}
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
           <div className="col-span-1 py-4 ml-2 bg-white border rounded-lg">
-            {props.second.map((item, idx) => (
-              <div
-                className="badge bg-[#90B5EA] badge-ghost text-white  block my-2 mx-auto h-6 w-20 text-center"
-                key={idx}
-              >
-                {item}
-              </div>
-            ))}
+            <ul>
+              {props.second.map((item, idx) => (
+                <li
+                  className="bg-[#90B5EA] text-white my-1 mx-3 text-center rounded-2xl py-1"
+                  key={idx}
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

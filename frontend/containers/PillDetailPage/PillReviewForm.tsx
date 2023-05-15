@@ -1,10 +1,14 @@
+import api from '@/apis/config';
+import useUserStore from '@/store/userStore';
 import axios from 'axios';
 import React from 'react';
 import { useState } from 'react';
 
-type Props = {};
+type Props = {
+  nutrientId: number;
+};
 
-function PillReviewForm({}: Props) {
+function PillReviewForm(props: Props) {
   const [rating, setRating] = useState<number>(5);
   const [reviewContent, setReviewContent] = useState<string>('');
 
@@ -21,17 +25,21 @@ function PillReviewForm({}: Props) {
     setReviewContent(e.target.value);
   };
 
-  const submitReview = () => {
+  const submitReview = async () => {
     //별점이랑 리뷰 axios
-    axios
-      .post(
-        'https://k8a703.p.ssafy.io/api/nutrient/${nutrientId}/${userId}',
-        {
-          reviewContent: { reviewContent },
-          reviewScore: { rating },
-        },
-      )
-      .then((res) => console.log(res));
+    // axios
+    //   .post(
+    //     'https://k8a703.p.ssafy.io/api/nutrient/${nutrientId}/${userId}',
+    //     {
+    //       reviewContent: { reviewContent },
+    //       reviewScore: { rating },
+    //     },
+    //   )
+    //   .then((res) => console.log(res));
+
+    const id: number = useUserStore.getState().user?.id as number;
+    await api.addReview(id, 4002000847, reviewContent, rating);
+    // api.addReview(id, props.nutrientId, reviewContent, rating);
   };
 
   return (
