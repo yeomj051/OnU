@@ -31,8 +31,9 @@ function PillAnalysisHaveBox(props: Props) {
   const [havingList, setHaveList] = useState<Array<have>>();
 
   useEffect(() => {
+    console.log(props.userId);
     getTakingPillData();
-  }, []);
+  }, [props]);
 
   const getTakingPillData = async () => {
     await api.getTakingPillList(props.userId).then((res) => {
@@ -43,7 +44,7 @@ function PillAnalysisHaveBox(props: Props) {
   };
 
   return (
-    <div className="flex justify-between">
+    <div className="flex flex-wrap">
       {havingList &&
         havingList.map((nutrient, idx) => (
           <PillAnalysisHave key={idx} nutrient={nutrient} />

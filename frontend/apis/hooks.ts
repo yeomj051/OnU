@@ -136,18 +136,6 @@ export const useDeleteInterest = (
   return useMutation([queryKey, userId, nutrientId], mutateFn);
 };
 
-//영양제 상세 정보 조회하는 api
-export const usePillDetail = (
-  nutrientId: number,
-  options?: QueryOptions,
-) => {
-  const queryFn = async () => {
-    const res = await api.getPillDetail(nutrientId);
-    return res;
-  };
-  return useQuery([queryKey, nutrientId], queryFn, { ...options });
-};
-
 //관심 영양제 등록하는 api
 export const useAddInterest = (
   userId: number,
@@ -200,7 +188,7 @@ export const useCombList = (
 //영양제 조합 저장
 export const useSaveComb = (
   userId: number,
-  combinationList: string[],
+  combinationList: number[],
 ) => {
   const mutateFn = async () => {
     const res = await api.saveComb(userId, combinationList);

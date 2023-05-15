@@ -139,7 +139,7 @@ function PillAnalysisMain() {
   // }, [deletedComb]);
 
   //조합(선택한 영양제id 리스트로 저장)
-  const [choiceList, setChoiceList] = useState<Array<string>>([]);
+  const [choiceList, setChoiceList] = useState<Array<number>>([]);
 
   //조합 저장하는 함수 => zustand에 저장되어 있는 리스트를 서버에 보내준다.
   const saveCombination = async () => {
@@ -159,15 +159,15 @@ function PillAnalysisMain() {
     <div className="mt-20">
       <div className="mx-4">
         <div className="py-5">
-          <div className="text-xl">복용중인 영양제</div>
+          <div className="text-xl ml-5">복용중인 영양제</div>
           <PillAnalysisHaveBox userId={userId} />
         </div>
         <div className="py-5">
           <div className="grid grid-cols-2">
-            <div className="grid content-center col-span-1 text-xl ">
+            <div className="grid content-center col-span-1 text-xl ml-5">
               관심 영양제
             </div>
-            <div className="flex justify-end col-span-1 mb-1">
+            <div className="flex justify-end col-span-1 mb-1 pt-1 pr-4">
               <button onClick={addLikeList}>
                 <Image
                   src={more}
@@ -184,8 +184,8 @@ function PillAnalysisMain() {
       </div>
 
       <div className="bg-[#D8EDFF]  py-5 px-4 h-[100%]">
-        <div className="grid grid-cols-2">
-          <div className="grid content-center col-span-1 text-xl">
+        <div className="grid grid-cols-2 mt-2">
+          <div className="grid content-center col-span-1 text-xl ml-5">
             성분 조합 한 눈에 보기
           </div>
           <div className="flex justify-end col-span-1">
@@ -197,15 +197,17 @@ function PillAnalysisMain() {
             </button>
           </div>
         </div>
-        <div className="w-full bg-white rounded-lg h-auto">
+        <div className="w-full bg-white rounded-lg mt-2">
           <PillAnalysisGraph
             analysisType={showChart}
             dataId={dataId}
           />
         </div>
-        <div className="">
-          <div className="col-span-1 text-xl">나의 영양제 조합</div>
-          {/* <PillAnalysisCombBox userId={userId} /> */}
+        <div className="mt-8">
+          <div className="col-span-1 text-xl ml-5 mb-2">
+            나의 영양제 조합
+          </div>
+          <PillAnalysisCombBox userId={userId} />
         </div>
       </div>
     </div>

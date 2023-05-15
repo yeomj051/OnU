@@ -228,7 +228,7 @@ const api = {
   //영양제 조합 저장
   async saveComb(
     userId: number,
-    combinationList: string[],
+    combinationList: number[],
   ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/combination`, {
       method: 'POST',
