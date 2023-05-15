@@ -67,7 +67,7 @@ const Header = (): React.ReactElement => {
         } else {
           setIsClicked(!isClicked);
           setSearchKeyword('');
-          router.push(`/search?query=${searchKeyword}`);
+          router.push(`/search/result?query=${searchKeyword}`);
         }
         break;
     }

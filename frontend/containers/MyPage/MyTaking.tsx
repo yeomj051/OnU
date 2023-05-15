@@ -1,5 +1,3 @@
-import { itemDataList } from '@/apis/data';
-import ItemList from '../../components/list/BaseItemList';
 import { useEffect, useState } from 'react';
 import api from '@/apis/config';
 import Image from 'next/image';
@@ -30,9 +28,18 @@ const Taking = (): React.ReactElement => {
 
   return (
     <div>
-      <p className="ml-2 text-xl font-extrabold text-[#1E266E] mb-2">
-        복용 중인 영양제
-      </p>
+      <div className="flex items-center justify-between">
+        <p className="ml-2 text-xl font-extrabold text-[#1E266E] mb-2">
+          복용 중인 영양제
+        </p>
+        <button
+          className="btn bg-[#1E266E] btn-xs"
+          onClick={() => router.push('/search')}
+        >
+          추가하기
+        </button>
+      </div>
+
       <div className="flex flex-col items-center w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md p-4">
         <div id="item-list">
           {itemData ? (
@@ -79,7 +86,7 @@ const Taking = (): React.ReactElement => {
               );
             })
           ) : (
-            <div>
+            <div className="flex flex-col">
               <span>복용 중인 영양제가 없습니다.</span>
             </div>
           )}
