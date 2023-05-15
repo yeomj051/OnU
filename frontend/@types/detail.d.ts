@@ -15,7 +15,7 @@ type nutrientDetail = {
   nutrientExpiration: string;
   nutrientType: string;
   nutrientMaterial: string;
-  isInterested: boolean;
+  interested: boolean;
   ingredientList: Array<ingredient>;
 
   functionList: Array<string>;

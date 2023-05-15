@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PillAnalysisLike from './PillAnalysisLike';
 import { useInterestPill } from '@/apis/hooks';
 import { likeStore } from '@/store/likeStore';
+import api from '@/apis/config';
 
 type Props = {
   userId: number;
@@ -20,21 +21,22 @@ function PillAnalysisLikeBox(props: Props) {
   const [interestList, setInterestList] = useState<Array<interest>>();
   const { likeList, setAllLikes } = likeStore();
 
-  const { isLoading, data, isError, isSuccess, error } =
-    useInterestPill(props.userId);
-
   useEffect(() => {
-    if (isError) {
-      console.log(error);
-    }
-    if (isSuccess) {
-      setAllLikes(data.data.inter);
-      setInterestList(data.data.interestNutrientList);
-    }
-  }, []);
+    getInterestData();
+  }, [props]);
+
+  const getInterestData = async () => {
+    await api
+      .getInterestPillList(props.userId)
+      .then((res) => {
+        console.log(res);
+        setInterestList(res.data.interestNutrientList);
+      })
+      .catch((error) => console.log(error));
+  };
 
   return (
-    <div className="flex justify-between">
+    <div className="flex flex-wrap">
       {interestList &&
         interestList.map((nutrient, idx) => (
           <PillAnalysisLike key={idx} nutrient={nutrient} />

@@ -74,7 +74,7 @@ function PillAnalysisHave(props: Props) {
     setIsSelected(!isSelected);
   };
   return (
-    <div className="" onClick={selectThis}>
+    <div className="w-1/3 mt-6" onClick={selectThis}>
       <div
         className={` ${
           isSelected ? 'bg-[#90B5EA]' : 'bg-[#D8EDFF]'
@@ -83,7 +83,7 @@ function PillAnalysisHave(props: Props) {
         <div className="mx-auto bg-white rounded-lg w-28 h-28">
           <div className="relative w-16 h-16 mx-auto">
             <Image
-              className="w-full h-full"
+              className="w-full h-full mt-1"
               src={props.nutrient.nutrientImageUrl}
               alt="사진깨짐"
               width={100}

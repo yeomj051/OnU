@@ -4,6 +4,8 @@ import Image from 'next/image';
 import { makeCombinationStore } from '../../store/makeCombinationStore';
 import { likeStore } from '../../store/likeStore';
 import { useDeleteInterest } from '@/apis/hooks';
+import useUserStore from '@/store/userStore';
+import api from '@/apis/config';
 
 type interest = {
   interestNutrientId: number;
@@ -18,29 +20,29 @@ type Props = {
 };
 
 function PillAnalysisLike(props: Props) {
+  const id: number = useUserStore.getState().user?.id as number;
   const { combList, addSelected, removeSelected, resetCombList } =
     makeCombinationStore();
   const { removeLike } = likeStore();
-  const userData = JSON.parse('userData' || '{}');
-  const userId: number = userData?.id as number;
-
+  useEffect(() => {}, []);
   //이 영양제가 선택되었는지 여부를 저장
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
-  //영양제 조합 삭제API 연결해서 조합 삭제
-  const deleteLike = (event: React.MouseEvent) => {
-    const { isLoading, data, isError, isSuccess, error } =
-      useDeleteInterest(userId, props.nutrient.nutrientId);
-
+  //영양제 관심 삭제API 연결해서 관심 삭제
+  const deleteLike = async (event: React.MouseEvent) => {
     if (isSelected) {
       //이미 선택되어있는 상태였다면 x를 눌러 삭제했을 때에도 seledtedList에서 제거해줘야 함
       removeSelected(props.nutrient.nutrientId);
       removeLike(props.nutrient.nutrientId);
     }
-    //api 연결
-    if (isError) {
-      console.log(error);
-    }
+
+    await api
+      .deleteInterestPill(id, props.nutrient.nutrientId)
+      .then((res) => {
+        console.log(res);
+        // 영양제 삭제됨
+      })
+      .catch((err) => console.log(err));
 
     //stopPropagation()=> 이벤트 버블링(이벤트 발생 위치부터 상위로 이동)을 막아줌
     //x를 클릭했을 때, selected css 상태 변하지 않게
@@ -59,7 +61,7 @@ function PillAnalysisLike(props: Props) {
   };
 
   return (
-    <div className="" onClick={selectThis}>
+    <div className="w-1/3 mt-6" onClick={selectThis}>
       <div
         className={`${
           isSelected ? 'bg-[#90B5EA]' : 'bg-[#D8EDFF]'
@@ -76,9 +78,11 @@ function PillAnalysisLike(props: Props) {
           </div>
           <div className="relative w-16 h-16 mx-auto">
             <Image
-              className="w-full h-full"
+              className="w-full h-full mt-1"
               src={props.nutrient.nutrientImageUrl}
               alt="사진깨짐"
+              width={200}
+              height={200}
             />
           </div>
           <div className="text-xs leading-3 text-center text-gray-400">

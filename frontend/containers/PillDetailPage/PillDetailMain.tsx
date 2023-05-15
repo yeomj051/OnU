@@ -28,7 +28,7 @@ function PillDetailMain(): React.ReactElement {
       nutrientType: '가루', //제형
       nutrientMaterial:
         '스피루리나(고시형),구연산,프로필렌글리콜,글리세린지방산에스테르,글리세린지방산에스테르혼합제제용액,덱스트린,효소처리탱자추출물,효소처리탱자추출물,히드록시프로필메틸셀룰로스,스테아린산마그네슘,삼백초추출물분말,인동추출분말,당잔대뿌리,민들레,결명자추출물분말,당근,검정콩,명일엽,호박,케일잎,덱스트린,클로렐라(고시형),결정셀룰로스,칼슘(고시형)...', //원재료
-      isInterested: true,
+      interested: true,
       ingredientList: [
         {
           ingredientName: '비타민A',
@@ -63,9 +63,15 @@ function PillDetailMain(): React.ReactElement {
       .then((res) => {
         console.log(res);
         setNutrientList(res.data.nutrientDetail);
+
         console.log(res.data.nutrientDetail);
       });
   };
+
+  useEffect(() => {
+    console.log(nutrientList.interested);
+    setLike(nutrientList.interested);
+  }, [nutrientList]);
 
   //제품상세정보<->리뷰
   const switchInfo = () => {
@@ -130,14 +136,14 @@ function PillDetailMain(): React.ReactElement {
               <button onClick={likeOrNot}>
                 {like ? (
                   <Image
-                    className="h-8 w-7"
-                    src={emptyHeart}
+                    className="w-7 h-8"
+                    src={fillHeart}
                     alt="사진깨짐"
                   />
                 ) : (
                   <Image
-                    className="h-8 w-7"
-                    src={fillHeart}
+                    className="w-7 h-8"
+                    src={emptyHeart}
                     alt="사진깨짐"
                   />
                 )}

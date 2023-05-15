@@ -13,6 +13,7 @@ function PillDetailNutrientGage(props: Props) {
   const [amount, setAmout] = useState<number>(0);
   const [start, setStart] = useState<number>(0);
   const [end, setEnd] = useState<number>(0);
+  const [unit, setUnit] = useState<string>('');
   const [color, setColor] = useState<string>('');
 
   useEffect(() => {
@@ -42,12 +43,17 @@ function PillDetailNutrientGage(props: Props) {
   }, [amount]);
 
   return (
-    <div className="grid grid-cols-12">
-      <div className="col-span-2 grid content-center mr-2 text-sm">
-        {props.ingredientName}
+    <div className="mt-1">
+      <div className="flex justify-between">
+        <div className="col-span-2 grid content-center mr-2 text-sm">
+          {props.ingredientName}
+        </div>
+        <div className="text-sm text-gray-400">
+          {props.ingredientAmount}
+        </div>
       </div>
       <ProgressNutrient
-        className="progress col-span-10 w-full my-3 bg-red-200 rounded-xl"
+        className="progress col-span-10 w-full mb-3 bg-red-200 rounded-xl"
         value={amount}
         max={end}
         color={color}

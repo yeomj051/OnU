@@ -182,7 +182,7 @@ export const useCombList = (
 //영양제 조합 저장
 export const useSaveComb = (
   userId: number,
-  combinationList: string[],
+  combinationList: number[],
 ) => {
   const mutateFn = async () => {
     const res = await api.saveComb(userId, combinationList);
