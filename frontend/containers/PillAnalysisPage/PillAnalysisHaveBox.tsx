@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import PillAnalysisHave from './PillAnalysisHave';
 import { haveStore } from '../../store/haveStore';
 import { makeCombinationStore } from '@/store/makeCombinationStore';
-import { useTakingPillIngredient } from '@/apis/hooks';
+import { useTakingPill, useTakingPillIngredient } from '@/apis/hooks';
+import api from '@/apis/config';
 
 type Props = {
   userId: number;
@@ -29,15 +30,17 @@ function PillAnalysisHaveBox(props: Props) {
   //복용중 목록 저장
   const [havingList, setHaveList] = useState<Array<have>>();
 
-  const { isLoading, data, isError, isSuccess } =
-    useTakingPillIngredient(props.userId);
-  if (isError) {
-    // console.log(error);
-  }
-  if (isSuccess) {
-    setAllHaves(data.data.havingNutrientList); //전역변수 저장
-    setHaveList(data.data.havingNutrientList); //state 저장
-  }
+  useEffect(() => {
+    getTakingPillData();
+  }, []);
+
+  const getTakingPillData = async () => {
+    await api.getTakingPillList(props.userId).then((res) => {
+      setHaveList(res.data.takingNutrientList);
+      setAllHaves(res.data.takingNutrientList); //전역변수 저장
+      // console.log(res.data.takingNutrientList);
+    });
+  };
 
   return (
     <div className="flex justify-between">

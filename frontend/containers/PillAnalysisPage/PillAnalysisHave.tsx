@@ -86,6 +86,8 @@ function PillAnalysisHave(props: Props) {
               className="w-full h-full"
               src={props.nutrient.nutrientImageUrl}
               alt="사진깨짐"
+              width={100}
+              height={100}
             />
           </div>
           <div className="text-xs leading-3 text-center text-gray-400">

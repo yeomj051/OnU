@@ -10,7 +10,7 @@ import redCircle from '../../public/redCircle.png';
 import Image from 'next/image';
 
 type Props = {
-  nutrientList?: nutrientDetail;
+  nutrientList: nutrientDetail;
 };
 
 function PillDetailInfo(props: Props) {
@@ -52,7 +52,7 @@ function PillDetailInfo(props: Props) {
   );
 
   useEffect(() => {
-    setNutrientList(realItems.nutrientDetail);
+    setNutrientList(props.nutrientList);
   }, []);
 
   return (

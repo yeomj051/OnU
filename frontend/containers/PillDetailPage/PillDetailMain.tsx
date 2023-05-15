@@ -52,18 +52,21 @@ function PillDetailMain(): React.ReactElement {
   const [nutrientList, setNutrientList] = useState<nutrientDetail>(
     Items.nutrientDetail,
   );
+  const [userID, setUserId] = useState<number>(0);
 
-  // const { isLoading, data, isError, isSuccess, error } = usePillDetail(11);
+  useEffect(() => {
+    getDetailData();
+  }, []);
 
-  // useEffect(() => {
-  //   if (isError) {
-  //     console.log(error);
-  //   }
-
-  //   if (isSuccess) {
-  //     setNutrientList(data.data.nutrientDetail);
-  //   }
-  // }, []);
+  const getDetailData = async () => {
+    await api
+      .getPillDetail(40020008630, userID)
+      // .getPillDetail(nutrientList.nutrientId, userID)
+      .then((res) => {
+        console.log(res);
+        setNutrientList(res.data.nutrientDetail);
+      });
+  };
 
   //제품상세정보<->리뷰
   const switchInfo = () => {
@@ -145,7 +148,7 @@ function PillDetailMain(): React.ReactElement {
             </div>
           </div>
 
-          <div className="mt-2 text-xl font-medium bg-yellow-200">
+          <div className="mt-2 text-xl font-medium">
             {nutrientList.nutrientName}
           </div>
           {/* <div className="mt-5 shadow-md ">

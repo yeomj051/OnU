@@ -60,7 +60,7 @@ function PillDetailReview(props: Props) {
   }, []);
 
   const getReviewData = async () => {
-    api
+    await api
       .getPillReviewList(4002000847)
       .then((res) => setReviewList(res.data.reviewListByNutrient));
   };
