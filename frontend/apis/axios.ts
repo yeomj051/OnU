@@ -30,7 +30,7 @@ const authInstance = (url: string): AxiosInstance => {
       return config;
     },
     (error) => {
-      return Promise.reject(error);
+      console.error(error);
     },
   );
 
@@ -65,7 +65,7 @@ const authInstance = (url: string): AxiosInstance => {
         return axios(originalRequest);
       }
       //나머지 오류
-      return Promise.reject(error);
+      return console.error(error);
     },
   );
 
