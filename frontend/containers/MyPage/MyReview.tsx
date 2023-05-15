@@ -17,14 +17,18 @@ const Review = (): React.ReactElement => {
   }, []);
 
   useEffect(() => {
-    getItemData();
+    if (userId !== null) {
+      getItemData(userId).then((res) => {
+        // API 응답의 데이터 구조에 대한 안전한 처리를 추가합니다.
+        if (res?.data?.interestNutrientList) {
+          setItemData(res.data.interestNutrientList);
+        }
+      });
+    }
   }, [userId]);
 
-  const getItemData = async () => {
-    return await api.getReviewList(userId).then((res) => {
-      setItemData(res.data.reviewListByNutrient);
-      console.log(res.data);
-    });
+  const getItemData = async (id: number) => {
+    return await api.getReviewList(id);
   };
 
   return (
@@ -34,7 +38,7 @@ const Review = (): React.ReactElement => {
       </p>
       <div className="flex flex-col items-center w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md p-4">
         <div id="item-list">
-          {itemData ? (
+          {itemData.length !== 0 ? (
             itemData.map((item, index) => (
               <div
                 id="item"

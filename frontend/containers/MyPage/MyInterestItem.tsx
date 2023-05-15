@@ -8,9 +8,7 @@ import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRou
 import { useRouter } from 'next/navigation';
 
 const MyInterestItem = (props: { item: Item; id: number }) => {
-  const [isInterested, setIsInterested] = useState<boolean>(
-    props.item.isInterested as boolean,
-  );
+  const [isInterested, setIsInterested] = useState<boolean>(true);
   const router = useRouter();
 
   const handleInterest = (itemId: number): void => {
@@ -20,6 +18,8 @@ const MyInterestItem = (props: { item: Item; id: number }) => {
         setIsInterested(true);
       } catch (error) {
         console.log(error);
+      } finally {
+        router.refresh();
       }
     }
   };
@@ -31,6 +31,8 @@ const MyInterestItem = (props: { item: Item; id: number }) => {
         setIsInterested(false);
       } catch (error) {
         console.log(error);
+      } finally {
+        router.refresh();
       }
     }
   };
@@ -39,7 +41,7 @@ const MyInterestItem = (props: { item: Item; id: number }) => {
     if (window.confirm('복용중인 영양제로 추가하시겠습니까?')) {
       try {
         api.addTakingPill(props.id, itemId).then(() => {
-          console.log('추가되었습니다.');
+          alert('추가되었습니다.');
         });
       } catch (error: any) {
         console.log(error);

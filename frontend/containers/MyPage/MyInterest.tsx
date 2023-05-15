@@ -1,10 +1,6 @@
 //나의 관심 영양제 리스트
-import ItemList from '../../components/list/GridList';
 import { useEffect, useState } from 'react';
 import api from '@/apis/config';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
-import { itemDataList } from '@/apis/data';
 
 import MyInterestItem from './MyInterestItem';
 

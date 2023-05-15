@@ -36,9 +36,15 @@ const Taking = (): React.ReactElement => {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <p className="ml-2 text-xl font-extrabold text-[#1E266E] mb-2">
-          복용 중인 영양제
-        </p>
+        <div>
+          <p className="ml-2 text-xl font-extrabold text-[#1E266E]">
+            복용 중인 영양제
+          </p>
+          <p className="ml-2 text-xs font-light text-[#1E266E] mb-2">
+            새로 복용하시는 제품이 있다면 오른쪽에서 추가해보세요.
+          </p>
+        </div>
+
         <button
           className="btn bg-[#1E266E] btn-xs"
           onClick={() => router.push('/search')}
