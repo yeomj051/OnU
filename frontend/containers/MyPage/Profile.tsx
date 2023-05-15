@@ -40,7 +40,11 @@ const Profile = (): React.ReactElement => {
   //캘린더 조회 api 호출
 
   const handleAlarm = () => {
-    if (window.confirm('복용 알림을 설정하시겠습니까?'))
+    if (
+      window.confirm(
+        '복용 알림 설정을 위해선 휴대폰 인증이 필요합니다. 이동하시겠습니까?',
+      )
+    )
       router.push('/user/phoneauth');
   };
 
