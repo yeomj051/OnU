@@ -10,4 +10,6 @@ public interface InterestNutrientRepository extends JpaRepository<InterestNutrie
     Optional<InterestNutrient> findByNutrient_NutrientIdAndUser_UserId(Long nutrientId, int userId);
 
     List<InterestNutrient> findByUser_UserId(int userId);
+
+    InterestNutrient findByUser_UserIdAndNutrient_NutrientId(int userId, long nutrientId);
 }

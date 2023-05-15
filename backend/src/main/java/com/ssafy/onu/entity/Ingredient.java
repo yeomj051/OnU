@@ -16,4 +16,8 @@ public class Ingredient {
 
     @Column
     private String ingredientName;
+    @Column
+    private String ingredientRecommendedIntakeStart;
+    @Column
+    private String ingredientRecommendedIntakeEnd;
 }
