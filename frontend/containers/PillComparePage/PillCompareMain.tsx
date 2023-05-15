@@ -24,7 +24,7 @@ type compareAmount = {
   recommendedIntakeEnd: string;
 };
 
-function PillCompareMain() {
+function PillCompareMain(props: { query: string; compare: string }) {
   const Items = {
     message: 'success or fail',
     nutrientDetail: {
@@ -70,30 +70,39 @@ function PillCompareMain() {
     Items.nutrientDetail,
   );
 
-  //items.id로 영양제 정보 api 요청해올것
-  const { isLoading, data, error, isError, isSuccess } =
-    useComparePill(1, 2);
+  const [userId, setUserId] = useState<number>(0);
 
   useEffect(() => {
-    if (isError) {
-      console.log(error);
-    }
-    if (isSuccess) {
-      setNutrientListA(data.data.nutrientListA);
-      setNutrientListB(data.data.nutrientListB);
-    }
+    setUserId(parseInt(localStorage.getItem('userId') as string));
   }, []);
 
+  useEffect(() => {
+    comparePills();
+  }, [userId, props]);
+
+  const comparePills = async () => {
+    const res1 = await api
+      .getPillDetail(parseInt(props.query), userId)
+      .then((res) => res.data);
+
+    const res2 = await api
+      .getPillDetail(parseInt(props.compare), userId)
+      .then((res) => res.data);
+
+    setNutrientListA(res1.nutrientDetail);
+    setNutrientListB(res2.nutrientDetail);
+  };
+
   //위 두 영양성분 받아서 영양성분 이름으로만 된 배열로 각각 만들기
-  let nutritionA = nutrientListA.ingredientList.map(
+  const nutritionA = nutrientListA.ingredientList.map(
     (item) => item.ingredientName,
   );
-  let nutritionB = nutrientListB.ingredientList.map(
+  const nutritionB = nutrientListB.ingredientList.map(
     (item) => item.ingredientName,
   );
 
   //영양성분과 두 영양제가 포함하고 있는 양을 저장할 객체 배열 [{비타민A, 10, 20}]
-  let nutritionProps: Array<compareAmount> = [];
+  const nutritionProps: Array<compareAmount> = [];
 
   while (!(nutritionA.length === 0 && nutritionB.length === 0)) {
     let tmp: string | undefined;
@@ -107,10 +116,14 @@ function PillCompareMain() {
         nutritionB.splice(nutritionB.indexOf(tmp), 1);
 
         //영양성분 이름, 양A, 양B 객체로 묶어서 nutritionProps에 저장
-        let nuA = nutrientListA.ingredientList.find(function (data) {
+        const nuA = nutrientListA.ingredientList.find(function (
+          data,
+        ) {
           return data.ingredientName === tmp;
         });
-        let nuB = nutrientListB.ingredientList.find(function (data) {
+        const nuB = nutrientListB.ingredientList.find(function (
+          data,
+        ) {
           return data.ingredientName === tmp;
         });
 
@@ -125,7 +138,9 @@ function PillCompareMain() {
         }
       } else {
         //값 없으면 이미 a배열에서는 삭제된 상태
-        let nuA = nutrientListA.ingredientList.find(function (data) {
+        const nuA = nutrientListA.ingredientList.find(function (
+          data,
+        ) {
           return data.ingredientName === tmp;
         });
         if (nuA) {
@@ -144,10 +159,14 @@ function PillCompareMain() {
       if (tmp && nutritionA.includes(tmp)) {
         nutritionA.splice(nutritionA.indexOf(tmp), 1);
 
-        let nuA = nutrientListA.ingredientList.find(function (data) {
+        const nuA = nutrientListA.ingredientList.find(function (
+          data,
+        ) {
           return data.ingredientName === tmp;
         });
-        let nuB = nutrientListB.ingredientList.find(function (data) {
+        const nuB = nutrientListB.ingredientList.find(function (
+          data,
+        ) {
           return data.ingredientName === tmp;
         });
 
@@ -163,7 +182,9 @@ function PillCompareMain() {
       } else {
         console.log(tmp);
         //값 없으면 이미 a배열에서는 삭제된 상태
-        let nuB = nutrientListB.ingredientList.find(function (data) {
+        const nuB = nutrientListB.ingredientList.find(function (
+          data,
+        ) {
           return data.ingredientName === tmp;
         });
         if (nuB) {
@@ -313,7 +334,7 @@ function PillCompareMain() {
         <hr className="mx-4" />
         <div className="col-span-1 py-4 mx-4 mt-2 mb-6 bg-white border rounded-lg">
           <div className="flex flex-row-reverse pr-2">
-            <div className="flex mx-1 items-center">
+            <div className="flex items-center mx-1">
               <Image
                 src={redCircle}
                 alt="빨강"
@@ -321,7 +342,7 @@ function PillCompareMain() {
               />
               <div className="text-sm">과다</div>
             </div>
-            <div className="flex mx-1 items-center">
+            <div className="flex items-center mx-1">
               <Image
                 src={greenCircle}
                 alt="초록"
@@ -329,7 +350,7 @@ function PillCompareMain() {
               />
               <div className="text-sm">적정</div>
             </div>
-            <div className="flex mx-1 items-center">
+            <div className="flex items-center mx-1">
               <Image
                 src={yellowCircle}
                 alt="노랑"
