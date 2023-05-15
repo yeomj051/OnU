@@ -24,7 +24,7 @@ public class CompareController {
 
     //두 영양제 비교
     @GetMapping("/{nutrientId01}/{nutrientId02}")
-    public ResponseEntity<Map<String, Object>> compareNutrient(@PathVariable int nutrientId01, @PathVariable int nutrientId02,
+    public ResponseEntity<Map<String, Object>> compareNutrient(@PathVariable long nutrientId01, @PathVariable long nutrientId02,
                                                                @RequestParam int userId, Principal principal) {
         Map<String, Object> resultMap = new HashMap<>();
 
