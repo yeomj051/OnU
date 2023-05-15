@@ -2,11 +2,13 @@ import api from '@/apis/config';
 import { itemStore } from '@/store/itemStore';
 import useUserStore from '@/store/userStore';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 const ItemList = (props: { itemList: Array<Item> }) => {
   // const itemDataList = props.data;
   const { items, setItems } = itemStore();
+  const router = useRouter();
 
   const compareItems = (item: Item) => {
     if (items.length < 2) setItems(item);
@@ -51,6 +53,11 @@ const ItemList = (props: { itemList: Array<Item> }) => {
                 alt="item-img"
                 width={140}
                 height={100}
+                onClick={() =>
+                  router.push(
+                    `/pilldetail/pill-detail/${item.nutrientId}`,
+                  )
+                }
               />
             </div>
             <div className="flex flex-col justify-between w-full m-2">

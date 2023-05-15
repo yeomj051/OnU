@@ -7,6 +7,7 @@ import WorryCategoryList from '@/containers/PillListPage/WorryCategoryList';
 import IngredientCategoryList from '@/containers/PillListPage/IngredientCategoryList';
 import CompareDrawer from '@/components/common/Drawer';
 import { itemDataList } from '@/apis/data';
+import ScrollTopBtn from '@/components/common/ScrollTopBtn';
 
 const EntireList = () => {
   //false : 성분별 클릭, true : 고민별 클릭
