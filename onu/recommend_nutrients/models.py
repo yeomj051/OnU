@@ -27,41 +27,34 @@ class Nutrient(models.Model):
     class Meta:
         db_table = 'nutrient'
 
-'''
-    @Id
-    private Long nutrientId;
 
-    @Column
-    private String nutrientName;
+class Auth(models.Model):
+    auth_id = models.BigIntegerField(primary_key= True)
+    user_phone_number = models.TextField()
+    user_provider = models.TextField()
+    user_provider_id = models.TextField()
 
-    @Column
-    private String nutrientImageUrl;
+    class Meta:
+        db_table = 'auth'
 
-    @Column
-    private String nutrientBrand;
 
-    @Column
-    private String nutrientIntake;
+class User(models.Model):
+    user_id = models.BigIntegerField(primary_key= True)
+    created_at = models.DateTimeField()
+    updated_at = models.DateTimeField()
+    user_age = models.IntegerField()
+    user_gender = models.TextField()
+    user_nickname = models.TextField()
+    user_auth = models.ForeignKey(Auth, on_delete=models.CASCADE)
 
-    @Column
-    private String nutrientCaution;
+    class Meta:
+        db_table = 'user'
 
-    @Column
-    private String nutrientExpiration;
 
-    @ManyToOne
-    @JoinColumn(name = "nutrient_type_id")
-    private NutrientType nutrientTypeId;
+class Taking_Nutrient(models.Model):
+    taking_nutrient_id = models.IntegerField(primary_key= True)
+    nutrient = models.ForeignKey(Nutrient, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    @Column
-    private String nutrientMaterial;
-
-    @Column
-    private boolean nutrientPregnant;
-
-    @Column
-    private boolean nutrientChild;
-
-    @Column
-    private int nutrientGender;
-'''
+    class Meta:
+        db_table = 'taking_nutrient'
