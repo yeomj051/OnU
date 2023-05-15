@@ -46,14 +46,13 @@ const api = {
   async sendVerificationCode(
     userId: number,
     phone: string,
-    authCode: string,
   ): Promise<AxiosResponse> {
     return await authAPI(`/user/sms`, {
       method: 'POST', //GET?
       data: {
         userId,
         phone,
-        authCode,
+        authCode: null,
       },
     });
   },
