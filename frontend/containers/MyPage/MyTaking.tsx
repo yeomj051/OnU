@@ -16,14 +16,14 @@ const Taking = (): React.ReactElement => {
   }, []);
 
   useEffect(() => {
-    getItemData();
-  }, [userId]);
-
-  const getItemData = async () => {
-    return await api.getTakingPillList(userId).then((res) => {
+    getItemData().then((res) => {
       setItemData(res.data.takingNutrientList);
       console.log(res.data);
     });
+  }, [userId]);
+
+  const getItemData = async () => {
+    return await api.getTakingPillList(userId);
   };
 
   return (

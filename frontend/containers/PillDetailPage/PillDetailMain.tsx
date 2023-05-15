@@ -7,7 +7,6 @@ import emptyHeart from '../../public/emptyHeart.png';
 import Image from 'next/image';
 import api from '@/apis/config';
 import useUserStore from '@/store/userStore';
-import { useRouter } from 'next/router';
 
 function PillDetailMain(): React.ReactElement {
   // const router = useRouter();
