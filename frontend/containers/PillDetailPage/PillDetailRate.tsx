@@ -11,7 +11,7 @@ function PillDetailRate(props: Props) {
       <div className="w-5/6 h-36 mx-auto my-2">
         <div className="grid grid-cols-5 text-center pt-6">
           {props.graphValue.map((value, idx) => (
-            <div className="col-span-1 rounded-lg">
+            <div key={idx} className="col-span-1 rounded-lg">
               <div
                 className="tooltip tooltip-open"
                 data-tip={props.statistic[idx]}

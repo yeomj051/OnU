@@ -8,8 +8,12 @@ import Image from 'next/image';
 import { usePillDetail } from '@/apis/hooks';
 import api from '@/apis/config';
 import useUserStore from '@/store/userStore';
+import { useRouter } from 'next/router';
 
 function PillDetailMain(): React.ReactElement {
+  const router = useRouter();
+  const { id } = router.query;
+  console.log(id);
   const Items = {
     message: 'success or fail',
     nutrientDetail: {

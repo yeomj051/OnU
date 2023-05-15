@@ -82,6 +82,7 @@ function PillDetailReview(props: Props) {
     let scoreArray = [0, 0, 0, 0, 0];
 
     reviewList.map((review, idx) => {
+      const key = idx;
       scoreArray[review.reviewScore - 1]++;
     });
     setStatistic(scoreArray);
