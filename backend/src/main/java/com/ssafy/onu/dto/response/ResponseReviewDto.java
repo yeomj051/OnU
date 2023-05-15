@@ -30,7 +30,7 @@ public class ResponseReviewDto {
         this.nutrientName = review.getNutrientId().getNutrientName();
         this.reviewContent = review.getReviewContent();
         this.userAge = LocalDateTime.now().getYear() - review.getUserId().getUserAge() + 1;
-        this.userGender = review.getUserId().getUserGender().toString() == GENDER ? MALE : FEMALE;
+        this.userGender = review.getUserId().getUserGender().toString().equals(GENDER) ? MALE : FEMALE;
         this.reviewScore = review.getReviewScore();
         this.reviewCreateTime = review.getCreatedAt();
         this.reviewUpdateTime = review.getUpdatedAt();
