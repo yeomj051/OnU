@@ -33,6 +33,8 @@ public class MypageService {
     private final InterestNutrientRepository interestNutrientRepository;
     private final TakingNutrientRepository takingNutrientRepository;
     private static final String COMMA = ",";
+    private static final String EMPTYSTRING = "";
+    private static final String REGULAREXPRESSION = "[^0-9.]";
     private static final String NUTRIENT_ID = "nutrientId:";
     private static final String DATE_FORMAT = "yyyy-MM-dd";
     private static final int ONE = 1;
@@ -148,14 +150,50 @@ public class MypageService {
         return result;
     }
 
-    public List<ResponseNutrientIngredientDto> getCombinationIngredient(ReqCombinationDto reqCombinationDto) {
-        List<ResponseNutrientIngredientDto> nutrientIngredientList = new LinkedList<>();
-
+    public  List<ResponseIngredientTotalDto> getCombinationIngredient(ReqCombinationDto reqCombinationDto) {
+        List<ResponseIngredientTotalDto> result = new LinkedList<>();
+        HashMap<String, Double> ingredientTotal = new HashMap<>();
         reqCombinationDto.getNutrientList().stream().forEach(nutrientId -> {
-            nutrientIngredientList.add(getNutrientIngredientInfo(nutrientId));
+            getNutrientIngredientTotal(nutrientId, ingredientTotal);
         });
+        for(String ingredient : ingredientTotal.keySet()){
+            result.add(new ResponseIngredientTotalDto(ingredient, ingredientTotal.get(ingredient)));
+        }
+        return result;
+    }
 
-        return nutrientIngredientList;
+    public void getNutrientIngredientTotal(Long nutrientId, HashMap<String, Double> ingredientTotal){
+        HashMap<String, String> nutrientIngredient = new HashMap<>();
+        String nID = NUTRIENT_ID + nutrientId;
+        //캐싱되어 있다면
+        if(redisUtil.hasNutrient(nID, nID)) {
+            for(Object key : redisUtil.getKeys(nID)){
+                if(!key.toString().equals(nID)) {
+                    nutrientIngredient.put(key.toString(), redisUtil.getNutrientInfo(nID, key.toString()));
+                }
+            }
+        } else {
+            Map<String, Object> map = new HashMap<>();
+            map.put(nID, nID);
+            nutrientIngredientRepository.findNutrientIngredientsByNutrient_NutrientId(nutrientId)
+                    .stream()
+                    .forEach(ingredient -> {
+                        map.put(ingredient.getIngredient().getIngredientName(), ingredient.getIngredientAmount());
+                        nutrientIngredient.put(ingredient.getIngredient().getIngredientName(), ingredient.getIngredientAmount());
+                    });
+            redisUtil.cacheNutrient(nID, map);
+        }
+        getIngredientTotal(ingredientTotal, nutrientIngredient);
+    }
+    public void getIngredientTotal(HashMap<String, Double> ingredientTotal, HashMap<String, String> nutrientIngredient){
+        for(String ingredientName : nutrientIngredient.keySet()){
+            if( nutrientIngredient.get(ingredientName) == null) continue;
+            double tmp = Double.valueOf(nutrientIngredient.get(ingredientName).replaceAll(REGULAREXPRESSION,EMPTYSTRING));
+            if(ingredientTotal.containsKey(ingredientName)){
+                tmp += ingredientTotal.get(ingredientName);
+            }
+            ingredientTotal.put(ingredientName, Math.round(tmp*1000)/1000.0);
+        }
     }
     
     public ResponseNutrientIngredientDto getNutrientIngredientInfo(Long nutrientId){
