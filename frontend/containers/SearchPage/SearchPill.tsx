@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 import { SearchBar } from '@/components/common/SearchBar';
+import Interest from '../MyPage/MyInterest';
 
 const SearchPill = (): React.ReactElement => {
   const [userId, setUserId] = useState<number>(0);
@@ -16,7 +17,9 @@ const SearchPill = (): React.ReactElement => {
 
   return (
     <div className="flex flex-col pt-20 items-center space-y-4 min-h-[100vh]">
+      <span>원하시는 영양제의 이름이나 성분을 검색해보세요!</span>
       <SearchBar />
+      <Interest />
     </div>
   );
 };

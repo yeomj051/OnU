@@ -3,11 +3,15 @@ import ItemList from '../../components/list/GridList';
 import { useEffect, useState } from 'react';
 import api from '@/apis/config';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-// import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/router';
+import { itemDataList } from '@/apis/data';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 
 const Interest = (): React.ReactElement => {
   const [userId, setUserId] = useState<number>(0);
+  const [userNickname, setUserNickname] = useState<string>('');
   const [itemData, setItemData] = useState<Item[]>([]);
   const router = useRouter();
 
@@ -15,26 +19,31 @@ const Interest = (): React.ReactElement => {
     setUserId(
       Number.parseInt(localStorage.getItem('userId') as string),
     );
+    setUserNickname(localStorage.getItem('userNickname') as string);
   }, []);
 
   useEffect(() => {
-    getItemData();
-  }, [userId]);
+    // getItemData();
+    setItemData(itemDataList);
+  }, []);
 
-  const getItemData = async () => {
-    return await api.getInterestPillList(userId).then((res) => {
-      setItemData(res.data.interestNutrientList);
-      console.log(res.data);
-    });
-  };
+  // const getItemData = async () => {
+  //   return await api.getInterestPillList(userId).then((res) => {
+  //     setItemData(res.data.interestNutrientList);
+  //     console.log(res.data);
+  //   });
+  // };
 
   return (
     <div>
-      <p className="ml-2 text-xl font-extrabold text-[#1E266E] mb-2">
+      <p className="ml-2 text-xl font-extrabold text-[#1E266E]">
         관심 영양제
       </p>
-      <div className="flex flex-col items-center w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md p-4">
-        <div className="grid grid-cols-2 gap-4 w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md items-baseline px-8">
+      <p className="ml-2 text-xs font-light text-[#1E266E] mb-2">
+        {userNickname}님이 관심있어 하는 제품들을 모아봤어요.
+      </p>
+      <div className="grid grid-cols-2 space-y-2 gap-4 w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md items-baseline px-8">
+        <div className="indicator">
           {itemData ? (
             itemData.map((item, index) => (
               <div
@@ -44,6 +53,11 @@ const Interest = (): React.ReactElement => {
                 // onClick={() => router.push(`${item.itemUrl}`)}
                 style={{ cursor: 'pointer' }}
               >
+                <div className="text-[#90B5EA] border-none bg-opacity-0 indicator-item badge top-2 right-2">
+                  <button>
+                    <AddCircleOutlineRoundedIcon />
+                  </button>
+                </div>
                 <div id="item-img" className="mask mask-square">
                   <Image
                     src={item.nutrientImageUrl}
