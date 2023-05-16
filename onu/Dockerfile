@@ -2,7 +2,7 @@
 FROM python:3.11
 
 # Set working directory
-WORKDIR /onu
+WORKDIR /app
 
 # Copy requirements.txt
 COPY requirements.txt .
@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 8000
 
 # Run the application with Gunicorn
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "myapp.wsgi:application"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "onu.wsgi:application"]
