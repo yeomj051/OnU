@@ -19,7 +19,7 @@ public class ResponseTakingNutrientInfoDto {
     private List<ResponseNutrientIngredientInfoDto> nutrientIngredientList;
 
     public ResponseTakingNutrientInfoDto(TakingNutrient takingNutrient, List<ResponseNutrientIngredientInfoDto> nutrientIngredientList) {
-        this.nutrientId = takingNutrient.getNutrient().getNutrientId();;
+        this.nutrientId = takingNutrient.getNutrient().getNutrientId();
         this.nutrientName = takingNutrient.getNutrient().getNutrientName();
         this.nutrientBrand = takingNutrient.getNutrient().getNutrientBrand();
         this.nutrientImageUrl = takingNutrient.getNutrient().getNutrientImageUrl();

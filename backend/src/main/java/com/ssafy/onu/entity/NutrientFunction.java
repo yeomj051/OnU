@@ -2,7 +2,6 @@ package com.ssafy.onu.entity;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicInsert;
 
 import javax.persistence.*;
 

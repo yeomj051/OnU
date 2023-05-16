@@ -1,7 +1,5 @@
 package com.ssafy.onu.repository;
 
-import com.ssafy.onu.entity.Function;
-import com.ssafy.onu.entity.InterestNutrient;
 import com.ssafy.onu.entity.NutrientFunction;
 import org.springframework.data.jpa.repository.JpaRepository;
 
