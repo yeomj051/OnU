@@ -2,7 +2,7 @@
 FROM python:3.11
 
 # Set working directory
-WORKDIR /app
+WORKDIR /home/deploy/jenkins_v/workspace/onu_bigdata/onu
 
 # Copy requirements.txt
 COPY requirements.txt .
