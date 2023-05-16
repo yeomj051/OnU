@@ -34,10 +34,14 @@ function PillAnalysisHaveBox(props: Props) {
     console.log(props.userId);
     if (props.userId != null) {
       getTakingPillData().then((res) => {
-        setHaveList(res.data.takingNutrientList);
-        setAllHaves(res.data.takingNutrientList); //전역변수 저장
+        if (res) {
+          setHaveList(res.data.takingNutrientList);
+          setAllHaves(res.data.takingNutrientList); //전역변수 저장
+        }
       });
     }
+
+    // console.log(haveList);
   }, [props.userId]);
 
   const getTakingPillData = async () => {

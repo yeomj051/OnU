@@ -61,14 +61,18 @@ function PillAnalysisHave(props: Props) {
   //이 영양제가 선택되었는지 여부를 저장
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
-  const { addSelected, removeSelected } = makeCombinationStore();
+  const { combList, addSelected, removeSelected } =
+    makeCombinationStore();
   //영양제 선택하면 css 변경 및 선택 영양제 리스트에 id제공여부 결정하는 함수
   const selectThis = (event: React.MouseEvent) => {
     //선택 되어있으면
     if (isSelected) {
       removeSelected(props.nutrient.nutrientId);
+      console.log(combList);
     } else {
+      //선택 안되어있으면
       addSelected(props.nutrient.nutrientId);
+      console.log(combList);
     }
 
     setIsSelected(!isSelected);

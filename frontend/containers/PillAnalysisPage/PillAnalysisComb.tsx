@@ -38,6 +38,7 @@ function PillAnalysisComb(props: Props) {
   }, [props.selectedComb]);
 
   const selectThis = (event: React.MouseEvent) => {
+    setIsSelected(!isSelected);
     props.selectCombination(props.combination.combinationId);
   };
 

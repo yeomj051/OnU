@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PillAnalysisComb from './PillAnalysisComb';
 import { useCombList } from '@/apis/hooks';
 import api from '@/apis/config';
+import { combinationStore } from '@/store/combinationStore';
 
 type Props = {
   userId: number;
@@ -32,6 +33,8 @@ function PillAnalysisCombBox(props: Props) {
   // 필요함 자동으로 리렌더링 안됨
   const [deletedComb, setDeletedComb] = useState<number>(0);
 
+  const { combinations, setCombinations } = combinationStore();
+
   useEffect(() => {
     getCombination();
   }, [props]);
@@ -42,6 +45,7 @@ function PillAnalysisCombBox(props: Props) {
       .then((res) => {
         console.log(res);
         setCombinationList(res.data.combinationList);
+        setCombinations(res.data.combinationList);
       })
       .catch((err) => console.log(err));
   };
