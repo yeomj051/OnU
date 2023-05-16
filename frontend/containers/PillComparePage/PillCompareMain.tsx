@@ -12,7 +12,6 @@ import greenCircle from '../../public/greenCircle.png';
 import redCircle from '../../public/redCircle.png';
 
 import Image from 'next/image';
-import { useComparePill } from '@/apis/hooks';
 import useUserStore from '@/store/userStore';
 import api from '@/apis/config';
 
@@ -82,11 +81,11 @@ function PillCompareMain(props: { query: string; compare: string }) {
 
   const comparePills = async () => {
     const res1 = await api
-      .getPillDetail(parseInt(props.query), userId)
+      .getPillDetail(parseInt(props.query))
       .then((res) => res.data);
 
     const res2 = await api
-      .getPillDetail(parseInt(props.compare), userId)
+      .getPillDetail(parseInt(props.compare))
       .then((res) => res.data);
 
     setNutrientListA(res1.nutrientDetail);

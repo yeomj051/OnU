@@ -8,9 +8,9 @@ import { useSearchParams } from 'next/navigation';
 
 const PillDetail: NextPageWithLayout = () => {
   const searchParams = useSearchParams();
-  const id: string | null = searchParams.get('id');
+  const id: string = searchParams.get('id') as string;
 
-  return <PillDetailMain itemId={id} />;
+  return <PillDetailMain itemId={parseInt(id)} />;
 };
 
 PillDetail.getLayout = function getLayout(page: React.ReactElement) {
