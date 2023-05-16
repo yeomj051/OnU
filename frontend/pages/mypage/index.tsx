@@ -6,6 +6,7 @@ import Profile from '@/containers/MyPage/Profile';
 import { NextPageWithLayout } from '../_app';
 import AppLayout from '@/components/layout/AppLayout';
 import { MyCalendar } from '@/containers/MyPage/Calendar';
+import HeaderLayout from '@/components/layout/HeaderLayout';
 
 const MyPage: NextPageWithLayout = (): React.ReactElement => {
   return (
@@ -19,7 +20,11 @@ const MyPage: NextPageWithLayout = (): React.ReactElement => {
 };
 
 MyPage.getLayout = function getLayout(page: React.ReactElement) {
-  return <AppLayout>{page}</AppLayout>;
+  return (
+    <AppLayout>
+      <HeaderLayout>{page}</HeaderLayout>
+    </AppLayout>
+  );
 };
 
 export default MyPage;

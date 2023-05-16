@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 
-export const SearchBar = () => {
+export const SearchBar = (): React.ReactElement => {
   const [searchKeyword, setSearchKeyword] = useState<string>('');
   const router = useRouter();
   const inputRef = useRef(null);

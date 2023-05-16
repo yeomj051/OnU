@@ -269,12 +269,14 @@ const Header = (): React.ReactElement => {
               </Link>
             )}
           </li>
-          <li key="mypage">
-            <Link href="/mypage">
-              <AccountCircleIcon />
-              마이페이지
-            </Link>
-          </li>
+          {isLoggedIn && (
+            <li key="mypage">
+              <Link href="/mypage">
+                <AccountCircleIcon />
+                마이페이지
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
     </div>

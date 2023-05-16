@@ -36,7 +36,7 @@ const Puller = styled(Box)(({ theme }) => ({
   left: 'calc(50% - 15px)',
 }));
 
-function CompareDrawer() {
+function CompareDrawer(): React.ReactElement {
   const [open, setOpen] = React.useState(false);
   const [itemList, setItemList] = React.useState<Item[]>([]);
   const [alert, setAlert] = React.useState(false);
@@ -59,7 +59,7 @@ function CompareDrawer() {
     setItemList(items.filter((item) => item.nutrientId === id));
   };
 
-  const comparePills = () => {
+  const comparePills = (): void => {
     if (itemList.length >= 2)
       router.push(
         `/pillcompare/pill-compare?query=${itemList[0].nutrientId}&compare=${itemList[1].nutrientId}`,

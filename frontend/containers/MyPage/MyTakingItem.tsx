@@ -5,7 +5,10 @@ import Image from 'next/image';
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { useRouter } from 'next/navigation';
 
-const MyTakingItem = (props: { item: Item; id: number }) => {
+const MyTakingItem = (props: {
+  item: Item;
+  id: number;
+}): React.ReactElement => {
   const router = useRouter();
 
   const handleTaking = (itemId: number): void => {

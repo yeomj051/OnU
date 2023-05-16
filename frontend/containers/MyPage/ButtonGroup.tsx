@@ -4,7 +4,7 @@ import SuppleIcon from '@/public/suppleIcon.svg';
 import ReviewIcon from '@/public/reviewIcon.svg';
 import { useRouter } from 'next/navigation';
 
-const ButtonGroup = () => {
+const ButtonGroup = (): React.ReactElement => {
   const router = useRouter();
 
   return (

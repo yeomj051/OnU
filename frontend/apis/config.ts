@@ -145,7 +145,7 @@ const api = {
   },
 
   //회원이 쓴 모든 리뷰 조회
-  async getReviewList(userId: number) {
+  async getReviewList(userId: number): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/review`, {
       method: 'GET',
     });
@@ -178,14 +178,16 @@ const api = {
   },
 
   //복용 영양제 목록 조회(성분 포함)
-  async getTakingPillIngredientList(userId: number) {
+  async getTakingPillIngredientList(
+    userId: number,
+  ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/taking/ingredient`, {
       method: 'GET',
     });
   },
 
   //관심 영양제 목록 조회
-  async getInterestPillList(userId: number) {
+  async getInterestPillList(userId: number): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/interest`, {
       method: 'GET',
     });
@@ -212,7 +214,7 @@ const api = {
   },
 
   //영양제 검색
-  async searchPill(keyword: string) {
+  async searchPill(keyword: string): Promise<AxiosResponse> {
     return await baseAPI(`/search/${keyword}`, {
       method: 'GET',
     });
@@ -268,21 +270,32 @@ const api = {
   async getPillListByIngredient(
     userId: number,
     ingredientId: number,
-  ) {
+  ): Promise<AxiosResponse> {
     return await baseAPI(`/nutrient/${ingredientId}/${userId}`, {
       method: 'GET',
     });
   },
 
   //기능별 영양제 목록 조회
-  async getPillListByFunction(userId: number, functionId: number) {
+  async getPillListByFunction(
+    userId: number,
+    functionId: number,
+  ): Promise<AxiosResponse> {
     return await baseAPI(`/nutrient/${functionId}/${userId}`, {
       method: 'GET',
     });
   },
 
   //영양제 상세정보 조회
-  async getPillDetail(nutrientId: number, userId: number) {
+  async getPillDetail(
+    nutrientId: number,
+    userId: number,
+  ): Promise<AxiosResponse> {
+    if (!userId) {
+      return await baseAPI(`/nutrient/${nutrientId}?userId=0`, {
+        method: 'GET',
+      });
+    }
     return await authAPI(`/nutrient/${nutrientId}?userId=${userId}`, {
       method: 'GET',
     });
@@ -314,21 +327,24 @@ const api = {
   },
 
   //비교할 영양제 정보 조회
-  async comparePill(nutrientId: number, compareId: number) {
+  async comparePill(
+    nutrientId: number,
+    compareId: number,
+  ): Promise<AxiosResponse> {
     return await authAPI(`/compare/${nutrientId}/${compareId}`, {
       method: 'GET',
     });
   },
 
   //설문용 질문리스트 호출
-  async nextSurvey(userId: number) {
+  async nextSurvey(userId: number): Promise<AxiosResponse> {
     return await authAPI(`/recommend/${userId}`, {
       method: 'GET',
     });
   },
 
   //설문결과 조회
-  async getSurveyResult(userId: number) {
+  async getSurveyResult(userId: number): Promise<AxiosResponse> {
     return await authAPI(``, {
       method: 'POST',
       data: {
@@ -339,28 +355,30 @@ const api = {
   },
 
   //복용알림 시간 등록
-  async addAlarm() {
+  async addAlarm(): Promise<AxiosResponse> {
     return await authAPI(`/notification`, {
       method: 'POST',
     });
   },
 
   //복용알림 취소
-  async deleteAlarm() {
+  async deleteAlarm(): Promise<AxiosResponse> {
     return await authAPI(`/notification`, {
       method: 'DELETE',
     });
   },
 
   //건강정보 목록조회
-  async getHealthInfoList() {
+  async getHealthInfoList(): Promise<AxiosResponse> {
     return await authAPI(`/healthinfo`, {
       method: 'GET',
     });
   },
 
   //건강정보 상세조회
-  async getHealthInfoDetail(healthInfoId: number) {
+  async getHealthInfoDetail(
+    healthInfoId: number,
+  ): Promise<AxiosResponse> {
     return await authAPI(`/healthinfo/${healthInfoId}`, {
       method: 'GET',
     });

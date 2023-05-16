@@ -2,6 +2,7 @@ import axios, {
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
+  InternalAxiosRequestConfig,
 } from 'axios';
 import { getCookie } from './cookie';
 
@@ -25,7 +26,8 @@ const authInstance = (url: string): AxiosInstance => {
   //request interceptor
   instance.interceptors.request.use(
     (config) => {
-      const token = localStorage.getItem('accessToken');
+      const token: string | null =
+        localStorage.getItem('accessToken');
       config.headers.Authorization = `Bearer ${token}`;
       console.log(`Bearer ${token}`);
       return config;

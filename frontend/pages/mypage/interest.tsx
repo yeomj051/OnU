@@ -4,6 +4,7 @@ import Profile from '@/containers/MyPage/Profile';
 import AppLayout from '@/components/layout/AppLayout';
 import { NextPageWithLayout } from '../_app';
 import Interest from '@/containers/MyPage/MyInterest';
+import HeaderLayout from '@/components/layout/HeaderLayout';
 
 const MyInterestPage: NextPageWithLayout = (): React.ReactElement => {
   return (
@@ -17,7 +18,11 @@ const MyInterestPage: NextPageWithLayout = (): React.ReactElement => {
 MyInterestPage.getLayout = function getLayout(
   page: React.ReactElement,
 ) {
-  return <AppLayout>{page}</AppLayout>;
+  return (
+    <AppLayout>
+      <HeaderLayout>{page}</HeaderLayout>
+    </AppLayout>
+  );
 };
 
 export default MyInterestPage;

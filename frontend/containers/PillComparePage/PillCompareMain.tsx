@@ -81,11 +81,11 @@ function PillCompareMain(props: { query: string; compare: string }) {
 
   const comparePills = async () => {
     const res1 = await api
-      .getPillDetail(parseInt(props.query))
+      .getPillDetail(parseInt(props.query), userId)
       .then((res) => res.data);
 
     const res2 = await api
-      .getPillDetail(parseInt(props.compare))
+      .getPillDetail(parseInt(props.compare), userId)
       .then((res) => res.data);
 
     setNutrientListA(res1.nutrientDetail);
