@@ -240,7 +240,7 @@ function PillCompareMain(props: { query: string; compare: string }) {
             src={nutrientListA.nutrientImageUrl}
             alt="영양제 사진"
             width={200}
-            height={200}
+            height={300}
             className="mx-auto"
           />
 

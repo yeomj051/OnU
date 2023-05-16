@@ -8,6 +8,7 @@ import StarRating from '@/components/common/StarRating';
 import { usePillReviewList } from '@/apis/hooks';
 import api from '@/apis/config';
 import axios from 'axios';
+// import { useRouter } from 'next/navigation';
 
 type reviewContents = {
   userNickname: string;
@@ -22,6 +23,7 @@ type reviewContents = {
 
 type Props = {
   nutrientId: number;
+  userId: number | undefined;
 };
 
 function PillDetailReview(props: Props) {
@@ -38,7 +40,17 @@ function PillDetailReview(props: Props) {
   ]);
 
   const openReviewForm = () => {
-    setWantReview(true);
+    if (props.userId) setWantReview(true);
+    else {
+      if (
+        window.confirm(
+          '로그인이 필요한 서비스입니다. 로그인하시겠습니까?',
+        )
+      ) {
+        router.push('/user/login');
+      }
+    }
+    // setWantReview(true);
   };
 
   useEffect(() => {
@@ -112,50 +124,61 @@ function PillDetailReview(props: Props) {
 
   return (
     <div>
-      <div className="bg-[#FFFCED] h-[250px] px-5 rounded-lg mt-3">
-        <div className="pt-6">
-          <div className="grid grid-cols-2">
-            <div className="grid justify-center col-span-1">
-              총 평점
-            </div>
-            <div className="grid justify-center col-span-1">
-              평점 비율
+      <div>
+        <div className="bg-[#FFFCED] h-[250px] px-5 rounded-lg mt-3">
+          <div className="pt-6">
+            <div className="grid grid-cols-2">
+              <div className="grid justify-center col-span-1">
+                총 평점
+              </div>
+              <div className="grid justify-center col-span-1">
+                평점 비율
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="bg-white pb-2 mt-3 grid grid-cols-2 rounded-lg">
-          <div className="col-span-1  grid justify-center">
-            <div className="grid justify-center mt-3 mb-1">
-              <StarRating rating={average} size="detail" />
+          <div className="bg-white pb-2 mt-3 grid grid-cols-2 rounded-lg">
+            <div className="col-span-1  grid justify-center">
+              <div className="grid justify-center mt-3 mb-1">
+                <StarRating rating={average} size="detail" />
+              </div>
+
+              <div className="text-center h-2 mb-3">
+                {average} / 5
+              </div>
+              <label
+                htmlFor="my-modal-6"
+                className="w-40 text-white btn btn-primary rounded-xl"
+                style={{
+                  backgroundColor: '#90B5EA',
+                  width: '170px',
+                  height: '30px',
+                  border: 'none',
+                }}
+                onClick={openReviewForm}
+              >
+                리뷰 작성하기
+              </label>
             </div>
-
-            <div className="text-center h-2 mb-3">{average} / 5</div>
-            <label
-              htmlFor="my-modal-6"
-              className="w-40 text-white btn btn-primary rounded-xl"
-              style={{
-                backgroundColor: '#90B5EA',
-                width: '170px',
-                height: '30px',
-                border: 'none',
-              }}
-              onClick={openReviewForm}
-            >
-              리뷰 작성하기
-            </label>
+            {/* 평점 비율 */}
+            <PillDetailRate
+              graphValue={graphValue}
+              statistic={statistic}
+            />
           </div>
-          {/* 평점 비율 */}
-          <PillDetailRate
-            graphValue={graphValue}
-            statistic={statistic}
-          />
         </div>
+        {wantReview && (
+          <PillReviewForm nutrientId={props.nutrientId} />
+        )}
+        {reviewList.map((review, idx) => (
+          <PillDetailReviewBox key={idx} review={review} />
+        ))}
       </div>
-      {wantReview && <PillReviewForm nutrientId={props.nutrientId} />}
-      {reviewList.map((review, idx) => (
-        <PillDetailReviewBox key={idx} review={review} />
-      ))}
+      {reviewList.length === 0 && (
+        <div className="w-100 text-center py-10 mt-2 mb-5 rounded-md bg-yellow-100">
+          리뷰가 없어요! 첫 리뷰를 작성해주세요😍
+        </div>
+      )}
     </div>
   );
 }

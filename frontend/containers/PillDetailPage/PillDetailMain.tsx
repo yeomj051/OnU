@@ -6,7 +6,6 @@ import fillHeart from '../../public/fillHeart.png';
 import emptyHeart from '../../public/emptyHeart.png';
 import Image from 'next/image';
 import api from '@/apis/config';
-import useUserStore from '@/store/userStore';
 import { useRouter } from 'next/navigation';
 
 function PillDetailMain(props: {
@@ -15,17 +14,17 @@ function PillDetailMain(props: {
   const [infoSwitch, setInfoSwitch] = useState<boolean>(true);
   const [like, setLike] = useState<boolean>(true);
   const [nutrientList, setNutrientList] = useState<nutrientDetail>();
-  const [userID, setUserId] = useState<number>();
+  const [userId, setUserId] = useState<number>();
   const router = useRouter();
 
   useEffect(() => {
     setUserId(parseInt(localStorage.getItem('userId') as string));
-    if (props.itemId !== null && userID !== undefined) {
-      getDetailData(props.itemId, userID).then((res) => {
+    if (props.itemId !== null && userId !== undefined) {
+      getDetailData(props.itemId, userId).then((res) => {
         setNutrientList(res?.data?.nutrientDetail);
       });
     }
-  }, [userID]);
+  }, [userId]);
 
   const getDetailData = async (itemId: number, userId: number) => {
     return await api.getPillDetail(itemId, userId);
@@ -45,22 +44,23 @@ function PillDetailMain(props: {
   };
 
   const switchReview = () => {
-    if (userID) setInfoSwitch(false);
-    else {
-      if (
-        window.confirm(
-          '로그인이 필요한 서비스입니다. 로그인하시겠습니까?',
-        )
-      ) {
-        router.push('/user/login');
-      }
-    }
+    // if (userId) setInfoSwitch(false);
+    // else {
+    //   if (
+    //     window.confirm(
+    //       '로그인이 필요한 서비스입니다. 로그인하시겠습니까?',
+    //     )
+    //   ) {
+    //     router.push('/user/login');
+    //   }
+    // }
+    setInfoSwitch(false);
   };
 
   //좋아요 on/off
   const likeOrNot = () => {
     // 좋아요 되어있는 영양제인지 확인하고 좋아요 되어있으면 => ZUStand에 관심영양제 저장한 리스트에서 있는지 확인해야할듯?
-    if (userID) {
+    if (userId) {
       if (like) {
         //좋아요 삭제
         removeInterest();
@@ -81,18 +81,18 @@ function PillDetailMain(props: {
   };
 
   const addInterest = async () => {
-    if (nutrientList !== undefined && userID) {
+    if (nutrientList !== undefined && userId) {
       await api
-        .addInterestPill(userID, nutrientList.nutrientId)
+        .addInterestPill(userId, nutrientList.nutrientId)
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
     }
   };
 
   const removeInterest = async () => {
-    if (nutrientList !== undefined && userID) {
+    if (nutrientList !== undefined && userId) {
       await api
-        .deleteInterestPill(userID, nutrientList.nutrientId)
+        .deleteInterestPill(userId, nutrientList.nutrientId)
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
     }
@@ -141,10 +141,6 @@ function PillDetailMain(props: {
           <div className="mt-2 text-xl font-medium">
             {nutrientList.nutrientName}
           </div>
-          {/* <div className="mt-5 shadow-md ">
-            <div className="text-center">원재료</div>
-            {nutrientList.nutrientMaterial}
-          </div> */}
         </div>
       </div>
       {/*여기는 파란부분 */}
@@ -177,7 +173,10 @@ function PillDetailMain(props: {
           {infoSwitch ? (
             <PillDetailInfo nutrientList={nutrientList} />
           ) : (
-            <PillDetailReview nutrientId={nutrientList.nutrientId} />
+            <PillDetailReview
+              nutrientId={nutrientList.nutrientId}
+              userId={userId}
+            />
           )}
         </div>
       </div>
