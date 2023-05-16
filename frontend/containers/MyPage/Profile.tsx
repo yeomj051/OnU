@@ -83,7 +83,7 @@ const Profile = (): React.ReactElement => {
               />
             </div>
             <div className="flex items-center justify-between w-full">
-              <div className="flex flex-col mt-4">
+              <div className="flex flex-col items-start w-full mt-4">
                 <p className="mr-8">{userInfo?.nickname}</p>
                 <p className="mb-5">
                   {Math.floor((userInfo?.age as number) / 10) * 10}대{' '}
