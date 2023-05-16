@@ -291,6 +291,11 @@ const api = {
     nutrientId: number,
     userId: number,
   ): Promise<AxiosResponse> {
+    if (!userId) {
+      return await baseAPI(`/nutrient/${nutrientId}?userId=0`, {
+        method: 'GET',
+      });
+    }
     return await authAPI(`/nutrient/${nutrientId}?userId=${userId}`, {
       method: 'GET',
     });
