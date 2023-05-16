@@ -50,7 +50,7 @@ const MyTakingItem = (props: { item: Item; id: number }) => {
             }}
             onClick={() =>
               router.push(
-                `/pilldetail/pill-detail/${props.item.nutrientId}`,
+                `/pilldetail/pill-detail?id=${item.nutrientId}`,
               )
             }
           />
