@@ -3,7 +3,6 @@ import React from 'react';
 import PillAnalysisComb from './PillAnalysisComb';
 import { useState, useEffect } from 'react';
 import PillAnalysisGraph from './PillAnalysisGraph';
-import { makeCombinationStore } from '../../store/makeCombinationStore';
 import PillAnalysisHaveBox from './PillAnalysisHaveBox';
 import PillAnalysisLikeBox from './PillAnalysisLikeBox';
 import Image from 'next/image';
@@ -16,11 +15,12 @@ import {
   useTakingPill,
   useTakingPillIngredient,
 } from '@/apis/hooks';
-import { likeStore } from '@/store/likeStore';
-import { haveStore } from '@/store/haveStore';
 import PillAnalysisCombBox from './PillAnalysisCombBox';
 import api from '@/apis/config';
 import useUserStore from '@/store/userStore';
+import { makeCombinationStore } from '@/store/makeCombinationStore';
+import { combinationStore } from '@/store/combinationStore';
+import { likeStore } from '@/store/likeStore';
 
 type combination = {
   combinationId: number;
@@ -118,6 +118,9 @@ function PillAnalysisMain() {
   const [dataId, setDataId] = useState<number>(-1);
   const router = useRouter();
   const [userId, setUserId] = useState<number>(0);
+  const { combList, resetCombList } = makeCombinationStore();
+  //이상하게 아래 store 훅만 써주면 무한렌더링됨 ( 터지지는 않음 ) 그냥 둬야할까?
+  // const { combinations, resetCombinations } = combinationStore();
 
   // props로 deleteAnything 값 바꾸는 함수 자식들에게 내려주고, x 눌렀을 때, 변동이 생긴 값이 올라오면 재렌더링
   const [deleteAnything, setDeleteAnything] =
@@ -129,11 +132,6 @@ function PillAnalysisMain() {
         localStorage.getItem('userId') || '{}',
       );
       setUserId(userData);
-
-      // saveCombinationPill();
-
-      // setCombinations(data.combinationList);
-      // setCombinationList(data.combinationList);
     }
   }, []);
 
@@ -146,21 +144,29 @@ function PillAnalysisMain() {
     setDeleteAnything(!deleteAnything);
   };
 
-  //조합(선택한 영양제id 리스트로 저장)
-  const [choiceList, setChoiceList] = useState<Array<number>>([]);
-
   //조합 저장하는 함수 => zustand에 저장되어 있는 리스트를 서버에 보내준다.
   const saveCombination = async () => {
     const id: number = useUserStore.getState().user?.id as number;
-    await api
-      .saveComb(id, choiceList)
-      .then((res) => console.log(res));
+
+    isExist();
+
+    await api.saveComb(id, combList).then((res) => console.log(res));
+    setDeleteAnything(!deleteAnything);
   };
 
   // 관심 영양제 추가하는 함수
   const addLikeList = () => {
     //검색페이지로 이동
     router.push(`/search`);
+  };
+
+  const isExist = () => {
+    // const combListAll = combinations;
+    // console.log(combListAll);
+    // if (combListAll.length == 0) {
+    //   console.log('no');
+    // }
+    return true;
   };
 
   return (

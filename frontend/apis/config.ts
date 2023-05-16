@@ -235,7 +235,7 @@ const api = {
     return await authAPI(`/mypage/${userId}/combination`, {
       method: 'POST',
       data: {
-        combinationList: combinationList,
+        nutrientList: combinationList,
       },
     });
   },
