@@ -50,62 +50,62 @@ function PillReviewForm(props: Props) {
       />
       <div className="modal modal-bottom sm:modal-middle">
         <div className="modal-box">
-          <h3 className="font-bold text-lg text-center">
+          <h3 className="text-lg font-bold text-center">
             리뷰 작성하기
           </h3>
           <label
             htmlFor="my-modal-6"
-            className="btn btn-sm btn-circle bg-black absolute right-6 top-6"
+            className="absolute bg-black btn btn-sm btn-circle right-6 top-6"
           >
             ✕
           </label>
           <div className="px-10 mt-10 bg-gray-100">
             <div className="grid grid-cols-2">
-              <div className="py-2 mt-5 pt-5 cols-span-1">
+              <div className="py-2 pt-5 mt-5 cols-span-1">
                 별점을 등록해주세요
               </div>
-              <div className="rating cols-span-1 mt-5 pt-5">
+              <div className="pt-5 mt-5 rating cols-span-1">
                 <input
                   type="radio"
                   name="rating-2"
-                  className="mask mask-star-2 bg-orange-400 w-10"
+                  className="w-10 bg-orange-400 mask mask-star-2"
                   value="1"
                   onClick={handleStarClick}
                 />
                 <input
                   type="radio"
                   name="rating-2"
-                  className="mask mask-star-2 bg-orange-400 w-10"
+                  className="w-10 bg-orange-400 mask mask-star-2"
                   value="2"
                   onClick={handleStarClick}
                 />
                 <input
                   type="radio"
                   name="rating-2"
-                  className="mask mask-star-2 bg-orange-400 w-10"
+                  className="w-10 bg-orange-400 mask mask-star-2"
                   value="3"
                   onClick={handleStarClick}
                 />
                 <input
                   type="radio"
                   name="rating-2"
-                  className="mask mask-star-2 bg-orange-400 w-10"
+                  className="w-10 bg-orange-400 mask mask-star-2"
                   value="4"
                   onClick={handleStarClick}
                 />
                 <input
                   type="radio"
                   name="rating-2"
-                  className="mask mask-star-2 bg-orange-400 w-10"
+                  className="w-10 bg-orange-400 mask mask-star-2"
                   value="5"
                   onClick={handleStarClick}
                 />
               </div>
             </div>
             <div className="pb-5">
-              <p className="mt-10 pb-2">리뷰 작성</p>
+              <p className="pb-2 mt-10">리뷰 작성</p>
               <textarea
-                className="textarea textarea-primary w-full"
+                className="w-full textarea textarea-primary"
                 placeholder="리뷰를 작성해주세요"
                 onChange={setReviewValue}
               ></textarea>

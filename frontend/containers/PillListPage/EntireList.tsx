@@ -1,12 +1,9 @@
 //'use client'
 
 import React, { useState } from 'react';
-// import { SearchBar } from '@/components/common/SearchBar';
-import ItemList from '@/components/list/ItemList';
 import WorryCategoryList from '@/containers/PillListPage/WorryCategoryList';
 import IngredientCategoryList from '@/containers/PillListPage/IngredientCategoryList';
 import CompareDrawer from '@/components/common/Drawer';
-import { itemDataList } from '@/apis/data';
 import ScrollTopBtn from '@/components/common/ScrollTopBtn';
 
 const EntireList = () => {
@@ -48,18 +45,6 @@ const EntireList = () => {
         ) : (
           <IngredientCategoryList />
         )}
-
-        {/* <div id="list-body">
-          {tabState ? (
-            <div id="ingredient-list">
-              <ItemList itemList={itemDataList} />
-            </div>
-          ) : (
-            <div id="worry-list">
-              <ItemList itemList={itemDataList} />
-            </div>
-          )}
-        </div> */}
       </div>
       <CompareDrawer />
     </div>

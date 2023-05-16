@@ -1,8 +1,10 @@
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import React from 'react';
 
 const ItemList = (props: { itemList: Array<Item> }) => {
   // const itemDataList = props.data;
+  const router = useRouter();
 
   return (
     <div id="item-list">
@@ -19,6 +21,11 @@ const ItemList = (props: { itemList: Array<Item> }) => {
                 alt="item-img"
                 width={140}
                 height={100}
+                onClick={() =>
+                  router.push(
+                    `/pilldetail/pill-detail?id=${item.nutrientId}`,
+                  )
+                }
               />
             </div>
             <div className="flex flex-col justify-between w-full pl-2 m-2">

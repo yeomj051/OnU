@@ -46,12 +46,12 @@ function CompareDrawer() {
 
   React.useEffect(() => {
     setItemList(items);
+    if (itemList.length === 0) setOpen(false);
+    if (itemList.length === 1) setOpen(true);
   }, [itemList, items]);
 
   const toggleDrawer = (newOpen: boolean) => () => {
-    if (itemList.length !== 2 && !newOpen) setOpen(false);
-    else if (itemList.length !== 2 && newOpen) setOpen(true);
-    else setOpen(!open);
+    setOpen(newOpen);
   };
 
   const deleteItem = (id: number) => {

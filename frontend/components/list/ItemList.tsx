@@ -11,8 +11,9 @@ const ItemList = (props: { itemList: Array<Item> }) => {
   const router = useRouter();
 
   const compareItems = (item: Item) => {
-    if (items.length < 2) setItems(item);
-    // console.log(item);
+    if (items.length < 2) {
+      setItems(item);
+    }
   };
 
   const id = useUserStore.getState().user?.id as number;
@@ -41,10 +42,15 @@ const ItemList = (props: { itemList: Array<Item> }) => {
   return (
     <div id="item-list">
       {props.itemList?.map((item, index) => {
+        const isSelected = items.some(
+          (i) => i.nutrientId === item.nutrientId,
+        );
         return (
           <div
             id="item"
-            className="flex justify-start w-full my-4 min-h-28"
+            className={`flex justify-start w-full my-4 min-h-28 p-0.5 ${
+              isSelected ? 'ring-2 rounded-md' : ''
+            }`}
             key={index}
           >
             <div id="item-img" className="mask mask-square">
@@ -55,7 +61,7 @@ const ItemList = (props: { itemList: Array<Item> }) => {
                 height={100}
                 onClick={() =>
                   router.push(
-                    `/pilldetail/pill-detail/${item.nutrientId}`,
+                    `/pilldetail/pill-detail?id=${item.nutrientId}`,
                   )
                 }
               />
