@@ -18,7 +18,7 @@ const Interest = (): React.ReactElement => {
   }, []);
 
   useEffect(() => {
-    if (userId !== null) {
+    if (userId !== null && userId !== undefined) {
       getItemData(userId).then((res: AxiosResponse) => {
         // API 응답의 데이터 구조에 대한 안전한 처리를 추가합니다.
         if (res?.data?.interestNutrientList) {
