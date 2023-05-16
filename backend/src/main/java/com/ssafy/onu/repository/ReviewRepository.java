@@ -12,4 +12,5 @@ public interface ReviewRepository extends JpaRepository<Review, Integer> {
     Optional<Review> findByReviewId(int reviewId);
     List<Review> findByNutrientId_NutrientId(Long nutrientId);
     Optional<Review> findByUserIdAndNutrientId(User userId, Nutrient nutrientId);
+    List<Review> findByUserId(User userId);
 }
