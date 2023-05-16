@@ -32,15 +32,16 @@ function PillAnalysisHaveBox(props: Props) {
 
   useEffect(() => {
     console.log(props.userId);
-    getTakingPillData();
-  }, [props]);
+    if (props.userId != null) {
+      getTakingPillData().then((res) => {
+        setHaveList(res.data.takingNutrientList);
+        setAllHaves(res.data.takingNutrientList); //전역변수 저장
+      });
+    }
+  }, [props.userId]);
 
   const getTakingPillData = async () => {
-    await api.getTakingPillList(props.userId).then((res) => {
-      setHaveList(res.data.takingNutrientList);
-      setAllHaves(res.data.takingNutrientList); //전역변수 저장
-      // console.log(res.data.takingNutrientList);
-    });
+    return await api.getTakingPillList(props.userId);
   };
 
   return (

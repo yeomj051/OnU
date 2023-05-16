@@ -20,20 +20,23 @@ function PillDetailMain(props: {
 
   useEffect(() => {
     setUserId(parseInt(localStorage.getItem('userId') as string));
-    if (props.itemId !== null) {
-      getDetailData().then((res) => {
+    if (props.itemId !== null && userID !== undefined) {
+      getDetailData(props.itemId, userID).then((res) => {
         setNutrientList(res?.data?.nutrientDetail);
       });
     }
   }, [userID]);
 
-  const getDetailData = async () => {
-    return await api.getPillDetail(props.itemId);
+  const getDetailData = async (itemId: number, userId: number) => {
+    return await api.getPillDetail(itemId, userId);
   };
 
   useEffect(() => {
-    // console.log(nutrientList.interested);
-    if (nutrientList !== undefined) setLike(nutrientList.interested);
+    if (nutrientList !== undefined) {
+      console.log(nutrientList);
+      console.log(nutrientList.interested);
+      setLike(nutrientList.interested);
+    }
   }, [nutrientList]);
 
   //제품상세정보<->리뷰
@@ -59,11 +62,11 @@ function PillDetailMain(props: {
     // 좋아요 되어있는 영양제인지 확인하고 좋아요 되어있으면 => ZUStand에 관심영양제 저장한 리스트에서 있는지 확인해야할듯?
     if (userID) {
       if (like) {
-        //좋아요 추가
-        addInterest();
-      } else {
         //좋아요 삭제
         removeInterest();
+      } else {
+        //좋아요 추가
+        addInterest();
       }
       setLike(!like);
     } else {
