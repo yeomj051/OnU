@@ -44,7 +44,7 @@ const ItemList = (props: {
   const handleTaking = (itemId: number): void => {
     if (window.confirm('복용중인 영양제로 추가하시겠습니까?')) {
       try {
-        api.addTakingPill(props.id, itemId).then(() => {
+        api.addTakingPill(id, itemId).then(() => {
           alert('추가되었습니다.');
         });
       } catch (error: any) {

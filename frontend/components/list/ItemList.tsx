@@ -56,7 +56,10 @@ const ItemList = (props: {
               }`}
               key={index}
             >
-              <div id="item-img" className="mask mask-square">
+              <div
+                id="item-img"
+                className="cursor-pointer mask mask-square"
+              >
                 <Image
                   src={item.nutrientImageUrl}
                   alt="item-img"
