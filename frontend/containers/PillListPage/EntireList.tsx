@@ -6,7 +6,7 @@ import IngredientCategoryList from '@/containers/PillListPage/IngredientCategory
 import CompareDrawer from '@/components/common/Drawer';
 import ScrollTopBtn from '@/components/common/ScrollTopBtn';
 
-const EntireList = () => {
+const EntireList = (): React.ReactElement => {
   //false : 성분별 클릭, true : 고민별 클릭
   const [tabState, setTabState] = useState<boolean>(false);
 

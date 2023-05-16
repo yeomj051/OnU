@@ -1,6 +1,8 @@
 import Header from '../common/Header';
 
-const HeaderLayout = (props: { children: React.ReactNode }) => {
+const HeaderLayout = (props: {
+  children: React.ReactNode;
+}): React.ReactElement => {
   return (
     <div>
       <Header />

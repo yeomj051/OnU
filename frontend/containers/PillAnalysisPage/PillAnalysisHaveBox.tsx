@@ -25,7 +25,7 @@ type have = {
   nutrientIngredientList: Array<Ingredient>;
 };
 
-function PillAnalysisHaveBox(props: Props) {
+function PillAnalysisHaveBox(props: Props): React.ReactElement {
   const { haveList, setAllHaves } = haveStore();
   //복용중 목록 저장
   const [havingList, setHaveList] = useState<Array<have>>();

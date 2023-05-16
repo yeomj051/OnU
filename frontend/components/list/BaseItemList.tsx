@@ -8,7 +8,7 @@ const ItemList = (props: { itemList: Array<Item> }) => {
 
   return (
     <div id="item-list">
-      {props.itemList?.map((item, index) => {
+      {props.itemList?.map((item: Item, index: number) => {
         return (
           <div
             id="item"

@@ -14,7 +14,7 @@ const PhoneAuth = () => {
 
   const router = useRouter();
 
-  React.useEffect(() => {
+  React.useEffect((): void => {
     const authNum: string | null = localStorage.getItem(
       'isPhoneAuthenticated',
     );
@@ -34,7 +34,7 @@ const PhoneAuth = () => {
   }, []);
 
   //인증시간 만료 로직처리
-  const handleTimeOut = () => {
+  const handleTimeOut = (): void => {
     if (confirm('인증시간이 초과되었습니다. 다시 시도해주세요')) {
       localStorage.removeItem('isAuth');
       router.reload();
@@ -64,7 +64,7 @@ const PhoneAuth = () => {
           throw new Error();
         }
       })
-      .catch((err: Error): void => {
+      .catch((): void => {
         alert('알 수 없는 오류가 발생했습니다. 다시 시도해주세요.');
         setIsMessageSent(false);
       });
@@ -83,11 +83,11 @@ const PhoneAuth = () => {
           throw new Error();
         }
       })
-      .catch((err: Error): void => {
+      .catch((): void => {
         alert('인증에 실패했습니다. 다시 시도해주세요');
         setIsMessageSent(false);
       })
-      .finally(() => {
+      .finally((): void => {
         setAuthCode('');
       });
   };

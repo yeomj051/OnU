@@ -7,7 +7,9 @@ import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRou
 import api from '@/apis/config';
 import useUserStore from '@/store/userStore';
 
-const ItemList = (props: { itemList: Array<Item> }) => {
+const ItemList = (props: {
+  itemList: Array<Item>;
+}): React.ReactElement => {
   // const itemDataList = props.data;
   const router = useRouter();
 
@@ -41,7 +43,7 @@ const ItemList = (props: { itemList: Array<Item> }) => {
 
   return (
     <div className="grid grid-cols-2 space-y-2 gap-4 w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md items-baseline px-8">
-      {props.itemList?.map((item, index) => (
+      {props.itemList?.map((item: Item, index: number) => (
         <div className="indicator">
           <div
             id="item"

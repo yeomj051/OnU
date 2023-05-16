@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import api from '@/apis/config';
 import useUserStore from '@/store/userStore';
+import { AxiosResponse } from 'axios';
 
-export const MyCalendar = () => {
+export const MyCalendar = (): React.ReactElement => {
   const [value, setValue] = useState<Date>(new Date());
   const [dateData, setDateData] = useState<string>(
     `${value.getFullYear()}-${
@@ -40,7 +41,7 @@ export const MyCalendar = () => {
       setMark(['2023-05-11', '2023-05-10', '2023-04-10']);
     });
 
-    await api.checkPill(userId).then((res) => {
+    await api.checkPill(userId).then((res: AxiosResponse) => {
       setStreak(res.data.continuousCount);
     });
   };

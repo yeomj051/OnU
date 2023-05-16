@@ -3,7 +3,7 @@ import AppLayout from '@/components/layout/AppLayout';
 import HeaderLayout from '@/components/layout/HeaderLayout';
 import EntireList from '@/containers/PillListPage/EntireList';
 
-const Home: NextPageWithLayout = () => {
+const Home: NextPageWithLayout = (): React.ReactElement => {
   return (
     <div>
       <div className="relative">

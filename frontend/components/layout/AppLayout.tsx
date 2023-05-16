@@ -8,7 +8,9 @@ const FixedWidth = styled.div`
   }
 `;
 
-const AppLayout = (props: { children: React.ReactNode }) => {
+const AppLayout = (props: {
+  children: React.ReactNode;
+}): React.ReactElement => {
   return (
     <div className="flex justify-center">
       <FixedWidth>{props.children}</FixedWidth>
