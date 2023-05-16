@@ -51,7 +51,7 @@ const MyReviewItem = (props: { item: Item; id: number }) => {
               height={100}
               onClick={() =>
                 router.push(
-                  `/pilldetail/pill-detail/${props.item.nutrientId}`,
+                  `/pilldetail/pill-detail?id=${props.item.nutrientId}`,
                 )
               }
             />
