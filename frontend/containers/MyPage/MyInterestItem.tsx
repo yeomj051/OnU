@@ -99,7 +99,7 @@ const MyInterestItem = (props: { item: Item; id: number }) => {
             }}
             onClick={() =>
               router.push(
-                `/pilldetail/pill-detail?id=${item.nutrientId}`,
+                `/pilldetail/pill-detail?id=${props.item.nutrientId}`,
               )
             }
           />
