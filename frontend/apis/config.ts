@@ -85,12 +85,10 @@ const api = {
     userId: number,
     nickname: string,
     gender: string,
-    age: number,
   ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}`, {
       method: 'PATCH',
       data: {
-        userAge: age,
         userGender: gender,
         userNickname: nickname,
       },

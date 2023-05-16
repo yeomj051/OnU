@@ -6,7 +6,7 @@ import MyInterestItem from './MyInterestItem';
 import { AxiosResponse } from 'axios';
 
 const Interest = (): React.ReactElement => {
-  const [userId, setUserId] = useState<number>(0);
+  const [userId, setUserId] = useState<number>();
   const [userNickname, setUserNickname] = useState<string>('');
   const [itemData, setItemData] = useState<Item[]>([]);
 
@@ -18,7 +18,7 @@ const Interest = (): React.ReactElement => {
   }, []);
 
   useEffect(() => {
-    if (userId !== null) {
+    if (userId !== null && userId !== undefined) {
       getItemData(userId).then((res: AxiosResponse) => {
         // API 응답의 데이터 구조에 대한 안전한 처리를 추가합니다.
         if (res?.data?.interestNutrientList) {
