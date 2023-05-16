@@ -137,7 +137,7 @@ const Update = () => {
             </div>
           </div>
           <button
-            className="bg-[#90B5EA] text-lg border-none btn btn-s btn-wide"
+            className="bg-[#90B5EA] text-md border-none btn btn-sm btn-wide"
             onClick={updateUser}
           >
             회원정보 수정

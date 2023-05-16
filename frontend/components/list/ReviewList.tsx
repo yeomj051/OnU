@@ -55,9 +55,9 @@ const ItemList = (props: {
                   id="review-content"
                   className="text-base font-base text-[#3A3A3A]"
                 >
-                  {'리뷰 내용은 1000자 이상으로 남겨주세요'}
+                  {item.reviewContent}
                 </span>
-                <StarRating rating={item.rating} />
+                <StarRating rating={item.reviewScore} />
               </div>
               <div
                 id="buttons"
