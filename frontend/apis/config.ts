@@ -282,8 +282,8 @@ const api = {
   },
 
   //영양제 상세정보 조회
-  async getPillDetail(nutrientId: number) {
-    return await baseAPI(`/nutrient/${nutrientId}?userId=0`, {
+  async getPillDetail(nutrientId: number, userId: number) {
+    return await authAPI(`/nutrient/${nutrientId}?userId=${userId}`, {
       method: 'GET',
     });
   },
