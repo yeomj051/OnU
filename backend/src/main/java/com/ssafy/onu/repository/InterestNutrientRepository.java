@@ -1,9 +1,7 @@
 package com.ssafy.onu.repository;
 
 import com.ssafy.onu.entity.InterestNutrient;
-import io.swagger.models.auth.In;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.List;
 import java.util.Optional;
 
