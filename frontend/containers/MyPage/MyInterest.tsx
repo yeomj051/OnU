@@ -6,7 +6,7 @@ import MyInterestItem from './MyInterestItem';
 import { AxiosResponse } from 'axios';
 
 const Interest = (): React.ReactElement => {
-  const [userId, setUserId] = useState<number>(0);
+  const [userId, setUserId] = useState<number>();
   const [userNickname, setUserNickname] = useState<string>('');
   const [itemData, setItemData] = useState<Item[]>([]);
 

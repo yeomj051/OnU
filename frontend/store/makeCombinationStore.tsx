@@ -13,7 +13,7 @@ export const makeCombinationStore = create<combListState>((set) => ({
 
   addSelected: (id: number): void =>
     set((state: combListState): { combList: Array<number> } => ({
-      combList: [...state.combList, id],
+      combList: [...state.combList, id].sort(),
     })),
 
   removeSelected: (id: number): void =>

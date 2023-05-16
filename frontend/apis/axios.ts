@@ -2,7 +2,6 @@ import axios, {
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
-  InternalAxiosRequestConfig,
 } from 'axios';
 import { getCookie } from './cookie';
 
@@ -29,11 +28,10 @@ const authInstance = (url: string): AxiosInstance => {
       const token: string | null =
         localStorage.getItem('accessToken');
       config.headers.Authorization = `Bearer ${token}`;
-      console.log(`Bearer ${token}`);
       return config;
     },
     (error) => {
-      console.error(error);
+      console.log(error);
     },
   );
 
@@ -44,6 +42,7 @@ const authInstance = (url: string): AxiosInstance => {
     },
     async (error) => {
       const originalRequest = error.config; //기존 요청 저장
+      console.log(error);
       //토큰이 만료되었을 때(Unauthorized)
       if (error.response.status === 401) {
         const id = localStorage.getItem('userId');
@@ -68,7 +67,7 @@ const authInstance = (url: string): AxiosInstance => {
         return axios(originalRequest);
       }
       //나머지 오류
-      return console.error(error);
+      return Promise.reject(error);
     },
   );
 

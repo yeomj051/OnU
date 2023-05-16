@@ -25,7 +25,6 @@ function PillAnalysisLike(props: Props) {
   const { combList, addSelected, removeSelected, resetCombList } =
     makeCombinationStore();
   const { removeLike } = likeStore();
-  useEffect(() => {}, []);
   //이 영양제가 선택되었는지 여부를 저장
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
@@ -37,8 +36,6 @@ function PillAnalysisLike(props: Props) {
       removeLike(props.nutrient.nutrientId);
     }
 
-    props.reRendering();
-
     await api
       .deleteInterestPill(id, props.nutrient.nutrientId)
       .then((res) => {
@@ -47,6 +44,7 @@ function PillAnalysisLike(props: Props) {
       })
       .catch((err) => console.log(err));
 
+    props.reRendering();
     //stopPropagation()=> 이벤트 버블링(이벤트 발생 위치부터 상위로 이동)을 막아줌
     //x를 클릭했을 때, selected css 상태 변하지 않게
     event.stopPropagation();
@@ -56,9 +54,10 @@ function PillAnalysisLike(props: Props) {
   const selectThis = (event: React.MouseEvent) => {
     if (isSelected) {
       removeSelected(props.nutrient.nutrientId);
-      // console.log(combList);
+      console.log(combList);
     } else {
       addSelected(props.nutrient.nutrientId);
+      console.log(combList);
     }
     setIsSelected(!isSelected);
   };
