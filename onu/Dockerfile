@@ -1,23 +1,20 @@
-# This file is a template, and might need editing before it works on your project.
+# Base image
 FROM python:3.11
 
-# Edit with mysql-client, postgresql-client, sqlite3, etc. for your needs.
-# Or delete entirely if not needed.
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-        postgresql-client \
-    && rm -rf /var/lib/apt/lists/*
+# Set working directory
+WORKDIR /app
 
-WORKDIR /usr/src/app
+# Copy requirements.txt
+COPY requirements.txt .
 
-COPY requirements.txt /usr/src/app/
-RUN pip install --no-cache-dir -r requirements.txt
+# Install dependencies including Gunicorn
+RUN pip install --no-cache-dir -r requirements.txt gunicorn
 
-COPY . /usr/src/app
+# Copy application code
+COPY . .
 
-# For Django
+# Expose port
 EXPOSE 8000
-CMD ["python", "manage.py", "0.0.0.0:8000"]
 
-# For some other command
-# CMD ["python", "app.py"]
+# Run the application with Gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "myapp.wsgi:application"]
