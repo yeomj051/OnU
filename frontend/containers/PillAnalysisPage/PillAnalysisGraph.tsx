@@ -62,22 +62,7 @@ export const options: any = {
   },
 };
 
-const labels = [
-  '비타민A',
-  '비타민B',
-  '비타민C',
-  '비타민D',
-  '비타민E',
-  '비타민F',
-  '비타민G',
-  '비타민H',
-  '비타민I',
-  '비타민G',
-  '비타민H',
-
-  '비타민H',
-  '비타민I',
-];
+const labels = ['비타민A', '비타민B', '비타민C', '비타민I'];
 
 export const data = {
   labels,
@@ -152,7 +137,7 @@ function PillAnalysisGraph(props: Props) {
 
   return (
     <div className="p-6">
-      <Bar options={options} data={data} className="w-full h-full" />
+      <Bar options={options} data={data} className=" bg-red-100" />
     </div>
   );
 }

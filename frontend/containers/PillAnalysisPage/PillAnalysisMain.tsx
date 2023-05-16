@@ -119,6 +119,10 @@ function PillAnalysisMain() {
   const router = useRouter();
   const [userId, setUserId] = useState<number>(0);
 
+  // props로 deleteAnything 값 바꾸는 함수 자식들에게 내려주고, x 눌렀을 때, 변동이 생긴 값이 올라오면 재렌더링
+  const [deleteAnything, setDeleteAnything] =
+    useState<boolean>(false);
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const userData = JSON.parse(
@@ -137,6 +141,10 @@ function PillAnalysisMain() {
   //   //여기에서 deletecomb랑 아이디 같은 영양제 조합
   //   //combinationList에서 filter로 제거해줌
   // }, [deletedComb]);
+
+  const reRendering = () => {
+    setDeleteAnything(!deleteAnything);
+  };
 
   //조합(선택한 영양제id 리스트로 저장)
   const [choiceList, setChoiceList] = useState<Array<number>>([]);
@@ -179,7 +187,10 @@ function PillAnalysisMain() {
               </button>
             </div>
           </div>
-          <PillAnalysisLikeBox userId={userId} />
+          <PillAnalysisLikeBox
+            userId={userId}
+            reRendering={reRendering}
+          />
         </div>
       </div>
 
@@ -207,7 +218,10 @@ function PillAnalysisMain() {
           <div className="col-span-1 text-xl ml-5 mb-2">
             나의 영양제 조합
           </div>
-          <PillAnalysisCombBox userId={userId} />
+          <PillAnalysisCombBox
+            userId={userId}
+            reRendering={reRendering}
+          />
         </div>
       </div>
     </div>

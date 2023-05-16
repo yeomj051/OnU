@@ -5,6 +5,7 @@ import api from '@/apis/config';
 
 type Props = {
   userId: number;
+  reRendering: () => void;
 };
 
 type combination = {
@@ -28,7 +29,8 @@ function PillAnalysisCombBox(props: Props) {
   //어떤 조합이 선택되어있는지 id 저장
   const [selectedComb, setSelectedComb] = useState<number>(0);
   //삭제된 조합 id 저장할 state => 근데 꼭 필요한가?? 자동 리렌더링 되면 api도 다시 받아올거니까 필요없을듯 일단 주석
-  // const [deletedComb, setDeletedComb] = useState<number>(0);
+  // 필요함 자동으로 리렌더링 안됨
+  const [deletedComb, setDeletedComb] = useState<number>(0);
 
   useEffect(() => {
     getCombination();
@@ -60,6 +62,7 @@ function PillAnalysisCombBox(props: Props) {
               selectCombination={selectCombination}
               selectedComb={selectedComb}
               // deleteCombination={deleteCombination}
+              reRendering={props.reRendering}
             />
           ))}
         </div>

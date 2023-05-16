@@ -22,6 +22,7 @@ type Props = {
   combination: combination;
   selectCombination: (id: number) => void;
   selectedComb: number;
+  reRendering: () => void;
   // deleteCombination: (id: number) => void;
 };
 
@@ -54,7 +55,7 @@ function PillAnalysisComb(props: Props) {
 
     // //그리고 자기 아이디 부모에게 전달
     // props.deleteCombination(props.combination.combinationId);
-
+    props.reRendering();
     event.stopPropagation();
   };
 
