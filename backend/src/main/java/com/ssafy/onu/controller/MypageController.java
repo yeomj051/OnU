@@ -9,6 +9,7 @@ import com.ssafy.onu.entity.*;
 import com.ssafy.onu.repository.UserRepository;
 import com.ssafy.onu.service.InterestNutrientService;
 import com.ssafy.onu.service.MypageService;
+import com.ssafy.onu.service.ReviewService;
 import com.ssafy.onu.service.TakingNutrientService;
 import com.ssafy.onu.util.TokenUtils;
 import io.swagger.annotations.ApiOperation;
@@ -34,6 +35,8 @@ public class MypageController {
     private static final String MESSAGE = "message";
     private static final String SUCCESS = "success";
     private static final String FAIL = "fail";
+
+    private final ReviewService reviewService;
 
     private final MypageService mypageService;
     private final InterestNutrientService interestNutrientService;
@@ -137,6 +140,23 @@ public class MypageController {
         }
 
         return new ResponseEntity<>(resultMap, status);
+    }
+
+    //내 리뷰목록
+    @ApiOperation(value = "내 리뷰 목록", notes = "사용자는 본인이 작성한 리뷰들의 목록을 죄회합니다.", response = Map.class)
+    @GetMapping("/{userId}/review")
+    public ResponseEntity<Map<String, Object>> getMyReview(@PathVariable @ApiParam(value = "회원 아이디", required = true, example = "1") int userId, Principal principal) {
+        Map<String, Object> resultMap = new HashMap<>();
+
+        if(TokenUtils.compareUserIdAndToken(userId, principal, resultMap)) {
+            return new ResponseEntity<>(resultMap, HttpStatus.BAD_REQUEST);
+        }
+
+        List<ResponseMyReviewDto> myReviewList = reviewService.getMyReviewList(userId);
+        resultMap.put("myReviewList", myReviewList);
+        resultMap.put(MESSAGE, SUCCESS);
+
+        return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
     @ApiOperation(value = "내 리뷰 수정", notes = "사용자는 자신이 작성한 리뷰를 수정한다.", response = Map.class)
