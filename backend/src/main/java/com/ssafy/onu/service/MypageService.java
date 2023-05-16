@@ -26,6 +26,7 @@ public class MypageService {
     private final UserRepository userRepository;
     private final ReviewRepository reviewRepository;
     private final NutrientIngredientRepository nutrientIngredientRepository;
+    private final IngredientRepository ingredientRepository;
     private final NutrientRepository nutrientRepository;
     private final ContinuousRepository continuousRepository;
     private final CombinationRepository combinationRepository;
@@ -34,9 +35,12 @@ public class MypageService {
     private final TakingNutrientRepository takingNutrientRepository;
     private static final String COMMA = ",";
     private static final String EMPTYSTRING = "";
-    private static final String REGULAREXPRESSION = "[^0-9.]";
+    private static final String TILDE = "~";
+    private static final String REGULAR_EXPRESSION_FIND_NUMBER = "[^0-9.]";
+    private static final String REGULAR_EXPRESSION_FIND_UNIT = "[0-9.]";
     private static final String NUTRIENT_ID = "nutrientId:";
     private static final String DATE_FORMAT = "yyyy-MM-dd";
+    private static final String INGREDIENT_NAME = "ingredientName:";
     private static final int ONE = 1;
     private static final int ZERO = 0;
 
@@ -152,24 +156,36 @@ public class MypageService {
 
     public  List<ResponseIngredientTotalDto> getCombinationIngredient(ReqCombinationDto reqCombinationDto) {
         List<ResponseIngredientTotalDto> result = new LinkedList<>();
-        HashMap<String, Double> ingredientTotal = new HashMap<>();
+        HashMap<String, String> ingredientTotal = new HashMap<>();
+        HashMap<String, String> ingredientIntake = new HashMap<>();
+
         reqCombinationDto.getNutrientList().stream().forEach(nutrientId -> {
-            getNutrientIngredientTotal(nutrientId, ingredientTotal);
+            getNutrientIngredientTotal(nutrientId, ingredientTotal, ingredientIntake);
         });
         for(String ingredient : ingredientTotal.keySet()){
-            result.add(new ResponseIngredientTotalDto(ingredient, ingredientTotal.get(ingredient)));
+            String[] ingredientMinMax = ingredientIntake.get(ingredient).split(TILDE);
+            result.add(new ResponseIngredientTotalDto(ingredient, ingredientTotal.get(ingredient), Double.parseDouble(ingredientMinMax[0]), Double.parseDouble(ingredientMinMax[1])));
         }
         return result;
     }
 
-    public void getNutrientIngredientTotal(Long nutrientId, HashMap<String, Double> ingredientTotal){
+    public void getNutrientIngredientTotal(Long nutrientId, HashMap<String, String> ingredientTotal, HashMap<String, String> ingredientIntake){
         HashMap<String, String> nutrientIngredient = new HashMap<>();
         String nID = NUTRIENT_ID + nutrientId;
         //캐싱되어 있다면
         if(redisUtil.hasNutrient(nID, nID)) {
             for(Object key : redisUtil.getKeys(nID)){
-                if(!key.toString().equals(nID)) {
+                if(!key.toString().equals(nID) && !key.toString().equals("function")) {
                     nutrientIngredient.put(key.toString(), redisUtil.getNutrientInfo(nID, key.toString()));
+                    String IID = INGREDIENT_NAME + key.toString();
+                    String intake = redisUtil.getIntake(IID);
+                    // 권장섭취량 캐싱여부 확인, 캐싱되어 있다면 값 가져와서 사용 캐싱되지 않았다면 권장섭취량 캐싱
+                    if(intake == null){
+                        Ingredient ingredient = ingredientRepository.findByIngredientName(key.toString());
+                        intake = ingredient.getIngredientRecommendedIntakeStart() + TILDE + ingredient.getIngredientRecommendedIntakeEnd();
+                        redisUtil.setData(IID,intake);
+                    }
+                    ingredientIntake.put(key.toString(), intake);
                 }
             }
         } else {
@@ -177,22 +193,31 @@ public class MypageService {
             map.put(nID, nID);
             nutrientIngredientRepository.findNutrientIngredientsByNutrient_NutrientId(nutrientId)
                     .stream()
-                    .forEach(ingredient -> {
-                        map.put(ingredient.getIngredient().getIngredientName(), ingredient.getIngredientAmount());
-                        nutrientIngredient.put(ingredient.getIngredient().getIngredientName(), ingredient.getIngredientAmount());
+                    .forEach(nutriIngredient -> {
+                        Ingredient ingredient = nutriIngredient.getIngredient();
+                        map.put(ingredient.getIngredientName(), nutriIngredient.getIngredientAmount());
+                        String IID = INGREDIENT_NAME + ingredient.getIngredientName();
+                        String intake = redisUtil.getIntake(IID);
+                        // 권장섭취량 캐싱여부 확인, 캐싱되어 있다면 값 가져와서 사용 캐싱되지 않았다면 권장섭취량 캐싱
+                        if(intake == null){
+                            intake = ingredient.getIngredientRecommendedIntakeStart()+ TILDE + ingredient.getIngredientRecommendedIntakeEnd();
+                            redisUtil.setData(IID,intake);
+                        }
+                        ingredientIntake.put(ingredient.getIngredientName(), intake);
+                        nutrientIngredient.put(nutriIngredient.getIngredient().getIngredientName(), nutriIngredient.getIngredientAmount());
                     });
             redisUtil.cacheNutrient(nID, map);
         }
         getIngredientTotal(ingredientTotal, nutrientIngredient);
     }
-    public void getIngredientTotal(HashMap<String, Double> ingredientTotal, HashMap<String, String> nutrientIngredient){
+    public void getIngredientTotal(HashMap<String, String> ingredientTotal, HashMap<String, String> nutrientIngredient){
         for(String ingredientName : nutrientIngredient.keySet()){
             if( nutrientIngredient.get(ingredientName) == null) continue;
-            double tmp = Double.valueOf(nutrientIngredient.get(ingredientName).replaceAll(REGULAREXPRESSION,EMPTYSTRING));
+            double tmp = Double.valueOf(nutrientIngredient.get(ingredientName).replaceAll(REGULAR_EXPRESSION_FIND_NUMBER,EMPTYSTRING));
             if(ingredientTotal.containsKey(ingredientName)){
-                tmp += ingredientTotal.get(ingredientName);
+                tmp += Double.valueOf(ingredientTotal.get(ingredientName).replaceAll(REGULAR_EXPRESSION_FIND_NUMBER,EMPTYSTRING));
             }
-            ingredientTotal.put(ingredientName, Math.round(tmp*1000)/1000.0);
+            ingredientTotal.put(ingredientName, Math.round(tmp*1000)/1000.0 + nutrientIngredient.get(ingredientName).replaceAll(REGULAR_EXPRESSION_FIND_UNIT,EMPTYSTRING));
         }
     }
     
