@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import api from '@/apis/config';
 
 import MyInterestItem from './MyInterestItem';
+import { AxiosResponse } from 'axios';
 
 const Interest = (): React.ReactElement => {
   const [userId, setUserId] = useState<number>(0);
@@ -18,7 +19,7 @@ const Interest = (): React.ReactElement => {
 
   useEffect(() => {
     if (userId !== null) {
-      getItemData(userId).then((res) => {
+      getItemData(userId).then((res: AxiosResponse) => {
         // API 응답의 데이터 구조에 대한 안전한 처리를 추가합니다.
         if (res?.data?.interestNutrientList) {
           setItemData(res.data.interestNutrientList);
@@ -27,7 +28,7 @@ const Interest = (): React.ReactElement => {
     }
   }, [userId]);
 
-  const getItemData = async (id: number) => {
+  const getItemData = async (id: number): Promise<AxiosResponse> => {
     return await api.getInterestPillList(id);
   };
 
@@ -40,9 +41,11 @@ const Interest = (): React.ReactElement => {
         {userNickname}님이 관심있어 하는 제품들을 모아봤어요.
       </p>
       <div className="grid grid-cols-2 space-y-2 gap-4 w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md items-baseline px-8">
-        {itemData?.map((item, index) => (
-          <MyInterestItem item={item} id={userId} />
-        ))}
+        {itemData?.map(
+          (item: Item, index: number): React.ReactElement => (
+            <MyInterestItem item={item} id={userId} />
+          ),
+        )}
       </div>
     </div>
   );

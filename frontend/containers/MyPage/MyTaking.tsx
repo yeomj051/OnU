@@ -3,6 +3,7 @@ import api from '@/apis/config';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import MyTakingItem from './MyTakingItem';
+import { AxiosResponse } from 'axios';
 
 //나의 복용중인 영양제 리스트
 const Taking = (): React.ReactElement => {
@@ -29,7 +30,7 @@ const Taking = (): React.ReactElement => {
     }
   }, [userId]);
 
-  const getItemData = async (id: number) => {
+  const getItemData = async (id: number): Promise<AxiosResponse> => {
     return await api.getTakingPillList(id);
   };
 
@@ -56,9 +57,11 @@ const Taking = (): React.ReactElement => {
       <div className="flex flex-col space-x-2 items-center w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md p-4">
         <div id="item-list">
           {itemData && userId !== null ? (
-            itemData.map((item, index) => (
-              <MyTakingItem item={item} id={userId} />
-            ))
+            itemData.map(
+              (item: Item, index: number): React.ReactElement => (
+                <MyTakingItem item={item} id={userId} />
+              ),
+            )
           ) : (
             <div className="flex flex-col">
               <span>복용 중인 영양제가 없습니다.</span>

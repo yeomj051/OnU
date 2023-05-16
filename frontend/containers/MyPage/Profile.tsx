@@ -7,10 +7,8 @@ import profileImg3 from '@/public/jelly.png';
 import profileImg4 from '@/public/powder.png';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useRouter } from 'next/navigation';
-import useUserStore from '@/store/userStore';
 import api from '@/apis/config';
-import Router from 'next/router';
-import { readSync } from 'fs';
+import { AxiosResponse } from 'axios';
 
 const bgImgSet: string[] = [
   'https://images.unsplash.com/photo-1612540943977-98ce54bea8a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
@@ -54,8 +52,8 @@ const Profile = (): React.ReactElement => {
     );
   }, []);
 
-  const getUser = async (userId: number) => {
-    await api.getUserInfo(userId).then((res) => {
+  const getUser = async (userId: number): Promise<void> => {
+    await api.getUserInfo(userId).then((res: AxiosResponse) => {
       setUserInfo({
         id: userId,
         nickname: res.data.userInfo.userNickname,
@@ -67,7 +65,7 @@ const Profile = (): React.ReactElement => {
 
   return (
     <div
-      className="w-full m-0 hero"
+      className="w-full pt-16 m-0 hero"
       style={{
         backgroundImage: `url(${bgImgSet[bgRandom]})`,
       }}
@@ -117,7 +115,7 @@ const Profile = (): React.ReactElement => {
                 </button>
                 <button
                   className="btn btn-ghost btn-circle"
-                  // onClick={() => router.push('/user/signup')}
+                  onClick={() => router.push('/user/update')}
                 >
                   <SettingsOutlinedIcon />
                 </button>

@@ -20,7 +20,7 @@ type InfoList = {
   nutrientBrand: string;
 };
 
-function PillAnalysisCombBox(props: Props) {
+function PillAnalysisCombBox(props: Props): React.ReactElement {
   //조합 목록 저장
   const [combinationList, setCombinationList] = useState<
     Array<combination>

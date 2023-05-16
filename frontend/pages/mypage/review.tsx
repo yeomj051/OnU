@@ -4,6 +4,7 @@ import Profile from '@/containers/MyPage/Profile';
 import AppLayout from '@/components/layout/AppLayout';
 import { NextPageWithLayout } from '../_app';
 import Review from '@/containers/MyPage/MyReview';
+import HeaderLayout from '@/components/layout/HeaderLayout';
 
 const MyReviewPage: NextPageWithLayout = (): React.ReactElement => {
   return (
@@ -17,7 +18,11 @@ const MyReviewPage: NextPageWithLayout = (): React.ReactElement => {
 MyReviewPage.getLayout = function getLayout(
   page: React.ReactElement,
 ) {
-  return <AppLayout>{page}</AppLayout>;
+  return (
+    <AppLayout>
+      <HeaderLayout>{page}</HeaderLayout>
+    </AppLayout>
+  );
 };
 
 export default MyReviewPage;

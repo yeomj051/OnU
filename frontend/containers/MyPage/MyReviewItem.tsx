@@ -5,7 +5,10 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import StarRating from '@/components/common/StarRating';
 
-const MyReviewItem = (props: { item: Item; id: number }) => {
+const MyReviewItem = (props: {
+  item: Item;
+  id: number;
+}): React.ReactElement => {
   const router = useRouter();
 
   // const updateReview = () => {

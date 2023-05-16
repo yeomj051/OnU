@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react';
 
-const ScrollTopBtn = () => {
+const ScrollTopBtn = (): React.ReactElement | null => {
   const [showBtn, setShowBtn] = useState<boolean>(false);
 
   useEffect(() => {
-    const handleShowBtn = () => {
+    const handleShowBtn = (): void => {
       window.scrollY > 500 ? setShowBtn(true) : setShowBtn(false);
     };
 
     //Add EventListener
     window.addEventListener('scroll', handleShowBtn);
     //Clean up EventListener
-    return () => {
+    return (): void => {
       window.removeEventListener('scroll', handleShowBtn);
     };
   });
 
-  const scrollTop = () => {
+  const scrollTop = (): void => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth',

@@ -4,7 +4,7 @@ import { useSearchParams } from 'next/navigation';
 import { useRouter } from 'next/router';
 import useUserStore from '@/store/userStore';
 
-const Redirect = () => {
+const Redirect = (): React.ReactElement => {
   const params = useSearchParams();
   const router = useRouter();
 

@@ -7,7 +7,10 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import { useRouter } from 'next/navigation';
 
-const MyInterestItem = (props: { item: Item; id: number }) => {
+const MyInterestItem = (props: {
+  item: Item;
+  id: number;
+}): React.ReactElement => {
   const [isInterested, setIsInterested] = useState<boolean>(true);
   const router = useRouter();
 
