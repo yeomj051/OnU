@@ -254,12 +254,12 @@ const api = {
   //영양제 조합에 따른 성분목록 조회
   async getIngredientListByCombination(
     userId: number,
-    combinationList: string[],
+    combinationList: number[],
   ): Promise<AxiosResponse> {
     return await authAPI(`/mypage/${userId}/combination/ingredient`, {
       method: 'POST',
       data: {
-        combinationList: combinationList,
+        nutrientList: combinationList,
       },
     });
   },

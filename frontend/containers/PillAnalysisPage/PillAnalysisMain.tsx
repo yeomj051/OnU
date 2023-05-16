@@ -115,7 +115,6 @@ function PillAnalysisMain() {
   };
 
   const [showChart, setShowchart] = useState<number>(-1);
-  const [dataId, setDataId] = useState<number>(-1);
   const router = useRouter();
   const [userId, setUserId] = useState<number>(0);
   const { combList, resetCombList } = makeCombinationStore();
@@ -144,6 +143,11 @@ function PillAnalysisMain() {
     setDeleteAnything(!deleteAnything);
   };
 
+  //선택된 조합 id 저장하는 함수 ( 그래프용 )
+  const isSelectedComb = (id: number) => {
+    setShowchart(id);
+  };
+
   //조합 저장하는 함수 => zustand에 저장되어 있는 리스트를 서버에 보내준다.
   const saveCombination = async () => {
     const id: number = useUserStore.getState().user?.id as number;
@@ -160,6 +164,7 @@ function PillAnalysisMain() {
     router.push(`/search`);
   };
 
+  //조합 중복 있는지 확인하는 함수
   const isExist = () => {
     // const combListAll = combinations;
     // console.log(combListAll);
@@ -216,8 +221,8 @@ function PillAnalysisMain() {
         </div>
         <div className="w-full bg-white rounded-lg mt-2">
           <PillAnalysisGraph
+            userId={userId}
             analysisType={showChart}
-            dataId={dataId}
           />
         </div>
         <div className="mt-8">
@@ -227,6 +232,7 @@ function PillAnalysisMain() {
           <PillAnalysisCombBox
             userId={userId}
             reRendering={reRendering}
+            isSelectedComb={isSelectedComb}
           />
         </div>
       </div>

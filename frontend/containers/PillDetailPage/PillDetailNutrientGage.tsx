@@ -5,8 +5,8 @@ import styled from 'styled-components';
 type Props = {
   ingredientName: string;
   ingredientAmount: string;
-  recommendedIntakeStart: string;
-  recommendedIntakeEnd: string;
+  recommendedIntakeStart: string | number;
+  recommendedIntakeEnd: string | number;
 };
 
 function PillDetailNutrientGage(props: Props) {
@@ -19,10 +19,23 @@ function PillDetailNutrientGage(props: Props) {
   useEffect(() => {
     const regex = /[^0-9.]/g;
     setAmout(parseInt(props.ingredientAmount?.replace(regex, '')));
-    setStart(
-      parseInt(props.recommendedIntakeStart?.replace(regex, '')),
-    );
-    setEnd(parseInt(props.recommendedIntakeEnd?.replace(regex, '')));
+    if (
+      typeof props.recommendedIntakeStart == 'string' &&
+      typeof props.recommendedIntakeEnd == 'string'
+    ) {
+      setStart(
+        parseInt(props.recommendedIntakeStart?.replace(regex, '')),
+      );
+      setEnd(
+        parseInt(props.recommendedIntakeEnd?.replace(regex, '')),
+      );
+    } else if (
+      typeof props.recommendedIntakeStart == 'number' &&
+      typeof props.recommendedIntakeEnd == 'number'
+    ) {
+      setStart(props.recommendedIntakeStart);
+      setEnd(props.recommendedIntakeEnd);
+    }
   }, [props]);
 
   useEffect(() => {

@@ -7,6 +7,7 @@ import { combinationStore } from '@/store/combinationStore';
 type Props = {
   userId: number;
   reRendering: () => void;
+  isSelectedComb: (id: number) => void;
 };
 
 type combination = {
@@ -53,6 +54,7 @@ function PillAnalysisCombBox(props: Props): React.ReactElement {
   //선택된 조합의 id저장 (하나만 고를 수 있도록)
   const selectCombination = (id: number) => {
     setSelectedComb(id);
+    props.isSelectedComb(id);
   };
 
   return (
