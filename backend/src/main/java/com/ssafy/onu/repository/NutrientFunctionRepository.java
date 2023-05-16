@@ -11,4 +11,5 @@ public interface NutrientFunctionRepository extends JpaRepository<NutrientFuncti
     List<NutrientFunction> findNutrientFuntionByFunction_FunctionId(int functionId);
 
     List<NutrientFunction> findNutrientFunctionByNutrient_NutrientId(long nutrientId);
+    List<NutrientFunction> findByFunction_FunctionIdIn(List<Integer> functionalIds);
 }
