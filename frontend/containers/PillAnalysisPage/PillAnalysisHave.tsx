@@ -23,11 +23,12 @@ type Props = {
   nutrient: have;
   renew: () => void;
   cancle: boolean;
+  makehaveLikeComb: () => void;
 };
 
 function PillAnalysisHave(props: Props) {
   //이 영양제가 선택되었는지 여부를 저장
-  const [isSelected, setIsSelected] = useState<boolean>(false);
+  const [isSelected, setIsSelected] = useState<boolean>(true);
 
   const { combList, addSelected, removeSelected } =
     makeCombinationStore();
@@ -52,6 +53,7 @@ function PillAnalysisHave(props: Props) {
     }
 
     setIsSelected(!isSelected);
+    props.makehaveLikeComb();
   };
 
   return (

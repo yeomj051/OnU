@@ -8,6 +8,7 @@ type Props = {
   reRendering: () => void;
   cancle: boolean;
   renew: () => void;
+  makehaveLikeComb: () => void;
 };
 
 type interest = {
@@ -52,6 +53,7 @@ function PillAnalysisLikeBox(props: Props) {
               reRendering={props.reRendering}
               cancle={props.cancle}
               renew={props.renew}
+              makehaveLikeComb={props.makehaveLikeComb}
             />
           ))}
       </div>

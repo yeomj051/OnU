@@ -20,6 +20,7 @@ type Props = {
   reRendering: () => void;
   cancle: boolean;
   renew: () => void;
+  makehaveLikeComb: () => void;
 };
 
 function PillAnalysisLike(props: Props) {
@@ -68,6 +69,7 @@ function PillAnalysisLike(props: Props) {
       addSelected(props.nutrient.nutrientId);
       console.log(combList);
     }
+    props.makehaveLikeComb();
     setIsSelected(!isSelected);
   };
 

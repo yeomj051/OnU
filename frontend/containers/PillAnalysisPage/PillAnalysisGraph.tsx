@@ -79,7 +79,7 @@ function PillAnalysisGraph(props: Props) {
     }
 
     setAnalysisList(tmpArr);
-    // console.log(tmpArr);
+    console.log(tmpArr);
   }, [
     props.analysisType,
     props.userId,

@@ -10,6 +10,7 @@ type Props = {
   userId: number;
   cancle: boolean;
   renew: () => void;
+  makehaveLikeComb: () => void;
 };
 
 type Ingredient = {
@@ -29,6 +30,7 @@ type have = {
 
 function PillAnalysisHaveBox(props: Props): React.ReactElement {
   const { haveList, setAllHaves } = haveStore();
+  const { setFirstNewComb } = makeCombinationStore();
   //복용중 목록 저장
   const [havingList, setHavingList] = useState<Array<have>>([]);
 
@@ -37,8 +39,18 @@ function PillAnalysisHaveBox(props: Props): React.ReactElement {
     if (props.userId != null && props.userId !== undefined) {
       getTakingPillData().then((res) => {
         if (res) {
+          console.log(res.data.takingNutrientList);
           setHavingList(res.data.takingNutrientList);
           setAllHaves(res.data.takingNutrientList); //전역변수 저장
+          const tmp: number[] = [];
+          for (
+            let i = 0;
+            i < res.data.takingNutrientList.length;
+            i++
+          ) {
+            tmp.push(res.data.takingNutrientList[i].nutrientId);
+          }
+          setFirstNewComb(tmp); //그래프에 복용중인 영양제 처음에 뜰 수 있도록
         }
       });
     }
@@ -60,6 +72,7 @@ function PillAnalysisHaveBox(props: Props): React.ReactElement {
               nutrient={nutrient}
               renew={props.renew}
               cancle={props.cancle}
+              makehaveLikeComb={props.makehaveLikeComb}
             />
           ))}
       </div>
