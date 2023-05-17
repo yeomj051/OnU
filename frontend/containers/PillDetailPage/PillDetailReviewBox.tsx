@@ -21,8 +21,9 @@ type reviewContents = {
 };
 
 function PillDetailReviewBox(props: Props) {
-  const date = new Date().getFullYear();
-  const age = Math.floor((date - props.review.userAge) / 10) * 10;
+  console.log(props.review.userAge);
+
+  const age = Math.floor(props.review.userAge / 10) * 10;
   let gender = '';
   if (props.review.userGender === 'm') {
     gender = '남';

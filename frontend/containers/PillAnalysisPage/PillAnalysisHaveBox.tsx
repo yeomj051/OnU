@@ -3,7 +3,8 @@ import { useState, useEffect } from 'react';
 import PillAnalysisHave from './PillAnalysisHave';
 import { haveStore } from '../../store/haveStore';
 import { makeCombinationStore } from '@/store/makeCombinationStore';
-import { useTakingPillIngredient } from '@/apis/hooks';
+import { useTakingPill, useTakingPillIngredient } from '@/apis/hooks';
+import api from '@/apis/config';
 
 type Props = {
   userId: number;
@@ -24,27 +25,42 @@ type have = {
   nutrientIngredientList: Array<Ingredient>;
 };
 
-function PillAnalysisHaveBox(props: Props) {
+function PillAnalysisHaveBox(props: Props): React.ReactElement {
   const { haveList, setAllHaves } = haveStore();
   //복용중 목록 저장
-  const [havingList, setHaveList] = useState<Array<have>>();
+  const [havingList, setHavingList] = useState<Array<have>>([]);
 
-  const { isLoading, data, isError, isSuccess } =
-    useTakingPillIngredient(props.userId);
-  if (isError) {
-    // console.log(error);
-  }
-  if (isSuccess) {
-    setAllHaves(data.data.havingNutrientList); //전역변수 저장
-    setHaveList(data.data.havingNutrientList); //state 저장
-  }
+  useEffect(() => {
+    console.log(props.userId);
+    if (props.userId != null) {
+      getTakingPillData().then((res) => {
+        if (res) {
+          setHavingList(res.data.takingNutrientList);
+          setAllHaves(res.data.takingNutrientList); //전역변수 저장
+        }
+      });
+    }
+
+    // console.log(haveList);
+  }, [props.userId]);
+
+  const getTakingPillData = async () => {
+    return await api.getTakingPillList(props.userId);
+  };
 
   return (
-    <div className="flex justify-between">
-      {havingList &&
-        havingList.map((nutrient, idx) => (
-          <PillAnalysisHave key={idx} nutrient={nutrient} />
-        ))}
+    <div>
+      <div className="flex flex-wrap">
+        {havingList &&
+          havingList.map((nutrient, idx) => (
+            <PillAnalysisHave key={idx} nutrient={nutrient} />
+          ))}
+      </div>
+      {havingList.length === 0 && (
+        <div className="w-100 text-center py-10 mt-2 rounded-md bg-yellow-100">
+          복용중인 영양제가 없어요! 마이페이지에서 추가해보세요
+        </div>
+      )}
     </div>
   );
 }

@@ -28,7 +28,7 @@ export const haveStore = create<haveState>((set) => ({
 
   setAllHaves: (allHaves: Array<have>): void =>
     set((state: haveState): { haveList: Array<have> } => ({
-      haveList: [...allHaves],
+      haveList: allHaves,
     })),
 
   setHaves: (newhave: have): void =>

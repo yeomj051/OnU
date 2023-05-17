@@ -20,7 +20,7 @@ export const likeStore = create<likeState>((set) => ({
 
   setAllLikes: (allLikes: Array<like>): void =>
     set((state: likeState): { likeList: Array<like> } => ({
-      likeList: [...allLikes],
+      likeList: allLikes,
     })),
 
   setLikes: (newLike: like): void =>

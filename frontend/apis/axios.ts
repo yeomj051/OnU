@@ -25,12 +25,13 @@ const authInstance = (url: string): AxiosInstance => {
   //request interceptor
   instance.interceptors.request.use(
     (config) => {
-      const token = localStorage.getItem('accessToken');
+      const token: string | null =
+        localStorage.getItem('accessToken');
       config.headers.Authorization = `Bearer ${token}`;
       return config;
     },
     (error) => {
-      return Promise.reject(error);
+      console.log(error);
     },
   );
 
@@ -41,6 +42,7 @@ const authInstance = (url: string): AxiosInstance => {
     },
     async (error) => {
       const originalRequest = error.config; //기존 요청 저장
+      console.log(error);
       //토큰이 만료되었을 때(Unauthorized)
       if (error.response.status === 401) {
         const id = localStorage.getItem('userId');

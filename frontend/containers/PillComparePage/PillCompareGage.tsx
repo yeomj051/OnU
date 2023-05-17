@@ -18,14 +18,18 @@ function PillCompareGage(props: Props) {
   const [colorB, setColorB] = useState<string>('');
 
   useEffect(() => {
-    const regex = /[^0-9]/g;
-    setAmoutA(parseInt(props.amountA.replace(regex, '')));
-    setAmoutB(parseInt(props.amountB.replace(regex, '')));
-    setStart(
-      parseInt(props.recommendedIntakeStart.replace(regex, '')),
-    );
-    setEnd(parseInt(props.recommendedIntakeEnd.replace(regex, '')));
-  }, []);
+    const regex = /[^0-9.]/g;
+    if (props) {
+      setAmoutA(parseInt(props.amountA?.replace(regex, '')));
+      setAmoutB(parseInt(props.amountB?.replace(regex, '')));
+      setStart(
+        parseInt(props.recommendedIntakeStart?.replace(regex, '')),
+      );
+      setEnd(
+        parseInt(props.recommendedIntakeEnd?.replace(regex, '')),
+      );
+    }
+  }, [props]);
 
   useEffect(() => {
     //수치에 따라 부족/적정/과다
@@ -67,7 +71,7 @@ function PillCompareGage(props: Props) {
             style={{ direction: 'rtl' }}
           ></ProgressNutrient>
         </div>
-        <div className="col-span-1 text-center grid content-center">
+        <div className="grid content-center col-span-1 text-center">
           {props.nutrient}
         </div>
         <div className="col-span-3">

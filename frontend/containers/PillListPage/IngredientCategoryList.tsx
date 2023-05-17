@@ -51,7 +51,6 @@ const IngredientCategoryList = () => {
         `${BASE_URL}/nutrient/ingredient/${ingredientId}?userId=${userId}`,
       )
       .then((res) => {
-        console.log(res.data);
         setItemData(res.data.reviewListByNutrient);
       });
   }, [userId, ingredientId]);

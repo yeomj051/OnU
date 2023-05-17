@@ -36,7 +36,7 @@ const Puller = styled(Box)(({ theme }) => ({
   left: 'calc(50% - 15px)',
 }));
 
-function CompareDrawer() {
+function CompareDrawer(): React.ReactElement {
   const [open, setOpen] = React.useState(false);
   const [itemList, setItemList] = React.useState<Item[]>([]);
   const [alert, setAlert] = React.useState(false);
@@ -46,12 +46,12 @@ function CompareDrawer() {
 
   React.useEffect(() => {
     setItemList(items);
+    if (itemList.length === 0) setOpen(false);
+    if (itemList.length === 1) setOpen(true);
   }, [itemList, items]);
 
   const toggleDrawer = (newOpen: boolean) => () => {
-    if (itemList.length !== 2 && !newOpen) setOpen(false);
-    else if (itemList.length !== 2 && newOpen) setOpen(true);
-    else setOpen(!open);
+    setOpen(newOpen);
   };
 
   const deleteItem = (id: number) => {
@@ -59,9 +59,11 @@ function CompareDrawer() {
     setItemList(items.filter((item) => item.nutrientId === id));
   };
 
-  const comparePills = () => {
+  const comparePills = (): void => {
     if (itemList.length >= 2)
-      router.push('/pillcompare/pill-compare');
+      router.push(
+        `/pillcompare/pill-compare?query=${itemList[0].nutrientId}&compare=${itemList[1].nutrientId}`,
+      );
     else {
       setAlert(true);
       setTimeout(() => {
@@ -77,8 +79,12 @@ function CompareDrawer() {
           '.MuiDrawer-root > .MuiPaper-root': {
             height: `calc(50% - ${drawerBleeding}px)`,
             overflow: 'visible',
-            maxWidth: '512px',
-            left: `calc(50% - 256px)`,
+            width: '360px',
+            left: `calc(50% - 180px)`,
+            '@media (min-width: 640px)': {
+              width: '512px',
+              left: `calc(50% - 256px)`,
+            },
           },
         }}
       />
@@ -117,7 +123,7 @@ function CompareDrawer() {
         >
           {/* 비교함 내부 */}
           <div className="flex flex-col items-center space-y-4">
-            <div className="flex flex-row w-full">
+            <div className="flex flex-col items-center w-full sm:flex-row  sm:justify-center">
               <div className="indicator">
                 {itemList[0] ? (
                   <div className="bg-gray-300 border-none indicator-item badge top-2 right-4">
@@ -131,7 +137,7 @@ function CompareDrawer() {
                   </div>
                 ) : null}
                 {itemList[0] ? (
-                  <div className="grid flex-grow w-56 h-56 card rounded-box place-items-center">
+                  <div className="grid flex-grow w-64 sm:w-52 h-52 card rounded-box place-items-center">
                     <div className="flex flex-col items-center flex-grow">
                       <Image
                         src={itemList[0]?.nutrientImageUrl}
@@ -156,11 +162,11 @@ function CompareDrawer() {
                     </div>
                   </div>
                 ) : (
-                  <div className="grid flex-grow w-56 h-56 card bg-base-300 rounded-box place-items-center" />
+                  <div className="grid flex-grow w-64 sm:w-52 h-52 card bg-base-300 rounded-box place-items-center" />
                 )}
               </div>
 
-              <div className="divider divider-horizontal" />
+              <div className="divider divider-vertical sm:divider-horizontal" />
               <div className="indicator">
                 {itemList[1] ? (
                   <div className="bg-gray-300 border-none indicator-item badge top-2 right-4">
@@ -174,7 +180,7 @@ function CompareDrawer() {
                   </div>
                 ) : null}
                 {itemList[1] ? (
-                  <div className="grid flex-grow w-56 h-56 card rounded-box place-items-center">
+                  <div className="grid flex-grow w-64 sm:w-52 h-52 card rounded-box place-items-center">
                     <div className="flex flex-col items-center flex-grow">
                       <Image
                         src={itemList[1]?.nutrientImageUrl}
@@ -199,7 +205,7 @@ function CompareDrawer() {
                     </div>
                   </div>
                 ) : (
-                  <div className="grid flex-grow w-56 h-56 card bg-base-300 rounded-box place-items-center" />
+                  <div className="grid flex-grow w-64 sm:w-52 h-52 card bg-base-300 rounded-box place-items-center" />
                 )}
               </div>
             </div>

@@ -9,7 +9,7 @@ import Link from 'next/link';
 const KAKAO_URL = process.env.REACT_APP_KAKAO_URL as string;
 // const KAKAO_URL = process.env.REACT_APP_TEST_URL as string;
 
-const Login = () => {
+const Login = (): React.ReactElement => {
   return (
     <div className="grid grid-rows h-[100vh] bg-white pt-20">
       {/* 로고화면

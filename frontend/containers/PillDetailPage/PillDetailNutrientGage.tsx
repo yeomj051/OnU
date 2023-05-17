@@ -5,29 +5,43 @@ import styled from 'styled-components';
 type Props = {
   ingredientName: string;
   ingredientAmount: string;
-  recommendedIntakeStart: string;
-  recommendedIntakeEnd: string;
+  recommendedIntakeStart: string | number;
+  recommendedIntakeEnd: string | number;
 };
 
 function PillDetailNutrientGage(props: Props) {
   const [amount, setAmout] = useState<number>(0);
   const [start, setStart] = useState<number>(0);
   const [end, setEnd] = useState<number>(0);
+  const [unit, setUnit] = useState<string>('');
   const [color, setColor] = useState<string>('');
 
   useEffect(() => {
-    const regex = /[^0-9]/g;
-    setAmout(parseInt(props.ingredientAmount.replace(regex, '')));
-    setStart(
-      parseInt(props.recommendedIntakeStart.replace(regex, '')),
-    );
-    setEnd(parseInt(props.recommendedIntakeEnd.replace(regex, '')));
-  }, []);
+    const regex = /[^0-9.]/g;
+    setAmout(parseInt(props.ingredientAmount?.replace(regex, '')));
+    if (
+      typeof props.recommendedIntakeStart == 'string' &&
+      typeof props.recommendedIntakeEnd == 'string'
+    ) {
+      setStart(
+        parseInt(props.recommendedIntakeStart?.replace(regex, '')),
+      );
+      setEnd(
+        parseInt(props.recommendedIntakeEnd?.replace(regex, '')),
+      );
+    } else if (
+      typeof props.recommendedIntakeStart == 'number' &&
+      typeof props.recommendedIntakeEnd == 'number'
+    ) {
+      setStart(props.recommendedIntakeStart);
+      setEnd(props.recommendedIntakeEnd);
+    }
+  }, [props]);
 
   useEffect(() => {
-    console.log('양 ' + amount);
-    console.log('시작 ' + start);
-    console.log('끝 ' + end);
+    // console.log('양 ' + amount);
+    // console.log('시작 ' + start);
+    // console.log('끝 ' + end);
     //수치에 따라 부족/적정/과다
     //부족
     if (amount < start) {
@@ -42,12 +56,17 @@ function PillDetailNutrientGage(props: Props) {
   }, [amount]);
 
   return (
-    <div className="grid grid-cols-12">
-      <div className="col-span-2 grid content-center mr-2 text-sm">
-        {props.ingredientName}
+    <div className="mt-1">
+      <div className="flex justify-between">
+        <div className="grid content-center col-span-2 mr-2 text-sm">
+          {props.ingredientName}
+        </div>
+        <div className="text-sm text-gray-400">
+          {props.ingredientAmount}
+        </div>
       </div>
       <ProgressNutrient
-        className="progress col-span-10 w-full my-3 bg-red-200 rounded-xl"
+        className="w-full col-span-10 mb-3 bg-red-200 progress rounded-xl"
         value={amount}
         max={end}
         color={color}

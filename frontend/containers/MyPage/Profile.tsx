@@ -7,10 +7,8 @@ import profileImg3 from '@/public/jelly.png';
 import profileImg4 from '@/public/powder.png';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useRouter } from 'next/navigation';
-import useUserStore from '@/store/userStore';
 import api from '@/apis/config';
-import Router from 'next/router';
-import { readSync } from 'fs';
+import { AxiosResponse } from 'axios';
 
 const bgImgSet: string[] = [
   'https://images.unsplash.com/photo-1612540943977-98ce54bea8a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
@@ -40,7 +38,11 @@ const Profile = (): React.ReactElement => {
   //캘린더 조회 api 호출
 
   const handleAlarm = () => {
-    if (window.confirm('복용 알림을 설정하시겠습니까?'))
+    if (
+      window.confirm(
+        '복용 알림 설정을 위해선 휴대폰 인증이 필요합니다. 이동하시겠습니까?',
+      )
+    )
       router.push('/user/phoneauth');
   };
 
@@ -50,8 +52,8 @@ const Profile = (): React.ReactElement => {
     );
   }, []);
 
-  const getUser = async (userId: number) => {
-    await api.getUserInfo(userId).then((res) => {
+  const getUser = async (userId: number): Promise<void> => {
+    await api.getUserInfo(userId).then((res: AxiosResponse) => {
       setUserInfo({
         id: userId,
         nickname: res.data.userInfo.userNickname,
@@ -63,7 +65,7 @@ const Profile = (): React.ReactElement => {
 
   return (
     <div
-      className="w-full m-0 hero"
+      className="w-full pt-16 m-0 hero"
       style={{
         backgroundImage: `url(${bgImgSet[bgRandom]})`,
       }}
@@ -81,7 +83,7 @@ const Profile = (): React.ReactElement => {
               />
             </div>
             <div className="flex items-center justify-between w-full">
-              <div className="flex flex-col mt-4">
+              <div className="flex flex-col items-start w-full mt-4">
                 <p className="mr-8">{userInfo?.nickname}</p>
                 <p className="mb-5">
                   {Math.floor((userInfo?.age as number) / 10) * 10}대{' '}
@@ -113,7 +115,7 @@ const Profile = (): React.ReactElement => {
                 </button>
                 <button
                   className="btn btn-ghost btn-circle"
-                  // onClick={() => router.push('/user/signup')}
+                  onClick={() => router.push('/user/update')}
                 >
                   <SettingsOutlinedIcon />
                 </button>

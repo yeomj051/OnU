@@ -44,7 +44,7 @@ const Header = (): React.ReactElement => {
     } else {
       setSearchKeyword('');
       setIsClicked(!isClicked);
-      router.push(`/search?query=${searchKeyword}`);
+      router.push(`/search/result?query=${searchKeyword}`);
     }
 
     //next/router(Next.js 13이전 버전)에서 사용하던 방식
@@ -67,7 +67,7 @@ const Header = (): React.ReactElement => {
         } else {
           setIsClicked(!isClicked);
           setSearchKeyword('');
-          router.push(`/search?query=${searchKeyword}`);
+          router.push(`/search/result?query=${searchKeyword}`);
         }
         break;
     }
@@ -78,7 +78,7 @@ const Header = (): React.ReactElement => {
   };
 
   return (
-    <div className="fixed top-0 navbar bg-base-100 w-[512px] z-50">
+    <div className="fixed top-0 navbar bg-base-100 z-50 w-[360px] sm:w-[512px]">
       <div className="navbar-start">
         <button
           className="px-2 btn btn-ghost btn-sm"
@@ -269,12 +269,14 @@ const Header = (): React.ReactElement => {
               </Link>
             )}
           </li>
-          <li key="mypage">
-            <Link href="/mypage">
-              <AccountCircleIcon />
-              마이페이지
-            </Link>
-          </li>
+          {isLoggedIn && (
+            <li key="mypage">
+              <Link href="/mypage">
+                <AccountCircleIcon />
+                마이페이지
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
     </div>

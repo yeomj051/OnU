@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 
-const Timer = (props: { seconds: number; onTimeOut: () => void }) => {
+const Timer = (props: {
+  seconds: number;
+  onTimeOut: () => void;
+}): React.ReactElement => {
   const [timeLeft, setTimeLeft] = useState<number>(props.seconds);
 
   useEffect(() => {

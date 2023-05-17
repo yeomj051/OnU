@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import PillAnalysisCombMem from './PillAnalysisCombMem';
 import api from '@/apis/config';
 import useUserStore from '@/store/userStore';
+import { AxiosResponse } from 'axios';
 // import Image from 'next/image';
 // import eundan from '@/public/eundan.png';
 
@@ -22,10 +23,11 @@ type Props = {
   combination: combination;
   selectCombination: (id: number) => void;
   selectedComb: number;
+  reRendering: () => void;
   // deleteCombination: (id: number) => void;
 };
 
-function PillAnalysisComb(props: Props) {
+function PillAnalysisComb(props: Props): React.ReactElement {
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
   useEffect(() => {
@@ -37,11 +39,15 @@ function PillAnalysisComb(props: Props) {
   }, [props.selectedComb]);
 
   const selectThis = (event: React.MouseEvent) => {
+    setIsSelected(!isSelected);
+
     props.selectCombination(props.combination.combinationId);
   };
 
   //영양제 조합 삭제API 연결해서 조합 삭제
-  const deleteCombination = async (event: React.MouseEvent) => {
+  const deleteCombination = async (
+    event: React.MouseEvent,
+  ): Promise<void> => {
     //이미 선택되어있는 상태였다면 x를 눌러 삭제했을 때 seledtedList에서 제거해줘야 함 (main에서 다시 api 호출하고 데이터 리렌더링되면 상관없음)
     // if (isSelected) {
     // }
@@ -50,11 +56,11 @@ function PillAnalysisComb(props: Props) {
     const id: number = useUserStore.getState().user?.id as number;
     await api
       .deleteComb(id, props.combination.combinationId)
-      .then((res) => console.log(res));
+      .then((res: AxiosResponse) => console.log(res));
 
     // //그리고 자기 아이디 부모에게 전달
     // props.deleteCombination(props.combination.combinationId);
-
+    props.reRendering();
     event.stopPropagation();
   };
 
@@ -75,9 +81,11 @@ function PillAnalysisComb(props: Props) {
             </button>
           </div>
           <div className="flex flex-wrap">
-            {props.combination.nutrientInfoList.map((item, idx) => (
-              <PillAnalysisCombMem nutrient={item} />
-            ))}
+            {props.combination.nutrientInfoList.map(
+              (item: InfoList, idx: number): React.ReactElement => (
+                <PillAnalysisCombMem key={idx} nutrient={item} />
+              ),
+            )}
           </div>
         </div>
       </div>

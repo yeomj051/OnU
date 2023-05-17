@@ -22,7 +22,7 @@ function PillDetailRate(props: Props) {
                   style={{ height: `${value}%` }}
                 ></div>
               </div>
-              <div className="text-gray-600 tx-sm">{5 - idx}점</div>
+              <div className="text-gray-600 tx-sm">{idx + 1}점</div>
             </div>
           ))}
         </div>

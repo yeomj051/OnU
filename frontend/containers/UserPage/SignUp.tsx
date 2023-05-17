@@ -10,7 +10,7 @@ import api from '@/apis/config';
 import useUserStore from '@/store/userStore';
 import { useRouter } from 'next/navigation';
 
-const SignUp = () => {
+const SignUp = (): React.ReactElement => {
   const [nicknameLabel, setNicknameLabel] = React.useState('');
   const [nickname, setNickname] = React.useState('');
   const [randomNumber, setRandomNumber] = React.useState(

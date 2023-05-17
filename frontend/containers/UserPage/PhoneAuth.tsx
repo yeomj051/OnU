@@ -1,6 +1,7 @@
 import React from 'react';
 import Timer from '@/components/common/Timer';
 import { useRouter } from 'next/router';
+import api from '@/apis/config';
 
 const PhoneAuth = () => {
   const [phoneNumber, setPhoneNumber] = React.useState<string>(''); //전화번호
@@ -13,7 +14,7 @@ const PhoneAuth = () => {
 
   const router = useRouter();
 
-  React.useEffect(() => {
+  React.useEffect((): void => {
     const authNum: string | null = localStorage.getItem(
       'isPhoneAuthenticated',
     );
@@ -24,13 +25,16 @@ const PhoneAuth = () => {
       else if (Number.parseInt(authNum) > 2) {
         alert('인증횟수를 초과했습니다. 다시 시도해주세요');
         localStorage.removeItem('isPhoneAuthenticated');
+        setIsAuth(0);
         router.reload();
       }
     }
+
+    setIsMessageSent(false);
   }, []);
 
   //인증시간 만료 로직처리
-  const handleTimeOut = () => {
+  const handleTimeOut = (): void => {
     if (confirm('인증시간이 초과되었습니다. 다시 시도해주세요')) {
       localStorage.removeItem('isAuth');
       router.reload();
@@ -48,51 +52,50 @@ const PhoneAuth = () => {
   };
 
   const verifyPhoneNumber = (): void => {
-    // api
-    //   .verifyPhoneNumber(userId, phoneNumber)
-    //   .then((res: any): void => {
-    //     if (res.data.message === 'true') {
-    //       alert('인증번호가 전송되었습니다.');
-    //       setIsMessageSent(true);
-    //     } else {
-    //       throw new Error();
-    //     }
-    //   })
-    //   .catch((err: Error): void => {
-    //     alert('알 수 없는 오류가 발생했습니다. 다시 시도해주세요.');
-    //   });
-    alert('인증번호가 전송되었습니다.');
-    setPhoneNumber('');
-    setAuthCode('');
-    setIsMessageSent(true);
+    api
+      .sendVerificationCode(userId, phoneNumber)
+
+      .then((res: any): void => {
+        console.log(res);
+        if (res.status === 200) {
+          alert('인증번호가 전송되었습니다.');
+          setIsMessageSent(true);
+        } else {
+          throw new Error();
+        }
+      })
+      .catch((): void => {
+        alert('알 수 없는 오류가 발생했습니다. 다시 시도해주세요.');
+        setIsMessageSent(false);
+      });
   };
 
   const verifyAuthNumber = (): void => {
-    // api
-    //   .verifyPhoneNumber()
-    //   .then((res: any): void => {
-    //     if (res.data.message === 'true') {
-    //       alert('인증이 완료되었습니다.');
-    //       setIsMessageSent(false);
-    //     } else {
-    //       throw new Error();
-    //     }
-    //   })
-    //   .catch((err: Error): void => {
-    //     alert('알 수 없는 오류가 발생했습니다. 다시 시도해주세요.');
-    //   });
-    alert('인증이 완료되었습니다.');
-    localStorage.removeItem('isPhoneAuthenticated');
-    setPhoneNumber('');
-    setAuthCode('');
-    setIsMessageSent(false);
-
-    //다음 페이지로 이동
+    api
+      .verifyPhoneNumber(userId, phoneNumber, authCode)
+      .then((res: any): void => {
+        console.log(res);
+        if (res.status === 200) {
+          alert('인증이 완료되었습니다.');
+          setIsMessageSent(false);
+          setPhoneNumber('');
+        } else {
+          throw new Error();
+        }
+      })
+      .catch((): void => {
+        alert('인증에 실패했습니다. 다시 시도해주세요');
+        setIsMessageSent(false);
+      })
+      .finally((): void => {
+        setAuthCode('');
+      });
   };
 
   const reVerify = (): void => {
     localStorage.setItem('isPhoneAuthenticated', String(isAuth + 1));
-    router.reload();
+    alert('인증 재시도 횟수: ' + (isAuth + 1));
+    verifyPhoneNumber();
   };
 
   return (

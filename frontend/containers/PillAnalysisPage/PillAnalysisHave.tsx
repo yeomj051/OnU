@@ -61,20 +61,24 @@ function PillAnalysisHave(props: Props) {
   //이 영양제가 선택되었는지 여부를 저장
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
-  const { addSelected, removeSelected } = makeCombinationStore();
+  const { combList, addSelected, removeSelected } =
+    makeCombinationStore();
   //영양제 선택하면 css 변경 및 선택 영양제 리스트에 id제공여부 결정하는 함수
   const selectThis = (event: React.MouseEvent) => {
     //선택 되어있으면
     if (isSelected) {
       removeSelected(props.nutrient.nutrientId);
+      console.log(combList);
     } else {
+      //선택 안되어있으면
       addSelected(props.nutrient.nutrientId);
+      console.log(combList);
     }
 
     setIsSelected(!isSelected);
   };
   return (
-    <div className="" onClick={selectThis}>
+    <div className="w-1/3 mt-6" onClick={selectThis}>
       <div
         className={` ${
           isSelected ? 'bg-[#90B5EA]' : 'bg-[#D8EDFF]'
@@ -83,9 +87,11 @@ function PillAnalysisHave(props: Props) {
         <div className="mx-auto bg-white rounded-lg w-28 h-28">
           <div className="relative w-16 h-16 mx-auto">
             <Image
-              className="w-full h-full"
+              className="w-full h-full mt-1"
               src={props.nutrient.nutrientImageUrl}
               alt="사진깨짐"
+              width={100}
+              height={100}
             />
           </div>
           <div className="text-xs leading-3 text-center text-gray-400">
