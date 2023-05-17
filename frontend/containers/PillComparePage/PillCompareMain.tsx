@@ -240,8 +240,8 @@ function PillCompareMain(props: { query: string; compare: string }) {
             src={nutrientListA.nutrientImageUrl}
             alt="영양제 사진"
             width={200}
-            height={300}
-            className="mx-auto"
+            height={200}
+            className="mx-auto w-56 h-52 mb-2"
           />
 
           <div>
@@ -280,7 +280,7 @@ function PillCompareMain(props: { query: string; compare: string }) {
             alt="영양제 사진"
             width={200}
             height={200}
-            className="mx-auto"
+            className="mx-auto  w-56 h-52 mb-2"
           />
 
           <div>
