@@ -29,6 +29,17 @@ function PillCompareGage(props: Props) {
         parseInt(props.recommendedIntakeEnd?.replace(regex, '')),
       );
     }
+    // console.log(
+    //   props.nutrient +
+    //     ' ' +
+    //     props.amountA +
+    //     ' ' +
+    //     props.amountB +
+    //     ' ' +
+    //     props.recommendedIntakeStart +
+    //     ' ' +
+    //     props.recommendedIntakeEnd,
+    // );
   }, [props]);
 
   useEffect(() => {
@@ -70,8 +81,11 @@ function PillCompareGage(props: Props) {
             color={colorA}
             style={{ direction: 'rtl' }}
           ></ProgressNutrient>
+          <div className="text-slate-400 font-light text-xs">
+            {props.amountA}
+          </div>
         </div>
-        <div className="grid content-center col-span-1 text-center">
+        <div className=" col-span-1 text-center">
           {props.nutrient}
         </div>
         <div className="col-span-3">
@@ -81,6 +95,9 @@ function PillCompareGage(props: Props) {
             max={end}
             color={colorB}
           ></ProgressNutrient>
+          <div className="text-right text-slate-400 font-light text-xs">
+            {props.amountB}
+          </div>
         </div>
       </div>
     </div>

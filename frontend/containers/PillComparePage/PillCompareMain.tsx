@@ -328,7 +328,7 @@ function PillCompareMain(props: { query: string; compare: string }) {
         />
         <hr className="mx-4" />
         <div className="grid py-4 mx-4 bg-white tabs justify-items-center">
-          <div className="">영양 성분</div>
+          <div className="font-semibold">영양 성분</div>
         </div>
         <hr className="mx-4" />
         <div className="col-span-1 py-4 mx-4 mt-2 mb-6 bg-white border rounded-lg">

@@ -90,6 +90,7 @@ function PillDetailMain(props: {
   };
 
   const reRendering = () => {
+    console.log('reRendering...');
     setRefresh(!refresh);
   };
 
@@ -171,7 +172,7 @@ function PillDetailMain(props: {
             <PillDetailReview
               nutrientId={nutrientList.nutrientId}
               userId={userId}
-              // reRendering={reRendering}
+              reRendering={reRendering}
             />
           )}
         </div>

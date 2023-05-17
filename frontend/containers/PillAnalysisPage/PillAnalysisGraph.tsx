@@ -63,6 +63,8 @@ function PillAnalysisGraph(props: Props) {
       for (let i = 0; i < haveList.length; i++) {
         tmpArr.push(haveList[i].nutrientId);
       }
+    } else if (props.analysisType === -3) {
+      //-3이 들어오면 tmp에 아무것도 넣지 않음
     } else if (props.analysisType === -2) {
       tmpArr = Array.from(combList);
     } else {
@@ -96,48 +98,56 @@ function PillAnalysisGraph(props: Props) {
 
   return (
     <div>
-      <div className="bg-white px-5 py-30 rounded-lg mt-3 min-h-[140px]">
-        <div className="mt-5">
-          <div className="flex flex-row-reverse my-1 pt-4">
-            <div className="flex items-center mx-1">
-              <Image
-                src={redCircle}
-                alt="빨강"
-                className="w-3 h-3 mr-1"
-              />
-              <div className="text-sm">과다</div>
+      {analysisList.length === 0 ? (
+        <div className="w-100 text-center py-10 mt-2 mb-5 rounded-md bg-yellow-50">
+          복용중 / 관심 영양제를 클릭해서 새로운 조합을 만들어보세요!
+        </div>
+      ) : (
+        <div>
+          <div className="bg-white px-5 py-30 rounded-lg mt-3 min-h-[140px]">
+            <div className="mt-5">
+              <div className="flex flex-row-reverse my-1 pt-4">
+                <div className="flex items-center mx-1">
+                  <Image
+                    src={redCircle}
+                    alt="빨강"
+                    className="w-3 h-3 mr-1"
+                  />
+                  <div className="text-sm">과다</div>
+                </div>
+                <div className="flex items-center mx-1">
+                  <Image
+                    src={greenCircle}
+                    alt="초록"
+                    className="w-3 h-3 mr-1"
+                  />
+                  <div className="text-sm">적정</div>
+                </div>
+                <div className="flex items-center mx-1">
+                  <Image
+                    src={yellowCircle}
+                    alt="노랑"
+                    className="w-3 h-3 mr-1"
+                  />
+                  <div className="text-sm">부족</div>
+                </div>
+              </div>
+              <div className="grid content-center pl-2 mb-3">
+                {ingredientList &&
+                  ingredientList.map((nutrient, idx) => (
+                    <PillDetailNutrientGage
+                      key={idx}
+                      ingredientName={nutrient.nutrientName}
+                      ingredientAmount={nutrient.nutrientAmount}
+                      recommendedIntakeStart={nutrient.nutrientMin}
+                      recommendedIntakeEnd={nutrient.nutrientMax}
+                    />
+                  ))}
+              </div>
             </div>
-            <div className="flex items-center mx-1">
-              <Image
-                src={greenCircle}
-                alt="초록"
-                className="w-3 h-3 mr-1"
-              />
-              <div className="text-sm">적정</div>
-            </div>
-            <div className="flex items-center mx-1">
-              <Image
-                src={yellowCircle}
-                alt="노랑"
-                className="w-3 h-3 mr-1"
-              />
-              <div className="text-sm">부족</div>
-            </div>
-          </div>
-          <div className="grid content-center pl-2 mb-3">
-            {ingredientList &&
-              ingredientList.map((nutrient, idx) => (
-                <PillDetailNutrientGage
-                  key={idx}
-                  ingredientName={nutrient.nutrientName}
-                  ingredientAmount={nutrient.nutrientAmount}
-                  recommendedIntakeStart={nutrient.nutrientMin}
-                  recommendedIntakeEnd={nutrient.nutrientMax}
-                />
-              ))}
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

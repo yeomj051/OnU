@@ -61,7 +61,7 @@ function PillAnalysisHave(props: Props) {
       <div
         className={` ${
           isSelected ? 'bg-[#90B5EA]' : 'bg-[#D8EDFF]'
-        } w-32 h-32 rounded-lg mx-auto grid content-center`}
+        } w-32 h-32 rounded-xl mx-auto grid content-center`}
       >
         <div className="mx-auto bg-white rounded-lg w-28 h-28">
           <div className="relative w-16 h-16 mx-auto">
