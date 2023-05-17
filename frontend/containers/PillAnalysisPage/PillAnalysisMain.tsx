@@ -113,8 +113,8 @@ function PillAnalysisMain() {
     return true;
   };
 
-  return (
-    userId !== undefined && (
+  if (userId !== undefined)
+    return (
       <div className="mt-20">
         <div className="mx-4">
           <div className="py-5">
@@ -185,8 +185,8 @@ function PillAnalysisMain() {
           </div>
         </div>
       </div>
-    )
-  );
+    );
+  return <div>로딩중</div>;
 }
 
 export default PillAnalysisMain;

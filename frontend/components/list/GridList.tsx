@@ -6,6 +6,7 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import api from '@/apis/config';
 import useUserStore from '@/store/userStore';
+import { AxiosError } from 'axios';
 
 const ItemList = (props: {
   itemList: Array<Item>;

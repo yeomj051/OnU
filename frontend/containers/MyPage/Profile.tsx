@@ -9,7 +9,6 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useRouter } from 'next/navigation';
 import api from '@/apis/config';
 import { AxiosResponse } from 'axios';
-import AlarmModal from './AlarmModal';
 
 const bgImgSet: string[] = [
   'https://images.unsplash.com/photo-1612540943977-98ce54bea8a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',

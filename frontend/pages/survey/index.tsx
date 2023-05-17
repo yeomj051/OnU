@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 // import QuestionGauge from '@/containers/SurveyPage/QuestionGauge';
 import Question from '@/containers/SurveyPage/Question';
 import { NextPageWithLayout } from '../_app';
