@@ -46,7 +46,7 @@ const FunctionList = (props: {
   const [femaleCheck, setFemaleCheck] = useState(false);
   const [maleCheck, setMaleCheck] = useState(false);
   const [functionName, setFunctionName] = useState<string[]>([]);
-  const [clickFunctions, setClickFunctions] = useState<string[]>([]);
+  const [clickFunctions, setClickFunctions] = useState<number[]>([]);
 
   useEffect(() => {
     if (props.gender === 'female') {

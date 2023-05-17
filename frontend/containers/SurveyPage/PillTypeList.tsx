@@ -20,7 +20,7 @@ const PillTypeList = (props: {
   onTypeClick: (typenname: any) => void;
   answers: any;
 }) => {
-  const [clickTypes, setClickTypes] = useState<string[]>([]);
+  const [clickTypes, setClickTypes] = useState<number[]>([]);
 
   useEffect(() => {
     setClickTypes(props.answers[5]);
@@ -41,7 +41,7 @@ const PillTypeList = (props: {
   };
   return (
     <div>
-      <div className="grid grid-cols-3 mx-10 gap-10">
+      <div className="grid grid-cols-3 gap-10 mx-10">
         {pillTypeImages.map((Item, index) => (
           <button
             key={index}
@@ -53,14 +53,16 @@ const PillTypeList = (props: {
                 : 'bg-[#D8EDFF] text-[#424B5A] hover:bg-[#90B5EA] hover:text-white active:bg-[#90B5EA] active:text-white'
             } text-xs w-24 h-20`}
           >
-            <div className="col-span-1 box-border hover:box-content">
+            <div className="box-border col-span-1 hover:box-content">
               <Image
                 className="w-[50px] h-[50px] mx-auto mt-2"
                 src={Item[0]}
                 alt="사진깨짐"
               />
               <div>
-                <p className="my-2 text-center">{Item[1]}</p>
+                <p className="my-2 text-center">
+                  {Item[1] as string}
+                </p>
               </div>
             </div>
           </button>
