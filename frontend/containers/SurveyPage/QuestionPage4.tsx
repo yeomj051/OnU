@@ -11,7 +11,6 @@ const QuestionPage4: React.FC<QuestionProps> = ({
   const [keyword, setKeyword] = useState<string>('');
 
   useEffect(() => {
-    // console.log(answers);
     if (answers) {
       setKeyword(answers[4]);
     }
@@ -22,7 +21,7 @@ const QuestionPage4: React.FC<QuestionProps> = ({
   ) => {
     const { value } = event.target;
     setKeyword(event.target.value);
-    onAnswer(value);
+    onAnswer(parseInt(value));
   };
 
   return (
@@ -34,8 +33,15 @@ const QuestionPage4: React.FC<QuestionProps> = ({
         value={keyword}
         onChange={handleAnswerChange}
       />
-      <button onClick={onPreviousPage}>Previous</button>
-      <button onClick={onNextPage}>Next</button>
+      <button
+        onClick={onPreviousPage}
+        className="btn btn-primary btn-sm"
+      >
+        이전
+      </button>
+      <button onClick={onNextPage} className="btn btn-primary btn-sm">
+        다음
+      </button>
     </div>
   );
 };

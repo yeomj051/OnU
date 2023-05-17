@@ -344,6 +344,24 @@ const api = {
     });
   },
 
+  // 설문 답변 리스트 전달
+  async submitSurvey(
+    userId: number,
+    answers: any,
+  ): Promise<AxiosResponse> {
+    return await authAPI(`/recommend/${userId}`, {
+      method: 'POST',
+      data: {
+        age: answers.age,
+        functionList: answers.functionList,
+        gender: answers.gender,
+        pregnant: answers.pregnant,
+        takingNutrientList: answers.takingNutrientList,
+        typeList: answers.typeList,
+      },
+    });
+  },
+
   //설문결과 조회
   async getSurveyResult(
     userId: number,

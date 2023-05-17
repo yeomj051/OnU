@@ -32,38 +32,45 @@ const QuestionPage1: React.FC<QuestionProps> = ({
 
   return (
     <div>
-      <p>{question?.surveyQuestion}</p>
-      {/* <form className="form">
-        <style>
-          {`
-          .form input:focus:invalid {
-            outline-color: #ff8383;
-            background-color: #fff3f3;
-          }
-          `}
-        </style> */}
-
-      <input
-        type="text"
-        value={keyword}
-        onChange={handleAnswerChange}
-        placeholder="입력하세요"
-        autoFocus
-        required
-      />
-      {!isValidInput && (
-        <p style={{ color: 'red' }}>숫자만 입력해주세요.</p>
-      )}
-      {!isWithinRange && (
-        <p style={{ color: 'red' }}>0에서 120내로 입력해주세요.</p>
-      )}
-      {/* </form> */}
-      <button
-        onClick={onNextPage}
-        disabled={!isValidInput || !isWithinRange}
-      >
-        Next
-      </button>
+      <div className=" place-itmes-center">
+        <div className="flex flex-col items-center">
+          <div className="form-control w-full max-w-xs">
+            <label className="label">
+              <span className="label-text">
+                {question?.surveyQuestion}
+              </span>
+            </label>
+            <input
+              type="text"
+              value={keyword}
+              onChange={handleAnswerChange}
+              placeholder="입력하세요"
+              autoFocus
+              required
+              className="input input-bordered w-full max-w-xs"
+            />
+            <label className="label">
+              {!isValidInput && (
+                <span className="label-text-alt">
+                  숫자만 입력해주세요.
+                </span>
+              )}
+              {!isWithinRange && (
+                <span className="label-text-alt">
+                  0에서 120내로 입력해주세요.
+                </span>
+              )}
+            </label>
+          </div>
+          <button
+            onClick={onNextPage}
+            disabled={!isValidInput || !isWithinRange}
+            className="btn btn-primary btn-sm"
+          >
+            다음
+          </button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -7,12 +7,12 @@ import QuestionPage3 from './QuestionPage3';
 import QuestionPage4 from './QuestionPage4';
 import QuestionPage5 from './QuestionPage5';
 import QuestionPage6 from './QuestionPage6';
-import Survey from '@/pages/survey';
+import useUserStore from '@/store/userStore';
 
 const Question = () => {
   const [questionList, setQuestionList] = useState<Question[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [answers, setAnswers] = useState<string[]>([]);
+  const [answers, setAnswers] = useState<any>([]);
   const [male, setMale] = useState(false);
   const [userId, setUserId] = useState<number>();
 
@@ -64,8 +64,8 @@ const Question = () => {
     }
   };
 
-  const handleAnswer = (answer: string) => {
-    setAnswers((prevAnswers) => ({
+  const handleAnswer = (answer: any) => {
+    setAnswers((prevAnswers: any) => ({
       ...prevAnswers,
       [currentPage]: answer,
     }));
@@ -78,14 +78,14 @@ const Question = () => {
       gender: answers[2], // 성별에 대한 답변
       pregnant: answers[3] === 'Yes' ? true : false, // 임신 여부에 대한 답변
       takingNutrientList: [answers[4]], // 복용 중인 영양제에 대한 답변 (하나의 영양제만 선택 가능)
-      functionList: answers[5].split(','), // 복용 목적에 대한 답변 (여러 개 선택 가능)
-      typeList: answers[6].split(','), // 선호 제형에 대한 답변 (여러 개 선택 가능)
+      functionList: answers[6], // 복용 목적에 대한 답변 (여러 개 선택 가능)
+      typeList: answers[5], // 선호 제형에 대한 답변 (여러 개 선택 가능)
     };
-    console.log('-->', answers, formattedAnswers);
 
     // 서버로 모든 답변 전송
+    const id: number = useUserStore.getState().user?.id as number;
     api
-      .getSurveyResult(userId as number, formattedAnswers)
+      .submitSurvey(id, formattedAnswers)
       .then((response) => {
         console.log('Answers submitted successfully:', response.data);
       })

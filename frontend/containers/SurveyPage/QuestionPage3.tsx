@@ -11,7 +11,6 @@ const QuestionPage3: React.FC<QuestionProps> = ({
   const [pregnant, setPregnant] = useState<string>('');
 
   useEffect(() => {
-    console.log(answers);
     if (answers && answers[3]) {
       setPregnant(answers[3]);
     }
@@ -55,8 +54,15 @@ const QuestionPage3: React.FC<QuestionProps> = ({
           </div>
         </div>
       </div>
-      <button onClick={onPreviousPage}>Previous</button>
-      <button onClick={onNextPage}>Next</button>
+      <button
+        onClick={onPreviousPage}
+        className="btn btn-primary btn-sm"
+      >
+        이전
+      </button>
+      <button onClick={onNextPage} className="btn btn-primary btn-sm">
+        다음
+      </button>
     </div>
   );
 };
