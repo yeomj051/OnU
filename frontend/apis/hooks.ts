@@ -203,20 +203,6 @@ export const useDeleteComb = (
   return useMutation([queryKey], mutateFn);
 };
 
-//영양제 조합에 따른 성분목록 조회
-export const useIngreByComb = (
-  userId: number,
-  combinationList: string[],
-) => {
-  const queryFn = async () => {
-    const res = await api.getIngredientListByCombination(
-      userId,
-      combinationList,
-    );
-    return res;
-  };
-  return useQuery([queryKey, userId, combinationList], queryFn);
-};
 export const useStorage = (key: string) => {
   if (typeof window !== 'undefined') {
     const item = localStorage.getItem(key);
