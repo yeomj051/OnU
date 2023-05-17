@@ -1,14 +1,7 @@
 // QuestionPage2.tsx
 import React, { useEffect, useState } from 'react';
 
-interface QuestionPage2Props {
-  question: Question;
-  onPreviousPage: () => void;
-  onNextPage: () => void;
-  onAnswer: (answer: string) => void;
-}
-
-const QuestionPage2: React.FC<QuestionPage2Props> = ({
+const QuestionPage2: React.FC<QuestionProps> = ({
   question,
   onPreviousPage,
   onNextPage,

@@ -342,12 +342,15 @@ const api = {
   },
 
   //설문결과 조회
-  async getSurveyResult(userId: number): Promise<AxiosResponse> {
+  async getSurveyResult(
+    userId: number,
+    survey: Survey,
+  ): Promise<AxiosResponse> {
     return await authAPI(``, {
       method: 'POST',
       data: {
         userId: userId,
-        survey: {},
+        survey: survey,
       },
     });
   },

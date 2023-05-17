@@ -2,14 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import FunctionList from './FuctionList';
 
-interface QuestionPage6Props {
-  question: Question;
-  onPreviousPage: () => void;
-  onSubmit: () => void;
-  onAnswer: (answer: string) => void;
-}
-
-const QuestionPage6: React.FC<QuestionPage6Props> = ({
+const QuestionPage6: React.FC<QuestionProps> = ({
   question,
   onPreviousPage,
   onSubmit,
