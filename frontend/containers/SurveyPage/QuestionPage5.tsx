@@ -1,5 +1,6 @@
 // QuestionPage5.tsx
 import React, { useEffect, useState } from 'react';
+import PillTypeList from './PillTypeList';
 
 const QuestionPage5: React.FC<QuestionProps> = ({
   question,
@@ -9,20 +10,18 @@ const QuestionPage5: React.FC<QuestionProps> = ({
   answers,
 }) => {
   const [keyword, setKeyword] = useState<string>('');
+  const [typeName, setTypeName] = useState<any>([]);
 
   useEffect(() => {
     console.log(answers);
-    if (answers) {
+    if (answers[5]) {
       setKeyword(answers[5]);
     }
   }, []);
 
-  const handleAnswerChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const { value } = event.target;
-    setKeyword(event.target.value);
-    onAnswer(value);
+  const handleAnswerChange = (typeName: any) => {
+    setTypeName(typeName);
+    onAnswer(typeName);
   };
 
   return (
@@ -33,8 +32,19 @@ const QuestionPage5: React.FC<QuestionProps> = ({
         value={keyword}
         onChange={handleAnswerChange}
       />
-      <button onClick={onPreviousPage}>Previous</button>
-      <button onClick={onNextPage}>Next</button>
+      <PillTypeList
+        onTypeClick={handleAnswerChange}
+        answers={answers}
+      />
+      <button
+        onClick={onPreviousPage}
+        className="btn btn-primary btn-sm"
+      >
+        이전
+      </button>
+      <button onClick={onNextPage} className="btn btn-primary btn-sm">
+        다음
+      </button>
     </div>
   );
 };

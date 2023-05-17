@@ -341,6 +341,16 @@ const api = {
     });
   },
 
+  // 설문 답변 리스트 전달
+  async submitSurvey(userId: number, answers: any) {
+    return await authAPI(`/api/recommend/${userId}`, {
+      method: 'POST',
+      data: {
+        answers,
+      },
+    });
+  },
+
   //설문결과 조회
   async getSurveyResult(
     userId: number,

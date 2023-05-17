@@ -11,7 +11,7 @@ const QuestionGauge = (props: {
 
   return (
     <div>
-      <ul className="steps mt-20 text-xs/[15px]">
+      <ul className="steps mt-20 text-xs/[15px] flex justify-center">
         <li
           className={`step ${
             props.currentQuestionIndex >= 0 ? 'step-primary' : ''

@@ -38,7 +38,11 @@ const maleFunctionName: string[] = [
   '정자 운동성',
 ];
 
-const FunctionList = (props: { gender: string }) => {
+const FunctionList = (props: {
+  onFunctionClick: (functionname: any) => void;
+  gender: string;
+  answers: any;
+}) => {
   const [femaleCheck, setFemaleCheck] = useState(false);
   const [maleCheck, setMaleCheck] = useState(false);
   const [functionName, setFunctionName] = useState<string[]>([]);
@@ -54,22 +58,28 @@ const FunctionList = (props: { gender: string }) => {
       setFemaleCheck(false);
       setFunctionName(maleFunctionName);
     }
-  }, [props.gender]);
+  }, [props.gender, clickFunctions]);
+
+  useEffect(() => {
+    setClickFunctions(props.answers[6]);
+  }, [props.answers[6]]);
 
   const handleButtonClick = (index: number) => {
-    if (clickFunctions.includes(functionName[index])) {
+    const updatedFunctions = clickFunctions
+      ? [...clickFunctions]
+      : [];
+    if (updatedFunctions.includes(index + 1)) {
       // 이미 선택된 기능일 경우 제거
-      setClickFunctions((prevFunctions) =>
-        prevFunctions.filter((fn) => fn !== functionName[index]),
-      );
+      updatedFunctions.splice(index + 1, 1);
     } else {
       // 선택되지 않은 기능일 경우 추가
-      setClickFunctions((prevFunctions) => [
-        ...prevFunctions,
-        functionName[index],
-      ]);
+      updatedFunctions.push(index + 1);
     }
+
+    setClickFunctions(updatedFunctions); // 업데이트된 배열을 설정합니다.
+    props.onFunctionClick(updatedFunctions); // 최신 배열을 상위 컴포넌트로 전달합니다.
   };
+
   console.log('==>', clickFunctions);
 
   return (
@@ -80,7 +90,8 @@ const FunctionList = (props: { gender: string }) => {
             key={index}
             onClick={() => handleButtonClick(index)}
             className={`btn btn-xl m-2 rounded-2xl border-none text-[#424B5A] ${
-              clickFunctions.includes(item)
+              clickFunctions !== undefined &&
+              clickFunctions.includes(index + 1)
                 ? 'bg-[#90B5EA] text-white'
                 : 'bg-[#D8EDFF] text-[#424B5A] hover:bg-[#90B5EA] hover:text-white active:bg-[#90B5EA] active:text-white'
             } text-xs w-24 h-20`}

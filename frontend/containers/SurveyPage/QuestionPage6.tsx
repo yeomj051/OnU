@@ -9,34 +9,39 @@ const QuestionPage6: React.FC<QuestionProps> = ({
   onAnswer,
   answers,
 }) => {
-  const [keyword, setKeyword] = useState<string>('');
+  const [functionName, setFunctionName] = useState<any>([]);
 
   useEffect(() => {
-    console.log(answers);
-    if (answers) {
-      setKeyword(answers[6]);
+    console.log('->', answers);
+    if (answers.length > 0) {
+      setFunctionName(answers);
     }
-  }, []);
 
-  const handleAnswerChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const { value } = event.target;
-    setKeyword(event.target.value);
-    onAnswer(value);
+    console.log('->', answers);
+  }, [answers]);
+
+  const handleAnswerChange = (functionName: any) => {
+    setFunctionName(functionName);
+    onAnswer(functionName);
   };
 
   return (
     <div>
       <p>{question.surveyQuestion}</p>
-      <input
-        type="text"
-        value={keyword}
-        onChange={handleAnswerChange}
+      <FunctionList
+        gender={answers[2]}
+        onFunctionClick={handleAnswerChange}
+        answers={answers}
       />
-      <FunctionList gender={answers[2]} />
-      <button onClick={onPreviousPage}>Previous</button>
-      <button onClick={onSubmit}>Submit</button>
+      <button
+        onClick={onPreviousPage}
+        className="btn btn-primary btn-sm"
+      >
+        이전
+      </button>
+      <button onClick={onSubmit} className="btn btn-accent btn-sm">
+        추천 받기
+      </button>
     </div>
   );
 };
