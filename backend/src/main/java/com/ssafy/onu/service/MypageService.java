@@ -273,4 +273,16 @@ public class MypageService {
 
         return takingNutrientList;
     }
+    
+    //휴대폰 번호 인증한 유저인지 확인메소드
+    public boolean checkPhoneCheckYn(int userId) {
+        Optional<User> user = userRepository.findByUserId(userId);
+        if(!user.isPresent()) return false;
+        
+        if(user.get().getUserPhoneCheckYn().equals("Y")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
