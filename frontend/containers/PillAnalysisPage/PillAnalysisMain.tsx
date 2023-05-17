@@ -35,6 +35,8 @@ type InfoList = {
 };
 
 function PillAnalysisMain() {
+  //차트 어떤거 보여줄지 정하는 state, -1은 복용중인 영양제들(초기상태)/-2는 복용/관심으로 클릭해서 만드는것
+  //양수는 그 수가 영양제 조합의 id
   const [showChart, setShowchart] = useState<number>(-1);
   const router = useRouter();
   const [userId, setUserId] = useState<number>();
@@ -116,21 +118,29 @@ function PillAnalysisMain() {
     return true;
   };
 
+  //복용중/관심에 props로 내려주고 클릭할때 차트컴포넌트에 -2 보내줌
+  const makehaveLikeComb = () => {
+    setShowchart(-2);
+  };
+
   if (userId !== undefined)
     return (
       <div className="mt-20">
         <div className="mx-4">
           <div className="py-5">
-            <div className="text-xl ml-5">복용중인 영양제</div>
+            <div className="text-xl ml-5 font-bold">
+              복용중인 영양제
+            </div>
             <PillAnalysisHaveBox
               userId={userId}
               cancle={cancle}
               renew={renew}
+              makehaveLikeComb={makehaveLikeComb}
             />
           </div>
           <div className="py-5">
             <div className="grid grid-cols-2">
-              <div className="grid content-center col-span-1 text-xl ml-5">
+              <div className="grid content-center col-span-1 text-xl ml-5 font-bold">
                 관심 영양제
               </div>
               <div className="flex justify-end col-span-1 mb-1 pt-1 pr-4">
@@ -150,18 +160,19 @@ function PillAnalysisMain() {
               reRendering={reRendering}
               cancle={cancle}
               renew={renew}
+              makehaveLikeComb={makehaveLikeComb}
             />
           </div>
         </div>
 
         <div className="bg-[#D8EDFF]  py-5 px-4 h-[100%]">
           <div className="grid grid-cols-2 mt-2">
-            <div className="grid content-center col-span-1 text-xl ml-5">
+            <div className="grid content-center col-span-1 text-xl ml-5 font-bold">
               성분 조합 한 눈에 보기
             </div>
             <div className="flex justify-end col-span-1">
               <button
-                className="btn btn-active btn-sm bg-[#1E266E] h-3"
+                className="btn btn-active btn-sm bg-[#1E266E] h-3 font-bold"
                 onClick={saveCombination}
               >
                 이 조합 저장하기
@@ -175,7 +186,7 @@ function PillAnalysisMain() {
             />
           </div>
           <div className="mt-8">
-            <div className="col-span-1 text-xl ml-5 mb-2">
+            <div className="col-span-1 text-xl ml-5 mb-2 font-bold">
               나의 영양제 조합
             </div>
             <PillAnalysisCombBox
