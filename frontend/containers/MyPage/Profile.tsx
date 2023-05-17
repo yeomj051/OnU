@@ -9,6 +9,7 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useRouter } from 'next/navigation';
 import api from '@/apis/config';
 import { AxiosResponse } from 'axios';
+import TimePicker from '@/components/common/TimePicker';
 
 const bgImgSet: string[] = [
   'https://images.unsplash.com/photo-1612540943977-98ce54bea8a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
@@ -40,16 +41,14 @@ const Profile = (): React.ReactElement => {
   //캘린더 조회 api 호출
 
   const handleAlarm = () => {
-    // if (!isAuth) {
-    //   if (
-    //     window.confirm(
-    //       '복용 알림 설정을 위해선 휴대폰 인증이 필요합니다. 이동하시겠습니까?',
-    //     )
-    //   )
-    //     router.push('/user/phoneauth');
-    // } else setIsModalOpen(true);
-    setIsModalOpen(true);
-    console.log(isModalOpen);
+    if (!isAuth) {
+      if (
+        window.confirm(
+          '복용 알림 설정을 위해선 휴대폰 인증이 필요합니다. 이동하시겠습니까?',
+        )
+      )
+        router.push('/user/phoneauth');
+    } else setIsModalOpen(true);
   };
 
   useEffect((): void => {
@@ -131,27 +130,31 @@ const Profile = (): React.ReactElement => {
               </div>
             </div>
           </div>
-
           <ButtonGroup />
         </div>
       </div>
+
       {isModalOpen && (
-        <div className="modal modal-bottom sm:modal-middle">
-          <div className="modal-box">
-            <h3 className="font-bold text-lg">
-              Congratulations random Internet user!
-            </h3>
-            <p className="py-4">
-              You've been selected for a chance to get one year of
-              subscription to use Wikipedia for free!
-            </p>
-            <div className="modal-action">
-              <button
-                className="btn"
-                onClick={() => setIsModalOpen(false)}
-              >
-                Yay!
-              </button>
+        <div className="flex items-center justify-center z-50 h-[100vh] w-[360px] sm:w-[512px] fixed top-0 pb-20 bg-neutral-400/80">
+          <div className="bg-white flex flex-col items-center absolute border-solid rounded-xl shadow mt-[50%] mb-[50%] p-4 font-sans">
+            <div className="">
+              <div className="flex justify-between">
+                <div className="flex flex-col items-baseline">
+                  <h3 className="font-bold text-lg">알림 설정</h3>
+                  <span className="ml-2 text-xs font-light text-[#1E266E] mb-2">
+                    알림을 받을 시간을 설정해주세요
+                  </span>
+                </div>
+
+                <button
+                  className="btn btn-xs btn-outline border-none"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  x
+                </button>
+              </div>
+
+              <TimePicker onClose={() => setIsModalOpen(false)} />
             </div>
           </div>
         </div>
