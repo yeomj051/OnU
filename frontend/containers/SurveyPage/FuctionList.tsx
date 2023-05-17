@@ -1,0 +1,99 @@
+import React, { useEffect, useState } from 'react';
+import styled from '@emotion/styled';
+import { Eye } from '@emotion-icons/entypo/Eye';
+
+const EyeIcon = styled(Eye)`
+  color: #424b5a;
+`;
+
+const femaleFunctionName: string[] = [
+  '뼈/관절',
+  '눈 건강',
+  '간 건강',
+  '장 건강',
+  '면역력 개선',
+  '혈행 개선',
+  '혈당 조절',
+  '콜레스테롤',
+  '체지방 감소',
+  '항산화',
+  '피로 개선',
+  '갱년기 여성',
+  '질 건강',
+];
+
+const maleFunctionName: string[] = [
+  '뼈/관절',
+  '눈 건강',
+  '간 건강',
+  '장 건강',
+  '면역력 개선',
+  '혈행 개선',
+  '혈당 조절',
+  '콜레스테롤',
+  '체지방 감소',
+  '항산화',
+  '피로 개선',
+  '갱년기 남성',
+  '정자 운동성',
+];
+
+const FunctionList = ({ gender }) => {
+  const [femaleCheck, setFemaleCheck] = useState(false);
+  const [maleCheck, setMaleCheck] = useState(false);
+  const [functionName, setFunctionName] = useState([]);
+  const [clickFunctions, setClickFunctions] = useState([]);
+
+  useEffect(() => {
+    if (gender === 'female') {
+      setFemaleCheck(true);
+      setMaleCheck(false);
+      setFunctionName(femaleFunctionName);
+    } else {
+      setMaleCheck(true);
+      setFemaleCheck(false);
+      setFunctionName(maleFunctionName);
+    }
+  }, [gender]);
+
+  const handleButtonClick = (index) => {
+    if (clickFunctions.includes(functionName[index])) {
+      // 이미 선택된 기능일 경우 제거
+      setClickFunctions((prevFunctions) =>
+        prevFunctions.filter((fn) => fn !== functionName[index]),
+      );
+    } else {
+      // 선택되지 않은 기능일 경우 추가
+      setClickFunctions((prevFunctions) => [
+        ...prevFunctions,
+        functionName[index],
+      ]);
+    }
+  };
+  console.log('==>', clickFunctions);
+
+  return (
+    <div>
+      <div id="list" className="flex flex-wrap mt-4 ml-4">
+        {functionName.map((item, index) => (
+          <button
+            key={index}
+            onClick={() => handleButtonClick(index)}
+            className={`btn btn-xl m-2 rounded-2xl border-none text-[#424B5A] ${
+              clickFunctions.includes(item)
+                ? 'bg-[#90B5EA] text-white'
+                : 'bg-[#D8EDFF] text-[#424B5A] hover:bg-[#90B5EA] hover:text-white active:bg-[#90B5EA] active:text-white'
+            } text-xs w-24 h-20`}
+          >
+            <div className="flex flex-col items-center">
+              <EyeIcon className="w-6 h-6" />
+              {item}
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default FunctionList;
