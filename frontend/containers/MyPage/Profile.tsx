@@ -9,6 +9,7 @@ import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import { useRouter } from 'next/navigation';
 import api from '@/apis/config';
 import { AxiosResponse } from 'axios';
+import AlarmModal from './AlarmModal';
 
 const bgImgSet: string[] = [
   'https://images.unsplash.com/photo-1612540943977-98ce54bea8a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
@@ -35,22 +36,31 @@ const Profile = (): React.ReactElement => {
   const router = useRouter();
 
   const [userInfo, setUserInfo] = useState<IUser>();
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   //캘린더 조회 api 호출
 
   const handleAlarm = () => {
-    if (
-      window.confirm(
-        '복용 알림 설정을 위해선 휴대폰 인증이 필요합니다. 이동하시겠습니까?',
-      )
-    )
-      router.push('/user/phoneauth');
+    // if (!isAuth) {
+    //   if (
+    //     window.confirm(
+    //       '복용 알림 설정을 위해선 휴대폰 인증이 필요합니다. 이동하시겠습니까?',
+    //     )
+    //   )
+    //     router.push('/user/phoneauth');
+    // } else setIsModalOpen(true);
+    setIsModalOpen(true);
+    console.log(isModalOpen);
   };
 
   useEffect((): void => {
     getUser(
       Number.parseInt(localStorage.getItem('userId') as string),
     );
-  }, []);
+    const auth = localStorage.getItem('isPhoneAuth');
+    if (auth === 'true') setIsAuth(true);
+    else setIsAuth(false);
+  }, [isModalOpen]);
 
   const getUser = async (userId: number): Promise<void> => {
     await api.getUserInfo(userId).then((res: AxiosResponse) => {
@@ -126,6 +136,27 @@ const Profile = (): React.ReactElement => {
           <ButtonGroup />
         </div>
       </div>
+      {isModalOpen && (
+        <div className="modal modal-bottom sm:modal-middle">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">
+              Congratulations random Internet user!
+            </h3>
+            <p className="py-4">
+              You've been selected for a chance to get one year of
+              subscription to use Wikipedia for free!
+            </p>
+            <div className="modal-action">
+              <button
+                className="btn"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Yay!
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

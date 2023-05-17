@@ -78,6 +78,8 @@ const PhoneAuth = () => {
         if (res.status === 200) {
           alert('인증이 완료되었습니다.');
           setIsMessageSent(false);
+          router.push('/mypage');
+          localStorage.setItem('isPhoneAuth', 'true');
           setPhoneNumber('');
         } else {
           throw new Error();

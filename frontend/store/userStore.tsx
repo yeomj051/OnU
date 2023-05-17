@@ -18,11 +18,7 @@ export const useUserStore = create<UserStore>((set) => ({
 
   setUser: (user: IUser) => set((x) => ({ ...x, user })),
   resetUser: () => {
-    localStorage.removeItem('userId');
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('userNickname');
-    localStorage.removeItem('userAge');
-    localStorage.removeItem('userGender');
+    localStorage.clear();
     set((x) => ({ ...x, user: undefined }));
   },
 }));

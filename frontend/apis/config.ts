@@ -1,5 +1,5 @@
 //API 호출에 사용할 함수들을 정리해놓은 파일입니다
-import { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { baseAPI, authAPI } from './axios';
 
 //사용은 api.함수명()으로 하면 됩니다
@@ -213,9 +213,12 @@ const api = {
 
   //영양제 검색
   async searchPill(keyword: string): Promise<AxiosResponse> {
-    return await baseAPI(`/search/${keyword}`, {
-      method: 'GET',
-    });
+    // return await baseAPI(`/search/${keyword}`, {
+    //   method: 'GET',
+    // });
+    return await axios.get(
+      `https://k8a703.p.ssafy.io/search/${keyword}`,
+    );
   },
 
   //영양제 조합 목록 조회
