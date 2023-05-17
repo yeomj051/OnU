@@ -69,7 +69,7 @@ const ItemList = (props: {
             key={index}
             style={{ cursor: 'pointer' }}
           >
-            {item.isInterested ? (
+            {/* {item.isInterested ? (
               <div className="text-red-500 bg-opacity-0 border-none indicator-item badge top-2 right-8">
                 <button
                   onClick={() => removeInterest(item.nutrientId)}
@@ -90,7 +90,7 @@ const ItemList = (props: {
               <button onClick={() => handleTaking(item.nutrientId)}>
                 <AddCircleOutlineRoundedIcon />
               </button>
-            </div>
+            </div> */}
             <div id="item-img" className="mask mask-square">
               <Image
                 src={item.nutrientImageUrl}
