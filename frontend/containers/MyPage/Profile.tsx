@@ -91,7 +91,7 @@ const Profile = (): React.ReactElement => {
         backgroundImage: `url(${bgImgSet[bgRandom]})`,
       }}
     >
-      <div className="hero-overlay bg-opacity-60"></div>
+      <div className="hero-overlay bg-opacity-60" />
       <div className="text-center hero-content text-neutral-content">
         <div className="flex flex-col items-center max-w-md">
           <div className="flex w-[400px] items-center space-x-2">
@@ -153,14 +153,14 @@ const Profile = (): React.ReactElement => {
             <div className="">
               <div className="flex justify-between">
                 <div className="flex flex-col items-baseline">
-                  <h3 className="font-bold text-lg">알림 설정</h3>
+                  <h3 className="text-lg font-bold">알림 설정</h3>
                   <span className="ml-2 text-xs font-light text-[#1E266E] mb-2">
                     알림을 받을 시간을 설정해주세요
                   </span>
                 </div>
 
                 <button
-                  className="btn btn-xs btn-outline border-none"
+                  className="border-none btn btn-xs btn-outline"
                   onClick={() => setIsModalOpen(false)}
                 >
                   x

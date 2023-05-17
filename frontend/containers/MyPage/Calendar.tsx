@@ -3,6 +3,7 @@ import Calendar from 'react-calendar';
 import api from '@/apis/config';
 import useUserStore from '@/store/userStore';
 import { AxiosResponse } from 'axios';
+import { useRouter } from 'next/navigation';
 
 export const MyCalendar = (): React.ReactElement => {
   const [value, setValue] = useState<Date>(new Date());
@@ -19,6 +20,8 @@ export const MyCalendar = (): React.ReactElement => {
   const [mark, setMark] = useState<string[]>([]);
   const [streak, setStreak] = useState<number>(0);
   const [page, setPage] = useState<number>(0);
+
+  const router = useRouter();
 
   useEffect((): void => {
     const id = useUserStore.getState().user?.id;
@@ -121,6 +124,18 @@ export const MyCalendar = (): React.ReactElement => {
           }}
         />
       )}
+
+      <div
+        className="w-full h-24 my-4 text-white rounded-md hero"
+        style={{
+          backgroundImage: `url('https://images.unsplash.com/photo-1600841793042-55790f1375da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80')`,
+        }}
+        onClick={() => router.push('/pillanalysis/pill-analysis')}
+      >
+        <div className="flex items-center justify-center h-full rounded-md bg-opacity-40 hero-overlay">
+          나의 영양제 분석하기
+        </div>
+      </div>
     </div>
   );
 };
