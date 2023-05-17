@@ -2,11 +2,16 @@ import { NextPageWithLayout } from './_app';
 import AppLayout from '@/components/layout/AppLayout';
 import HeaderLayout from '@/components/layout/HeaderLayout';
 import EntireList from '@/containers/PillListPage/EntireList';
+import { useRouter } from 'next/navigation';
 
 const Home: NextPageWithLayout = (): React.ReactElement => {
+  const router = useRouter();
   return (
     <div>
-      <div className="relative">
+      <div
+        className="relative hero"
+        onClick={() => router.push('/survey')}
+      >
         <img src="https://images.unsplash.com/photo-1628771065518-0d82f1938462?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80" />
         {/* <span className="absolute whitespace-nowrap -translate-x-1/2 top-1/2 left-1/2 text-[#FFFFFF] text-2xl font-bold">
           나에게 맞는 영양제를 먹고 있는걸까?
@@ -14,6 +19,12 @@ const Home: NextPageWithLayout = (): React.ReactElement => {
         <span className="absolute whitespace-nowrap translate-y-full top-1/2 left-1/2 text-[#FFFFFF] text-lg font-bold">
           설문하러 가기
         </span> */}
+        <div className="flex flex-col items-baseline pt-56 pr-48 hero-content text-[#FFFFFF]">
+          <span className="text-lg font-bold whitespace-nowrap">
+            나에게 맞는 영양제를 먹고 있는 걸까?
+          </span>
+          <span className="text-sm font-bold">설문하러 가기</span>
+        </div>
       </div>
       <EntireList />
     </div>

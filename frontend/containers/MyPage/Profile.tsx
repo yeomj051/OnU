@@ -68,9 +68,6 @@ const Profile = (): React.ReactElement => {
     getUser(
       Number.parseInt(localStorage.getItem('userId') as string),
     );
-    // const auth = localStorage.getItem('isPhoneAuth');
-    // if (auth === 'true') setIsAuth(true);
-    // else setIsAuth(false);
   }, [isModalOpen]);
 
   const getUser = async (userId: number): Promise<void> => {
