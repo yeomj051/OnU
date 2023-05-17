@@ -12,12 +12,9 @@ const QuestionPage6: React.FC<QuestionProps> = ({
   const [functionName, setFunctionName] = useState<any>([]);
 
   useEffect(() => {
-    console.log('->', answers);
     if (answers.length > 0) {
       setFunctionName(answers);
     }
-
-    console.log('->', answers);
   }, [answers]);
 
   const handleAnswerChange = (functionName: any) => {

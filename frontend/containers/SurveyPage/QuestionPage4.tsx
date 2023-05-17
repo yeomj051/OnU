@@ -11,7 +11,6 @@ const QuestionPage4: React.FC<QuestionProps> = ({
   const [keyword, setKeyword] = useState<string>('');
 
   useEffect(() => {
-    // console.log(answers);
     if (answers) {
       setKeyword(answers[4]);
     }

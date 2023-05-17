@@ -80,8 +80,6 @@ const FunctionList = (props: {
     props.onFunctionClick(updatedFunctions); // 최신 배열을 상위 컴포넌트로 전달합니다.
   };
 
-  console.log('==>', clickFunctions);
-
   return (
     <div>
       <div id="list" className="flex flex-wrap mt-4 ml-4">

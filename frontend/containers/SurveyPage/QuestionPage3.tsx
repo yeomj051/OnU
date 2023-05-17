@@ -11,7 +11,6 @@ const QuestionPage3: React.FC<QuestionProps> = ({
   const [pregnant, setPregnant] = useState<string>('');
 
   useEffect(() => {
-    console.log(answers);
     if (answers && answers[3]) {
       setPregnant(answers[3]);
     }

@@ -342,11 +342,19 @@ const api = {
   },
 
   // 설문 답변 리스트 전달
-  async submitSurvey(userId: number, answers: any) {
-    return await authAPI(`/api/recommend/${userId}`, {
+  async submitSurvey(
+    userId: number,
+    answers: any,
+  ): Promise<AxiosResponse> {
+    return await authAPI(`/recommend/${userId}`, {
       method: 'POST',
       data: {
-        answers,
+        age: answers.age,
+        functionList: answers.functionList,
+        gender: answers.gender,
+        pregnant: answers.pregnant,
+        takingNutrientList: answers.takingNutrientList,
+        typeList: answers.typeList,
       },
     });
   },
