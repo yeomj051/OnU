@@ -78,7 +78,7 @@ const Header = (): React.ReactElement => {
   };
 
   return (
-    <div className="fixed top-0 navbar bg-base-100 w-[512px] z-50">
+    <div className="fixed top-0 navbar bg-base-100 z-50 w-[360px] sm:w-[512px]">
       <div className="navbar-start">
         <button
           className="px-2 btn btn-ghost btn-sm"
