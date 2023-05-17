@@ -45,16 +45,6 @@ function PillDetailMain(props: {
   };
 
   const switchReview = () => {
-    // if (userId) setInfoSwitch(false);
-    // else {
-    //   if (
-    //     window.confirm(
-    //       '로그인이 필요한 서비스입니다. 로그인하시겠습니까?',
-    //     )
-    //   ) {
-    //     router.push('/user/login');
-    //   }
-    // }
     setInfoSwitch(false);
   };
 
