@@ -24,6 +24,7 @@ import java.util.stream.Collectors;
 public class MypageService {
 
     private final UserRepository userRepository;
+    private final AlarmRepository alarmRepository;
     private final ReviewRepository reviewRepository;
     private final NutrientIngredientRepository nutrientIngredientRepository;
     private final IngredientRepository ingredientRepository;
@@ -43,11 +44,14 @@ public class MypageService {
     private static final String INGREDIENT_NAME = "ingredientName:";
     private static final int ONE = 1;
     private static final int ZERO = 0;
+    private static final int TIMEINDEX = 9;
 
     // 회원 정보 조회
-    public ResponseUserInfoDto getUser(int userId) {
+    public ResponseMypageUserInfoDto getUser(int userId) {
         Optional<User> userData = userRepository.findByUserId(userId);
-        return new ResponseUserInfoDto(userData.get());
+        Optional<Alarm> alarmData = alarmRepository.findByAlarmUserId_UserId(userId);
+        String alarmTime = alarmData.isPresent() ? (alarmData.get().getAlarmRequestId() == null ? EMPTYSTRING : alarmData.get().getAlarmScheduleCode().substring(TIMEINDEX)) : EMPTYSTRING;
+        return new ResponseMypageUserInfoDto(userData.get(), alarmTime);
     }
 
     // 회원 정보 수정
@@ -57,8 +61,7 @@ public class MypageService {
 
         if (userData.isPresent()) {
             userData.get().updateUserInfo(reqUserInfoDto);
-            userRepository.save(userData.get());
-            return getUser(userId);
+            return new ResponseUserInfoDto(userRepository.save(userData.get()));
         } else {
             return null;
         }
