@@ -25,6 +25,7 @@ type reviewContents = {
 type Props = {
   nutrientId: number;
   userId: number | undefined;
+  // reRendering: () => void;
 };
 
 function PillDetailReview(props: Props) {
@@ -170,7 +171,10 @@ function PillDetailReview(props: Props) {
           </div>
         </div>
         {wantReview && (
-          <PillReviewForm nutrientId={props.nutrientId} />
+          <PillReviewForm
+            nutrientId={props.nutrientId}
+            // reRendering={props.reRendering}
+          />
         )}
         {reviewList.map((review, idx) => (
           <PillDetailReviewBox key={idx} review={review} />

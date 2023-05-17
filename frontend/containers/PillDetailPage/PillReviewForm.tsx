@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 type Props = {
   nutrientId: number;
+  // reRendering: () => void;
 };
 
 function PillReviewForm(props: Props) {
@@ -38,6 +39,8 @@ function PillReviewForm(props: Props) {
           '이미 리뷰를 등록하셨습니다. 리뷰는 수정 및 삭제만 가능합니다.',
         ),
       );
+
+    // props.reRendering();
   };
 
   return (

@@ -8,6 +8,8 @@ type Props = {
   userId: number;
   reRendering: () => void;
   isSelectedComb: (id: number) => void;
+  cancle: boolean;
+  renew: () => void;
 };
 
 type combination = {
@@ -34,19 +36,29 @@ function PillAnalysisCombBox(props: Props): React.ReactElement {
   // 필요함 자동으로 리렌더링 안됨
   const [deletedComb, setDeletedComb] = useState<number>(0);
 
-  const { combinations, setCombinations } = combinationStore();
+  const { combinations, setCombinations, resetCombinations } =
+    combinationStore();
 
   useEffect(() => {
-    getCombination();
+    if (props.userId !== undefined) getCombination();
   }, [props]);
 
   const getCombination = async () => {
     await api
       .getCombList(props.userId)
       .then((res) => {
+        console.log('조합 저장하기');
         console.log(res);
         setCombinationList(res.data.combinationList);
+        resetCombinations();
         setCombinations(res.data.combinationList);
+
+        //렌더링 문제로 로컬스토리에 일단 저장
+        localStorage.setItem(
+          'lastCombId',
+          res.data.combinationList[combinationList.length - 1]
+            .combinationId,
+        );
       })
       .catch((err) => console.log(err));
   };

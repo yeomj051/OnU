@@ -8,6 +8,8 @@ import api from '@/apis/config';
 
 type Props = {
   userId: number;
+  cancle: boolean;
+  renew: () => void;
 };
 
 type Ingredient = {
@@ -32,7 +34,7 @@ function PillAnalysisHaveBox(props: Props): React.ReactElement {
 
   useEffect(() => {
     console.log(props.userId);
-    if (props.userId != null) {
+    if (props.userId != null && props.userId !== undefined) {
       getTakingPillData().then((res) => {
         if (res) {
           setHavingList(res.data.takingNutrientList);
@@ -53,7 +55,12 @@ function PillAnalysisHaveBox(props: Props): React.ReactElement {
       <div className="flex flex-wrap">
         {havingList &&
           havingList.map((nutrient, idx) => (
-            <PillAnalysisHave key={idx} nutrient={nutrient} />
+            <PillAnalysisHave
+              key={idx}
+              nutrient={nutrient}
+              renew={props.renew}
+              cancle={props.cancle}
+            />
           ))}
       </div>
       {havingList.length === 0 && (
