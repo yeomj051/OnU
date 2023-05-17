@@ -11,7 +11,7 @@ function PillCompareBox(props: Props) {
     <div className="mb-6">
       <hr className="mx-4" />
       <div className="grid py-4 mx-4 bg-white tabs justify-items-center">
-        <div className="">{props.subject}</div>
+        <div className="font-semibold">{props.subject}</div>
       </div>
       <hr className="mx-4" />
       <div className="mx-4">

@@ -1,4 +1,3 @@
-import { cp } from 'fs';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
@@ -13,7 +12,6 @@ function PillDetailNutrientGage(props: Props) {
   const [amount, setAmout] = useState<number>(0);
   const [start, setStart] = useState<number>(0);
   const [end, setEnd] = useState<number>(0);
-  const [unit, setUnit] = useState<string>('');
   const [color, setColor] = useState<string>('');
 
   useEffect(() => {
@@ -39,9 +37,6 @@ function PillDetailNutrientGage(props: Props) {
   }, [props]);
 
   useEffect(() => {
-    // console.log('양 ' + amount);
-    // console.log('시작 ' + start);
-    // console.log('끝 ' + end);
     //수치에 따라 부족/적정/과다
     //부족
     if (amount < start) {

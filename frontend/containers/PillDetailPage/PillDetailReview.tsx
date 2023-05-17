@@ -25,7 +25,7 @@ type reviewContents = {
 type Props = {
   nutrientId: number;
   userId: number | undefined;
-  // reRendering: () => void;
+  reRendering: () => void;
 };
 
 function PillDetailReview(props: Props) {
@@ -53,7 +53,6 @@ function PillDetailReview(props: Props) {
         router.push('/user/login');
       }
     }
-    // setWantReview(true);
   };
 
   useEffect(() => {
@@ -64,7 +63,7 @@ function PillDetailReview(props: Props) {
     };
 
     getReviewData();
-  }, []);
+  }, [props]);
 
   useEffect(() => {
     console.log(reviewList);
@@ -173,7 +172,7 @@ function PillDetailReview(props: Props) {
         {wantReview && (
           <PillReviewForm
             nutrientId={props.nutrientId}
-            // reRendering={props.reRendering}
+            reRendering={props.reRendering}
           />
         )}
         {reviewList.map((review, idx) => (

@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { makeCombinationStore } from '../../store/makeCombinationStore';
 import { likeStore } from '../../store/likeStore';
-import { useDeleteInterest } from '@/apis/hooks';
 import useUserStore from '@/store/userStore';
 import api from '@/apis/config';
 
@@ -40,6 +39,7 @@ function PillAnalysisLike(props: Props) {
 
   //영양제 관심 삭제API 연결해서 관심 삭제
   const deleteLike = async (event: React.MouseEvent) => {
+    event.stopPropagation();
     if (isSelected) {
       //이미 선택되어있는 상태였다면 x를 눌러 삭제했을 때에도 seledtedList에서 제거해줘야 함
       removeSelected(props.nutrient.nutrientId);
@@ -57,11 +57,11 @@ function PillAnalysisLike(props: Props) {
     props.reRendering();
     //stopPropagation()=> 이벤트 버블링(이벤트 발생 위치부터 상위로 이동)을 막아줌
     //x를 클릭했을 때, selected css 상태 변하지 않게
-    event.stopPropagation();
   };
 
   //영양제 선택하면 css 변경 및 선택 영양제 리스트에 id제공여부 결정하는 함수
   const selectThis = (event: React.MouseEvent) => {
+    event.stopPropagation();
     if (isSelected) {
       removeSelected(props.nutrient.nutrientId);
       console.log(combList);
@@ -78,7 +78,7 @@ function PillAnalysisLike(props: Props) {
       <div
         className={`${
           isSelected ? 'bg-[#90B5EA]' : 'bg-[#D8EDFF]'
-        } w-32 h-32 rounded-lg mx-auto grid content-center`}
+        } w-32 h-32 rounded-xl mx-auto grid content-center`}
       >
         <div className="mx-auto bg-white rounded-lg w-28 h-28">
           <div className="grid justify-items-end">

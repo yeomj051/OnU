@@ -11,7 +11,7 @@ function PillCompareContent(props: Props) {
     <div className="mb-6">
       <hr className="mx-4" />
       <div className="tabs grid justify-items-center py-4 bg-white mx-4">
-        <div className="">{props.subject}</div>
+        <div className="font-semibold">{props.subject}</div>
       </div>
       <hr className="mx-4" />
       <div className="mx-4">
