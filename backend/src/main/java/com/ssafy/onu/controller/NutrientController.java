@@ -86,7 +86,7 @@ public class NutrientController {
         List<ResponseNutrientListDto> nutrientListByIngreidientList = nutrientService.getNutrientByIngredient(ingredientId, userId);
 
         resultMap.put(MESSAGE, SUCCESS);
-        resultMap.put("reviewListByNutrient", nutrientListByIngreidientList);
+        resultMap.put("nutrientListByIngreidientList", nutrientListByIngreidientList);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
 
@@ -106,7 +106,7 @@ public class NutrientController {
         List<ResponseNutrientListDto> nutrientListByIngreidientList = nutrientService.getNutrientByFunction(functionId, userId);
 
         resultMap.put(MESSAGE, SUCCESS);
-        resultMap.put("reviewListByNutrient", nutrientListByIngreidientList);
+        resultMap.put("nutrientListByFunctionList", nutrientListByIngreidientList);
         return new ResponseEntity<>(resultMap, HttpStatus.OK);
     }
     @ApiOperation(value = "영양제의 상세 정보 조회", notes = "선택한 영양제에 대한 상세 정보를 조회한다.", response = Map.class)

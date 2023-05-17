@@ -17,6 +17,7 @@ public class NutrientService {
     private static final int ZERO = 0;
     private static final String NUTRIENT_ID = "nutrientId:";
     private static final String INGREDIENT_NAME = "ingredientName:";
+    private static final String FUNCTION = "function";
     private static final String COMMA = ",";
     private final RedisUtil redisUtil;
     private final NutrientRepository nutrientRepository;
@@ -42,7 +43,7 @@ public class NutrientService {
 
                 boolean isInterested = false;
                 for (InterestNutrient interestNutrient : interestNutrientList) {
-                    if(interestNutrient.getNutrient().getNutrientId() == nutrient.getNutrientId()) isInterested = true;
+                    if(interestNutrient.getNutrient().getNutrientId().equals(nutrient.getNutrientId())) isInterested = true;
                 }
                 nutrientByIngreidientDto.setInterested(isInterested);
 
@@ -67,7 +68,7 @@ public class NutrientService {
 
                 boolean isInterested = false;
                 for (InterestNutrient interestNutrient : interestNutrientList) {
-                    if(interestNutrient.getNutrient().getNutrientId() == nutrient.getNutrientId()) isInterested = true;
+                    if(interestNutrient.getNutrient().getNutrientId().equals(nutrient.getNutrientId())) isInterested = true;
                 }
                 nutrientByIngreidientDto.setInterested(isInterested);
 
@@ -103,38 +104,29 @@ public class NutrientService {
 
         if(redisUtil.hasNutrient(nID,nID)){
             for(Object key : redisUtil.getKeys(nID)){
-                if(!key.toString().equals(nID) && !key.toString().equals("function")) {
+                if(!key.toString().equals(nID) && !key.toString().equals(FUNCTION)) {
                     // 성분별 함량
                     ResponseNutrientIngredientInfoDto nutrienIngredientInfo = new ResponseNutrientIngredientInfoDto(key.toString(), redisUtil.getNutrientInfo(nID, key.toString()));
 
                     // 일일 권장량
                     String IID = INGREDIENT_NAME + key;
                     String intake = redisUtil.getIntake(IID);
-                    nutrienIngredientInfo.setIntake(intake);
 
+                    nutrienIngredientInfo.setIntake(intake);
                     nutrientIngredientInfoList.add(nutrienIngredientInfo);
                 }
             }
 
             // 기능
-            if(redisUtil.hasNutrient(nID,"function")){
-
-                String function = redisUtil.getNutrientInfo(nID, String.valueOf(new StringBuilder("function")));
+            if(redisUtil.hasNutrient(nID,FUNCTION)){
+                String function = redisUtil.getNutrientInfo(nID, String.valueOf(new StringBuilder(FUNCTION)));
                 StringTokenizer stringTokenizer = new StringTokenizer(function,COMMA);
                 while(stringTokenizer.hasMoreTokens()){
                     functionList.add(stringTokenizer.nextToken());
                 }
             }else{
-                StringBuilder functionString = new StringBuilder();
-
-                nutrientFunctionRepository.findNutrientFunctionByNutrient_NutrientId(nutrientDetail.getNutrientId()).stream()
-                        .forEach(nutrientFunction -> {
-                            functionString.append(nutrientFunction.getFunction().getFunctionName()).append(COMMA);
-                            functionList.add(nutrientFunction.getFunction().getFunctionName());
-                        });
-
-                functionString.delete(functionString.length()-1, functionString.length());
-                redisUtil.getHash(nID).put("function",functionString);
+                Map<String,Object> map = redisUtil.getHash(nID);
+                functionList = getFuntion(nutrientDetail.getNutrientId(),map, nID);
             }
 
         } else {
@@ -143,38 +135,47 @@ public class NutrientService {
             nutrientIngredientRepository.findNutrientIngredientsByNutrient_NutrientId(nutrientDetail.getNutrientId())
                     .stream()
                     .forEach(nutrientIngredient -> {
-                        map.put(nutrientIngredient.getIngredient().getIngredientName(), nutrientIngredient.getIngredientAmount());
+                        if(nutrientIngredient.getIngredientAmount() != null) {
+                            map.put(nutrientIngredient.getIngredient().getIngredientName(), nutrientIngredient.getIngredientAmount());
 
-                        //일일 권장량
-                        String IID = INGREDIENT_NAME + nutrientIngredient.getIngredient().getIngredientName();
-                        String intake = redisUtil.getIntake(IID);
-                        if(intake == null){
-                            Ingredient ingredient = ingredientRepository.findByIngredientId(nutrientIngredient.getIngredient().getIngredientId());
-                            intake = ingredient.getIngredientRecommendedIntakeStart() + "~" + ingredient.getIngredientRecommendedIntakeEnd();
-                            redisUtil.setData(IID,intake);
+                            //일일 권장량
+                            String IID = INGREDIENT_NAME + nutrientIngredient.getIngredient().getIngredientName();
+                            String intake = redisUtil.getIntake(IID);
+                            if(intake == null){
+                                Ingredient ingredient = ingredientRepository.findByIngredientId(nutrientIngredient.getIngredient().getIngredientId());
+                                intake = ingredient.getIngredientRecommendedIntakeStart() + "~" + ingredient.getIngredientRecommendedIntakeEnd();
+                                redisUtil.setData(IID,intake);
+                            }
+                            ResponseNutrientIngredientInfoDto nutrienIngredientInfo = new ResponseNutrientIngredientInfoDto(nutrientIngredient);
+                            nutrienIngredientInfo.setIntake(intake);
+
+                            nutrientIngredientInfoList.add(nutrienIngredientInfo);
                         }
-                        ResponseNutrientIngredientInfoDto nutrienIngredientInfo = new ResponseNutrientIngredientInfoDto(nutrientIngredient);
-                        nutrienIngredientInfo.setIntake(intake);
-
-                        nutrientIngredientInfoList.add(nutrienIngredientInfo);
                     });
 
             //기능
-            StringBuilder functionString = new StringBuilder();
-
-            nutrientFunctionRepository.findNutrientFunctionByNutrient_NutrientId(nutrientDetail.getNutrientId()).stream()
-                    .forEach(nutrientFunction -> {
-                        functionString.append(nutrientFunction.getFunction().getFunctionName()).append(COMMA);
-                        functionList.add(nutrientFunction.getFunction().getFunctionName());
-                    });
-
-            functionString.delete(functionString.length()-1, functionString.length());
-            map.put("function",functionString.toString());
-
-            redisUtil.cacheNutrient(nID, map);
+            functionList = getFuntion(nutrientDetail.getNutrientId(),map, nID);
         }
 
         nutrientDetail.setIngredientList(nutrientIngredientInfoList);
         nutrientDetail.setFunctionList(functionList);
+    }
+
+    private List<String> getFuntion(long nutrientId, Map<String,Object> map, String nID){
+        StringBuilder functionString = new StringBuilder();
+        List<String> functionList = new ArrayList<>();
+
+        nutrientFunctionRepository.findNutrientFunctionByNutrient_NutrientId(nutrientId).stream()
+                .forEach(nutrientFunction -> {
+                    functionString.append(nutrientFunction.getFunction().getFunctionName()).append(COMMA);
+                    functionList.add(nutrientFunction.getFunction().getFunctionName());
+                });
+
+        functionString.delete(functionString.length()-1, functionString.length());
+        map.put(FUNCTION,functionString.toString());
+
+        redisUtil.cacheNutrient(nID, map);
+
+        return functionList;
     }
 }
