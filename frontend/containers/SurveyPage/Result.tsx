@@ -49,7 +49,6 @@ const Result = () => {
               {item.ingredientName}
             </button>
           ))}
-
         <ItemList
           itemList={data[ingredientId]?.nutrientDtoLinkedList}
         />

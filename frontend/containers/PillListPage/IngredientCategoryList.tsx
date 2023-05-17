@@ -3,6 +3,7 @@ import { itemDataList } from '@/apis/data';
 import ItemList from '@/components/list/ItemList';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { RotatingLines } from 'react-loader-spinner';
 
 const ingredientDataList: string[] = [
   '칼슘',
@@ -72,7 +73,19 @@ const IngredientCategoryList = () => {
           </button>
         ))}
       </div>
-      <ItemList itemList={itemData} />
+      {itemData.length != 0 ? (
+        <ItemList itemList={itemData} />
+      ) : (
+        <div className="flex justify-center pt-6">
+          <RotatingLines
+            strokeColor="grey"
+            strokeWidth="5"
+            animationDuration="0.75"
+            width="48"
+            visible={true}
+          />
+        </div>
+      )}
     </div>
   );
 };

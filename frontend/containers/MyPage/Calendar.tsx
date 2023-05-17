@@ -78,6 +78,7 @@ export const MyCalendar = (): React.ReactElement => {
             setValue(value);
           }} // useState로 포커스 변경 시 현재 날짜 받아오기
           onClickDay={(date) => {
+            api.checkPill(userId).then((res) => console.log(res));
             console.log(formatDate2(date));
           }}
           formatDay={(locale, date: Date): string => formatDate(date)}
