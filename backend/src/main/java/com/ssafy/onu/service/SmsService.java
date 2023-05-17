@@ -95,6 +95,10 @@ public class SmsService {
                     Auth authEntity = auth.get();
                     authEntity.changeUserPhoneNumber(phoneAuthDto.getPhone());
                     authRepository.save(authEntity);
+
+                    //번호인증여부 N -> Y로 바꾸기
+                    user.get().checkPhoneCheckYn();
+                    userRepository.save(user.get());
                 }
             }
             //redis에서 삭제처리

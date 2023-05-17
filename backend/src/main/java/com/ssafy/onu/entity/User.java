@@ -32,6 +32,9 @@ public class User extends BaseEntity{
     @Column(length = 50)
     private String userNickname;
 
+    @Column(length = 1)
+    private String userPhoneCheckYn;
+
     @OneToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "user_auth_id")
     private Auth userAuthId;
@@ -64,5 +67,9 @@ public class User extends BaseEntity{
     public void updateUserInfo(ReqUserInfoDto reqUserInfoDto){
         this.userNickname = reqUserInfoDto.getUserNickname();
         this.userGender = Gender.valueOf(reqUserInfoDto.getUserGender());
+    }
+
+    public void checkPhoneCheckYn() {
+        this.userPhoneCheckYn = "Y";
     }
 }

@@ -19,6 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.*;
+import retrofit2.http.Path;
 
 import javax.validation.Valid;
 import java.security.Principal;
@@ -437,5 +438,19 @@ public class MypageController {
         status = HttpStatus.OK;
 
         return new ResponseEntity<>(resultMap, status);
+    }
+
+    @ApiOperation(value = "번호인증 상태 확인", notes = "현재 사용자가 번호인증을 완료한 사용자인지 확인합니다.", response = Map.class)
+    @GetMapping("/phone/check/{userId}")
+    public ResponseEntity<Map<String, Object>> checkPhoneAuthCode(@ApiParam(value = "회원 아이디") @PathVariable int userId) {
+        Map<String, Object> resultMap = new HashMap<>();
+
+        if(mypageService.checkPhoneCheckYn(userId)) {
+            resultMap.put(MESSAGE, SUCCESS);
+            return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.OK);
+        } else {
+            resultMap.put(MESSAGE, FAIL);
+            return new ResponseEntity<Map<String, Object>>(resultMap, HttpStatus.BAD_REQUEST);
+        }
     }
 }
