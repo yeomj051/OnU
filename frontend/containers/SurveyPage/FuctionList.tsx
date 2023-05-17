@@ -68,12 +68,12 @@ const FunctionList = (props: {
     const updatedFunctions = clickFunctions
       ? [...clickFunctions]
       : [];
-    if (updatedFunctions.includes(index + 1)) {
+    if (updatedFunctions.includes((index + 1).toString())) {
       // 이미 선택된 기능일 경우 제거
       updatedFunctions.splice(index + 1, 1);
     } else {
       // 선택되지 않은 기능일 경우 추가
-      updatedFunctions.push(index + 1);
+      updatedFunctions.push((index + 1).toString());
     }
 
     setClickFunctions(updatedFunctions); // 업데이트된 배열을 설정합니다.
@@ -89,7 +89,7 @@ const FunctionList = (props: {
             onClick={() => handleButtonClick(index)}
             className={`btn btn-xl m-2 rounded-2xl border-none text-[#424B5A] ${
               clickFunctions !== undefined &&
-              clickFunctions.includes(index + 1)
+              clickFunctions.includes((index + 1).toString())
                 ? 'bg-[#90B5EA] text-white'
                 : 'bg-[#D8EDFF] text-[#424B5A] hover:bg-[#90B5EA] hover:text-white active:bg-[#90B5EA] active:text-white'
             } text-xs w-24 h-20`}

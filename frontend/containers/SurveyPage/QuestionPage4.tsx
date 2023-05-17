@@ -21,7 +21,7 @@ const QuestionPage4: React.FC<QuestionProps> = ({
   ) => {
     const { value } = event.target;
     setKeyword(event.target.value);
-    onAnswer(parseInt(value));
+    onAnswer(value);
   };
 
   return (

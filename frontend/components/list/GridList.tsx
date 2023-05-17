@@ -1,12 +1,6 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
-import api from '@/apis/config';
-import useUserStore from '@/store/userStore';
-import { AxiosError } from 'axios';
 
 const ItemList = (props: {
   itemList: Array<Item>;
@@ -14,50 +8,48 @@ const ItemList = (props: {
   // const itemDataList = props.data;
   const router = useRouter();
 
-  const id = useUserStore.getState().user?.id as number;
-
   useEffect(() => {
     console.log(props.itemList);
   }, [props]);
 
-  const handleInterest = (itemId: number): void => {
-    if (window.confirm('관심 영양제로 추가하시겠습니까?')) {
-      try {
-        api.addInterestPill(id, itemId);
-        router.reload();
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
+  // const handleInterest = (itemId: number): void => {
+  //   if (window.confirm('관심 영양제로 추가하시겠습니까?')) {
+  //     try {
+  //       api.addInterestPill(id, itemId);
+  //       router.reload();
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
 
-  const removeInterest = (itemId: number): void => {
-    if (window.confirm('관심 영양제 목록에서 제거하시겠습니까?')) {
-      try {
-        api.deleteInterestPill(id, itemId);
-        router.reload();
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
+  // const removeInterest = (itemId: number): void => {
+  //   if (window.confirm('관심 영양제 목록에서 제거하시겠습니까?')) {
+  //     try {
+  //       api.deleteInterestPill(id, itemId);
+  //       router.reload();
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
 
-  const handleTaking = (itemId: number): void => {
-    if (window.confirm('복용중인 영양제로 추가하시겠습니까?')) {
-      try {
-        api.addTakingPill(id, itemId).then(() => {
-          alert('추가되었습니다.');
-        });
-      } catch (error: any) {
-        console.log(error);
-        if (error.data.message === 'duplicated') {
-          alert('이미 복용중인 영양제입니다.');
-        } else {
-          alert('등록에 실패했습니다. 다시 시도해주세요');
-        }
-      }
-    }
-  };
+  // const handleTaking = (itemId: number): void => {
+  //   if (window.confirm('복용중인 영양제로 추가하시겠습니까?')) {
+  //     try {
+  //       api.addTakingPill(id, itemId).then(() => {
+  //         alert('추가되었습니다.');
+  //       });
+  //     } catch (error: any) {
+  //       console.log(error);
+  //       if (error.data.message === 'duplicated') {
+  //         alert('이미 복용중인 영양제입니다.');
+  //       } else {
+  //         alert('등록에 실패했습니다. 다시 시도해주세요');
+  //       }
+  //     }
+  //   }
+  // };
 
   return (
     <div className="grid grid-cols-2 space-y-2 gap-4 w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md items-baseline px-8">
