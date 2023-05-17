@@ -10,6 +10,7 @@ type Props = {
   isSelectedComb: (id: number) => void;
   cancle: boolean;
   renew: () => void;
+  newSelectedComb: number | undefined;
 };
 
 type combination = {
@@ -62,6 +63,12 @@ function PillAnalysisCombBox(props: Props): React.ReactElement {
       })
       .catch((err) => console.log(err));
   };
+
+  useEffect(() => {
+    if (props.newSelectedComb != undefined) {
+      setSelectedComb(props.newSelectedComb);
+    }
+  }, [props.newSelectedComb]);
 
   //선택된 조합의 id저장 (하나만 고를 수 있도록)
   const selectCombination = (id: number) => {

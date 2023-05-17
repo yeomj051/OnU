@@ -49,8 +49,9 @@ function PillAnalysisComb(props: Props): React.ReactElement {
     event: React.MouseEvent,
   ): Promise<void> => {
     //이미 선택되어있는 상태였다면 x를 눌러 삭제했을 때 seledtedList에서 제거해줘야 함 (main에서 다시 api 호출하고 데이터 리렌더링되면 상관없음)
-    // if (isSelected) {
-    // }
+    if (isSelected) {
+      setIsSelected(false);
+    }
 
     //삭제 api 연결
     const id: number = useUserStore.getState().user?.id as number;

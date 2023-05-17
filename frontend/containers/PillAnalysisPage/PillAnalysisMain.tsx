@@ -46,6 +46,7 @@ function PillAnalysisMain() {
   // props로 deleteAnything 값 바꾸는 함수 자식들에게 내려주고, x 눌렀을 때, 변동이 생긴 값이 올라오면 재렌더링
   const [deleteAnything, setDeleteAnything] =
     useState<boolean>(false);
+  const [newSelectedComb, setNewSelectedComb] = useState<number>();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -54,8 +55,6 @@ function PillAnalysisMain() {
       );
       if ((userData as number) !== undefined) setUserId(userData);
     }
-
-    // console.log(combinations);
   }, []);
 
   const reRendering = () => {
@@ -65,12 +64,15 @@ function PillAnalysisMain() {
   //선택된 조합 id 저장하는 함수 ( 그래프용 )
   const isSelectedComb = (id: number) => {
     setShowchart(id);
+    //조합 클릭하면 복용중/관심 css 없애줘야하기때문에 setCancle
+    setCancle(true);
   };
 
   //조합 저장하는 함수 => zustand에 저장되어 있는 리스트를 서버에 보내준다.
   const saveCombination = async () => {
     const id: number = useUserStore.getState().user?.id as number;
 
+    //존재하는 조합이면 추가하지 않도록 => 무한렌더링때문에 보류
     // isExist();
 
     await api.saveComb(id, combList).then((res) => console.log(res));
@@ -89,6 +91,7 @@ function PillAnalysisMain() {
         setShowchart(newCombId + 1);
         console.log(newCombId + 1);
       }
+      setNewSelectedComb(newCombId + 1);
     }
   };
 
@@ -181,6 +184,7 @@ function PillAnalysisMain() {
               isSelectedComb={isSelectedComb}
               cancle={cancle}
               renew={renew}
+              newSelectedComb={newSelectedComb}
             />
           </div>
         </div>
