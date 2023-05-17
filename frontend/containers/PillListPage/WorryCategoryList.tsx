@@ -73,6 +73,7 @@ const WorryCategoryList = () => {
     Math.ceil(Math.random() * 15),
   );
   const [userId, setUserId] = useState<number>(0);
+  const [activeButton, setActiveButton] = useState<number>(0); // New st
 
   useEffect(() => {
     if (localStorage.getItem('userData')) {
@@ -98,8 +99,15 @@ const WorryCategoryList = () => {
         {worryDataList.map((item, index) => (
           <button
             key={index}
-            className="btn btn-xl m-2 bg-[#D8EDFF] rounded-2xl border-none text-[#424B5A]  active:bg-[#90B5EA] active:text-[#FFFFFF] hover:bg-[#90B5EA] hover:text-[#FFFFFF] whitespace-pre text-xs w-20 h-16 sm:w-24 sm:h-20"
-            onClick={() => setFunctionId(index + 1)}
+            className={`btn btn-xl m-2 rounded-2xl border-none text-[#424B5A] whitespace-pre text-xs w-20 h-16 sm:w-24 sm:h-20 ${
+              activeButton === index
+                ? 'bg-[#90B5EA] text-[#FFFFFF]'
+                : 'bg-[#D8EDFF] hover:bg-[#90B5EA] hover:text-[#FFFFFF]'
+            }`}
+            onClick={() => {
+              setFunctionId(index + 1);
+              setActiveButton(index); // Update the active button
+            }}
           >
             <div className="flex flex-col items-center">
               <img

@@ -38,6 +38,7 @@ const IngredientCategoryList = () => {
     Math.ceil(Math.random() * 16),
   );
   const [userId, setUserId] = useState<number>(0);
+  const [activeButton, setActiveButton] = useState<number>(0); // New state
 
   useEffect(() => {
     if (localStorage.getItem('userData')) {
@@ -66,8 +67,15 @@ const IngredientCategoryList = () => {
         {ingredientDataList.map((item, index) => (
           <button
             key={index}
-            className="btn btn-sm m-1 bg-[#D8EDFF] rounded-xl border-none text-[#424B5A] active:bg-[#90B5EA] active:text-[#FFFFFF] hover:bg-[#90B5EA] hover:text-[#FFFFFF]"
-            onClick={() => setIngredientId(index + 1)}
+            className={`btn btn-sm m-1 rounded-xl border-none text-[#424B5A] ${
+              activeButton === index
+                ? 'bg-[#90B5EA] text-[#FFFFFF]'
+                : 'bg-[#D8EDFF] hover:bg-[#90B5EA] hover:text-[#FFFFFF]'
+            }`}
+            onClick={() => {
+              setIngredientId(index + 1);
+              setActiveButton(index); // Update the active button
+            }}
           >
             {item}
           </button>
