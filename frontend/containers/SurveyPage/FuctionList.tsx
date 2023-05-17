@@ -38,14 +38,14 @@ const maleFunctionName: string[] = [
   '정자 운동성',
 ];
 
-const FunctionList = ({ gender }) => {
+const FunctionList = (props: { gender: string }) => {
   const [femaleCheck, setFemaleCheck] = useState(false);
   const [maleCheck, setMaleCheck] = useState(false);
-  const [functionName, setFunctionName] = useState([]);
-  const [clickFunctions, setClickFunctions] = useState([]);
+  const [functionName, setFunctionName] = useState<string[]>([]);
+  const [clickFunctions, setClickFunctions] = useState<string[]>([]);
 
   useEffect(() => {
-    if (gender === 'female') {
+    if (props.gender === 'female') {
       setFemaleCheck(true);
       setMaleCheck(false);
       setFunctionName(femaleFunctionName);
@@ -54,9 +54,9 @@ const FunctionList = ({ gender }) => {
       setFemaleCheck(false);
       setFunctionName(maleFunctionName);
     }
-  }, [gender]);
+  }, [props.gender]);
 
-  const handleButtonClick = (index) => {
+  const handleButtonClick = (index: number) => {
     if (clickFunctions.includes(functionName[index])) {
       // 이미 선택된 기능일 경우 제거
       setClickFunctions((prevFunctions) =>

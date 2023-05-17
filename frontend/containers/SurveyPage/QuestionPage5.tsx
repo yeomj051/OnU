@@ -1,14 +1,7 @@
 // QuestionPage5.tsx
 import React, { useEffect, useState } from 'react';
 
-interface QuestionPage5Props {
-  question: Question;
-  onPreviousPage: () => void;
-  onNextPage: () => void;
-  onAnswer: (answer: string) => void;
-}
-
-const QuestionPage5: React.FC<QuestionPage5Props> = ({
+const QuestionPage5: React.FC<QuestionProps> = ({
   question,
   onPreviousPage,
   onNextPage,

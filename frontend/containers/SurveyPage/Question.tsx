@@ -7,16 +7,18 @@ import QuestionPage3 from './QuestionPage3';
 import QuestionPage4 from './QuestionPage4';
 import QuestionPage5 from './QuestionPage5';
 import QuestionPage6 from './QuestionPage6';
+import Survey from '@/pages/survey';
 
 const Question = () => {
   const [questionList, setQuestionList] = useState<Question[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [answers, setAnswers] = useState<String[]>([]);
+  const [answers, setAnswers] = useState<string[]>([]);
   const [male, setMale] = useState(false);
+  const [userId, setUserId] = useState<number>();
 
   useEffect(() => {
     const storedQuestionList = localStorage.getItem('questionList');
-    if (storedQuestionList) {
+    if (storedQuestionList && userId !== undefined) {
       setQuestionList(JSON.parse(storedQuestionList));
     } else {
       api
@@ -32,9 +34,10 @@ const Question = () => {
           console.error('Error fetching survey questions:', error);
         });
     }
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
+    setUserId(parseInt(localStorage.getItem('userId') as string));
     localStorage.setItem('answers', JSON.stringify(answers));
   }, [answers, male, currentPage]);
 
@@ -42,7 +45,7 @@ const Question = () => {
     // 성별이 남자일 때 3번 질문일 경우 다음 페이지로 이동
     if (currentPage === 2 && answers[2] === 'male') {
       setMale(true);
-      answers[3] = false;
+      answers[3] = 'No';
       setCurrentPage((prevPage) => prevPage + 2);
     } else if (answers[2] !== 'male') {
       setMale(false);
@@ -70,8 +73,8 @@ const Question = () => {
 
   const handleSubmit = () => {
     // 문제 번호에 맞는 문제 키워드로 바꿔주기
-    const formattedAnswers = {
-      age: answers[1], // 나이에 대한 답변
+    const formattedAnswers: Survey = {
+      age: parseInt(answers[1]), // 나이에 대한 답변
       gender: answers[2], // 성별에 대한 답변
       pregnant: answers[3] === 'Yes' ? true : false, // 임신 여부에 대한 답변
       takingNutrientList: [answers[4]], // 복용 중인 영양제에 대한 답변 (하나의 영양제만 선택 가능)
@@ -82,7 +85,7 @@ const Question = () => {
 
     // 서버로 모든 답변 전송
     api
-      .submitAnswers(formattedAnswers)
+      .getSurveyResult(userId as number, formattedAnswers)
       .then((response) => {
         console.log('Answers submitted successfully:', response.data);
       })
@@ -100,7 +103,6 @@ const Question = () => {
       {currentPage === 1 && (
         <QuestionPage1
           question={questionList[0]}
-          currentQuestionIndex={currentPage} // currentQuestionIndex 전달
           onNextPage={handleNextPage}
           onAnswer={handleAnswer}
           answers={answers} // answers 상태 전달
@@ -109,7 +111,6 @@ const Question = () => {
       {currentPage === 2 && (
         <QuestionPage2
           question={questionList[1]}
-          currentQuestionIndex={currentPage} // currentQuestionIndex 전달
           onPreviousPage={handlePreviousPage}
           onNextPage={handleNextPage}
           onAnswer={handleAnswer}
@@ -119,7 +120,6 @@ const Question = () => {
       {male === false && currentPage === 3 && (
         <QuestionPage3
           question={questionList[2]}
-          currentQuestionIndex={currentPage} // currentQuestionIndex 전달
           onPreviousPage={handlePreviousPage}
           onNextPage={handleNextPage}
           onAnswer={handleAnswer}
@@ -129,7 +129,6 @@ const Question = () => {
       {currentPage === 4 && (
         <QuestionPage4
           question={questionList[3]}
-          currentQuestionIndex={currentPage} // currentQuestionIndex 전달
           onPreviousPage={handlePreviousPage}
           onNextPage={handleNextPage}
           onAnswer={handleAnswer}
@@ -139,7 +138,6 @@ const Question = () => {
       {currentPage === 5 && (
         <QuestionPage5
           question={questionList[4]}
-          currentQuestionIndex={currentPage} // currentQuestionIndex 전달
           onPreviousPage={handlePreviousPage}
           onNextPage={handleNextPage}
           onAnswer={handleAnswer}
@@ -149,7 +147,6 @@ const Question = () => {
       {currentPage === 6 && (
         <QuestionPage6
           question={questionList[5]}
-          currentQuestionIndex={currentPage} // currentQuestionIndex 전달
           onPreviousPage={handlePreviousPage}
           onSubmit={handleSubmit}
           onAnswer={handleAnswer}

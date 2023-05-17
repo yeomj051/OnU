@@ -1,13 +1,7 @@
 // QuestionPage1.tsx
 import React, { useEffect, useState } from 'react';
 
-interface QuestionPage1Props {
-  question: Question;
-  onNextPage: () => void;
-  onAnswer: (answer: string) => void;
-}
-
-const QuestionPage1: React.FC<QuestionPage1Props> = ({
+const QuestionPage1: React.FC<QuestionProps> = ({
   question,
   onNextPage,
   onAnswer,
@@ -33,7 +27,8 @@ const QuestionPage1: React.FC<QuestionPage1Props> = ({
   }, []);
 
   const isValidInput = keyword !== '' && /^\d+$/.test(keyword);
-  const isWithinRange = keyword >= 0 && keyword <= 120;
+  const isWithinRange =
+    parseInt(keyword) >= 0 && parseInt(keyword) <= 120;
 
   return (
     <div>
