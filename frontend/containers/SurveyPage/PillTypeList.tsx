@@ -20,7 +20,7 @@ const PillTypeList = (props: {
   onTypeClick: (typenname: any) => void;
   answers: any;
 }) => {
-  const [clickTypes, setClickTypes] = useState<string[]>([]);
+  const [clickTypes, setClickTypes] = useState<number[]>([]);
 
   useEffect(() => {
     setClickTypes(props.answers[5]);
@@ -29,12 +29,12 @@ const PillTypeList = (props: {
   const handleButtonClick = (index: number) => {
     const updatedTypes = clickTypes ? [...clickTypes] : [];
 
-    if (updatedTypes.includes((index + 1).toString())) {
+    if (updatedTypes.includes(index + 1)) {
       // 이미 선택된 기능일 경우 제거
       updatedTypes.splice(index + 1, 1);
     } else {
       // 선택되지 않은 기능일 경우 추가
-      updatedTypes.push((index + 1).toString());
+      updatedTypes.push(index + 1);
     }
     setClickTypes(updatedTypes); // 업데이트된 배열을 설정합니다
     props.onTypeClick(updatedTypes); // 최신 배열을 상위 컴포넌트로 전달합니다.
@@ -48,7 +48,7 @@ const PillTypeList = (props: {
             onClick={() => handleButtonClick(index)}
             className={`btn btn-xl rounded-2xl border-none text-[#424B5A] ${
               clickTypes !== undefined &&
-              clickTypes.includes((index + 1).toString())
+              clickTypes.includes(index + 1)
                 ? 'bg-[#90B5EA] text-white'
                 : 'bg-[#D8EDFF] text-[#424B5A] hover:bg-[#90B5EA] hover:text-white active:bg-[#90B5EA] active:text-white'
             } text-xs w-24 h-20`}
