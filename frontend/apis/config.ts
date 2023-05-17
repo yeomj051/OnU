@@ -322,8 +322,8 @@ const api = {
   },
 
   //설문용 질문리스트 호출
-  async nextSurvey(userId: number) {
-    return await authAPI(`/recommend/${userId}`, {
+  async getSurvey() {
+    return await authAPI(`/survey`, {
       method: 'GET',
     });
   },
