@@ -39,12 +39,12 @@ const Header = (): React.ReactElement => {
     //검색어가 없거나 공백일 경우 검색하지 않음
     if (searchKeyword.trim() === '') {
       setSearchKeyword('');
-      setIsClicked(!isClicked);
+      setIsClicked(true);
       return;
     } else {
       setSearchKeyword('');
-      setIsClicked(!isClicked);
-      router.push(`/search/result?query=${searchKeyword}`);
+      setIsClicked(true);
+      router.push(`/search?query=${searchKeyword}`);
     }
 
     //next/router(Next.js 13이전 버전)에서 사용하던 방식
@@ -62,12 +62,12 @@ const Header = (): React.ReactElement => {
       case 'Enter':
         if (searchKeyword.trim() === '') {
           setSearchKeyword('');
-          setIsClicked(!isClicked);
+          setIsClicked(true);
           return;
         } else {
-          setIsClicked(!isClicked);
+          setIsClicked(true);
           setSearchKeyword('');
-          router.push(`/search/result?query=${searchKeyword}`);
+          router.push(`/search?query=${searchKeyword}`);
         }
         break;
     }
