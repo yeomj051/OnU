@@ -4,6 +4,7 @@ import {
   CheckIcon,
   ChevronUpDownIcon,
 } from '@heroicons/react/20/solid';
+import api from '@/apis/config';
 
 const times = [
   { name: '00:00' },
@@ -56,11 +57,13 @@ const times = [
   { name: '23:30' },
 ];
 
-export default function TimePicker() {
+export default function TimePicker(props: { onClose: () => void }) {
   const [selected, setSelected] = useState(times[0]);
 
   const handleSubmit = () => {
-    return;
+    api.addAlarm(selected.name);
+    console.log(selected.name);
+    props.onClose();
   };
   return (
     <div className="flex items-baseline space-x-2">

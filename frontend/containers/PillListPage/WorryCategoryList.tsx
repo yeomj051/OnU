@@ -118,7 +118,7 @@ const WorryCategoryList = () => {
       )
       .then((res) => {
         console.log(res.data);
-        setItemData(res.data.reviewListByNutrient);
+        setItemData(res.data.nutrientListByFunctionList);
       });
   }, [userId, functionId]);
 
