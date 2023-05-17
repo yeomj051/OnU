@@ -3,6 +3,7 @@ import Calendar from 'react-calendar';
 import api from '@/apis/config';
 import useUserStore from '@/store/userStore';
 import { AxiosResponse } from 'axios';
+import TimePicker from '@/components/common/TimePicker';
 
 export const MyCalendar = (): React.ReactElement => {
   const [value, setValue] = useState<Date>(new Date());
@@ -69,6 +70,7 @@ export const MyCalendar = (): React.ReactElement => {
       <p className="ml-2 text-sm font-base text-[black] mb-2 text-left">
         현재 {streak}일 연속 복용중!
       </p>
+      <TimePicker />
       {isClient && (
         <Calendar
           onChange={() => {
