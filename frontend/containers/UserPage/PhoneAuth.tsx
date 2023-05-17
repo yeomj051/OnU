@@ -6,7 +6,7 @@ import api from '@/apis/config';
 const PhoneAuth = () => {
   const [phoneNumber, setPhoneNumber] = React.useState<string>(''); //전화번호
   const [authCode, setAuthCode] = React.useState<string>(''); //인증번호
-  const [userId, setUserId] = React.useState<number>(0);
+  const [userId, setUserId] = React.useState<number>();
   const [isMessageSent, setIsMessageSent] =
     React.useState<boolean>(false); //인증 메시지 전송 여부
   const [time, setTime] = React.useState<number>(180);
@@ -15,9 +15,12 @@ const PhoneAuth = () => {
   const router = useRouter();
 
   React.useEffect((): void => {
+    const id = localStorage.getItem('userId');
     const authNum: string | null = localStorage.getItem(
       'isPhoneAuthenticated',
     );
+
+    if (id !== null) setUserId(parseInt(id));
 
     if (authNum) {
       setIsAuth(Number.parseInt(authNum));
@@ -52,46 +55,50 @@ const PhoneAuth = () => {
   };
 
   const verifyPhoneNumber = (): void => {
-    api
-      .sendVerificationCode(userId, phoneNumber)
+    if (userId !== undefined) {
+      api
+        .sendVerificationCode(userId, phoneNumber)
 
-      .then((res: any): void => {
-        console.log(res);
-        if (res.status === 200) {
-          alert('인증번호가 전송되었습니다.');
-          setIsMessageSent(true);
-        } else {
-          throw new Error();
-        }
-      })
-      .catch((): void => {
-        alert('알 수 없는 오류가 발생했습니다. 다시 시도해주세요.');
-        setIsMessageSent(false);
-      });
+        .then((res: any): void => {
+          console.log(res);
+          if (res.status === 200) {
+            alert('인증번호가 전송되었습니다.');
+            setIsMessageSent(true);
+          } else {
+            throw new Error();
+          }
+        })
+        .catch((): void => {
+          alert('알 수 없는 오류가 발생했습니다. 다시 시도해주세요.');
+          setIsMessageSent(false);
+        });
+    }
   };
 
   const verifyAuthNumber = (): void => {
-    api
-      .verifyPhoneNumber(userId, phoneNumber, authCode)
-      .then((res: any): void => {
-        console.log(res);
-        if (res.status === 200) {
-          alert('인증이 완료되었습니다.');
+    if (userId !== undefined) {
+      api
+        .verifyPhoneNumber(userId, phoneNumber, authCode)
+        .then((res: any): void => {
+          console.log(res);
+          if (res.status === 200) {
+            alert('인증이 완료되었습니다.');
+            setIsMessageSent(false);
+            router.push('/mypage');
+            localStorage.setItem('isPhoneAuth', 'true');
+            setPhoneNumber('');
+          } else {
+            throw new Error();
+          }
+        })
+        .catch((): void => {
+          alert('인증에 실패했습니다. 다시 시도해주세요');
           setIsMessageSent(false);
-          router.push('/mypage');
-          localStorage.setItem('isPhoneAuth', 'true');
-          setPhoneNumber('');
-        } else {
-          throw new Error();
-        }
-      })
-      .catch((): void => {
-        alert('인증에 실패했습니다. 다시 시도해주세요');
-        setIsMessageSent(false);
-      })
-      .finally((): void => {
-        setAuthCode('');
-      });
+        })
+        .finally((): void => {
+          setAuthCode('');
+        });
+    }
   };
 
   const reVerify = (): void => {
