@@ -32,14 +32,15 @@ const QuestionPage1: React.FC<QuestionProps> = ({
 
   return (
     <div>
-      <div className=" place-itmes-center">
+      <div className="flex justify-center items-center h-full">
         <div className="flex flex-col items-center">
-          <div className="form-control w-full max-w-xs">
-            <label className="label">
-              <span className="label-text">
-                {question?.surveyQuestion}
-              </span>
-            </label>
+          <div className="flex flex-col items-center m-10">
+            <span className="text-2xl font-black">
+              나이가 어떻게 되시나요?
+            </span>
+            <span className="text-sm text-blue-600/50 mb-4 font-bold">
+              {question?.surveyQuestion}
+            </span>
             <input
               type="text"
               value={keyword}
@@ -61,14 +62,14 @@ const QuestionPage1: React.FC<QuestionProps> = ({
                 </span>
               )}
             </label>
+            <button
+              onClick={onNextPage}
+              disabled={!isValidInput || !isWithinRange}
+              className="btn btn-primary btn-sm"
+              >
+              다음
+            </button>
           </div>
-          <button
-            onClick={onNextPage}
-            disabled={!isValidInput || !isWithinRange}
-            className="btn btn-primary btn-sm"
-          >
-            다음
-          </button>
         </div>
       </div>
     </div>

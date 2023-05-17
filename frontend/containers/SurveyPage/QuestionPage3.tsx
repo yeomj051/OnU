@@ -26,43 +26,54 @@ const QuestionPage3: React.FC<QuestionProps> = ({
 
   return (
     <div>
-      <p>{question.surveyQuestion}</p>
-      <div className="flex justify-between mb-4">
-        <span className="pl-1 font-bold">임신 여부</span>
-        <div className="flex space-x-2">
-          <div className="flex flex-row space-x-1">
-            <input
-              value="Yes"
-              onChange={handleAnswerChange}
-              type="radio"
-              name="radio-2"
-              className="radio radio-info"
-              checked={pregnant === 'Yes'}
-            />
-            <span>예</span>
+      <div className="flex flex-col items-center m-10">
+        <span className="text-2xl font-black">
+          임산부 혹은 수유 중이신가요?
+        </span>
+        <span className="text-sm text-blue-600/50 mb-4 font-bold">
+          {question.surveyQuestion}
+        </span>
+        <div className="flex flex-row my-2">
+          <input
+            value="Yes"
+            onChange={handleAnswerChange}
+            type="radio"
+            name="radio-6"
+            className="radio radio-warning"
+            checked={pregnant === 'Yes'}
+          />
+          <span>예</span>
+        </div>
+        <div className="flex flex-row my-2">
+          <input
+            value="No"
+            onChange={handleAnswerChange}
+            type="radio"
+            name="radio-6"
+            className="radio radio-warning"
+            checked={pregnant === 'No'}
+          />
+          <span>아니오</span>
+        </div>
+        <div className="flex space-x-4 my-2">
+          <div>
+            <button
+              onClick={onPreviousPage}
+              className="btn btn-primary btn-sm"
+            >
+              이전
+            </button>
           </div>
-          <div className="flex flex-row space-x-1">
-            <input
-              value="No"
-              onChange={handleAnswerChange}
-              type="radio"
-              name="radio-2"
-              className="radio radio-info"
-              checked={pregnant === 'No'}
-            />
-            <span>아니오</span>
+          <div>
+            <button
+              onClick={onNextPage}
+              className="btn btn-primary btn-sm"
+            >
+              다음
+            </button>
           </div>
         </div>
       </div>
-      <button
-        onClick={onPreviousPage}
-        className="btn btn-primary btn-sm"
-      >
-        이전
-      </button>
-      <button onClick={onNextPage} className="btn btn-primary btn-sm">
-        다음
-      </button>
     </div>
   );
 };

@@ -82,7 +82,7 @@ const FunctionList = (props: {
 
   return (
     <div>
-      <div id="list" className="flex flex-wrap mt-4 ml-4">
+      <div id="list" className="grid grid-cols-3 mx-10 gap-1">
         {functionName.map((item, index) => (
           <button
             key={index}
