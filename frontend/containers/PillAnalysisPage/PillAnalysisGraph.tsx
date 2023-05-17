@@ -191,10 +191,9 @@ function PillAnalysisGraph(props: Props) {
     //   <Bar options={options} data={data} className=" bg-red-100" />
     // </div>
     <div>
-      <div className="bg-white px-5 py-30 grid grid-cols-6 rounded-lg mt-3 min-h-[140px]">
-        <div className="grid content-center col-span-1">영양성분</div>
-        <div className="col-span-5 mt-5">
-          <div className="flex flex-row-reverse my-1">
+      <div className="bg-white px-5 py-30 rounded-lg mt-3 min-h-[140px]">
+        <div className="mt-5">
+          <div className="flex flex-row-reverse my-1 pt-4">
             <div className="flex items-center mx-1">
               <Image
                 src={redCircle}
