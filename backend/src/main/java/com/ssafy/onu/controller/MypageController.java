@@ -5,8 +5,6 @@ import com.ssafy.onu.dto.request.ReqCombinationDto;
 import com.ssafy.onu.dto.request.ReqReviewCreateFormDto;
 import com.ssafy.onu.dto.request.ReqUserInfoDto;
 import com.ssafy.onu.dto.response.*;
-import com.ssafy.onu.entity.*;
-import com.ssafy.onu.repository.UserRepository;
 import com.ssafy.onu.service.InterestNutrientService;
 import com.ssafy.onu.service.MypageService;
 import com.ssafy.onu.service.ReviewService;
@@ -17,9 +15,7 @@ import io.swagger.annotations.ApiParam;
 import lombok.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StopWatch;
 import org.springframework.web.bind.annotation.*;
-import retrofit2.http.Path;
 
 import javax.validation.Valid;
 import java.security.Principal;
