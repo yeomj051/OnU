@@ -47,7 +47,7 @@ const api = {
     userId: number,
     phone: string,
   ): Promise<AxiosResponse> {
-    return await authAPI(`/user/sms`, {
+    return await baseAPI(`/user/sms`, {
       method: 'POST', //GET?
       data: {
         userId,
@@ -63,7 +63,7 @@ const api = {
     phone: string,
     authCode: string,
   ): Promise<AxiosResponse> {
-    return await authAPI(`/user/phone`, {
+    return await baseAPI(`/user/phone`, {
       method: 'POST',
       data: {
         authCode,
@@ -387,6 +387,13 @@ const api = {
     healthInfoId: number,
   ): Promise<AxiosResponse> {
     return await authAPI(`/healthinfo/${healthInfoId}`, {
+      method: 'GET',
+    });
+  },
+
+  //전화번호 인증상태 확인
+  async checkAuth(userId: number): Promise<AxiosResponse> {
+    return await baseAPI(`/mypage/phone/check/${userId}`, {
       method: 'GET',
     });
   },

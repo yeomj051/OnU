@@ -40,24 +40,37 @@ const Profile = (): React.ReactElement => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   //캘린더 조회 api 호출
 
+  const checkPhoneAuth = () => {
+    return api.checkAuth(
+      Number.parseInt(localStorage.getItem('userId') as string),
+    );
+  };
+
   const handleAlarm = () => {
-    if (!isAuth) {
-      if (
-        window.confirm(
-          '복용 알림 설정을 위해선 휴대폰 인증이 필요합니다. 이동하시겠습니까?',
+    checkPhoneAuth()
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          setIsModalOpen(true);
+        }
+      })
+      .catch(() => {
+        if (
+          window.confirm(
+            '복용 알림 설정을 위해선 휴대폰 인증이 필요합니다. 이동하시겠습니까?',
+          )
         )
-      )
-        router.push('/user/phoneauth');
-    } else setIsModalOpen(true);
+          router.push('/user/phoneauth');
+      });
   };
 
   useEffect((): void => {
     getUser(
       Number.parseInt(localStorage.getItem('userId') as string),
     );
-    const auth = localStorage.getItem('isPhoneAuth');
-    if (auth === 'true') setIsAuth(true);
-    else setIsAuth(false);
+    // const auth = localStorage.getItem('isPhoneAuth');
+    // if (auth === 'true') setIsAuth(true);
+    // else setIsAuth(false);
   }, [isModalOpen]);
 
   const getUser = async (userId: number): Promise<void> => {
