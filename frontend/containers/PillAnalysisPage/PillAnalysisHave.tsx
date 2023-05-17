@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { haveStore } from '@/store/haveStore';
 import { makeCombinationStore } from '@/store/makeCombinationStore';
@@ -21,48 +21,24 @@ type have = {
 
 type Props = {
   nutrient: have;
+  renew: () => void;
+  cancle: boolean;
 };
 
 function PillAnalysisHave(props: Props) {
-  const data = {
-    message: true,
-    nutrientList: [
-      {
-        nutrientId: 6002000845,
-        nutrientName: '에스론 우먼 골드',
-        nutrientImageUrl:
-          'https://shopping-phinf.pstatic.net/main_1266476/12664762425.8.jpg',
-        nutrientBrand: '하이리빙',
-      },
-      {
-        nutrientId: 6002000845,
-        nutrientName: '에스론 우먼 골드',
-        nutrientImageUrl:
-          'https://shopping-phinf.pstatic.net/main_1266476/12664762425.8.jpg',
-        nutrientBrand: '하이리빙',
-      },
-      {
-        nutrientId: 6002000845,
-        nutrientName: '에스론 우먼 골드',
-        nutrientImageUrl:
-          'https://shopping-phinf.pstatic.net/main_1266476/12664762425.8.jpg',
-        nutrientBrand: '하이리빙',
-      },
-      {
-        nutrientId: 6002000845,
-        nutrientName: '에스론 우먼 골드',
-        nutrientImageUrl:
-          'https://shopping-phinf.pstatic.net/main_1266476/12664762425.8.jpg',
-        nutrientBrand: '하이리빙',
-      },
-    ],
-  };
-
   //이 영양제가 선택되었는지 여부를 저장
   const [isSelected, setIsSelected] = useState<boolean>(false);
 
   const { combList, addSelected, removeSelected } =
     makeCombinationStore();
+
+  useEffect(() => {
+    if (props.cancle) {
+      setIsSelected(false);
+      props.renew();
+    }
+  }, [props.cancle]);
+
   //영양제 선택하면 css 변경 및 선택 영양제 리스트에 id제공여부 결정하는 함수
   const selectThis = (event: React.MouseEvent) => {
     //선택 되어있으면
@@ -77,6 +53,7 @@ function PillAnalysisHave(props: Props) {
 
     setIsSelected(!isSelected);
   };
+
   return (
     <div className="w-1/3 mt-6" onClick={selectThis}>
       <div

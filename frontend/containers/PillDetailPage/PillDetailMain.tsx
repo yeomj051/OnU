@@ -15,6 +15,7 @@ function PillDetailMain(props: {
   const [like, setLike] = useState<boolean>(true);
   const [nutrientList, setNutrientList] = useState<nutrientDetail>();
   const [userId, setUserId] = useState<number>();
+  const [refresh, setRefresh] = useState<boolean>(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -98,6 +99,10 @@ function PillDetailMain(props: {
     }
   };
 
+  const reRendering = () => {
+    setRefresh(!refresh);
+  };
+
   return nutrientList ? (
     <div className="h-[100vh] mt-20">
       <div className="mx-4">
@@ -176,6 +181,7 @@ function PillDetailMain(props: {
             <PillDetailReview
               nutrientId={nutrientList.nutrientId}
               userId={userId}
+              // reRendering={reRendering}
             />
           )}
         </div>

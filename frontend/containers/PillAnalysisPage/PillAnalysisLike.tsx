@@ -18,6 +18,8 @@ type interest = {
 type Props = {
   nutrient: interest;
   reRendering: () => void;
+  cancle: boolean;
+  renew: () => void;
 };
 
 function PillAnalysisLike(props: Props) {
@@ -27,6 +29,13 @@ function PillAnalysisLike(props: Props) {
   const { removeLike } = likeStore();
   //이 영양제가 선택되었는지 여부를 저장
   const [isSelected, setIsSelected] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (props.cancle) {
+      setIsSelected(false);
+      props.renew();
+    }
+  }, [props.cancle]);
 
   //영양제 관심 삭제API 연결해서 관심 삭제
   const deleteLike = async (event: React.MouseEvent) => {

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import PillAnalysisLike from './PillAnalysisLike';
 import { useInterestPill } from '@/apis/hooks';
-import { likeStore } from '@/store/likeStore';
 import api from '@/apis/config';
 
 type Props = {
   userId: number;
   reRendering: () => void;
+  cancle: boolean;
+  renew: () => void;
 };
 
 type interest = {
@@ -22,28 +23,19 @@ function PillAnalysisLikeBox(props: Props) {
   const [interestList, setInterestList] = useState<Array<interest>>(
     [],
   );
-  const { likeList, setAllLikes } = likeStore();
 
   useEffect(() => {
-    getInterestData()
-      .then((res) => {
-        console.log(res);
-        if (res) {
-          setInterestList(res.data.interestNutrientList);
-        }
-      })
-      .catch((error) => console.log(error));
+    if (props.userId !== undefined) {
+      getInterestData()
+        .then((res) => {
+          console.log(res);
+          if (res) {
+            setInterestList(res.data.interestNutrientList);
+          }
+        })
+        .catch((error) => console.log(error));
+    }
   }, [props]);
-
-  // const getInterestData = async () => {
-  //   await api
-  //     .getInterestPillList(props.userId)
-  //     .then((res) => {
-  //       console.log(res);
-  //       setInterestList(res.data.interestNutrientList);
-  //     })
-  //     .catch((error) => console.log(error));
-  // };
 
   const getInterestData = async () => {
     return await api.getInterestPillList(props.userId);
@@ -53,11 +45,13 @@ function PillAnalysisLikeBox(props: Props) {
     <div>
       <div className="flex flex-wrap">
         {interestList &&
-          interestList.map((nutrient, idx) => (
+          interestList.map((nutrient, index) => (
             <PillAnalysisLike
-              key={idx}
+              key={interestList[index].interestNutrientId}
               nutrient={nutrient}
               reRendering={props.reRendering}
+              cancle={props.cancle}
+              renew={props.renew}
             />
           ))}
       </div>
