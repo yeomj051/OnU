@@ -8,6 +8,7 @@ import StarRating from '@/components/common/StarRating';
 import { usePillReviewList } from '@/apis/hooks';
 import api from '@/apis/config';
 import axios from 'axios';
+import { useRouter } from 'next/navigation';
 // import { useRouter } from 'next/navigation';
 
 type reviewContents = {
@@ -38,6 +39,7 @@ function PillDetailReview(props: Props) {
   const [graphValue, setGraphValue] = useState<Array<number>>([
     0, 0, 0, 0, 0,
   ]);
+  const router = useRouter();
 
   const openReviewForm = () => {
     if (props.userId) setWantReview(true);

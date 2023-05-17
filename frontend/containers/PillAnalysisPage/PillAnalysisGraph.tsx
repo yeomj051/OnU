@@ -14,7 +14,6 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { makeCombinationStore } from '@/store/makeCombinationStore';
-import { useIngreByComb } from '@/apis/hooks';
 import api from '@/apis/config';
 import { haveStore } from '@/store/haveStore';
 import { combinationStore } from '@/store/combinationStore';
