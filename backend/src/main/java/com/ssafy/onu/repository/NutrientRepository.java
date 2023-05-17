@@ -14,4 +14,6 @@ public interface NutrientRepository extends JpaRepository<Nutrient, Integer> {
 
     @Query(value = "SELECT * FROM nutrient WHERE MATCH(nutrient_name, nutrient_brand) AGAINST(?1)", nativeQuery = true)
     List<Nutrient> searchNutrient(String keyword);
+
+    List<Nutrient> findByNutrientTypeId_NutrientTypeIdInAndNutrientChildInAndNutrientPregnantIn(List<Integer> typeId, boolean[] nutrientChild, boolean[] pregnant);
 }
