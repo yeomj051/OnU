@@ -7,6 +7,8 @@ import emptyHeart from '../../public/emptyHeart.png';
 import Image from 'next/image';
 import api from '@/apis/config';
 import { useRouter } from 'next/navigation';
+import CompareDrawer from '@/components/common/Drawer';
+import { itemStore } from '@/store/itemStore';
 
 function PillDetailMain(props: {
   itemId: number;
@@ -17,6 +19,7 @@ function PillDetailMain(props: {
   const [userId, setUserId] = useState<number>();
   const [refresh, setRefresh] = useState<boolean>(true);
   const router = useRouter();
+  const { items, setItems } = itemStore();
 
   useEffect(() => {
     setUserId(parseInt(localStorage.getItem('userId') as string));
@@ -93,6 +96,12 @@ function PillDetailMain(props: {
     setRefresh(!refresh);
   };
 
+  const compareItems = (item: Item) => {
+    if (items.length < 2) {
+      setItems(item);
+    }
+  };
+
   return nutrientList ? (
     <div className="h-[100vh] mt-20">
       <div className="mx-4">
@@ -110,7 +119,10 @@ function PillDetailMain(props: {
               {nutrientList.nutrientBrand}
             </div>
             <div className="grid content-center col-span-3 row-span-3 justify-items-end">
-              <button className="w-24 h-6 text-gray-500 badge badge-outline">
+              <button
+                className="w-24 h-6 text-gray-500 badge badge-outline"
+                onClick={() => compareItems(nutrientList)}
+              >
                 비교하기
               </button>
             </div>
@@ -176,6 +188,7 @@ function PillDetailMain(props: {
           )}
         </div>
       </div>
+      <CompareDrawer />
     </div>
   ) : (
     <div>로딩 중...</div>
