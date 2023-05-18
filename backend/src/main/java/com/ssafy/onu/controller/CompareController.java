@@ -3,6 +3,7 @@ package com.ssafy.onu.controller;
 import com.ssafy.onu.dto.response.ResponseNutrientDetailDto;
 import com.ssafy.onu.service.NutrientService;
 import com.ssafy.onu.util.TokenUtils;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class CompareController {
     private final NutrientService nutrientService;
 
     //두 영양제 비교
+    @ApiOperation(value = "두 영양제 비교", notes = "비교하기에 선택한 두 영양제의 정보를 조회합니다", response = Map.class)
     @GetMapping("/{nutrientId01}/{nutrientId02}")
     public ResponseEntity<Map<String, Object>> compareNutrient(@PathVariable long nutrientId01, @PathVariable long nutrientId02,
                                                                @RequestParam int userId, Principal principal) {
