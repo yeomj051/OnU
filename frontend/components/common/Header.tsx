@@ -44,7 +44,7 @@ const Header = (): React.ReactElement => {
     } else {
       setSearchKeyword('');
       setIsClicked(true);
-      router.push(`/search?query=${searchKeyword}`);
+      router.push(`/recommend/result?query=${searchKeyword}`);
     }
 
     //next/router(Next.js 13이전 버전)에서 사용하던 방식
@@ -67,7 +67,7 @@ const Header = (): React.ReactElement => {
         } else {
           setIsClicked(true);
           setSearchKeyword('');
-          router.push(`/search?query=${searchKeyword}`);
+          router.push(`/recommend/result?query=${searchKeyword}`);
         }
         break;
     }
@@ -98,7 +98,7 @@ const Header = (): React.ReactElement => {
           </Link>
         </div>
       ) : (
-        <div className="navbar-center-hidden">
+        <div className="w-0 navbar-center-hidden">
           <Link
             href="/"
             className="text-xl text-blue-900 normal-case btn btn-ghost"
@@ -243,7 +243,7 @@ const Header = (): React.ReactElement => {
         </label>
         <ul
           tabIndex={0}
-          className="w-40 p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box"
+          className="right-0 w-40 p-2 mt-3 shadow menu menu-compact dropdown-content bg-base-100 rounded-box"
         >
           <li key="home">
             <Link href="/">

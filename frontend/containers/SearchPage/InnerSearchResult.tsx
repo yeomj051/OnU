@@ -5,6 +5,7 @@ import ItemList from '@/components/list/GridList';
 import { useSearch } from '@/apis/hooks';
 import { AxiosResponse } from 'axios';
 import { useRouter } from 'next/router';
+import CompareDrawer from '@/components/common/Drawer';
 
 type SearchProps = {
   keyword: string;
@@ -45,6 +46,7 @@ const InnerSearchResult = () => {
          */}
         <ItemList itemList={itemDataList} />
       </div>
+      <CompareDrawer />
     </div>
   );
 };

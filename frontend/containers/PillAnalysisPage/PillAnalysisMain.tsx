@@ -1,5 +1,4 @@
 import React from 'react';
-// import { PlusCircle } from '@emotion-icons/bootstrap';
 import PillAnalysisComb from './PillAnalysisComb';
 import { useState, useEffect } from 'react';
 import PillAnalysisGraph from './PillAnalysisGraph';
@@ -7,20 +6,13 @@ import PillAnalysisHaveBox from './PillAnalysisHaveBox';
 import PillAnalysisLikeBox from './PillAnalysisLikeBox';
 import Image from 'next/image';
 import more from '../../public/more.png';
+import question from '../../public/question.png';
 import { useRouter } from 'next/navigation';
-import {
-  useCombList,
-  useInterestPill,
-  useSaveComb,
-  useTakingPill,
-  useTakingPillIngredient,
-} from '@/apis/hooks';
+
 import PillAnalysisCombBox from './PillAnalysisCombBox';
 import api from '@/apis/config';
 import useUserStore from '@/store/userStore';
 import { makeCombinationStore } from '@/store/makeCombinationStore';
-import { combinationStore } from '@/store/combinationStore';
-import { likeStore } from '@/store/likeStore';
 
 type combination = {
   combinationId: number;
@@ -42,7 +34,7 @@ function PillAnalysisMain() {
   const [userId, setUserId] = useState<number>();
   const { combList, resetCombList } = makeCombinationStore();
   const [cancle, setCancle] = useState<boolean>(false);
-  //이상하게 아래 store 훅만 써주면 무한렌더링됨 ( 터지지는 않음 ) 그냥 둬야할까?
+  //이상하게 아래 store 훅만 써주면 무한렌더링됨 ( 터지지는 않음 ) 그냥 둬야할까? 이제는 터진다
   // const { combinations, resetCombinations } = combinationStore();
 
   // props로 deleteAnything 값 바꾸는 함수 자식들에게 내려주고, x 눌렀을 때, 변동이 생긴 값이 올라오면 재렌더링
@@ -68,6 +60,7 @@ function PillAnalysisMain() {
     setShowchart(id);
     //조합 클릭하면 복용중/관심 css 없애줘야하기때문에 setCancle
     setCancle(true);
+    autoMoveToChart();
   };
 
   //조합 저장하는 함수 => zustand에 저장되어 있는 리스트를 서버에 보내준다.
@@ -85,6 +78,7 @@ function PillAnalysisMain() {
     //각 컴포넌트에서 cancle이 true이면 css 변경해주고 true로 바꿔줌
     setCancle(true);
 
+    //새 조합 저장했을 때, 바로 그 새로운 조합에 포커싱+차트띄우기 위한 부분
     if (typeof window !== 'undefined') {
       const newCombId = JSON.parse(
         localStorage.getItem('lastCombId') || '{}',
@@ -94,6 +88,16 @@ function PillAnalysisMain() {
         console.log(newCombId + 1);
       }
       setNewSelectedComb(newCombId + 1);
+    }
+    autoMoveToChart();
+  };
+
+  //차트로 바로 자동 스크롤해주는 함수
+  const autoMoveToChart = () => {
+    event?.preventDefault();
+    const element = document.getElementById('target');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -128,8 +132,26 @@ function PillAnalysisMain() {
       <div className="mt-20">
         <div className="mx-4">
           <div className="py-5">
-            <div className="text-xl ml-5 font-bold">
-              복용중인 영양제
+            <div className="grid grid-cols-2">
+              <div className="grid content-center col-span-1 ml-3 sm:text-xl font-bold text-lg">
+                💪 복용중인 영양제
+              </div>
+              <div className="flex justify-end col-span-1 pt-1 pr-4 mb-1">
+                <div
+                  className="tooltip tooltip-bottom tooltip-left"
+                  data-tip={`😀영양제를 조합해서 성분을 분석해보세요
+                  만든 조합은 조합 저장하기로 다시 확인할 수 있어요`}
+                  style={{ whiteSpace: 'pre-line' }}
+                >
+                  <Image
+                    src={question}
+                    alt="도움말"
+                    className="w-5 h-5 mr-1"
+                    width={100}
+                    height={100}
+                  />
+                </div>
+              </div>
             </div>
             <PillAnalysisHaveBox
               userId={userId}
@@ -140,10 +162,10 @@ function PillAnalysisMain() {
           </div>
           <div className="py-5">
             <div className="grid grid-cols-2">
-              <div className="grid content-center col-span-1 text-xl ml-5 font-bold">
-                관심 영양제
+              <div className="grid content-center col-span-1 ml-3 sm:text-xl font-bold text-lg">
+                🧡 관심 영양제
               </div>
-              <div className="flex justify-end col-span-1 mb-1 pt-1 pr-4">
+              <div className="flex justify-end col-span-1 pt-1 pr-4 mb-1">
                 <button onClick={addLikeList}>
                   <Image
                     src={more}
@@ -165,10 +187,11 @@ function PillAnalysisMain() {
           </div>
         </div>
 
+        <a id="target"></a>
         <div className="bg-[#D8EDFF]  py-5 px-4 h-[100%]">
-          <div className="grid grid-cols-2 mt-2">
-            <div className="grid content-center col-span-1 text-xl ml-5 font-bold">
-              성분 조합 한 눈에 보기
+          <div className="grid grid-cols-3 mt-2">
+            <div className="grid content-center col-span-2 ml-3 sm:text-xl font-bold text-lg">
+              👀 성분 조합 한 눈에 보기
             </div>
             <div className="flex justify-end col-span-1">
               <button
@@ -179,15 +202,16 @@ function PillAnalysisMain() {
               </button>
             </div>
           </div>
-          <div className="w-full bg-white rounded-lg mt-2">
+          <div></div>
+          <div className="w-full mt-2 bg-white rounded-lg">
             <PillAnalysisGraph
               userId={userId}
               analysisType={showChart}
             />
           </div>
           <div className="mt-8">
-            <div className="col-span-1 text-xl ml-5 mb-2 font-bold">
-              나의 영양제 조합
+            <div className="col-span-1 mb-2 ml-3 sm:text-xl font-bold text-lg">
+              💊 나의 영양제 조합
             </div>
             <PillAnalysisCombBox
               userId={userId}

@@ -65,7 +65,7 @@ export const MyCalendar = (): React.ReactElement => {
   };
 
   return (
-    <div id="calendar">
+    <div id="calendar" className="w-[320px] sm:w-[400px]">
       <p className="ml-2 text-xl font-extrabold text-[#1E266E] mb-1 text-left">
         나의 복용일수 체크하기
       </p>
@@ -78,6 +78,7 @@ export const MyCalendar = (): React.ReactElement => {
             setValue(value);
           }} // useState로 포커스 변경 시 현재 날짜 받아오기
           onClickDay={(date) => {
+            api.checkPill(userId).then((res) => console.log(res));
             console.log(formatDate2(date));
           }}
           formatDay={(locale, date: Date): string => formatDate(date)}

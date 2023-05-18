@@ -14,6 +14,7 @@ if (typeof window !== 'undefined') {
   // Perform localStorage action
   console.log('로그인 체크중...');
   useUserStore.getState().initialize();
+  console.log(useUserStore.getState().user?.id);
 }
 
 export type NextPageWithLayout = NextPage & {

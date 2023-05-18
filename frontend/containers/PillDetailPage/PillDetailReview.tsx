@@ -25,7 +25,7 @@ type reviewContents = {
 type Props = {
   nutrientId: number;
   userId: number | undefined;
-  // reRendering: () => void;
+  reRendering: () => void;
 };
 
 function PillDetailReview(props: Props) {
@@ -53,7 +53,6 @@ function PillDetailReview(props: Props) {
         router.push('/user/login');
       }
     }
-    // setWantReview(true);
   };
 
   useEffect(() => {
@@ -64,7 +63,7 @@ function PillDetailReview(props: Props) {
     };
 
     getReviewData();
-  }, []);
+  }, [props]);
 
   useEffect(() => {
     console.log(reviewList);
@@ -81,7 +80,7 @@ function PillDetailReview(props: Props) {
 
   //별점마다 개수 세는 함수
   const makeStatistics = () => {
-    let scoreArray = [0, 0, 0, 0, 0];
+    const scoreArray = [0, 0, 0, 0, 0];
 
     reviewList.map((review, idx) => {
       const key = idx;
@@ -106,7 +105,7 @@ function PillDetailReview(props: Props) {
 
   //리뷰 그래프 비율계산하는 함수
   const makeGraphRate = () => {
-    let scoreArrayForGraph = [0, 0, 0, 0, 0];
+    const scoreArrayForGraph = [0, 0, 0, 0, 0];
 
     for (let i = 0; i < 5; i++) {
       let tmp = (statistic[i] / reviewList.length) * 100;
@@ -151,11 +150,11 @@ function PillDetailReview(props: Props) {
               </div>
               <label
                 htmlFor="my-modal-6"
-                className="w-40 text-white btn btn-primary rounded-xl"
+                className="sm:w-40 w-32 mx-auto text-white btn btn-primary rounded-xl"
                 style={{
                   backgroundColor: '#90B5EA',
-                  width: '170px',
-                  height: '30px',
+                  // width: '170px',
+                  // height: '30px',
                   border: 'none',
                 }}
                 onClick={openReviewForm}
@@ -173,7 +172,7 @@ function PillDetailReview(props: Props) {
         {wantReview && (
           <PillReviewForm
             nutrientId={props.nutrientId}
-            // reRendering={props.reRendering}
+            reRendering={props.reRendering}
           />
         )}
         {reviewList.map((review, idx) => (

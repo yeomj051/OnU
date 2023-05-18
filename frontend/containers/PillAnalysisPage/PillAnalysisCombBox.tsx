@@ -35,7 +35,6 @@ function PillAnalysisCombBox(props: Props): React.ReactElement {
   const [selectedComb, setSelectedComb] = useState<number>(0);
   //삭제된 조합 id 저장할 state => 근데 꼭 필요한가?? 자동 리렌더링 되면 api도 다시 받아올거니까 필요없을듯 일단 주석
   // 필요함 자동으로 리렌더링 안됨
-  const [deletedComb, setDeletedComb] = useState<number>(0);
 
   const { combinations, setCombinations, resetCombinations } =
     combinationStore();

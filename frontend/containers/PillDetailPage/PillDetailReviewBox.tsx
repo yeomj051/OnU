@@ -32,7 +32,7 @@ function PillDetailReviewBox(props: Props) {
   }
 
   function repeatStar(score: number): JSX.Element[] {
-    let arr = [];
+    const arr = [];
     for (let i = 0; i < score; i++) {
       arr.push(
         <p>
@@ -57,17 +57,17 @@ function PillDetailReviewBox(props: Props) {
 
   return (
     <div className="bg-white min-h-[60px] px-5 py-30 rounded-lg mt-4">
-      <div className="grid grid-cols-8 pt-6">
-        <div className="w-10 col-span-1 pt-0.5">
+      <div className="grid sm:grid-cols-8 grid-cols-12 pt-6">
+        <div className="w-10 sm:col-span-1 col-span-2 pt-0.5">
           <Image src={profile} className="w-10 h-10" alt="프로필" />
         </div>
-        <div className="col-span-4 pb-1">
+        <div className="sm:col-span-4 col-span-6 pb-1">
           <div className="text-xl">{props.review.userNickname}</div>
           <div className="text-sm">
             {age}대 {gender}성
           </div>
         </div>
-        <div className="col-span-3 grid justify-items-end">
+        <div className="sm:col-span-3 col-span-4 grid justify-items-end">
           <div className="text-sm">
             {props.review.reviewCreateTime.slice(0, 10)}
           </div>

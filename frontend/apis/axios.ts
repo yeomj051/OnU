@@ -42,29 +42,31 @@ const authInstance = (url: string): AxiosInstance => {
     },
     async (error) => {
       const originalRequest = error.config; //기존 요청 저장
-      console.log(error);
+
       //토큰이 만료되었을 때(Unauthorized)
       if (error.response.status === 401) {
         const id = localStorage.getItem('userId');
 
         const refreshToken: string = getCookie('refreshToken');
         console.log(`refreshToken: ${refreshToken}`);
-        //리프레시 토큰으로 새로운 토큰 재발급 요청
-        const response: AxiosResponse = await axios({
-          method: 'POST',
-          url: 'https://k8a703.p.ssafy.io/auth/reissue',
-          data: {
-            refreshToken: refreshToken,
-            userId: id,
-          },
-        });
+        if (id !== null) {
+          //리프레시 토큰으로 새로운 토큰 재발급 요청
+          const response: AxiosResponse = await axios({
+            method: 'POST',
+            url: 'https://o-nu.com/api/auth/reissue',
+            data: {
+              refreshToken: refreshToken,
+              userId: id,
+            },
+          });
 
-        //await 키워드가 붙은 코드가 완료될 때까지 다음 코드가 실행되지 않음
-        localStorage.setItem(
-          'accessToken',
-          response.data.accessToken,
-        );
-        return axios(originalRequest);
+          //await 키워드가 붙은 코드가 완료될 때까지 다음 코드가 실행되지 않음
+          localStorage.setItem(
+            'accessToken',
+            response.data.accessToken,
+          );
+          return axios(originalRequest);
+        }
       }
       //나머지 오류
       return Promise.reject(error);

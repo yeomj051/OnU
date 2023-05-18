@@ -14,7 +14,7 @@ type Props = {
 function PillAnalysisCombMem(props: Props): React.ReactElement {
   return (
     <div className="w-1/3 mt-6">
-      <div className="mx-auto bg-white rounded-lg w-28 h-28">
+      <div className="mx-auto bg-white rounded-lg sm:w-28 sm:h-28 w-20">
         <div className="relative w-16 h-16 mx-auto">
           <Image
             src={props.nutrient.nutrientImageUrl}

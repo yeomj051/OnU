@@ -9,12 +9,16 @@ import QuestionPage5 from './QuestionPage5';
 import QuestionPage6 from './QuestionPage6';
 import useUserStore from '@/store/userStore';
 
+import surveyStore from '@/store/surveyStore';
+import { useRouter } from 'next/navigation';
+
 const Question = () => {
   const [questionList, setQuestionList] = useState<Question[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [answers, setAnswers] = useState<any>([]);
   const [male, setMale] = useState(false);
   const [userId, setUserId] = useState<number>();
+  const router = useRouter();
 
   useEffect(() => {
     const storedQuestionList = localStorage.getItem('questionList');
@@ -88,6 +92,10 @@ const Question = () => {
       .submitSurvey(id, formattedAnswers)
       .then((response) => {
         console.log('Answers submitted successfully:', response.data);
+        surveyStore.getState().setResult(response.data);
+        router.push('/survey/result');
+
+        console.log(surveyStore.getState().result);
       })
       .catch((error) => {
         console.error('Error submitting answers:', error);

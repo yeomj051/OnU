@@ -3,16 +3,6 @@ import yellowCircle from '../../public/yellowCircle.png';
 import greenCircle from '../../public/greenCircle.png';
 import redCircle from '../../public/redCircle.png';
 import Image from 'next/image';
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  BarElement,
-  Title,
-  Tooltip,
-  Legend,
-} from 'chart.js';
-import { Bar } from 'react-chartjs-2';
 import { makeCombinationStore } from '@/store/makeCombinationStore';
 import api from '@/apis/config';
 import { haveStore } from '@/store/haveStore';
@@ -31,14 +21,21 @@ type ingredient = {
   nutrientMax: number;
 };
 
-function PillAnalysisGraph(props: Props) {
+function SurveyGraph(props: Props) {
   const [analysisList, setAnalysisList] = useState<Array<number>>([]);
-  const { haveList } = haveStore();
   const { combinations } = combinationStore();
   const { combList } = makeCombinationStore(); //zstand에 들어있는 combList에서 영양제 id 가져옴
   const [ingredientList, setIngredientList] = useState<
     Array<ingredient>
   >([]);
+  const [haveList, setHaveList] = useState<Array<number>>([]);
+
+  const data = localStorage.getItem('answers');
+  useEffect(() => {
+    if (data !== null) setHaveList([JSON.parse(data)[4]]);
+  }, []);
+
+  console.log(haveList);
 
   const getAnalysisData = useCallback(async () => {
     try {
@@ -61,7 +58,7 @@ function PillAnalysisGraph(props: Props) {
 
     if (props.analysisType === -1) {
       for (let i = 0; i < haveList.length; i++) {
-        tmpArr.push(haveList[i].nutrientId);
+        tmpArr.push(haveList[i]);
       }
     } else if (props.analysisType === -3) {
       //-3이 들어오면 tmp에 아무것도 넣지 않음
@@ -99,14 +96,14 @@ function PillAnalysisGraph(props: Props) {
   return (
     <div>
       {analysisList.length === 0 ? (
-        <div className="w-100 text-center py-10 mt-2 mb-5 rounded-md bg-yellow-50">
+        <div className="py-10 mt-2 mb-5 text-center rounded-md w-100 bg-yellow-50">
           복용중 / 관심 영양제를 클릭해서 새로운 조합을 만들어보세요!
         </div>
       ) : (
         <div>
           <div className="bg-white px-5 py-30 rounded-lg mt-3 min-h-[140px]">
             <div className="mt-5">
-              <div className="flex flex-row-reverse my-1 pt-4">
+              <div className="flex flex-row-reverse pt-4 my-1">
                 <div className="flex items-center mx-1">
                   <Image
                     src={redCircle}
@@ -152,4 +149,4 @@ function PillAnalysisGraph(props: Props) {
   );
 }
 
-export default PillAnalysisGraph;
+export default SurveyGraph;

@@ -57,14 +57,17 @@ function PillAnalysisHave(props: Props) {
   };
 
   return (
-    <div className="w-1/3 mt-6" onClick={selectThis}>
+    <div
+      className="w-1/3 mt-6 transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-105 duration-200"
+      onClick={selectThis}
+    >
       <div
         className={` ${
           isSelected ? 'bg-[#90B5EA]' : 'bg-[#D8EDFF]'
-        } w-32 h-32 rounded-lg mx-auto grid content-center`}
+        } sm:w-32 sm:h-32 w-24 h-28 rounded-xl mx-auto grid content-center`}
       >
-        <div className="mx-auto bg-white rounded-lg w-28 h-28">
-          <div className="relative w-16 h-16 mx-auto">
+        <div className="mx-auto bg-white rounded-lg sm:w-28 sm:h-28 w-20 h-24">
+          <div className="relative sm:w-16 sm:h-16 w-12 h-12 mx-auto">
             <Image
               className="w-full h-full mt-1"
               src={props.nutrient.nutrientImageUrl}

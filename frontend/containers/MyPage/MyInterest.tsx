@@ -41,7 +41,7 @@ const Interest = (): React.ReactElement => {
         {userNickname}님이 관심있어 하는 제품들을 모아봤어요.
       </p>
       {itemData.length !== 0 ? (
-        <div className="grid grid-cols-2 space-y-2 gap-4 w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md items-baseline px-8">
+        <div className="grid grid-cols-2 space-y-2 gap-4 w-[320px] sm:w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md items-baseline px-8">
           {userId !== undefined &&
             itemData?.map(
               (item: Item, index: number): React.ReactElement => (
@@ -51,7 +51,7 @@ const Interest = (): React.ReactElement => {
         </div>
       ) : (
         <div>
-          <span>아직 작성한 리뷰가 없습니다.</span>
+          <span>관심있어 하시는 제품이 아직 없어요.</span>
         </div>
       )}
     </div>
