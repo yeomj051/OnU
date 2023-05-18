@@ -2,6 +2,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import AddIcon from '@mui/icons-material/Add';
+import api from '@/apis/config';
 
 const ItemList = (props: {
   itemList: Array<Item>;
@@ -36,17 +37,20 @@ const ItemList = (props: {
   // };
 
   const handleTaking = (itemId: number): void => {
+    const id = localStorage.getItem('userId');
     if (window.confirm('복용중인 영양제로 추가하시겠습니까?')) {
-      try {
-        api.addTakingPill(id, itemId).then(() => {
-          alert('추가되었습니다.');
-        });
-      } catch (error: any) {
-        console.log(error);
-        if (error.data.message === 'duplicated') {
-          alert('이미 복용중인 영양제입니다.');
-        } else {
-          alert('등록에 실패했습니다. 다시 시도해주세요');
+      if (id !== null) {
+        try {
+          api.addTakingPill(parseInt(id), itemId).then(() => {
+            alert('추가되었습니다.');
+          });
+        } catch (error: any) {
+          console.log(error);
+          if (error.data.message === 'duplicated') {
+            alert('이미 복용중인 영양제입니다.');
+          } else {
+            alert('등록에 실패했습니다. 다시 시도해주세요');
+          }
         }
       }
     }
