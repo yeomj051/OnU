@@ -217,3 +217,24 @@ abbr[title] {
 .navbar-center-hidden {
   visibility: collapse;
 }
+
+.rsis-container {
+  width: 360px;
+  height: 250px;
+
+  @media (min-width: 640px) {
+    width: 512px;
+    height: 300px;
+  }
+}
+
+.rsis-image {
+  width: 360px;
+  height: 250px;
+  background-size: contain !important;
+
+  @media (min-width: 640px) {
+    width: 512px;
+    height: 300px;
+  }
+}

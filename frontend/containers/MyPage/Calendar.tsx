@@ -40,8 +40,8 @@ export const MyCalendar = (): React.ReactElement => {
 
   const getCal = async () => {
     await api.getCalendar(userId, dateData).then((res): void => {
-      // setMark(res.data.checkedDate.takingDateDate);
-      setMark(['2023-05-11', '2023-05-10', '2023-04-10']);
+      setMark(res.data.checkedDate.takingDateDate);
+      // setMark(['2023-05-11', '2023-05-10', '2023-04-10']);
     });
 
     await api.checkPill(userId).then((res: AxiosResponse) => {
@@ -66,6 +66,18 @@ export const MyCalendar = (): React.ReactElement => {
 
   return (
     <div id="calendar" className="w-[320px] sm:w-[400px]">
+      <div
+        className="w-full h-24 my-4 text-white rounded-md hero"
+        style={{
+          backgroundImage: `url('https://images.unsplash.com/photo-1600841793042-55790f1375da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80')`,
+        }}
+        onClick={() => router.push('/pillanalysis/pill-analysis')}
+      >
+        <div className="flex items-center justify-center h-full rounded-md bg-opacity-40 hero-overlay">
+          나의 영양제 분석하기
+        </div>
+      </div>
+
       <p className="ml-2 text-xl font-extrabold text-[#1E266E] mb-1 text-left">
         나의 복용일수 체크하기
       </p>
@@ -125,18 +137,6 @@ export const MyCalendar = (): React.ReactElement => {
           }}
         />
       )}
-
-      <div
-        className="w-full h-24 my-4 text-white rounded-md hero"
-        style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1600841793042-55790f1375da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80')`,
-        }}
-        onClick={() => router.push('/pillanalysis/pill-analysis')}
-      >
-        <div className="flex items-center justify-center h-full rounded-md bg-opacity-40 hero-overlay">
-          나의 영양제 분석하기
-        </div>
-      </div>
     </div>
   );
 };

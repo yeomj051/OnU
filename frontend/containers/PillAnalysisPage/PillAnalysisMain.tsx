@@ -109,7 +109,7 @@ function PillAnalysisMain() {
   // 관심 영양제 추가하는 함수
   const addLikeList = () => {
     //검색페이지로 이동
-    router.push(`/search`);
+    router.push(`/recommend`);
   };
 
   //조합 중복 있는지 확인하는 함수
@@ -133,7 +133,7 @@ function PillAnalysisMain() {
         <div className="mx-4">
           <div className="py-5">
             <div className="grid grid-cols-2">
-              <div className="grid content-center col-span-1 ml-3 sm:text-xl font-bold text-lg">
+              <div className="grid content-center col-span-1 ml-3 text-lg font-bold sm:text-xl">
                 💪 복용중인 영양제
               </div>
               <div className="flex justify-end col-span-1 pt-1 pr-4 mb-1">
@@ -162,7 +162,7 @@ function PillAnalysisMain() {
           </div>
           <div className="py-5">
             <div className="grid grid-cols-2">
-              <div className="grid content-center col-span-1 ml-3 sm:text-xl font-bold text-lg">
+              <div className="grid content-center col-span-1 ml-3 text-lg font-bold sm:text-xl">
                 🧡 관심 영양제
               </div>
               <div className="flex justify-end col-span-1 pt-1 pr-4 mb-1">
@@ -190,7 +190,7 @@ function PillAnalysisMain() {
         <a id="target"></a>
         <div className="bg-[#D8EDFF]  py-5 px-4 h-[100%]">
           <div className="grid grid-cols-3 mt-2">
-            <div className="grid content-center col-span-2 ml-3 sm:text-xl font-bold text-lg">
+            <div className="grid content-center col-span-2 ml-3 text-lg font-bold sm:text-xl">
               👀 성분 조합 한 눈에 보기
             </div>
             <div className="flex justify-end col-span-1">
@@ -210,7 +210,7 @@ function PillAnalysisMain() {
             />
           </div>
           <div className="mt-8">
-            <div className="col-span-1 mb-2 ml-3 sm:text-xl font-bold text-lg">
+            <div className="col-span-1 mb-2 ml-3 text-lg font-bold sm:text-xl">
               💊 나의 영양제 조합
             </div>
             <PillAnalysisCombBox
