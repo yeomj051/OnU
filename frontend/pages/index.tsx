@@ -26,9 +26,9 @@ const Home: NextPageWithLayout = (): React.ReactElement => {
   return (
     <div>
       <CardSlider />
-      <div className="flex justify-center pt-4">
+      <div className="flex justify-center pt-6">
         <div
-          className="hero w-[300px] h-[180px] sm:w-[400px] sm:h-[240px] opacity-100 rounded-lg shadow-xl"
+          className="hero w-[300px] h-[200px] sm:w-[450px] sm:h-[180px] opacity-100 rounded-lg shadow-xl"
           style={{
             backgroundImage: `url(
             'https://images.unsplash.com/photo-1628088061698-e4f4cd2969bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
@@ -36,23 +36,19 @@ const Home: NextPageWithLayout = (): React.ReactElement => {
           }}
           onClick={goSurvey}
         >
-          <div className="flex flex-col items-baseline pt-4 pl-40 sm:pl-56 sm:pt-12 hero-overlay opacity-50 rounded-lg text-white w-[300px] h-[180px] sm:w-[400px] sm:h-[240px] whitespace-pre-line cursor-pointer">
-            <div className="pb-12 cursor-default">
-              <p className="text-sm font-bold sm:text-md">
-                지금 나에게
-              </p>
-              <p className="text-sm font-bold sm:text-md">
-                필요한 영양제가
-              </p>
-              <p className="text-sm font-bold sm:text-md">
-                무엇인지 궁금하다면?
-              </p>
-            </div>
-
-            <span className="pl-10 font-extrabold text-md sm:text-lg">
-              설문하러 가기
-            </span>
+          {/* <div className="flex flex-col items-baseline pt-4 pl-40 sm:pl-56 sm:pt-12 hero-overlay rounded-lg text-white w-[300px] h-[180px] sm:w-[400px] sm:h-[240px] whitespace-pre-line cursor-pointer"> */}
+          <div className="pb-12 cursor-default flex flex-col items-baseline pl-40 text-white">
+            <p className="text-sm font-semibold">지금 나에게</p>
+            <p className="text-sm font-semibold ">필요한 영양제가</p>
+            <p className="text-sm font-semibold sm:text-md">
+              무엇인지 궁금하다면?
+            </p>
           </div>
+
+          <span className="pl-64 font-extrabold text-md sm:text-lg flex flex-col items-baseline pt-32 text-white hover:text-[#1E266E]">
+            설문하러 가기 > 
+          </span>
+          {/* </div> */}
         </div>
       </div>
 

@@ -17,7 +17,7 @@ const EntireList = (): React.ReactElement => {
         <label className="ml-2 text-xl font-extrabold text-[#1E266E]">
           영양제 한눈에 보기
         </label>
-        <hr className="mt-2 mb-4" />
+        <hr className="mt-2 mb-1" />
         <div id="list-header" className="flex justify-center w-full">
           <a
             className={
@@ -27,7 +27,7 @@ const EntireList = (): React.ReactElement => {
             }
             onClick={(): void => setTabState(false)}
           >
-            성분별
+            <p className="font-bold text-[#1E266E]">성분별</p>
           </a>
           <a
             className={
@@ -37,7 +37,7 @@ const EntireList = (): React.ReactElement => {
             }
             onClick={(): void => setTabState(true)}
           >
-            고민별
+            <p className="font-bold text-[#1E266E]">고민별</p>
           </a>
         </div>
         {tabState ? (
