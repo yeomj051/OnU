@@ -123,7 +123,7 @@ public class MypageService {
             int continuousCount = ONE;
             if(betweenDays == ONE) {
                 continuousCount = continuous.get().getContinuousCount() + ONE;
-            } else if(betweenDays <= ZERO){
+            } else if(betweenDays == ZERO){
                 continuousCount = continuous.get().getContinuousCount();
             }
             continuous.get().changeContinuous(continuousCount, lastTakingDate);
