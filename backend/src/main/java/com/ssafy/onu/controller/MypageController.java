@@ -51,7 +51,7 @@ public class MypageController {
             return new ResponseEntity<>(resultMap, status);
         }
 
-        ResponseUserInfoDto userInfo = mypageService.getUser(userId);
+        ResponseMypageUserInfoDto userInfo = mypageService.getUser(userId);
 
         if(userInfo != null) {
             resultMap.put(MESSAGE, SUCCESS);
