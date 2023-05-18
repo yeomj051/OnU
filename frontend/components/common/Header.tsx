@@ -44,7 +44,7 @@ const Header = (): React.ReactElement => {
     } else {
       setSearchKeyword('');
       setIsClicked(true);
-      router.push(`/search/result?query=${searchKeyword}`);
+      router.push(`/recommend/result?query=${searchKeyword}`);
     }
 
     //next/router(Next.js 13이전 버전)에서 사용하던 방식
@@ -67,7 +67,7 @@ const Header = (): React.ReactElement => {
         } else {
           setIsClicked(true);
           setSearchKeyword('');
-          router.push(`/search/result?query=${searchKeyword}`);
+          router.push(`/recommend/result?query=${searchKeyword}`);
         }
         break;
     }
