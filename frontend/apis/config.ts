@@ -377,8 +377,11 @@ const api = {
   },
 
   //복용알림 시간 등록
-  async addAlarm(time: string): Promise<AxiosResponse> {
-    return await authAPI(`/notification`, {
+  async addAlarm(
+    userId: number,
+    time: string,
+  ): Promise<AxiosResponse> {
+    return await authAPI(`/notification/${userId}`, {
       method: 'POST',
       data: {
         time,
