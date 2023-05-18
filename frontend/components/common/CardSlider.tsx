@@ -2,21 +2,24 @@ import Slider from 'react-slick';
 import React, { useState, useEffect } from 'react';
 
 const slides = [
-  {
-    image:
-      'https://images.unsplash.com/photo-1612540943977-98ce54bea8a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
-    text: 'Sample text 1',
-  },
-  {
-    image:
-      'https://images.unsplash.com/photo-1596572934980-5a6a24b04f33?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-    text: 'Sample text 2',
-  },
-  {
-    image:
-      'https://images.unsplash.com/photo-1584174594005-60a49c828bbc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1136&q=80',
-    text: 'Sample text 3',
-  },
+  // {
+  //   image:
+  //     'https://images.unsplash.com/photo-1612540943977-98ce54bea8a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
+  //   text: 'Sample text 1',
+  // },
+  // {
+  //   image:
+  //     'https://images.unsplash.com/photo-1596572934980-5a6a24b04f33?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+  //   text: 'Sample text 2',
+  // },
+  // {
+  //   image:
+  //     'https://images.unsplash.com/photo-1584174594005-60a49c828bbc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1136&q=80',
+  //   text: 'Sample text 3',
+  // },
+  { image: '/배너1.png' },
+  { image: '/배너2.png' },
+  { image: '/배너3.png' },
 ];
 
 const useResponsiveDimension = () => {
@@ -28,9 +31,9 @@ const useResponsiveDimension = () => {
   useEffect(() => {
     const updateDimension = () => {
       if (window.innerWidth < 640) {
-        setDimension({ width: '360px', height: '250px' });
+        setDimension({ width: '360px', height: '200px' });
       } else {
-        setDimension({ width: '512px', height: '300px' }); // 원하는 크기로 설정해주세요.
+        setDimension({ width: '512px', height: '200px' }); // 원하는 크기로 설정해주세요.
       }
     };
 

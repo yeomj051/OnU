@@ -68,22 +68,32 @@ export const MyCalendar = (): React.ReactElement => {
     <div className="w-[100%]">
       <div className="flex justify-center">
         <div id="calendar" className="w-[320px] sm:w-[400px]">
-          <div
+          {/* <div
             className="w-full h-24 my-4 text-white rounded-md hero"
             style={{
               backgroundImage: `url('https://images.unsplash.com/photo-1600841793042-55790f1375da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80')`,
             }}
             onClick={() => router.push('/pillanalysis/pill-analysis')}
+          > */}
+          <div
+            className="my-5"
+            onClick={() => router.push('/pillanalysis/pill-analysis')}
           >
-            <div className="flex items-center justify-center h-full rounded-md bg-opacity-40 hero-overlay">
-              나의 영양제 분석하기
-            </div>
+            <img
+              src="/분석.png"
+              alt=""
+              className="rounded-lg h-18 w-full"
+            />
           </div>
+          {/* <div className="flex items-center justify-center h-full rounded-md bg-opacity-40 hero-overlay">
+            나의 영양제 분석하기
+          </div> */}
+          {/* </div> */}
 
-          <p className="ml-2 text-xl font-extrabold text-[#1E266E] mb-1 text-left">
+          <p className="ml-2 text-xl font-extrabold text-[#1E266E] my-1 text-left">
             나의 복용일수 체크하기
           </p>
-          <p className="ml-2 text-sm font-base text-[black] mb-2 text-left">
+          <p className="ml-2 text-sm font-base text-[black]/80 mt-1 mb-4 text-left">
             현재 {streak}일 연속 복용중!
           </p>
           {isClient && (
