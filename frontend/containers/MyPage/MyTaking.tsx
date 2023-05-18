@@ -48,7 +48,7 @@ const Taking = (): React.ReactElement => {
 
         <button
           className="btn bg-[#1E266E] btn-xs"
-          onClick={() => router.push('/searchapi')}
+          onClick={() => router.push('/search')}
         >
           추가하기
         </button>
