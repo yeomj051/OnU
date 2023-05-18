@@ -1,4 +1,6 @@
 // QuestionPage4.tsx
+import { useSearch } from '@/apis/hooks';
+import { AxiosResponse } from 'axios';
 import React, { useEffect, useState } from 'react';
 
 const QuestionPage4: React.FC<QuestionProps> = ({
@@ -24,14 +26,26 @@ const QuestionPage4: React.FC<QuestionProps> = ({
     onAnswer(value);
   };
 
+  const [itemDataList, setItemDataList] = useState<Item[]>([]);
+  const { isLoading, isError, data, error } = useSearch(
+    keyword as string,
+  );
+
+  useEffect(() => {
+    const res: AxiosResponse = data as AxiosResponse;
+    setItemDataList(res?.data.searchedList);
+  }, [data, keyword]);
+
+  console.log(data);
+
   return (
-    <div>
-      <div className="flex flex-col items-center m-10 ">
-        <span className="text-2xl font-black">
-          현재 복용 중인 영양제를 알려주세요!
-        </span>
-        <span className="text-sm text-blue-600/50 mb-3 font-bold">
+    <div className="grid grid-cols-1 place-items-center h-[100vh]">
+      <div className="flex flex-col items-center my-10">
+        <span className="text-center text-xl font-black">
           {question.surveyQuestion}
+        </span>
+        <span className="text-center text-sm text-blue-600/50 mb-3 font-bold">
+          복용 중인 것을 고려하여 추천해드려요
         </span>
         <input
           type="text"
@@ -39,23 +53,24 @@ const QuestionPage4: React.FC<QuestionProps> = ({
           onChange={handleAnswerChange}
           className="input input-bordered w-full max-w-xs"
         />
-        <div className="flex space-x-4 my-3">
-          <div>
-            <button
-              onClick={onPreviousPage}
-              className="btn btn-primary btn-sm"
-            >
-              이전
-            </button>
-          </div>
-          <div>
-            <button
-              onClick={onNextPage}
-              className="btn btn-primary btn-sm"
-            >
-              다음
-            </button>
-          </div>
+      </div>
+      <div className="grid grid-cols-1 gap-2">
+        <div>
+          <button
+            onClick={onPreviousPage}
+            className="btn btn-primary btn-radius btn-wide btn-circle antialiased hover:subpixel-antialiased "
+          >
+            이전
+          </button>
+        </div>
+        <div>
+          <button
+            onClick={onNextPage}
+            className="btn btn-primary btn-radius btn-wide btn-circle antialiased hover:subpixel-antialiased "
+            disabled={answers[4] === undefined || answers[4] === ''}
+          >
+            다음
+          </button>
         </div>
       </div>
     </div>

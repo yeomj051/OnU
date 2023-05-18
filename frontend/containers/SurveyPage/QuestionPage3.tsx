@@ -25,10 +25,10 @@ const QuestionPage3: React.FC<QuestionProps> = ({
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center h-[100vh]">
       <div className="flex flex-col items-center m-10">
-        <span className="text-2xl font-black">
-          임산부 혹은 수유 중이신가요?
+        <span className="text-xl font-black">
+          혹시 임산부이신가요?
         </span>
         <span className="text-sm text-blue-600/50 mb-4 font-bold">
           {question.surveyQuestion}
@@ -55,23 +55,24 @@ const QuestionPage3: React.FC<QuestionProps> = ({
           />
           <span>아니오</span>
         </div>
-        <div className="flex space-x-4 my-2">
-          <div>
-            <button
-              onClick={onPreviousPage}
-              className="btn btn-primary btn-sm"
-            >
-              이전
-            </button>
-          </div>
-          <div>
-            <button
-              onClick={onNextPage}
-              className="btn btn-primary btn-sm"
-            >
-              다음
-            </button>
-          </div>
+      </div>
+      <div className="grid grid-cols-1 gap-2">
+        <div>
+          <button
+            onClick={onPreviousPage}
+            className="btn btn-primary btn-radius btn-wide btn-circle antialiased hover:subpixel-antialiased "
+          >
+            이전
+          </button>
+        </div>
+        <div>
+          <button
+            onClick={onNextPage}
+            className="btn btn-primary btn-radius btn-wide btn-circle antialiased hover:subpixel-antialiased "
+            disabled={answers[3] === undefined || answers[3] === ''}
+          >
+            다음
+          </button>
         </div>
       </div>
     </div>
