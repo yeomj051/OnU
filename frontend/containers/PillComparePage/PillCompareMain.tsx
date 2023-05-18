@@ -90,6 +90,8 @@ function PillCompareMain(props: { query: string; compare: string }) {
 
     setNutrientListA(res1.nutrientDetail);
     setNutrientListB(res2.nutrientDetail);
+    setFirstLike(res1.nutrientDetail.interested);
+    setSecondLike(res2.nutrientDetail.interested);
   };
 
   //위 두 영양성분 받아서 영양성분 이름으로만 된 배열로 각각 만들기
