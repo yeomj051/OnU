@@ -30,6 +30,9 @@ const Result = () => {
   return (
     <div className="flex flex-col items-center h-full pt-20 space-y-4 text-center">
       <div className="flex flex-col items-start w-[320px] sm:w-[400px]">
+        그래프 넣기
+      </div>
+      <div className="flex flex-col items-start w-[320px] sm:w-[400px]">
         <p className="ml-2 text-xl font-extrabold text-[#1E266E]">
           추천 영양제
         </p>
