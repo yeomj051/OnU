@@ -55,7 +55,7 @@ const Result = () => {
           모아봤어요.
         </p>
       </div>
-      <div className="w-[320px] sm:w-[440px]">
+      <div className="w-[320px] sm:w-[440px] pb-4">
         {data.length !== 0 &&
           data.map((item, index: number) => (
             <button
@@ -69,8 +69,8 @@ const Result = () => {
         <ItemList
           itemList={data[ingredientId]?.nutrientDtoLinkedList}
         />
-        <CompareDrawer />
       </div>
+      <CompareDrawer />
     </div>
   );
 };
