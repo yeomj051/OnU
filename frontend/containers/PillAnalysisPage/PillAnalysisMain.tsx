@@ -139,7 +139,7 @@ function PillAnalysisMain() {
               <div className="flex justify-end col-span-1 pt-1 pr-4 mb-1">
                 <div
                   className="tooltip tooltip-bottom tooltip-left"
-                  data-tip={`😀영양제를 조합해서 성분을 분석해보세요
+                  data-tip={`😀 영양제를 조합해서 성분을 분석해보세요
                   만든 조합은 조합 저장하기로 다시 확인할 수 있어요`}
                   style={{ whiteSpace: 'pre-line' }}
                 >
@@ -168,7 +168,7 @@ function PillAnalysisMain() {
               <div className="flex justify-end col-span-1 pt-1 pr-4 mb-1 ">
                 <div
                   className="tooltip tooltip-bottom tooltip-left"
-                  data-tip={`😀관심 영양제를 추가하고 싶다면
+                  data-tip={`😀 관심 영양제를 추가하고 싶다면
                   여기를 눌러보세요!`}
                   style={{ whiteSpace: 'pre-line' }}
                 >

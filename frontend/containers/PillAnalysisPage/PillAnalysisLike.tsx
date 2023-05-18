@@ -75,7 +75,7 @@ function PillAnalysisLike(props: Props) {
 
   return (
     <div
-      className="w-1/3 mt-6 transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-105 duration-200"
+      className="w-1/3 mt-6 transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-105 duration-200 cursor-pointer"
       onClick={selectThis}
     >
       <div

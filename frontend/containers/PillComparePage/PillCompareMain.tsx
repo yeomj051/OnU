@@ -315,7 +315,7 @@ function PillCompareMain(props: { query: string; compare: string }) {
         </div>
       </div>
       {/*여기는 파란부분 */}
-      <div className="bg-[#F2F9FF] mt-8 h-full pt-6">
+      <div className="bg-[#F2F9FF] mt-8 pb-4 pt-6">
         <PillCompareBadge
           subject="기능성"
           first={nutrientListA.functionList}
