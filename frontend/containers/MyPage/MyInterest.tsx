@@ -51,7 +51,7 @@ const Interest = (): React.ReactElement => {
         </div>
       ) : (
         <div>
-          <span>아직 작성한 리뷰가 없습니다.</span>
+          <span>관심있어 하시는 제품이 아직 없어요.</span>
         </div>
       )}
     </div>
