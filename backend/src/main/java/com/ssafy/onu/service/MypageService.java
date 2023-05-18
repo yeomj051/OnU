@@ -27,6 +27,7 @@ public class MypageService {
     private final AlarmRepository alarmRepository;
     private final ReviewRepository reviewRepository;
     private final NutrientIngredientRepository nutrientIngredientRepository;
+    private final TakingDateRepository takingDateRepository;
     private final IngredientRepository ingredientRepository;
     private final NutrientRepository nutrientRepository;
     private final ContinuousRepository continuousRepository;
@@ -66,8 +67,6 @@ public class MypageService {
             return null;
         }
     }
-
-    private final TakingDateRepository takingDateRepository;
 
     // 복용 날짜 조회
     public ResponseTakingDateDto getCheckedDate(int userId, String date) {
@@ -111,7 +110,8 @@ public class MypageService {
 
         Optional<User> user = userRepository.findByUserId(userId);
         if(!user.isPresent()) return -1;
-
+        Optional<TakingDate> takingDate = takingDateRepository.findByUserIdAndAndTakingDateDate(user.get(), lastTakingDate);
+        if(takingDate.isPresent()) return -1;
         takingDateRepository.save(new TakingDate(lastTakingDate, user.get()));
         Optional<Continuous> continuous = continuousRepository.findByContinuousUserId(user.get());
         if (!continuous.isPresent()){
@@ -123,6 +123,8 @@ public class MypageService {
             int continuousCount = ONE;
             if(betweenDays == ONE) {
                 continuousCount = continuous.get().getContinuousCount() + ONE;
+            } else if(betweenDays == ZERO){
+                continuousCount = continuous.get().getContinuousCount();
             }
             continuous.get().changeContinuous(continuousCount, lastTakingDate);
             return continuousRepository.save(continuous.get()).getContinuousCount();

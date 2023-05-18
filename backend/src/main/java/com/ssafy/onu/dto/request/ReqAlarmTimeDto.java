@@ -8,5 +8,5 @@ import java.util.List;
 @Getter
 public class ReqAlarmTimeDto {
     @NotNull(message = "알림 시간 정보는 필수 값입니다.")
-    private String alarmTime;
+    private String time;
 }

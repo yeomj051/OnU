@@ -41,7 +41,7 @@ public class AlarmController {
         }
 
         try {
-            if(alarmService.createAlarm(userId, reqAlarmTimeDto.getAlarmTime())) {
+            if(alarmService.createAlarm(userId, reqAlarmTimeDto.getTime())) {
                 resultMap.put(MESSAGE, SUCCESS);
                 return new ResponseEntity<>(resultMap, HttpStatus.OK);
             } else {
