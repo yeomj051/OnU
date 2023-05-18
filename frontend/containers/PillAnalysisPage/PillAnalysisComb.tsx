@@ -78,7 +78,7 @@ function PillAnalysisComb(props: Props): React.ReactElement {
         <div className="pb-5 bg-white rounded-xl">
           <div className="grid justify-items-end">
             <button
-              className="absolute w-5 h-5 mt-3 mr-3 text-gray-500"
+              className="absolute w-5 h-5 mt-3 mr-3 text-gray-500 z-50"
               onClick={deleteCombination}
             >
               ✕

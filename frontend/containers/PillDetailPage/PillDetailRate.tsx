@@ -8,7 +8,7 @@ type Props = {
 function PillDetailRate(props: Props) {
   return (
     <div className="col-span-1">
-      <div className="w-5/6 h-36 mx-auto my-2">
+      <div className="w-5/6 h-40 mx-auto my-2">
         <div className="grid grid-cols-5 text-center pt-6">
           {props.graphValue.map((value, idx) => (
             <div key={idx} className="col-span-1 rounded-lg">
