@@ -8,10 +8,10 @@ export const useUserStore = create<UserStore>((set) => ({
 
   initialize: () => {
     const user: IUser = {
-      id: Number.parseInt(useStorage('userId') as string),
-      nickname: useStorage('userNickname') as string,
-      gender: useStorage('userGender') as string,
-      age: Number.parseInt(useStorage('userAge') as string),
+      id: Number.parseInt(localStorage.getItem('userId') as string),
+      nickname: localStorage.getItem('userNickname') as string,
+      gender: localStorage.getItem('userGender') as string,
+      age: Number.parseInt(localStorage.getItem('userAge') as string),
     };
     set((x) => ({ ...x, user }));
   },
