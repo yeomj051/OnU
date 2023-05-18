@@ -12,10 +12,7 @@ import com.ssafy.onu.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
@@ -38,7 +35,7 @@ public class AlarmService {
     private final String EMPTY = "";
     private final String MINUS = "-";
     private final String MYPAGE_URL = "https://k8a703.p.ssafy.io/mypage";
-    private final String SUCCESS = "success";
+    private final String SUCCESS = "202";
 
     private final AlarmRepository alarmRepository;
     private final UserRepository userRepository;
@@ -69,13 +66,13 @@ public class AlarmService {
         if(findAlarm.isPresent()){
             //기존 스케쥴된 것 삭제
             try{
-                if(findAlarm.get().getAlarmRequestId() != null){
-                    removeSms(findAlarm.get().getAlarmScheduleCode(), findAlarm.get().getAlarmRequestId());
-                }
                 //네이버 API 호출
                 ResponseAlarmDto responseAlarmDto = sendSms(alarmMessageDto, scheduleCode);
                 //네이버 API 호출 실패시
-                if(!responseAlarmDto.getStatusName().equals(SUCCESS)) return Boolean.FALSE;
+                if(!responseAlarmDto.getStatusCode().equals(SUCCESS)) return Boolean.FALSE;
+                if(findAlarm.get().getAlarmRequestId() != null){
+                    removeSms(findAlarm.get().getAlarmScheduleCode(), findAlarm.get().getAlarmRequestId());
+                }
                 findAlarm.get().changeInfo(responseAlarmDto.getRequestId(),scheduleCode);
                 alarmRepository.save(findAlarm.get());
             }catch (RestClientException e){
@@ -88,7 +85,7 @@ public class AlarmService {
             //네이버 API 호출
             ResponseAlarmDto responseAlarmDto = sendSms(alarmMessageDto, scheduleCode);
             //네이버 API 호출 실패시
-            if(!responseAlarmDto.getStatusName().equals(SUCCESS)) return Boolean.FALSE;
+            if(!responseAlarmDto.getStatusCode().equals(SUCCESS)) return Boolean.FALSE;
             alarmRepository.save(new Alarm(findUser.get(), responseAlarmDto.getRequestId(), scheduleCode));
         }
         return Boolean.TRUE;

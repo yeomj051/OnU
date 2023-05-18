@@ -1,6 +1,7 @@
 package com.ssafy.onu.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.ssafy.onu.dto.request.ReqAlarmTimeDto;
 import com.ssafy.onu.dto.response.ResponseNutrientDetailDto;
 import com.ssafy.onu.service.AlarmService;
 import com.ssafy.onu.util.TokenUtils;
@@ -29,9 +30,9 @@ public class AlarmController {
     private final AlarmService alarmService;
 
     @ApiOperation(value = "알림 등록한다.", notes = "사용자는 알림 등록을 한다.", response = Map.class)
-    @GetMapping("/{userId}/{alarmTime}")
-    public ResponseEntity<Map<String, Object>> createAlarm(@PathVariable int userId, @PathVariable String alarmTime,
-                                                    Principal principal){
+    @PostMapping("/{userId}")
+    public ResponseEntity<Map<String, Object>> createAlarm(@PathVariable int userId, @RequestBody ReqAlarmTimeDto reqAlarmTimeDto,
+                                                           Principal principal){
         Map<String, Object> resultMap = new HashMap<>();
 
         // PathVariable로 받은 userId와 토큰에 있는 userId 비교
@@ -40,7 +41,7 @@ public class AlarmController {
         }
 
         try {
-            if(alarmService.createAlarm(userId, alarmTime)) {
+            if(alarmService.createAlarm(userId, reqAlarmTimeDto.getAlarmTime())) {
                 resultMap.put(MESSAGE, SUCCESS);
                 return new ResponseEntity<>(resultMap, HttpStatus.OK);
             } else {
