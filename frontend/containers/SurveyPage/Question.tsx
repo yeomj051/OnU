@@ -51,7 +51,7 @@ const Question = () => {
   // 원형 구조를 수정하기 위한 replacer 함수를 정의합니다.
   const getCircularReplacer = () => {
     const seen = new WeakSet();
-    return (key, value) => {
+    return (value: any) => {
       if (typeof value === 'object' && value !== null) {
         if (seen.has(value)) {
           return;
