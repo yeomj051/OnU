@@ -14,28 +14,6 @@ const ItemList = (props: {
     console.log(props.itemList);
   }, [props]);
 
-  // const handleInterest = (itemId: number): void => {
-  //   if (window.confirm('관심 영양제로 추가하시겠습니까?')) {
-  //     try {
-  //       api.addInterestPill(id, itemId);
-  //       router.reload();
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // };
-
-  // const removeInterest = (itemId: number): void => {
-  //   if (window.confirm('관심 영양제 목록에서 제거하시겠습니까?')) {
-  //     try {
-  //       api.deleteInterestPill(id, itemId);
-  //       router.reload();
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // };
-
   const handleTaking = (itemId: number): void => {
     const id = localStorage.getItem('userId');
     if (window.confirm('복용중인 영양제로 추가하시겠습니까?')) {
@@ -66,23 +44,6 @@ const ItemList = (props: {
             key={index}
             style={{ cursor: 'pointer' }}
           >
-            {/* {item.isInterested ? (
-              <div className="text-red-500 bg-opacity-0 border-none indicator-item badge top-2 right-8">
-                <button
-                  onClick={() => removeInterest(item.nutrientId)}
-                >
-                  <FavoriteIcon />
-                </button>
-              </div>
-            ) : (
-              <div className="text-red-500 bg-opacity-0 border-none indicator-item badge top-2 right-8">
-                <button
-                  onClick={() => handleInterest(item.nutrientId)}
-                >
-                  <FavoriteBorderIcon />
-                </button>
-              </div>
-            )} */}
             <div className="text-[#90B5EA] border-none bg-opacity-0 indicator-item badge top-2 right-2">
               <button onClick={() => handleTaking(item.nutrientId)}>
                 <AddIcon />
