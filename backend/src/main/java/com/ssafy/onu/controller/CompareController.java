@@ -4,6 +4,7 @@ import com.ssafy.onu.dto.response.ResponseNutrientDetailDto;
 import com.ssafy.onu.service.NutrientService;
 import com.ssafy.onu.util.TokenUtils;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,8 +27,8 @@ public class CompareController {
     //두 영양제 비교
     @ApiOperation(value = "두 영양제 비교", notes = "비교하기에 선택한 두 영양제의 정보를 조회합니다", response = Map.class)
     @GetMapping("/{nutrientId01}/{nutrientId02}")
-    public ResponseEntity<Map<String, Object>> compareNutrient(@PathVariable long nutrientId01, @PathVariable long nutrientId02,
-                                                               @RequestParam int userId, Principal principal) {
+    public ResponseEntity<Map<String, Object>> compareNutrient(@PathVariable @ApiParam(value = "영양제 아이디", required = true, example = "4002000847") long nutrientId01, @PathVariable long nutrientId02,
+                                                               @RequestParam @ApiParam(value = "유저 아이디", required = true, example = "1") int userId, Principal principal) {
         Map<String, Object> resultMap = new HashMap<>();
 
         // PathVariable로 받은 userId와 토큰에 있는 userId 비교
