@@ -8,6 +8,7 @@ import { itemStore } from '@/store/itemStore';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { Transition } from '@headlessui/react';
+import nothing from '/public/nothing.png';
 
 const drawerBleeding = 56;
 
@@ -207,7 +208,7 @@ function CompareDrawer(): React.ReactElement {
                     </div>
                   </div>
                 ) : (
-                  <div className="grid flex-grow h-48 w-36 sm:w-52 sm:h-52 card bg-base-300 rounded-box place-items-center" />
+                  <div className="grid flex-grow h-48 w-36 sm:w-52 sm:h-52 card bg-base-300 rounded-box place-items-center"></div>
                 )}
               </div>
             </div>
