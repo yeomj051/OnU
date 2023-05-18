@@ -75,7 +75,7 @@ export const MyCalendar = (): React.ReactElement => {
             }}
             onClick={() => router.push('/pillanalysis/pill-analysis')}
           >
-            <div className="flex items-center justify-center h-full rounded-md bg-opacity-40 hero-overlay">
+            <div className="flex items-center justify-center h-full rounded-md bg-opacity-40 hero-overlay cursor-pointer">
               나의 영양제 분석하기
             </div>
           </div>
@@ -154,7 +154,7 @@ export const MyCalendar = (): React.ReactElement => {
       </div>
 
       {isClient && (
-        <div className="bg-[#D8EDFF]  w-full pb-8 mt-6">
+        <div>
           <MyCombination userId={userId} />
         </div>
       )}

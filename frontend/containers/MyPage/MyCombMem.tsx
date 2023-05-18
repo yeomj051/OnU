@@ -22,7 +22,7 @@ function MyCombMem(props: Props) {
 
   return (
     <div
-      className="w-1/3 mt-6 transition ease-in-out delay-100 hover:scale-[102%] duration-200"
+      className="w-1/3 mt-6 transition ease-in-out delay-100 hover:scale-[102%] duration-200 cursor-pointer"
       onClick={moveToDetail}
     >
       <div className="mx-auto bg-white rounded-lg sm:w-28 sm:h-28 w-20">
