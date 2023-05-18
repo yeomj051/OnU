@@ -11,7 +11,7 @@ const KAKAO_URL = process.env.REACT_APP_KAKAO_URL as string;
 
 const Login = (): React.ReactElement => {
   return (
-    <div className="grid grid-rows h-[100vh] bg-white">
+    <div className="grid grid-rows h-[100vh] pt-16 bg-white">
       {/* 로고화면
        */}
       <div className="w-full h-80 bg-[#D8EDFF] flex justify-center items-center pl-10">
