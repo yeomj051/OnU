@@ -82,7 +82,7 @@ export const MyCalendar = (): React.ReactElement => {
             <img
               src="/분석.png"
               alt=""
-              className="rounded-lg h-18 w-full"
+              className="rounded-lg h-18 w-full cursor-pointer"
             />
           </div>
           {/* <div className="flex items-center justify-center h-full rounded-md bg-opacity-40 hero-overlay">
