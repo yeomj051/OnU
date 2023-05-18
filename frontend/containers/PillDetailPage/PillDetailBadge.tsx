@@ -110,11 +110,11 @@ function PillDetailBadge(props: Props) {
         <div className="col-span-1 grid content-center font-semibold">
           {props.subject}
         </div>
-        <div className="col-span-5 mx-5 my-2">
-          <div className="grid grid-cols-3">
+        <div className="col-span-5 mx-3 my-2">
+          <div className="flex flex-wrap justify-center">
             {props.badges.map((badge, idx) => (
               <div
-                className="col span-1 grid justify-center m-2 mt-5 text-[#424B5A] whitespace-pre text-sm w-20 h-16 sm:w-24 sm:h-20"
+                className=" w-1/3 m-2 mt-5 text-[#424B5A] whitespace-pre text-sm w-20 h-16 sm:w-24 sm:h-20"
                 key={idx}
               >
                 <Image

@@ -67,7 +67,7 @@ function PillDetailImg(props: Props) {
         <div className="col-span-1 grid content-center font-semibold">
           {props.subject}
         </div>
-        <div className="col-span-5 ml-[140px] my-7">
+        <div className="col-span-5 ml-[164px] my-7">
           <Image
             className="w-10 h-10"
             // src={pillTypeImage[props.pillType]}
