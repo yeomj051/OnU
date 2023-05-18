@@ -26,7 +26,7 @@ const QuestionPage5: React.FC<QuestionProps> = ({
 
   return (
     <div>
-      <p>{question.surveyQuestion}</p>
+      <p>{question?.surveyQuestion}</p>
       <input
         type="text"
         value={keyword}
