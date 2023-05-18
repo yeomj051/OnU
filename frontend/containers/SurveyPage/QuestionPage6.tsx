@@ -24,13 +24,13 @@ const QuestionPage6: React.FC<QuestionProps> = ({
 
   return (
     <div className="flex flex-col items-center my-4 h-[100vh]">
-      <div className="flex flex-col items-center mx-10 ">
+      <div className="flex flex-col items-center my-5 ">
         <span className="text-xl text-center font-black">
           영양제를 먹는 이유가
           <br /> 무엇인가요?
         </span>
-        <span className="text-sm text-center text-blue-600/50 mb-3 font-bold">
-          {question.surveyQuestion}
+        <span className="text-sm text-center text-blue-600/50 my-2 font-bold">
+          {question?.surveyQuestion}
         </span>
         <FunctionList
           gender={answers[2]}
@@ -38,7 +38,7 @@ const QuestionPage6: React.FC<QuestionProps> = ({
           answers={answers}
         />
       </div>
-      <div className="grid grid-cols-1 gap-2">
+      <div className="grid justify-center fixed bottom-8 space-y-2">
         <div>
           <button
             onClick={onPreviousPage}

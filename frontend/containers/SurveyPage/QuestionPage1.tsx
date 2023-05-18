@@ -36,7 +36,6 @@ const QuestionPage1: React.FC<QuestionProps> = ({
   };
 
   useEffect(() => {
-    console.log('?', answers);
     if (answers) {
       setKeyword(answers[1]);
       onAnswer(answers[1]);

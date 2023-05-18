@@ -28,7 +28,7 @@ const QuestionPage2: React.FC<QuestionProps> = ({
     <div className="grid grid-cols-1 place-items-center h-[75vh] overflow-hidden ">
       <div className="grid justify-center mb-20 content-center mb-20">
         <span className="text-2xl text-center font-black">
-          {question.surveyQuestion}
+          {question?.surveyQuestion}
         </span>
         <span className="text-sm text-center text-blue-600/50 my-2 font-bold">
           성별에 따라 추천 영양성분이 달라져요

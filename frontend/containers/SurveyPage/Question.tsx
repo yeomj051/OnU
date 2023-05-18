@@ -41,9 +41,26 @@ const Question = () => {
   }, [userId]);
 
   useEffect(() => {
-    setUserId(parseInt(localStorage.getItem('userId') as string));
-    localStorage.setItem('answers', JSON.stringify(answers));
+    setUserId(parseInt(localStorage.getItem('userId') || '0')); // 기본값 0을 설정합니다.
+    localStorage.setItem(
+      'answers',
+      JSON.stringify(answers, getCircularReplacer()),
+    ); // 원형 구조를 수정하기 위한 replacer 함수를 전달합니다.
   }, [answers, male, currentPage]);
+
+  // 원형 구조를 수정하기 위한 replacer 함수를 정의합니다.
+  const getCircularReplacer = () => {
+    const seen = new WeakSet();
+    return (key, value) => {
+      if (typeof value === 'object' && value !== null) {
+        if (seen.has(value)) {
+          return;
+        }
+        seen.add(value);
+      }
+      return value;
+    };
+  };
 
   const handleNextPage = () => {
     // 성별이 남자일 때 3번 질문일 경우 다음 페이지로 이동
@@ -81,7 +98,7 @@ const Question = () => {
       age: parseInt(answers[1]), // 나이에 대한 답변
       gender: answers[2], // 성별에 대한 답변
       pregnant: answers[3] === 'Yes' ? true : false, // 임신 여부에 대한 답변
-      takingNutrientList: [answers[4]], // 복용 중인 영양제에 대한 답변 (하나의 영양제만 선택 가능)
+      takingNutrientList: answers[4], // 복용 중인 영양제에 대한 답변 (하나의 영양제만 선택 가능)
       functionList: answers[6], // 복용 목적에 대한 답변 (여러 개 선택 가능)
       typeList: answers[5], // 선호 제형에 대한 답변 (여러 개 선택 가능)
     };
