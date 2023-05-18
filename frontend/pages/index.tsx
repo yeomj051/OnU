@@ -50,7 +50,7 @@ const Home: NextPageWithLayout = (): React.ReactElement => {
   return (
     <div>
       <div
-        className="relative hero"
+        className="relative hero cursor-pointer"
         onClick={() => router.push('/survey')}
       >
         <SimpleImageSlider

@@ -4,6 +4,7 @@ import api from '@/apis/config';
 import useUserStore from '@/store/userStore';
 import { AxiosResponse } from 'axios';
 import { useRouter } from 'next/navigation';
+import MyCombination from './MyCombination';
 
 export const MyCalendar = (): React.ReactElement => {
   const [value, setValue] = useState<Date>(new Date());
@@ -62,77 +63,91 @@ export const MyCalendar = (): React.ReactElement => {
   };
 
   return (
-    <div id="calendar" className="w-[320px] sm:w-[400px]">
-      <div
-        className="w-full h-24 my-4 text-white rounded-md hero"
-        style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1600841793042-55790f1375da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80')`,
-        }}
-        onClick={() => router.push('/pillanalysis/pill-analysis')}
-      >
-        <div className="flex items-center justify-center h-full rounded-md bg-opacity-40 hero-overlay">
-          나의 영양제 분석하기
+    <div className="w-[100%]">
+      <div className="flex justify-center">
+        <div id="calendar" className="w-[320px] sm:w-[400px]">
+          <div
+            className="w-full h-24 my-4 text-white rounded-md hero"
+            style={{
+              backgroundImage: `url('https://images.unsplash.com/photo-1600841793042-55790f1375da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80')`,
+            }}
+            onClick={() => router.push('/pillanalysis/pill-analysis')}
+          >
+            <div className="flex items-center justify-center h-full rounded-md bg-opacity-40 hero-overlay">
+              나의 영양제 분석하기
+            </div>
+          </div>
+
+          <p className="ml-2 text-xl font-extrabold text-[#1E266E] mb-1 text-left">
+            나의 복용일수 체크하기
+          </p>
+          <p className="ml-2 text-sm font-base text-[black] mb-2 text-left">
+            현재 {streak}일 연속 복용중!
+          </p>
+          {isClient && (
+            <Calendar
+              onChange={() => {
+                setValue(value);
+              }} // useState로 포커스 변경 시 현재 날짜 받아오기
+              onClickDay={(date) => {
+                api.checkPill(userId).then((res) => console.log(res));
+                console.log(formatDate2(date));
+              }}
+              formatDay={(locale, date: Date): string =>
+                formatDate(date)
+              }
+              onActiveStartDateChange={({
+                activeStartDate,
+              }): void => {
+                const year: number | undefined =
+                  activeStartDate?.getFullYear();
+                const month: number | undefined =
+                  activeStartDate?.getMonth();
+
+                if (year !== undefined && month !== undefined) {
+                  setDateData(
+                    `${year}-${
+                      month + 1 < 10 ? `0${month + 1}` : month + 1
+                    }`,
+                  );
+                }
+              }}
+              value={value}
+              minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
+              maxDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
+              showNeighboringMonth={false} //  이전, 이후 달의 날짜는 보이지 않도록 설정
+              className="w-full mx-auto text-sm text-center border-b"
+              tileContent={({ date }) => {
+                // 날짜 타일에 컨텐츠 추가하기 (html 태그)
+                // 추가할 html 태그를 변수 초기화
+                const html = [];
+                // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
+                if (mark.find((x) => x === formatDate2(date))) {
+                  html.push(
+                    <div
+                      className="absolute w-6 h-6 bg-red-400 opacity-50 mb-7 rounded-xl"
+                      key={date.toString()}
+                    />,
+                  );
+                }
+                // 다른 조건을 주어서 html.push 에 추가적인 html 태그를 적용할 수 있음.
+                return (
+                  <>
+                    <div className="flex items-center justify-center absoluteDiv">
+                      {html}
+                    </div>
+                  </>
+                );
+              }}
+            />
+          )}
         </div>
       </div>
 
-      <p className="ml-2 text-xl font-extrabold text-[#1E266E] mb-1 text-left">
-        나의 복용일수 체크하기
-      </p>
-      <p className="ml-2 text-sm font-base text-[black] mb-2 text-left">
-        현재 {streak}일 연속 복용중!
-      </p>
       {isClient && (
-        <Calendar
-          onChange={() => {
-            setValue(value);
-          }} // useState로 포커스 변경 시 현재 날짜 받아오기
-          onClickDay={(date) => {
-            api.checkPill(userId).then((res) => console.log(res));
-            console.log(formatDate2(date));
-          }}
-          formatDay={(locale, date: Date): string => formatDate(date)}
-          onActiveStartDateChange={({ activeStartDate }): void => {
-            const year: number | undefined =
-              activeStartDate?.getFullYear();
-            const month: number | undefined =
-              activeStartDate?.getMonth();
-
-            if (year !== undefined && month !== undefined) {
-              setDateData(
-                `${year}-${
-                  month + 1 < 10 ? `0${month + 1}` : month + 1
-                }`,
-              );
-            }
-          }}
-          value={value}
-          minDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
-          maxDetail="month" // 상단 네비게이션에서 '월' 단위만 보이게 설정
-          showNeighboringMonth={false} //  이전, 이후 달의 날짜는 보이지 않도록 설정
-          className="w-full mx-auto text-sm text-center border-b"
-          tileContent={({ date }) => {
-            // 날짜 타일에 컨텐츠 추가하기 (html 태그)
-            // 추가할 html 태그를 변수 초기화
-            const html = [];
-            // 현재 날짜가 post 작성한 날짜 배열(mark)에 있다면, dot div 추가
-            if (mark.find((x) => x === formatDate2(date))) {
-              html.push(
-                <div
-                  className="absolute w-6 h-6 bg-red-400 opacity-50 mb-7 rounded-xl"
-                  key={date.toString()}
-                />,
-              );
-            }
-            // 다른 조건을 주어서 html.push 에 추가적인 html 태그를 적용할 수 있음.
-            return (
-              <>
-                <div className="flex items-center justify-center absoluteDiv">
-                  {html}
-                </div>
-              </>
-            );
-          }}
-        />
+        <div className="bg-[#D8EDFF]  w-full pb-8 mt-6">
+          <MyCombination userId={userId} />
+        </div>
       )}
     </div>
   );

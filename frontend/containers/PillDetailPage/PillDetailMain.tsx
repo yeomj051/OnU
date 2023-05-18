@@ -137,7 +137,7 @@ function PillDetailMain(props: {
             </div>
             <div className="grid content-center sm:col-span-3 col-span-4 row-span-3 justify-items-end">
               <button
-                className="w-24 h-6 text-gray-500 badge badge-outline"
+                className="w-24 h-6 text-gray-500 badge badge-outline  hover:bg-yellow-50"
                 onClick={() => compareItems(nutrientList)}
               >
                 비교하기
@@ -167,7 +167,7 @@ function PillDetailMain(props: {
             </div>
             <div className="col-span-5 sm:col-span-4 grid content-center row-span-3 justify-items-end">
               <button
-                className="sm:w-[135px] w-[122px] h-6 text-gray-500 badge badge-outline"
+                className="sm:w-[135px] w-[122px] h-6 text-gray-500 badge badge-outline  hover:bg-yellow-50"
                 onClick={() => moveWithUrl(nutrientList.nutrientName)}
               >
                 구매하러가기
