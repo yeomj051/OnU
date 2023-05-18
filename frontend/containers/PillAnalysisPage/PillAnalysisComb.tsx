@@ -66,7 +66,10 @@ function PillAnalysisComb(props: Props): React.ReactElement {
   };
 
   return (
-    <div onClick={selectThis}>
+    <div
+      onClick={selectThis}
+      className="transition ease-in-out delay-100 hover:scale-[102%] duration-200"
+    >
       <div
         className={`${
           isSelected ? 'bg-[#90B5EA]' : 'bg-white'
