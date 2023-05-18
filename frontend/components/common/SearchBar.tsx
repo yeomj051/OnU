@@ -17,7 +17,7 @@ export const SearchBar = (): React.ReactElement => {
       setSearchKeyword('');
       return;
     } else {
-      router.push(`/searchapi?query=${searchKeyword}`);
+      router.push(`/search?query=${searchKeyword}`);
     }
   };
 
@@ -29,7 +29,7 @@ export const SearchBar = (): React.ReactElement => {
           setSearchKeyword('');
           return;
         } else {
-          router.push(`/searchapi?query=${searchKeyword}`);
+          router.push(`/search?query=${searchKeyword}`);
         }
         break;
     }

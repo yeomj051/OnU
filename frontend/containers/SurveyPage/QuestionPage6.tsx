@@ -24,7 +24,7 @@ const QuestionPage6: React.FC<QuestionProps> = ({
 
   return (
     <div>
-      <p>{question.surveyQuestion}</p>
+      <p>{question?.surveyQuestion}</p>
       <FunctionList
         gender={answers[2]}
         onFunctionClick={handleAnswerChange}

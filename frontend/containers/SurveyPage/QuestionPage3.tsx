@@ -26,7 +26,7 @@ const QuestionPage3: React.FC<QuestionProps> = ({
 
   return (
     <div>
-      <p>{question.surveyQuestion}</p>
+      <p>{question?.surveyQuestion}</p>
       <div className="flex justify-between mb-4">
         <span className="pl-1 font-bold">임신 여부</span>
         <div className="flex space-x-2">
