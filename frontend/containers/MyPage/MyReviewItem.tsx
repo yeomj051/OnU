@@ -66,7 +66,7 @@ const MyReviewItem = (props: {
   return (
     <div
       id="item"
-      className="flex justify-start items-center w-full my-4 min-h-28"
+      className="flex justify-start items-center w-[300px] sm:w-full my-4 min-h-28"
     >
       <div className="flex flex-col items-center w-32">
         <div id="item-img" className="mask mask-square">
@@ -84,7 +84,7 @@ const MyReviewItem = (props: {
         </div>
         <div
           id="item-info"
-          className="flex flex-col items-center whitespace-pre-wrap px-4"
+          className="flex flex-col items-center px-4 whitespace-pre-wrap"
         >
           <span
             id="manufacturer"
@@ -102,7 +102,7 @@ const MyReviewItem = (props: {
       </div>
 
       {wantReview ? (
-        <div className="w-64 m-2 p-2">
+        <div className="w-64 p-2 m-2">
           <div className="grid grid-cols-2">
             <div className="cols-span-1">별점을 등록해주세요</div>
             <div className="rating cols-span-1">

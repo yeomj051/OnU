@@ -52,12 +52,12 @@ const ItemList = (props: {
   // };
 
   return (
-    <div className="grid grid-cols-2 space-y-2 gap-4 w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md items-baseline px-8">
+    <div className="grid grid-cols-2 space-y-2 w-[320px] sm:w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md items-baseline px-4 space-x-4">
       {props.itemList?.map((item: Item, index: number) => (
         <div className="indicator">
           <div
             id="item"
-            className="flex flex-col items-center w-[160px] my-4 min-h-28"
+            className="flex flex-col items-center w-[120px] sm:w-[160px] my-4 min-h-28"
             key={index}
             style={{ cursor: 'pointer' }}
           >

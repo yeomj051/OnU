@@ -133,10 +133,10 @@ function PillAnalysisMain() {
         <div className="mx-4">
           <div className="py-5">
             <div className="grid grid-cols-2">
-              <div className="grid content-center col-span-1 text-xl ml-3 font-bold">
+              <div className="grid content-center col-span-1 ml-3 text-xl font-bold">
                 💪 복용중인 영양제
               </div>
-              <div className="flex justify-end col-span-1 mb-1 pt-1 pr-4">
+              <div className="flex justify-end col-span-1 pt-1 pr-4 mb-1">
                 <div
                   className="tooltip tooltip-bottom tooltip-left"
                   data-tip={`😀영양제를 조합해서 성분을 분석해보세요
@@ -162,10 +162,10 @@ function PillAnalysisMain() {
           </div>
           <div className="py-5">
             <div className="grid grid-cols-2">
-              <div className="grid content-center col-span-1 text-xl ml-3 font-bold">
+              <div className="grid content-center col-span-1 ml-3 text-xl font-bold">
                 🧡 관심 영양제
               </div>
-              <div className="flex justify-end col-span-1 mb-1 pt-1 pr-4">
+              <div className="flex justify-end col-span-1 pt-1 pr-4 mb-1">
                 <button onClick={addLikeList}>
                   <Image
                     src={more}
@@ -190,7 +190,7 @@ function PillAnalysisMain() {
         <a id="target"></a>
         <div className="bg-[#D8EDFF]  py-5 px-4 h-[100%]">
           <div className="grid grid-cols-2 mt-2">
-            <div className="grid content-center col-span-1 text-xl ml-3 font-bold">
+            <div className="grid content-center col-span-1 ml-3 text-xl font-bold">
               👀 성분 조합 한 눈에 보기
             </div>
             <div className="flex justify-end col-span-1">
@@ -203,14 +203,14 @@ function PillAnalysisMain() {
             </div>
           </div>
           <div></div>
-          <div className="w-full bg-white rounded-lg mt-2">
+          <div className="w-full mt-2 bg-white rounded-lg">
             <PillAnalysisGraph
               userId={userId}
               analysisType={showChart}
             />
           </div>
           <div className="mt-8">
-            <div className="col-span-1 text-xl ml-3 mb-2 font-bold">
+            <div className="col-span-1 mb-2 ml-3 text-xl font-bold">
               💊 나의 영양제 조합
             </div>
             <PillAnalysisCombBox
