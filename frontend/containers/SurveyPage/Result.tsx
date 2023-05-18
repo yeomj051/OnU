@@ -28,8 +28,11 @@ const Result = () => {
   console.log(data);
 
   return (
-    <div className="flex flex-col items-center text-center pt-20 space-y-4 min-h-[100vh]">
-      <div className="flex flex-col items-start">
+    <div className="flex flex-col items-center h-full pt-20 space-y-4 text-center">
+      <div className="flex flex-col items-start w-[320px] sm:w-[400px]">
+        그래프 넣기
+      </div>
+      <div className="flex flex-col items-start w-[320px] sm:w-[400px]">
         <p className="ml-2 text-xl font-extrabold text-[#1E266E]">
           추천 영양제
         </p>
@@ -38,7 +41,7 @@ const Result = () => {
           모아봤어요.
         </p>
       </div>
-      <div>
+      <div className="w-[320px] sm:w-[440px]">
         {data.length !== 0 &&
           data.map((item, index: number) => (
             <button
