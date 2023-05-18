@@ -35,11 +35,11 @@ export const MyCalendar = (): React.ReactElement => {
       );
 
     setIsClient(true);
-  }, []);
+  }, [dateData]);
 
   useEffect(() => {
     if (dateData && userId !== -1 && userId !== undefined) getCal();
-  }, [userId, dateData]);
+  }, [userId, dateData, streak]);
 
   const getCal = async () => {
     console.log(dateData);
@@ -164,7 +164,7 @@ export const MyCalendar = (): React.ReactElement => {
       </div>
 
       {isClient && (
-        <div className="bg-[#D8EDFF]  w-full pb-8 mt-6">
+        <div>
           <MyCombination userId={userId} />
         </div>
       )}
