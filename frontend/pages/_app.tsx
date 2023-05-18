@@ -9,17 +9,12 @@ import type { AppProps } from 'next/app';
 import { NextPage } from 'next';
 import useUserStore from '@/store/userStore';
 import ScrollTopBtn from '@/components/common/ScrollTopBtn';
-import { useRouter } from 'next/navigation';
 
 if (typeof window !== 'undefined') {
   // Perform localStorage action
   console.log('로그인 체크중...');
   useUserStore.getState().initialize();
-  if (useUserStore.getState().user?.id === undefined) {
-    const router = useRouter();
-    alert('로그인이 필요한 서비스입니다.');
-    router.push('/user/login');
-  }
+  console.log(useUserStore.getState().user?.id);
 }
 
 export type NextPageWithLayout = NextPage & {
