@@ -116,10 +116,10 @@ function PillDetailMain(props: {
 
         <div>
           <div className="grid grid-cols-12">
-            <div className="grid content-center col-span-8 row-span-3 ml-1 text-sm font-light text-gray-500">
+            <div className="grid content-center sm:col-span-8 col-span-7 row-span-3 ml-1 text-sm font-light text-gray-500">
               {nutrientList.nutrientBrand}
             </div>
-            <div className="grid content-center col-span-3 row-span-3 justify-items-end">
+            <div className="grid content-center sm:col-span-3 col-span-4 row-span-3 justify-items-end">
               <button
                 className="w-24 h-6 text-gray-500 badge badge-outline"
                 onClick={() => compareItems(nutrientList)}

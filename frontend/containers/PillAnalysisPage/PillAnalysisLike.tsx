@@ -81,18 +81,18 @@ function PillAnalysisLike(props: Props) {
       <div
         className={`${
           isSelected ? 'bg-[#90B5EA]' : 'bg-[#D8EDFF]'
-        } w-32 h-32 rounded-xl mx-auto grid content-center`}
+        } sm:w-32 sm:h-32 w-24 h-28 rounded-xl mx-auto grid content-center`}
       >
-        <div className="mx-auto bg-white rounded-lg w-28 h-28">
+        <div className="mx-auto bg-white rounded-lg sm:w-28 sm:h-28 w-20 h-24">
           <div className="grid justify-items-end">
             <button
-              className="absolute w-5 h-5 mt-1 mr-1 text-gray-500"
+              className="absolute w-5 h-5 mt-1 mr-1 text-gray-500 z-50"
               onClick={deleteLike}
             >
               ✕
             </button>
           </div>
-          <div className="relative w-16 h-16 mx-auto">
+          <div className="relative sm:w-16 sm:h-16 w-12 h-12 mx-auto">
             <Image
               className="w-full h-full mt-1"
               src={props.nutrient.nutrientImageUrl}
