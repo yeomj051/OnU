@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
+import AddIcon from '@mui/icons-material/Add';
 
 const ItemList = (props: {
   itemList: Array<Item>;
@@ -34,22 +35,22 @@ const ItemList = (props: {
   //   }
   // };
 
-  // const handleTaking = (itemId: number): void => {
-  //   if (window.confirm('복용중인 영양제로 추가하시겠습니까?')) {
-  //     try {
-  //       api.addTakingPill(id, itemId).then(() => {
-  //         alert('추가되었습니다.');
-  //       });
-  //     } catch (error: any) {
-  //       console.log(error);
-  //       if (error.data.message === 'duplicated') {
-  //         alert('이미 복용중인 영양제입니다.');
-  //       } else {
-  //         alert('등록에 실패했습니다. 다시 시도해주세요');
-  //       }
-  //     }
-  //   }
-  // };
+  const handleTaking = (itemId: number): void => {
+    if (window.confirm('복용중인 영양제로 추가하시겠습니까?')) {
+      try {
+        api.addTakingPill(id, itemId).then(() => {
+          alert('추가되었습니다.');
+        });
+      } catch (error: any) {
+        console.log(error);
+        if (error.data.message === 'duplicated') {
+          alert('이미 복용중인 영양제입니다.');
+        } else {
+          alert('등록에 실패했습니다. 다시 시도해주세요');
+        }
+      }
+    }
+  };
 
   return (
     <div className="grid grid-cols-2 space-y-2 w-[320px] sm:w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md items-baseline px-4 space-x-4">
@@ -77,12 +78,12 @@ const ItemList = (props: {
                   <FavoriteBorderIcon />
                 </button>
               </div>
-            )}
+            )} */}
             <div className="text-[#90B5EA] border-none bg-opacity-0 indicator-item badge top-2 right-2">
               <button onClick={() => handleTaking(item.nutrientId)}>
-                <AddCircleOutlineRoundedIcon />
+                <AddIcon />
               </button>
-            </div> */}
+            </div>
             <div id="item-img" className="mask mask-square">
               <Image
                 src={item.nutrientImageUrl}
