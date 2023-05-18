@@ -35,17 +35,14 @@ export const MyCalendar = (): React.ReactElement => {
   }, []);
 
   useEffect(() => {
-    if (dateData && userId !== -1) getCal();
+    if (dateData && userId !== -1 && userId !== undefined) getCal();
   }, [userId, dateData]);
 
   const getCal = async () => {
+    console.log(dateData);
     await api.getCalendar(userId, dateData).then((res): void => {
       setMark(res.data.checkedDate.takingDateDate);
       // setMark(['2023-05-11', '2023-05-10', '2023-04-10']);
-    });
-
-    await api.checkPill(userId).then((res: AxiosResponse) => {
-      setStreak(res.data.continuousCount);
     });
   };
   const formatDate = (date: Date): string => {
