@@ -34,7 +34,7 @@ import java.util.Optional;
 public class AlarmService {
     private final String EMPTY = "";
     private final String MINUS = "-";
-    private final String MYPAGE_URL = "https://k8a703.p.ssafy.io/mypage";
+    private final String MYPAGE_URL = "https://o-nu.com/mypage";
     private final String SUCCESS = "202";
 
     private final AlarmRepository alarmRepository;
