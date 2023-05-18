@@ -69,9 +69,6 @@ const CardSlider = () => {
               height={height}
               alt={`Slide ${index}`}
             />
-            <div className="absolute flex justify-center w-full h-full p-4 text-white bg-black bg-opacity-50 sm:bottom-0">
-              {slide.text}
-            </div>
           </div>
         ))}
       </Slider>
