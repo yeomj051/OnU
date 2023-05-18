@@ -133,7 +133,7 @@ function PillAnalysisMain() {
         <div className="mx-4">
           <div className="py-5">
             <div className="grid grid-cols-2">
-              <div className="grid content-center col-span-1 ml-3 text-lg font-bold sm:text-xl">
+              <div className="grid content-center col-span-1 ml-3 text-lg font-bold sm:text-xl  font-extrabold text-[#1E266E]">
                 💪 복용중인 영양제
               </div>
               <div className="flex justify-end col-span-1 pt-1 pr-4 mb-1">
@@ -162,19 +162,26 @@ function PillAnalysisMain() {
           </div>
           <div className="py-5">
             <div className="grid grid-cols-2">
-              <div className="grid content-center col-span-1 ml-3 text-lg font-bold sm:text-xl">
+              <div className="grid content-center col-span-1 ml-3 text-lg font-bold sm:text-xl  font-extrabold text-[#1E266E]">
                 🧡 관심 영양제
               </div>
-              <div className="flex justify-end col-span-1 pt-1 pr-4 mb-1">
-                <button onClick={addLikeList}>
-                  <Image
-                    src={more}
-                    alt="추가하기"
-                    className="w-5 h-5 mr-1"
-                    width={100}
-                    height={100}
-                  />
-                </button>
+              <div className="flex justify-end col-span-1 pt-1 pr-4 mb-1 ">
+                <div
+                  className="tooltip tooltip-bottom tooltip-left"
+                  data-tip={`😀관심 영양제를 추가하고 싶다면
+                  여기를 눌러보세요!`}
+                  style={{ whiteSpace: 'pre-line' }}
+                >
+                  <button onClick={addLikeList}>
+                    <Image
+                      src={more}
+                      alt="추가하기"
+                      className="w-5 h-5 mr-1"
+                      width={100}
+                      height={100}
+                    />
+                  </button>
+                </div>
               </div>
             </div>
             <PillAnalysisLikeBox
@@ -190,7 +197,7 @@ function PillAnalysisMain() {
         <a id="target"></a>
         <div className="bg-[#D8EDFF]  py-5 px-4 h-[100%]">
           <div className="grid grid-cols-3 mt-2">
-            <div className="grid content-center col-span-2 ml-3 text-lg font-bold sm:text-xl">
+            <div className="grid content-center col-span-2 ml-3 text-lg font-bold sm:text-xl font-extrabold text-[#1E266E]">
               👀 성분 조합 한 눈에 보기
             </div>
             <div className="flex justify-end col-span-1">
@@ -210,7 +217,7 @@ function PillAnalysisMain() {
             />
           </div>
           <div className="mt-8">
-            <div className="col-span-1 mb-2 ml-3 text-lg font-bold sm:text-xl">
+            <div className="col-span-1 mb-2 ml-3 text-lg font-bold sm:text-xl  font-extrabold text-[#1E266E]">
               💊 나의 영양제 조합
             </div>
             <PillAnalysisCombBox
