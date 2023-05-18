@@ -25,38 +25,43 @@ const QuestionPage3: React.FC<QuestionProps> = ({
   };
 
   return (
-    <div className="flex flex-col items-center h-[100vh]">
-      <div className="flex flex-col items-center m-10">
-        <span className="text-xl font-black">
-          혹시 임산부이신가요?
+    <div className="grid grid-cols-1 place-items-center h-[75vh] overflow-hidden ">
+      <div className="grid justify-center mb-20 content-center mb-20">
+        <span className="text-2xl text-center font-black">
+          임산부이신가요?
         </span>
-        <span className="text-sm text-blue-600/50 mb-4 font-bold">
-          {question.surveyQuestion}
+        <span className="text-sm text-center text-blue-600/50 my-2 font-bold">
+          {question?.surveyQuestion}
         </span>
-        <div className="flex flex-row my-2">
-          <input
-            value="Yes"
-            onChange={handleAnswerChange}
-            type="radio"
-            name="radio-6"
-            className="radio radio-warning"
-            checked={pregnant === 'Yes'}
-          />
-          <span>예</span>
-        </div>
-        <div className="flex flex-row my-2">
-          <input
-            value="No"
-            onChange={handleAnswerChange}
-            type="radio"
-            name="radio-6"
-            className="radio radio-warning"
-            checked={pregnant === 'No'}
-          />
-          <span>아니오</span>
+        <div className="space-y-3 mt-2">
+          <div className="flex flex-row space-x-20">
+            <div>
+              <input
+                value="Yes"
+                onChange={handleAnswerChange}
+                type="radio"
+                name="radio-6"
+                className="radio radio-warning"
+                checked={pregnant === 'Yes'}
+              />
+            </div>
+            <span>예</span>
+          </div>
+
+          <div className="flex flex-row space-x-20">
+            <input
+              value="No"
+              onChange={handleAnswerChange}
+              type="radio"
+              name="radio-6"
+              className="radio radio-warning"
+              checked={pregnant === 'No'}
+            />
+            <span>아니오</span>
+          </div>
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-2">
+      <div className="grid justify-center fixed bottom-14 space-y-2">
         <div>
           <button
             onClick={onPreviousPage}
