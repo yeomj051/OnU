@@ -194,17 +194,19 @@ public class MypageService {
             nutrientIngredientRepository.findNutrientIngredientsByNutrient_NutrientId(nutrientId)
                     .stream()
                     .forEach(nutriIngredient -> {
-                        Ingredient ingredient = nutriIngredient.getIngredient();
-                        map.put(ingredient.getIngredientName(), nutriIngredient.getIngredientAmount());
-                        String IID = INGREDIENT_NAME + ingredient.getIngredientName();
-                        String intake = redisUtil.getIntake(IID);
-                        // 권장섭취량 캐싱여부 확인, 캐싱되어 있다면 값 가져와서 사용 캐싱되지 않았다면 권장섭취량 캐싱
-                        if(intake == null){
-                            intake = ingredient.getIngredientRecommendedIntakeStart()+ TILDE + ingredient.getIngredientRecommendedIntakeEnd();
-                            redisUtil.setData(IID,intake);
+                        if(nutriIngredient.getIngredientAmount() != null) {
+                            Ingredient ingredient = nutriIngredient.getIngredient();
+                            map.put(ingredient.getIngredientName(), nutriIngredient.getIngredientAmount());
+                            String IID = INGREDIENT_NAME + ingredient.getIngredientName();
+                            String intake = redisUtil.getIntake(IID);
+                            // 권장섭취량 캐싱여부 확인, 캐싱되어 있다면 값 가져와서 사용 캐싱되지 않았다면 권장섭취량 캐싱
+                            if(intake == null){
+                                intake = ingredient.getIngredientRecommendedIntakeStart()+ TILDE + ingredient.getIngredientRecommendedIntakeEnd();
+                                redisUtil.setData(IID,intake);
+                            }
+                            ingredientIntake.put(ingredient.getIngredientName(), intake);
+                            nutrientIngredient.put(nutriIngredient.getIngredient().getIngredientName(), nutriIngredient.getIngredientAmount());
                         }
-                        ingredientIntake.put(ingredient.getIngredientName(), intake);
-                        nutrientIngredient.put(nutriIngredient.getIngredient().getIngredientName(), nutriIngredient.getIngredientAmount());
                     });
             redisUtil.cacheNutrient(nID, map);
         }
@@ -237,8 +239,10 @@ public class MypageService {
             nutrientIngredientRepository.findNutrientIngredientsByNutrient_NutrientId(nutrientId)
                     .stream()
                     .forEach(nutrientIngredient -> {
-                        map.put(nutrientIngredient.getIngredient().getIngredientName(), nutrientIngredient.getIngredientAmount());
-                        nutrientIngredientInfoList.add(new ResponseNutrientIngredientInfoDto(nutrientIngredient));
+                        if(nutrientIngredient.getIngredientAmount() != null) {
+                            map.put(nutrientIngredient.getIngredient().getIngredientName(), nutrientIngredient.getIngredientAmount());
+                            nutrientIngredientInfoList.add(new ResponseNutrientIngredientInfoDto(nutrientIngredient));
+                        }
                     });
             redisUtil.cacheNutrient(nID, map);
         }
