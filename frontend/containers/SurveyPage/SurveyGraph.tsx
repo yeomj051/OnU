@@ -32,7 +32,7 @@ function SurveyGraph(props: Props) {
 
   const data = localStorage.getItem('answers');
   useEffect(() => {
-    if (data !== null) setHaveList([JSON.parse(data)[4]]);
+    if (data !== null) setHaveList(JSON.parse(data)[4]);
   }, []);
 
   console.log(haveList);

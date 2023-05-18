@@ -13,7 +13,6 @@ const QuestionPage5: React.FC<QuestionProps> = ({
   const [typeName, setTypeName] = useState<any>([]);
 
   useEffect(() => {
-    console.log(answers);
     if (answers[5]) {
       setKeyword(answers[5]);
     }
@@ -30,15 +29,15 @@ const QuestionPage5: React.FC<QuestionProps> = ({
         <span className="text-xl text-center font-black">
           어떤 제형을 선호하시나요?
         </span>
-        <span className="text-sm text-center text-blue-600/50 mb-3 font-bold">
-          {question.surveyQuestion}
+        <span className="text-sm text-center text-blue-600/50 my-2 font-bold">
+          {question?.surveyQuestion}
         </span>
         <PillTypeList
           onTypeClick={handleAnswerChange}
           answers={answers}
         />
       </div>
-      <div className="grid grid-cols-1 gap-2">
+      <div className="grid justify-center fixed bottom-8 space-y-2">
         <div>
           <button
             onClick={onPreviousPage}

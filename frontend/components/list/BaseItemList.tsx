@@ -12,7 +12,7 @@ const ItemList = (props: { itemList: Array<Item> }) => {
         return (
           <div
             id="item"
-            className="flex justify-start w-full my-4 min-h-28"
+            className="flex justify-start w-full my-4"
             key={index}
           >
             <div id="item-img" className="mask mask-square">
@@ -46,6 +46,13 @@ const ItemList = (props: { itemList: Array<Item> }) => {
                   {item.nutrientName}
                 </span>
               </div>
+              <button
+                id="add-btn"
+                className="btn btn-sm border-[#90B5EA] text-[#90B5EA] btn-outline"
+                // onClick={() => handleInterest(item.nutrientId)}
+              >
+                관심목록 추가
+              </button>
             </div>
           </div>
         );

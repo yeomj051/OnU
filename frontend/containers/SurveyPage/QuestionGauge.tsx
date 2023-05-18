@@ -10,9 +10,9 @@ const QuestionGauge = (props: {
   }, [props.currentQuestionIndex]);
 
   return (
-    <div className="grid justify-center">
-      <div>
-        <ul className="steps mt-20 text-xs/[15px] font-semibold antialiased hover:subpixel-antialiased flex justify-center">
+    <div className="flex justify-center text-xs/[15px]">
+      <div className="w-96">
+        <ul className="steps mt-20 text-xs font-normal antialiased hover:subpixel-antialiased flex justify-center">
           <li
             className={`step ${
               props.currentQuestionIndex >= 0 ? 'step-primary' : ''
