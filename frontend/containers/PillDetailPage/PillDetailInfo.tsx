@@ -34,7 +34,9 @@ function PillDetailInfo(props: Props) {
       />
 
       <div className="bg-white px-5 py-30 grid grid-cols-6 rounded-lg mt-3 min-h-[140px]">
-        <div className="grid content-center col-span-1">영양성분</div>
+        <div className="grid content-center col-span-1 font-semibold">
+          영양성분
+        </div>
         <div className="col-span-5 mt-5">
           <div className="flex flex-row-reverse my-1">
             <div className="flex items-center mx-1">

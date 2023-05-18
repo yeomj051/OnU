@@ -57,7 +57,10 @@ function PillAnalysisHave(props: Props) {
   };
 
   return (
-    <div className="w-1/3 mt-6" onClick={selectThis}>
+    <div
+      className="w-1/3 mt-6 transition ease-in-out delay-100 hover:-translate-y-1 hover:scale-105 duration-200"
+      onClick={selectThis}
+    >
       <div
         className={` ${
           isSelected ? 'bg-[#90B5EA]' : 'bg-[#D8EDFF]'
