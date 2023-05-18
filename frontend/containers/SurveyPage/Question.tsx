@@ -44,23 +44,24 @@ const Question = () => {
     setUserId(parseInt(localStorage.getItem('userId') || '0')); // 기본값 0을 설정합니다.
     localStorage.setItem(
       'answers',
-      JSON.stringify(answers, getCircularReplacer()),
+      // JSON.stringify(answers, getCircularReplacer()),
+      JSON.stringify(answers),
     ); // 원형 구조를 수정하기 위한 replacer 함수를 전달합니다.
   }, [answers, male, currentPage]);
 
   // 원형 구조를 수정하기 위한 replacer 함수를 정의합니다.
-  const getCircularReplacer = () => {
-    const seen = new WeakSet();
-    return (value: any) => {
-      if (typeof value === 'object' && value !== null) {
-        if (seen.has(value)) {
-          return;
-        }
-        seen.add(value);
-      }
-      return value;
-    };
-  };
+  // const getCircularReplacer = () => {
+  //   const seen = new WeakSet();
+  //   return (value: any) => {
+  //     if (typeof value === 'object' && value !== null) {
+  //       if (seen.has(value)) {
+  //         return;
+  //       }
+  //       seen.add(value);
+  //     }
+  //     return value;
+  //   };
+  // };
 
   const handleNextPage = () => {
     // 성별이 남자일 때 3번 질문일 경우 다음 페이지로 이동

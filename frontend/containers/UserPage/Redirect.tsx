@@ -31,7 +31,10 @@ const Redirect = (): React.ReactElement => {
     localStorage.setItem('userAge', age.toString());
     localStorage.setItem('userGender', gender);
 
-    if (id === undefined || id === null) {
+    console.log(nickname);
+    console.log(gender);
+    console.log(age);
+    if (nickname === null || gender === null || age === 0) {
       router.push('/user/signup');
     } else router.push('/');
     return;

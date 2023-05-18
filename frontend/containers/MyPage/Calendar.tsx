@@ -26,6 +26,8 @@ export const MyCalendar = (): React.ReactElement => {
 
   useEffect((): void => {
     const id = useUserStore.getState().user?.id;
+    if (localStorage.getItem('streak') !== null)
+      setStreak(parseInt(localStorage.getItem('streak') as string));
     if (id) setUserId(id);
     else
       setUserId(
@@ -90,7 +92,14 @@ export const MyCalendar = (): React.ReactElement => {
                 setValue(value);
               }} // useState로 포커스 변경 시 현재 날짜 받아오기
               onClickDay={(date) => {
-                api.checkPill(userId).then((res) => console.log(res));
+                api
+                  .checkPill(userId)
+                  .then((res) =>
+                    localStorage.setItem(
+                      'streak',
+                      res.data.continuousCount,
+                    ),
+                  );
                 console.log(formatDate2(date));
               }}
               formatDay={(locale, date: Date): string =>
