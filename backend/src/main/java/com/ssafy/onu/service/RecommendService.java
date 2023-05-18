@@ -34,7 +34,7 @@ public class RecommendService {
     private static final boolean TRUE = true;
     private static final boolean FALSE = false;
     private static final int MIN_RECOMMEND_SIZE = 1;
-    private static final int MAX_RECOMMEND_SIZE = 3;
+    private static final int MAX_RECOMMEND_SIZE = 10;
 
     public List<ResponseRecommendDto> nutrientFiltering(ReqRecommendNutrientDto reqRecommendNutrientDto, int userId){
         boolean[] age = reqRecommendNutrientDto.getAge() > 12 ? new boolean[] {TRUE, FALSE} : new boolean[]{FALSE};
@@ -82,7 +82,7 @@ public class RecommendService {
         }
         if(result.size() != MAX_RECOMMEND_SIZE){
             Random rand = new Random();
-            while (!filteringNutrientSet.isEmpty()){
+            while (checkHasCommon(filteringNutrientSet, filtering)){
                 if(result.size() == MAX_RECOMMEND_SIZE) break;
                 int idx = rand.nextInt(filtering.size());
                 ResponseRecommendNutrientDto tmp = filtering.get(idx);
@@ -99,7 +99,7 @@ public class RecommendService {
         // 아이디 가져와서 성분 가져오기
         // 한 영양제마다 HashMap<String(영양제 성분), ResponseRecommendNutrientDto : 영양제 정보(영양제 아이디, 브랜드,..)>
         for(ResponseRecommendNutrientDto responseRecommendNutrient : result){
-            if(interestNutrientList.contains(responseRecommendNutrient.getNutrientId())){
+           if(interestNutrientList.contains(responseRecommendNutrient.getNutrientId())){
                 responseRecommendNutrient.setInterest(TRUE);
             }
             getNutrientIngredientInfo(responseRecommendNutrient.getNutrientId()).stream()
@@ -115,6 +115,12 @@ public class RecommendService {
             responRecommentList.add(new ResponseRecommendDto(key, responseResult.get(key)));
         }
         return responRecommentList;
+    }
+    public boolean checkHasCommon(HashSet<Long> filteringNutrientSet, List<ResponseRecommendNutrientDto> filtering){
+        for(ResponseRecommendNutrientDto responseRecommendNutrientDto : filtering){
+            if(filteringNutrientSet.contains(responseRecommendNutrientDto.getNutrientId())) return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
     public List<Long> getRecommend(List<Long> takingNutrientList, int userId) {
         ReqForRecommend requestDto = new ReqForRecommend(takingNutrientList, userId);
@@ -138,8 +144,10 @@ public class RecommendService {
             nutrientIngredientRepository.findNutrientIngredientsByNutrient_NutrientId(nutrientId)
                     .stream()
                     .forEach(nutrientIngredient -> {
-                        map.put(nutrientIngredient.getIngredient().getIngredientName(), nutrientIngredient.getIngredientAmount());
-                        nutrientIngredientInfoList.add(nutrientIngredient.getIngredient().getIngredientName());
+                        if(nutrientIngredient.getIngredientAmount() != null) {
+                            map.put(nutrientIngredient.getIngredient().getIngredientName(), nutrientIngredient.getIngredientAmount());
+                            nutrientIngredientInfoList.add(nutrientIngredient.getIngredient().getIngredientName());
+                        }
                     });
             redisUtil.cacheNutrient(nID, map);
         }
