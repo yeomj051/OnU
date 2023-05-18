@@ -47,7 +47,10 @@ function PillDetailInfo(props: Props) {
               />
               <div className="text-sm">과다</div>
             </div>
-            <div className="flex items-center mx-1">
+            <div
+              className="flex items-center mx-1 tooltip tooltip-left"
+              data-tip="영양소의 하루 섭취 권장량 기준"
+            >
               <Image
                 src={greenCircle}
                 alt="초록"
@@ -55,7 +58,10 @@ function PillDetailInfo(props: Props) {
               />
               <div className="text-sm">적정</div>
             </div>
-            <div className="flex items-center mx-1">
+            <div
+              className="flex items-center mx-1"
+              data-tip="영양섭취"
+            >
               <Image
                 src={yellowCircle}
                 alt="노랑"
