@@ -1,75 +1,45 @@
+import CardSlider from '@/components/common/CardSlider';
 import { NextPageWithLayout } from './_app';
 import AppLayout from '@/components/layout/AppLayout';
 import HeaderLayout from '@/components/layout/HeaderLayout';
 import EntireList from '@/containers/PillListPage/EntireList';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import SimpleImageSlider from 'react-simple-image-slider';
-
-const bgImgSet = [
-  {
-    url: 'https://images.unsplash.com/photo-1612540943977-98ce54bea8a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1596572934980-5a6a24b04f33?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
-  },
-  {
-    url: 'https://images.unsplash.com/photo-1584174594005-60a49c828bbc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1136&q=80',
-  },
-];
-
-// viewport 너비에 따라 다른 값을 반환하는 custom hook
-const useResponsiveDimension = () => {
-  const [dimension, setDimension] = useState({
-    width: '512px',
-    height: '300px',
-  });
-
-  useEffect(() => {
-    const updateDimension = () => {
-      if (window.innerWidth < 640) {
-        setDimension({ width: '360px', height: '250px' });
-      } else {
-        setDimension({ width: '512px', height: '300px' }); // 원하는 크기로 설정해주세요.
-      }
-    };
-
-    updateDimension();
-    window.addEventListener('resize', updateDimension);
-
-    return () =>
-      window.removeEventListener('resize', updateDimension);
-  }, []);
-
-  return dimension;
-};
 
 const Home: NextPageWithLayout = (): React.ReactElement => {
   const router = useRouter();
-  const { width, height } = useResponsiveDimension();
   return (
     <div>
-      <div
-        className="relative hero cursor-pointer"
-        onClick={() => router.push('/survey')}
-      >
-        <SimpleImageSlider
-          width={width}
-          height={height}
-          images={bgImgSet}
-          showNavs={false}
-          showBullets={true}
-          autoPlay={true}
+      <CardSlider />
+      <div className="flex justify-center pt-4">
+        <div
+          className="hero w-[300px] h-[180px] sm:w-[400px] sm:h-[240px] opacity-100 rounded-lg shadow-xl"
+          style={{
+            backgroundImage: `url(
+            'https://images.unsplash.com/photo-1628088061698-e4f4cd2969bb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80'
+          )`,
+          }}
           onClick={() => router.push('/survey')}
-        />
+        >
+          <div className="flex flex-col items-baseline pt-4 pl-40 sm:pl-56 sm:pt-12 hero-overlay opacity-50 rounded-lg text-white w-[300px] h-[180px] sm:w-[400px] sm:h-[240px] whitespace-pre-line cursor-pointer">
+            <div className="pb-12 cursor-default">
+              <p className="text-sm font-bold sm:text-md">
+                지금 나에게
+              </p>
+              <p className="text-sm font-bold sm:text-md">
+                필요한 영양제가
+              </p>
+              <p className="text-sm font-bold sm:text-md">
+                무엇인지 궁금하다면?
+              </p>
+            </div>
 
-        <div className="flex flex-col items-baseline pt-40 sm:pt-56 pr-48 hero-content text-[#FFFFFF] w-[360px] sm:w-[512px]">
-          <span className="text-lg font-bold whitespace-nowrap">
-            나에게 맞는 영양제를 먹고 있는 걸까?
-          </span>
-          <span className="text-sm font-bold">설문하러 가기</span>
+            <span className="pl-10 font-extrabold text-md sm:text-lg">
+              설문하러 가기
+            </span>
+          </div>
         </div>
       </div>
+
       <EntireList />
     </div>
   );
