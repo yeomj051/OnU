@@ -4,7 +4,6 @@ import React from 'react';
 import { NextPageWithLayout } from '../_app';
 import AppLayout from '@/components/layout/AppLayout';
 import Login from '@/containers/UserPage/Login';
-import HeaderLayout from '@/components/layout/HeaderLayout';
 
 const LoginMain: NextPageWithLayout = () => {
   return <Login />;
