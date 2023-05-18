@@ -88,7 +88,7 @@ const Profile = (): React.ReactElement => {
         backgroundImage: `url(${bgImgSet[bgRandom]})`,
       }}
     >
-      <div className="hero-overlay bg-opacity-60" />
+      <div className="hero-overlay bg-opacity-40" />
       <div className="text-center hero-content text-neutral-content">
         <div className="flex flex-col items-center max-w-md">
           <div className="flex w-[320px] sm:w-[400px] items-center  space-x-2">

@@ -3,12 +3,37 @@ import AppLayout from '@/components/layout/AppLayout';
 import HeaderLayout from '@/components/layout/HeaderLayout';
 import EntireList from '@/containers/PillListPage/EntireList';
 import { useRouter } from 'next/navigation';
+import SimpleImageSlider from 'react-simple-image-slider';
+
+const bgImgSet = [
+  {
+    url: 'https://images.unsplash.com/photo-1628771065518-0d82f1938462?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80',
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1612540943977-98ce54bea8a1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80',
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1596572934980-5a6a24b04f33?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80',
+  },
+  {
+    url: 'https://images.unsplash.com/photo-1584174594005-60a49c828bbc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1136&q=80',
+  },
+];
 
 const Home: NextPageWithLayout = (): React.ReactElement => {
   const router = useRouter();
   return (
     <div>
-      <div
+      <SimpleImageSlider
+        width="512px"
+        height="300px"
+        images={bgImgSet}
+        showNavs={false}
+        showBullets={true}
+        autoPlay={true}
+      />
+
+      {/* <div
         className="relative hero"
         onClick={() => router.push('/survey')}
       >
@@ -19,7 +44,7 @@ const Home: NextPageWithLayout = (): React.ReactElement => {
           </span>
           <span className="text-sm font-bold">설문하러 가기</span>
         </div>
-      </div>
+      </div> */}
       <EntireList />
     </div>
   );
