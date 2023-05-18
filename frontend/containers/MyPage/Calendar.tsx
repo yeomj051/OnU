@@ -87,8 +87,24 @@ export const MyCalendar = (): React.ReactElement => {
             setValue(value);
           }} // useState로 포커스 변경 시 현재 날짜 받아오기
           onClickDay={(date) => {
-            api.checkPill(userId).then((res) => console.log(res));
-            console.log(formatDate2(date));
+            if (
+              date.getDate() === new Date().getDate() &&
+              date.getMonth() === new Date().getMonth() &&
+              date.getFullYear() === new Date().getFullYear()
+            ) {
+              api
+                .checkPill(userId)
+                .then((res) => {
+                  '확인되었습니다. 오늘도 건강한 하루 되세요';
+                })
+                .catch(() => {
+                  alert('이미 복용체크를 하셨습니다.');
+                });
+            } else {
+              alert(
+                '복용날짜가 정확하지 않습니다. 다시 확인해주세요',
+              );
+            }
           }}
           formatDay={(locale, date: Date): string => formatDate(date)}
           onActiveStartDateChange={({ activeStartDate }): void => {
