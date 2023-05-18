@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import surveyStore from '@/store/surveyStore';
 import ItemList from '@/components/list/ItemList';
 import CompareDrawer from '@/components/common/Drawer';
+import SurveyGraph from './SurveyGraph';
 
 type ingredientItem = {
   ingredientName: string;
@@ -19,18 +20,31 @@ type nutrientList = {
 const Result = () => {
   const [data, setData] = useState<ingredientItem[]>([]);
   const [ingredientId, setIngredientId] = useState<number>(0);
+  const [userId, setUserId] = useState<number>();
+
+  useEffect(() => {
+    setUserId(
+      Number.parseInt(localStorage.getItem('userId') as string),
+    );
+  }, [ingredientId]);
 
   useEffect(() => {
     const data = surveyStore.getState().result;
     setData(data.nutrientFiltering);
-  }, [ingredientId]);
-
+  }, [userId, ingredientId]);
   console.log(data);
 
   return (
     <div className="flex flex-col items-center h-full pt-20 space-y-4 text-center">
       <div className="flex flex-col items-start w-[320px] sm:w-[400px]">
-        그래프 넣기
+        <p className="ml-2 text-xl font-extrabold text-[#1E266E]">
+          영양상태 분석
+        </p>
+        {userId !== undefined ? (
+          <div className="w-full mt-2 bg-white rounded-lg">
+            <SurveyGraph userId={userId} analysisType={-1} />
+          </div>
+        ) : null}
       </div>
       <div className="flex flex-col items-start w-[320px] sm:w-[400px]">
         <p className="ml-2 text-xl font-extrabold text-[#1E266E]">
