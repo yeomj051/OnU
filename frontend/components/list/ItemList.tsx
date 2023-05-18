@@ -23,8 +23,9 @@ const ItemList = (props: {
   const handleInterest = (itemId: number): void => {
     if (window.confirm('관심 영양제로 추가하시겠습니까?')) {
       try {
-        api.addInterestPill(id, itemId);
-        console.log('success');
+        api.addInterestPill(id, itemId).then((res) => {
+          alert('추가되었습니다.');
+        });
       } catch (error) {
         console.log(error);
       }
@@ -34,7 +35,9 @@ const ItemList = (props: {
   const removeInterest = (itemId: number): void => {
     if (window.confirm('관심 영양제 목록에서 제거하시겠습니까?')) {
       try {
-        api.deleteInterestPill(id, itemId);
+        api.deleteInterestPill(id, itemId).then((res) => {
+          alert('제거되었습니다.');
+        });
       } catch (error) {
         console.log(error);
       }
@@ -101,7 +104,7 @@ const ItemList = (props: {
                   >
                     비교하기
                   </button>
-                  {!item.isInterested ? (
+                  {!item.interested ? (
                     <button
                       id="add-btn"
                       className="btn btn-sm border-[#90B5EA] text-[#90B5EA] btn-outline"

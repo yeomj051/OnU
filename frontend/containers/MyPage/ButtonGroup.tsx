@@ -17,7 +17,7 @@ const ButtonGroup = (): React.ReactElement => {
         onClick={() => router.push('/mypage')}
       >
         <HeartIcon />
-        <span>영양분석</span>
+        <span>나의영양관리</span>
       </button>
       <button
         className="flex flex-col items-center col-start-2 col-end-3"

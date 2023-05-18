@@ -35,17 +35,14 @@ export const MyCalendar = (): React.ReactElement => {
   }, []);
 
   useEffect(() => {
-    if (dateData && userId !== -1) getCal();
+    if (dateData && userId !== -1 && userId !== undefined) getCal();
   }, [userId, dateData]);
 
   const getCal = async () => {
+    console.log(dateData);
     await api.getCalendar(userId, dateData).then((res): void => {
-      // setMark(res.data.checkedDate.takingDateDate);
-      setMark(['2023-05-11', '2023-05-10', '2023-04-10']);
-    });
-
-    await api.checkPill(userId).then((res: AxiosResponse) => {
-      setStreak(res.data.continuousCount);
+      setMark(res.data.checkedDate.takingDateDate);
+      // setMark(['2023-05-11', '2023-05-10', '2023-04-10']);
     });
   };
   const formatDate = (date: Date): string => {
@@ -66,6 +63,18 @@ export const MyCalendar = (): React.ReactElement => {
 
   return (
     <div id="calendar" className="w-[320px] sm:w-[400px]">
+      <div
+        className="w-full h-24 my-4 text-white rounded-md hero"
+        style={{
+          backgroundImage: `url('https://images.unsplash.com/photo-1600841793042-55790f1375da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80')`,
+        }}
+        onClick={() => router.push('/pillanalysis/pill-analysis')}
+      >
+        <div className="flex items-center justify-center h-full rounded-md bg-opacity-40 hero-overlay">
+          나의 영양제 분석하기
+        </div>
+      </div>
+
       <p className="ml-2 text-xl font-extrabold text-[#1E266E] mb-1 text-left">
         나의 복용일수 체크하기
       </p>
@@ -78,8 +87,24 @@ export const MyCalendar = (): React.ReactElement => {
             setValue(value);
           }} // useState로 포커스 변경 시 현재 날짜 받아오기
           onClickDay={(date) => {
-            api.checkPill(userId).then((res) => console.log(res));
-            console.log(formatDate2(date));
+            if (
+              date.getDate() === new Date().getDate() &&
+              date.getMonth() === new Date().getMonth() &&
+              date.getFullYear() === new Date().getFullYear()
+            ) {
+              api
+                .checkPill(userId)
+                .then((res) => {
+                  '확인되었습니다. 오늘도 건강한 하루 되세요';
+                })
+                .catch(() => {
+                  alert('이미 복용체크를 하셨습니다.');
+                });
+            } else {
+              alert(
+                '복용날짜가 정확하지 않습니다. 다시 확인해주세요',
+              );
+            }
           }}
           formatDay={(locale, date: Date): string => formatDate(date)}
           onActiveStartDateChange={({ activeStartDate }): void => {
@@ -125,18 +150,6 @@ export const MyCalendar = (): React.ReactElement => {
           }}
         />
       )}
-
-      <div
-        className="w-full h-24 my-4 text-white rounded-md hero"
-        style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1600841793042-55790f1375da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80')`,
-        }}
-        onClick={() => router.push('/pillanalysis/pill-analysis')}
-      >
-        <div className="flex items-center justify-center h-full rounded-md bg-opacity-40 hero-overlay">
-          나의 영양제 분석하기
-        </div>
-      </div>
     </div>
   );
 };

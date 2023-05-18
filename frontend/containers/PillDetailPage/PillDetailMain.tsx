@@ -9,6 +9,7 @@ import api from '@/apis/config';
 import { useRouter } from 'next/navigation';
 import CompareDrawer from '@/components/common/Drawer';
 import { itemStore } from '@/store/itemStore';
+import Link from 'next/link';
 
 function PillDetailMain(props: {
   itemId: number;
@@ -103,6 +104,21 @@ function PillDetailMain(props: {
     }
   };
 
+  const moveWithUrl = (nutrientName: string) => {
+    const url =
+      'https://search.shopping.naver.com/search/all?query=' +
+      nutrientName;
+
+    //새창열기
+    const openNewWindow = window.open('about:blank');
+    if (openNewWindow != null) {
+      openNewWindow.location.href = url;
+    }
+
+    //페이지에서 바로 이동
+    // window.location.href = url;
+  };
+
   return nutrientList ? (
     <div className="h-[100vh] mt-20">
       <div className="mx-4">
@@ -116,7 +132,7 @@ function PillDetailMain(props: {
 
         <div>
           <div className="grid grid-cols-12">
-            <div className="grid content-center sm:col-span-8 col-span-7 row-span-3 ml-1 text-sm font-light text-gray-500">
+            <div className="grid content-center sm:col-span-8 col-span-7 row-span-3 ml-1 text-sm font-light text-gray-500 ">
               {nutrientList.nutrientBrand}
             </div>
             <div className="grid content-center sm:col-span-3 col-span-4 row-span-3 justify-items-end">
@@ -127,7 +143,7 @@ function PillDetailMain(props: {
                 비교하기
               </button>
             </div>
-            <div className="grid content-center col-span-1 justify-items-end">
+            <div className="grid content-center col-span-1 justify-items-end pl-1">
               <button onClick={likeOrNot}>
                 {like ? (
                   <Image
@@ -145,9 +161,18 @@ function PillDetailMain(props: {
               </button>
             </div>
           </div>
-
-          <div className="mt-2 text-xl font-medium">
-            {nutrientList.nutrientName}
+          <div className="grid grid-cols-12">
+            <div className="sm:col-span-8 col-span-7 mt-2 text-xl font-medium ">
+              {nutrientList.nutrientName}
+            </div>
+            <div className="col-span-5 sm:col-span-4 grid content-center row-span-3 justify-items-end">
+              <button
+                className="sm:w-[135px] w-[122px] h-6 text-gray-500 badge badge-outline"
+                onClick={() => moveWithUrl(nutrientList.nutrientName)}
+              >
+                구매하러가기
+              </button>
+            </div>
           </div>
         </div>
       </div>

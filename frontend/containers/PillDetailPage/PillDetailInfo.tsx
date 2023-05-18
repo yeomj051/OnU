@@ -82,7 +82,7 @@ function PillDetailInfo(props: Props) {
       </div>
 
       <PillDetailContents
-        subject="섭취 방법"
+        subject="섭취방법"
         content={nutrientList.nutrientIntake}
       />
       <PillDetailContents

@@ -124,10 +124,10 @@ function PillCompareBox(props: Props) {
                 </li>
               ))}
             </ul> */}
-            <div className="grid grid-cols-2">
+            <div className="flex flex-wrap justify-center">
               {props.first.map((badge, idx) => (
                 <div
-                  className="col span-1 grid justify-center m-2 mt-5 text-[#424B5A] whitespace-pre text-sm w-20 h-16 sm:w-24 sm:h-20"
+                  className="w-1/2 grid justify-center m-2 mt-5 text-[#424B5A] whitespace-pre text-sm w-20 h-16 sm:w-24 sm:h-20"
                   key={idx}
                 >
                   <Image
@@ -145,20 +145,10 @@ function PillCompareBox(props: Props) {
             </div>
           </div>
           <div className="col-span-1 py-4 ml-2 bg-white border rounded-lg">
-            {/* <ul>
-              {props.second.map((item, idx) => (
-                <li
-                  className="bg-[#90B5EA] text-white my-1 mx-3 text-center rounded-2xl py-1"
-                  key={idx}
-                >
-                  {item}
-                </li>
-              ))}
-            </ul> */}
-            <div className="grid grid-cols-2">
+            <div className="flex flex-wrap justify-center">
               {props.second.map((badge, idx) => (
                 <div
-                  className="col span-1 grid justify-center m-2 mt-5 text-[#424B5A] whitespace-pre text-sm w-20 h-16 sm:w-24 sm:h-20"
+                  className="w-1/2 grid justify-center m-2 mt-5 text-[#424B5A] whitespace-pre text-sm w-20 h-16 sm:w-24 sm:h-20"
                   key={idx}
                 >
                   <Image
