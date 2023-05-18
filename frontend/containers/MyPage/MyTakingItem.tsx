@@ -36,7 +36,7 @@ const MyTakingItem = (props: {
 
       <div
         id="item"
-        className="flex flex-col items-center w-[160px] my-4 min-h-28"
+        className="flex flex-col items-center w-[140px] sm:w-[180px] my-4 min-h-28"
         style={{ cursor: 'pointer' }}
       >
         <div

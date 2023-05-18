@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import ItemList from '@/components/list/GridList';
 import { useSearch } from '@/apis/hooks';
 import { AxiosResponse } from 'axios';
+import CompareDrawer from '@/components/common/Drawer';
 
 type SearchProps = {
   keyword: string;
@@ -51,6 +52,7 @@ const SearchResult = (props: SearchProps) => {
          */}
         <ItemList itemList={itemDataList} />
       </div>
+      <CompareDrawer />
     </div>
   );
 };

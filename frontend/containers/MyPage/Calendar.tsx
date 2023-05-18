@@ -65,7 +65,7 @@ export const MyCalendar = (): React.ReactElement => {
   };
 
   return (
-    <div id="calendar">
+    <div id="calendar" className="w-[320px] sm:w-[400px]">
       <p className="ml-2 text-xl font-extrabold text-[#1E266E] mb-1 text-left">
         나의 복용일수 체크하기
       </p>

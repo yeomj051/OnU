@@ -10,7 +10,7 @@ const ButtonGroup = (): React.ReactElement => {
   return (
     <div
       id="button-group"
-      className="w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md grid grid-cols-4 justify-items-center p-4"
+      className="w-[320px] sm:w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md grid grid-cols-4 justify-items-center p-4"
     >
       <button
         className="flex flex-col items-center col-start-1 col-end-2"

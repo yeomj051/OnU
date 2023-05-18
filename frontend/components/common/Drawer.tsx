@@ -77,11 +77,12 @@ function CompareDrawer(): React.ReactElement {
       <Global
         styles={{
           '.MuiDrawer-root > .MuiPaper-root': {
-            height: `calc(50% - ${drawerBleeding}px)`,
+            height: `calc(50% - 40px)`,
             overflow: 'visible',
             width: '360px',
             left: `calc(50% - 180px)`,
             '@media (min-width: 640px)': {
+              height: `calc(50% - 32px)`,
               width: '512px',
               left: `calc(50% - 256px)`,
             },
@@ -123,7 +124,8 @@ function CompareDrawer(): React.ReactElement {
         >
           {/* 비교함 내부 */}
           <div className="flex flex-col items-center space-y-4">
-            <div className="flex flex-col items-center w-full sm:flex-row  sm:justify-center">
+            {/* <div className="flex flex-col items-center w-full sm:flex-row sm:justify-center"> */}
+            <div className="flex items-center w-full sm:justify-center">
               <div className="indicator">
                 {itemList[0] ? (
                   <div className="bg-gray-300 border-none indicator-item badge top-2 right-4">
@@ -137,7 +139,7 @@ function CompareDrawer(): React.ReactElement {
                   </div>
                 ) : null}
                 {itemList[0] ? (
-                  <div className="grid flex-grow w-64 sm:w-52 h-52 card rounded-box place-items-center">
+                  <div className="grid flex-grow h-48 w-36 sm:w-52 sm:h-52 card rounded-box place-items-center">
                     <div className="flex flex-col items-center flex-grow">
                       <Image
                         src={itemList[0]?.nutrientImageUrl}
@@ -162,11 +164,11 @@ function CompareDrawer(): React.ReactElement {
                     </div>
                   </div>
                 ) : (
-                  <div className="grid flex-grow w-64 sm:w-52 h-52 card bg-base-300 rounded-box place-items-center" />
+                  <div className="grid flex-grow h-48 w-36 sm:w-52 sm:h-52 card bg-base-300 rounded-box place-items-center" />
                 )}
               </div>
 
-              <div className="divider divider-vertical sm:divider-horizontal" />
+              <div className="divider divider-horizontal" />
               <div className="indicator">
                 {itemList[1] ? (
                   <div className="bg-gray-300 border-none indicator-item badge top-2 right-4">
@@ -180,7 +182,7 @@ function CompareDrawer(): React.ReactElement {
                   </div>
                 ) : null}
                 {itemList[1] ? (
-                  <div className="grid flex-grow w-64 sm:w-52 h-52 card rounded-box place-items-center">
+                  <div className="grid flex-grow h-48 w-36 sm:w-52 sm:h-52 card rounded-box place-items-center">
                     <div className="flex flex-col items-center flex-grow">
                       <Image
                         src={itemList[1]?.nutrientImageUrl}
@@ -205,7 +207,7 @@ function CompareDrawer(): React.ReactElement {
                     </div>
                   </div>
                 ) : (
-                  <div className="grid flex-grow w-64 sm:w-52 h-52 card bg-base-300 rounded-box place-items-center" />
+                  <div className="grid flex-grow h-48 w-36 sm:w-52 sm:h-52 card bg-base-300 rounded-box place-items-center" />
                 )}
               </div>
             </div>

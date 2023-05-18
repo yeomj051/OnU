@@ -83,7 +83,7 @@ const Profile = (): React.ReactElement => {
 
   return (
     <div
-      className="w-full pt-16 m-0 hero"
+      className="pt-16 m-0 hero"
       style={{
         backgroundImage: `url(${bgImgSet[bgRandom]})`,
       }}
@@ -91,7 +91,7 @@ const Profile = (): React.ReactElement => {
       <div className="hero-overlay bg-opacity-60" />
       <div className="text-center hero-content text-neutral-content">
         <div className="flex flex-col items-center max-w-md">
-          <div className="flex w-[400px] items-center space-x-2">
+          <div className="flex w-[320px] sm:w-[400px] items-center  space-x-2">
             <div className="flex items-center justify-center w-20 h-20 mb-2 text-5xl font-bold bg-white mask mask-circle">
               <Image
                 src={iconImgSet[iconRandom]}

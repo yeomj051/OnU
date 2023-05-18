@@ -36,12 +36,12 @@ const Taking = (): React.ReactElement => {
 
   return (
     <div>
-      <div className="flex items-center justify-between">
-        <div>
+      <div className="flex items-baseline justify-between sm:items-center">
+        <div className="w-[240px] sm:w-full">
           <p className="ml-2 text-xl font-extrabold text-[#1E266E]">
             복용 중인 영양제
           </p>
-          <p className="ml-2 text-xs font-light text-[#1E266E] mb-2">
+          <p className="ml-2 text-xs font-light text-[#1E266E] mb-2 whitespace-pre-line">
             새로 복용하시는 제품이 있다면 오른쪽에서 추가해보세요.
           </p>
         </div>
@@ -54,7 +54,7 @@ const Taking = (): React.ReactElement => {
         </button>
       </div>
 
-      <div className="flex flex-col space-x-2 items-center w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md p-4">
+      <div className="flex flex-col space-x-2 items-center w-[320px] sm:w-[400px] bg-white shadow-lg text-xs font-base text-[#909090] rounded-md p-4">
         <div id="item-list">
           {itemData && userId !== null ? (
             itemData.map(
