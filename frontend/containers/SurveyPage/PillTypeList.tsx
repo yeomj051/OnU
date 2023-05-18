@@ -31,7 +31,9 @@ const PillTypeList = (props: {
 
     if (updatedTypes.includes(index + 1)) {
       // 이미 선택된 기능일 경우 제거
-      updatedTypes.splice(index + 1, 1);
+      const updatedIndex = updatedTypes.indexOf(index + 1);
+      updatedTypes.splice(updatedIndex, 1);
+      console.log(updatedIndex);
     } else {
       // 선택되지 않은 기능일 경우 추가
       updatedTypes.push(index + 1);
@@ -40,8 +42,8 @@ const PillTypeList = (props: {
     props.onTypeClick(updatedTypes); // 최신 배열을 상위 컴포넌트로 전달합니다.
   };
   return (
-    <div>
-      <div className="grid grid-cols-3 gap-10 mx-10">
+    <div className="flex flex-col items-center">
+      <div className="grid grid-cols-3 gap-3 my-3">
         {pillTypeImages.map((Item, index) => (
           <button
             key={index}
@@ -51,7 +53,7 @@ const PillTypeList = (props: {
               clickTypes.includes(index + 1)
                 ? 'bg-[#90B5EA] text-white'
                 : 'bg-[#D8EDFF] text-[#424B5A] hover:bg-[#90B5EA] hover:text-white active:bg-[#90B5EA] active:text-white'
-            } text-xs w-24 h-20`}
+            } text-xs w-24 h-24`}
           >
             <div className="box-border col-span-1 hover:box-content">
               <Image

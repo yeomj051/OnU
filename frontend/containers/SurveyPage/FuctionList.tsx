@@ -70,7 +70,8 @@ const FunctionList = (props: {
       : [];
     if (updatedFunctions.includes(index + 1)) {
       // 이미 선택된 기능일 경우 제거
-      updatedFunctions.splice(index + 1, 1);
+      const updatedIndex = updatedFunctions.indexOf(index + 1);
+      updatedFunctions.splice(updatedIndex, 1);
     } else {
       // 선택되지 않은 기능일 경우 추가
       updatedFunctions.push(index + 1);
@@ -81,18 +82,18 @@ const FunctionList = (props: {
   };
 
   return (
-    <div>
-      <div id="list" className="flex flex-wrap mt-4 ml-4">
+    <div className="flex flex-col items-center">
+      <div id="list" className="grid grid-cols-3 my-4 gap-2">
         {functionName.map((item, index) => (
           <button
             key={index}
             onClick={() => handleButtonClick(index)}
-            className={`btn btn-xl m-2 rounded-2xl border-none text-[#424B5A] ${
+            className={`btn btn-xl rounded-2xl border-none text-[#424B5A] ${
               clickFunctions !== undefined &&
               clickFunctions.includes(index + 1)
                 ? 'bg-[#90B5EA] text-white'
                 : 'bg-[#D8EDFF] text-[#424B5A] hover:bg-[#90B5EA] hover:text-white active:bg-[#90B5EA] active:text-white'
-            } text-xs w-24 h-20`}
+            } text-xs w-20 h-20`}
           >
             <div className="flex flex-col items-center">
               <EyeIcon className="w-6 h-6" />
