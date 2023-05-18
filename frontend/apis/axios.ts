@@ -53,7 +53,7 @@ const authInstance = (url: string): AxiosInstance => {
           //리프레시 토큰으로 새로운 토큰 재발급 요청
           const response: AxiosResponse = await axios({
             method: 'POST',
-            url: 'https://k8a703.p.ssafy.io/auth/reissue',
+            url: 'https://o-nu.com/api/auth/reissue',
             data: {
               refreshToken: refreshToken,
               userId: id,

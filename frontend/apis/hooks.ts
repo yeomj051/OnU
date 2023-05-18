@@ -18,7 +18,7 @@ export const useSearch = (
   const queryKey = process.env.REACT_APP_API_URL;
   const queryFn = async () => {
     const res: AxiosResponse = await axios.get(
-      `https://k8a703.p.ssafy.io/search/${keyword}`,
+      `https://o-nu.com/search/${keyword}`,
     );
     return res;
   };
