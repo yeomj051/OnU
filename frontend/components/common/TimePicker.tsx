@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import {
   CheckIcon,
@@ -59,8 +59,15 @@ const times = [
 
 export default function TimePicker(props: { onClose: () => void }) {
   const [selected, setSelected] = useState(times[0]);
+  const [userId, setUserId] = useState<number>();
   const hour = new Date().getHours();
   const minute = new Date().getMinutes();
+
+  useEffect(() => {
+    setUserId(
+      Number.parseInt(localStorage.getItem('userId') as string),
+    );
+  }, [props]);
 
   const handleSubmit = () => {
     const newDate1 = new Date(
@@ -77,8 +84,9 @@ export default function TimePicker(props: { onClose: () => void }) {
     const timeDiff =
       (newDate1.getTime() - newDate2.getTime()) / 1000 / 60;
 
-    if (timeDiff < -10 || timeDiff > 10) api.addAlarm(selected.name);
-    else
+    if (timeDiff < -10 || timeDiff > 10) {
+      if (userId !== undefined) api.addAlarm(userId, selected.name);
+    } else
       alert(
         '알람 시간이 너무 가깝습니다. 다른 시간대를 선택해 주세요',
       );
