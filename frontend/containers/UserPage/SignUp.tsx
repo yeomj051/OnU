@@ -23,10 +23,10 @@ const SignUp = (): React.ReactElement => {
 
   useEffect((): void => {
     //추후 서버에서 닉네임 중복확인 api를 받아와서 사용
-    if (nickname.length >= 4 && nickname.length <= 15) {
+    if (nickname.length >= 2 && nickname.length <= 15) {
       api.checkNickname(nickname).then((res) => {
         if (res.status === 200) {
-          setNicknameLabel('사용 가능한 닉네임입니다.');
+          setNicknameLabel('사용 가능한 닉네임입니다');
         } else {
           setNicknameLabel('사용 불가능한 닉네임입니다');
         }
@@ -53,7 +53,7 @@ const SignUp = (): React.ReactElement => {
 
     // 회원정보 보내고
     await api.signupUser(id, nickname, age, gender).then((res) => {
-      console.log(res);
+      alert('회원가입이 완료되었습니다');
       router.push('/');
     });
   };
@@ -137,7 +137,7 @@ const SignUp = (): React.ReactElement => {
             </div>
           </div>
           <button
-            className="bg-[#90B5EA] text-lg border-none btn btn-wide"
+            className="bg-[#90B5EA] text-lg border-none btn w-[180px] sm:btn-wide"
             onClick={registerUser}
           >
             회원가입 완료
