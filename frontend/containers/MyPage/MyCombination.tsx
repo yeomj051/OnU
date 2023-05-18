@@ -48,20 +48,22 @@ function MyCombination(props: Props) {
   };
 
   return (
-    <div className="mt-12">
+    <div className=" w-full mt-6">
       {combinationList.length != 0 ? (
-        <div>
-          <div className="sm:w-[75%] w-[85%] mx-auto pb-2 pt-10 text-left text-xl font-extrabold text-[#1E266E]">
-            나의 영양제 조합
-          </div>
+        <div className="mt-12 bg-[#D8EDFF] pb-8">
           <div>
-            {combinationList.map((combination, idx) => (
-              <MyCombBox
-                key={idx}
-                combination={combination}
-                renew={renew}
-              />
-            ))}
+            <div className="sm:w-[75%] w-[85%] mx-auto pb-2 pt-10 text-left text-xl font-extrabold text-[#1E266E]">
+              나의 영양제 조합
+            </div>
+            <div>
+              {combinationList.map((combination, idx) => (
+                <MyCombBox
+                  key={idx}
+                  combination={combination}
+                  renew={renew}
+                />
+              ))}
+            </div>
           </div>
         </div>
       ) : (
