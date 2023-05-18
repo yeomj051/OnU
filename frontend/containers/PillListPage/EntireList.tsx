@@ -11,7 +11,7 @@ const EntireList = (): React.ReactElement => {
   const [tabState, setTabState] = useState<boolean>(false);
 
   return (
-    <div className="grid grid-rows h-[100vh] bg-white pt-20 mx-4 space-y-8">
+    <div className="grid grid-rows h-[100vh] bg-white pt-8 mx-4 space-y-8">
       {/* <SearchBar /> */}
       <div id="list">
         <label className="ml-2 text-xl font-extrabold text-[#1E266E]">

@@ -24,14 +24,6 @@ const ingredientDataList: string[] = [
   '코엔자임Q10',
 ];
 
-type Item = {
-  nutrientId: number;
-  nutrientName: string;
-  nutrientImageUrl: string;
-  nutrientBrand: string;
-  isInterested: boolean;
-};
-
 const IngredientCategoryList = () => {
   const [itemData, setItemData] = useState<Item[]>([]);
   const [ingredientId, setIngredientId] = useState<number>(
