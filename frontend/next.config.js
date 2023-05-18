@@ -2,7 +2,7 @@
 
 const nextConfig = {
   images: {
-    domains: ['shopping-phinf.pstatic.net'],
+    domains: ['shopping-phinf.pstatic.net', 'pilly.kr'],
   },
   env: {
     REACT_APP_API_URL: 'https://k8a703.p.ssafy.io/api',
