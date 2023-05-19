@@ -26,21 +26,20 @@
   - 영양제에 대한 선택지 간소화
   - 나에게 맞는 적합한 영양제 선택
 
- ![영양제추천](https://github.com/PrimeJin/onu-readme/assets/110287222/3041c5b6-b4c9-4910-ba99-96a9037dd557)
+ <img src="https://github.com/PrimeJin/onu-readme/assets/110287222/3041c5b6-b4c9-4910-ba99-96a9037dd557"  width="600" height="600"/>
 
 ### 📌 영양 분석
 - **현재 복용중인 영양제를 반영한 영양 성분 그래프 표시**
 - **영양 성분 분석으로 원하는 영양제 조합을 만들어 저장 가능**
 
-![영양제분석](https://github.com/PrimeJin/onu-readme/assets/110287222/80493ed7-d557-4552-9119-9d61235fb515)
-
+ <img src="https://github.com/PrimeJin/onu-readme/assets/110287222/80493ed7-d557-4552-9119-9d61235fb515"  width="600" height="600"/>
 
 ### 📌 복용 알림
 - **알림 서비스 구독 -> 원하는 시간에 복용 알림 수신 -> 알림 링크 클릭 -> 캘린더 체크**
 - 기대효과
   - 꾸준한 영양제 복용 유도
 
-![알림](https://github.com/PrimeJin/onu-readme/assets/110287222/e906cda4-ad2f-44bf-abdd-7d9518fe2b74)
+ <img src="https://github.com/PrimeJin/onu-readme/assets/110287222/e906cda4-ad2f-44bf-abdd-7d9518fe2b74"  width="600" height="600"/>
 
 
 ### 📌 제품 비교
@@ -48,27 +47,30 @@
 - 기대효과
   - 자기 주도적 영양제 선택
 
-![비교](https://github.com/PrimeJin/onu-readme/assets/110287222/8f10197d-1dcd-48f3-9ed5-d0d74c4c1993)
+ <img src="https://github.com/PrimeJin/onu-readme/assets/110287222/8f10197d-1dcd-48f3-9ed5-d0d74c4c1993"  width="600" height="600"/>
 
 ### 📌 영양제 검색 및 복용 영양제 등록
 **영양제에 대해 아는정보 (이름, 브랜드명)로 입력시 검색결과 조회**
 - 검색의 경우 영양제 비교, 전체 영양제 조회, 영양분석에도 사용
 
 **검색 결과에서 복용중인 영양제로 등록가능**
-![검색및복용영양제등록](https://github.com/PrimeJin/onu-readme/assets/110287222/c9cd02b0-020d-40be-b9bc-caba5fa761e6)
+
+<img src="https://github.com/PrimeJin/onu-readme/assets/110287222/c9cd02b0-020d-40be-b9bc-caba5fa761e6"  width="600" height="600"/>
 
 ### 📌 성분, 기능에 해당하는 영양제 조회
 **원하는 성분과 기능을 선택하여 해당 성분, 기능을 갖고있는 영양제 조회**
-![성분_기능_조회 (1)](https://github.com/PrimeJin/onu-readme/assets/110287222/83680135-a341-4492-a529-feda754f2b82)
 
+<img src="https://github.com/PrimeJin/onu-readme/assets/110287222/83680135-a341-4492-a529-feda754f2b82"  width="600" height="600"/>
 
 ### 📌 리뷰
 **영양제 별 리뷰 관리를 통해 사용자의 영양제 선택에 도움 제공**
-![검색및복용영양제등록](https://github.com/PrimeJin/onu-readme/assets/110287222/8891b310-c9c1-4ee8-98db-52abf1e5af2f)
+
+<img src="https://github.com/PrimeJin/onu-readme/assets/110287222/8891b310-c9c1-4ee8-98db-52abf1e5af2f"  width="600" height="600"/>
 
 ### 📌 소셜로그인
 **카카오톡 소셜로그인**
-![소셜로그인](https://github.com/PrimeJin/onu-readme/assets/110287222/01736e86-555c-45f5-8258-410a6e0baa0f)
+
+<img src="https://github.com/PrimeJin/onu-readme/assets/110287222/01736e86-555c-45f5-8258-410a6e0baa0f"  width="600" height="600"/>
 
 
 ## 💻 기획
